@@ -92,6 +92,7 @@ public class Pathfinder : MonoBehaviour
     {
         currentCount = 0;
         speedThreshold = 1;
+        finishedPaths[pathIndex] = false;
 
         pos start = new pos(startVec);
         pos end = new pos(endVec);
@@ -213,9 +214,12 @@ public class Pathfinder : MonoBehaviour
     public void findPath()
     {
         StopAllCoroutines();
+        numCoroutinesRunning = 0;
         for (int i = 0; i < checkPointList.Count - 1; i++)
         {
             numCoroutinesRunning++;
+            removeSegmentFromDictionary(i);
+            removeVisualizerSegment(i);
             StartCoroutine(findPathBetweenPoints(checkPointList[i].transform.position, checkPointList[i + 1].transform.position, i));
         }
     }
@@ -233,8 +237,6 @@ public class Pathfinder : MonoBehaviour
                         removeSegmentFromDictionary(i);
                         removeVisualizerSegment(i);
                         numCoroutinesRunning++;
-                        //idea: only start coroutine if path is finished
-                        finishedPaths[i] = false;
                         StartCoroutine(findPathBetweenPoints(checkPointList[i].transform.position, checkPointList[i + 1].transform.position, i));
                         j = path[i].Count;
                     }
