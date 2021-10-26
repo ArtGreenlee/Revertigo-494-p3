@@ -88,7 +88,7 @@ public class Pathfinder : MonoBehaviour
         //maybe???
     }
 
-    public IEnumerator findPathBetweenPoints(Vector3 startVec, Vector3 endVec, int pathIndex)
+    public IEnumerator findPathBetweenPointsSlow(Vector3 startVec, Vector3 endVec, int pathIndex)
     {
         currentCount = 0;
         speedThreshold = 1;
@@ -156,7 +156,7 @@ public class Pathfinder : MonoBehaviour
                             removeSegmentFromDictionary(pathIndex);
                             removeVisualizerSegment(pathIndex);
                             numCoroutinesRunning++;
-                            StartCoroutine(findPathBetweenPoints(startVec, endVec, pathIndex));
+                            StartCoroutine(findPathBetweenPointsSlow(startVec, endVec, pathIndex));
                             numCoroutinesRunning--;
                             yield break;
                         }
@@ -205,7 +205,116 @@ public class Pathfinder : MonoBehaviour
             towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
             wallStorage.popRecentWall();
             numCoroutinesRunning++;
-            StartCoroutine(findPathBetweenPoints(startVec, endVec, pathIndex));
+            StartCoroutine(findPathBetweenPointsSlow(startVec, endVec, pathIndex));
+            numCoroutinesRunning--;
+            yield break;
+        }
+    }
+
+    public IEnumerator findPathBetweenPointsFast(Vector3 startVec, Vector3 endVec, int pathIndex)
+    {
+        currentCount = 0;
+        speedThreshold = 1;
+        finishedPaths[pathIndex] = false;
+
+        pos start = new pos(startVec);
+        pos end = new pos(endVec);
+        start.FCost = Vector3.Distance(start.v, end.v);
+        start.parent = start;
+        start.GCost = 0;
+
+        SortedList<float, pos> activePath = new SortedList<float, pos>();
+        activePath.Add(start.FCost, start);
+        Dictionary<Vector3, pos> closedPath = new Dictionary<Vector3, pos>();
+
+        bool pathFound = false;
+        int speedSwitch = 0;
+        while (activePath.Count > 0)
+        {
+            currentCount++;
+            speedSwitch++;
+            if (currentCount > speedThresholdTrigger)
+            {
+                currentCount = 0;
+                speedThreshold++;
+            }
+            if (speedSwitch > speedThreshold)
+            {
+                yield return new WaitForEndOfFrame();
+                speedSwitch = 0;
+            }
+
+            pos curPos = activePath.Values[0];
+            activePath.RemoveAt(0);
+            closedPath.Add(curPos.v, curPos);
+
+            foreach (Vector3 newVec in walkableTiles(curPos.v))
+            {
+                if (newVec == end.v)
+                {
+                    end.parent = curPos;
+                    List<Vector3> temp = new List<Vector3>();
+                    temp.Add(end.v);
+                    while (end.parent.v != start.v)
+                    {
+                        end = end.parent;
+                        temp.Add(end.v);
+                        pathVectors[pathIndex].Add(end.v);
+                        visualizers[pathIndex].Add(Instantiate(pathFindingVisualizerSphere, end.v, new Quaternion()));
+                        if (wallStorage.isWall(end.v))
+                        {
+                            removeSegmentFromDictionary(pathIndex);
+                            removeVisualizerSegment(pathIndex);
+                            numCoroutinesRunning++;
+                            StartCoroutine(findPathBetweenPointsFast(startVec, endVec, pathIndex));
+                            numCoroutinesRunning--;
+                            yield break;
+                        }
+                    }
+                    temp.Reverse();
+                    path[pathIndex] = temp;
+                    numCoroutinesRunning--;
+                    finishedPaths[pathIndex] = true;
+                    yield break;
+                }
+
+
+                if (!closedPath.ContainsKey(newVec))
+                {
+                    pos newPos = new pos(newVec);
+                    newPos.parent = curPos;
+                    float GCost = curPos.GCost + Vector3.Distance(newVec, curPos.v);
+                    float Fcost = Vector3.Distance(end.v, newVec) + GCost;
+                    newPos.GCost = GCost;
+                    newPos.FCost = Fcost;
+                    newPos.parent = curPos;
+
+                    bool found = false;
+                    foreach (pos checkPos in activePath.Values)
+                    {
+                        if (checkPos.v == newVec)
+                        {
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                    {
+                        while (activePath.ContainsKey(newPos.FCost))
+                        {
+                            //holy fuck this is bad my god this needs to be fixed TODO TODO TODO
+                            newPos.FCost -= .01f;
+                        }
+                        activePath.Add(newPos.FCost, newPos);
+                    }
+                }
+            }
+        }
+        if (activePath.Count == 0 && !pathFound)
+        {
+            towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
+            wallStorage.popRecentWall();
+            numCoroutinesRunning++;
+            StartCoroutine(findPathBetweenPointsFast(startVec, endVec, pathIndex));
             numCoroutinesRunning--;
             yield break;
         }
@@ -220,7 +329,7 @@ public class Pathfinder : MonoBehaviour
             numCoroutinesRunning++;
             removeSegmentFromDictionary(i);
             removeVisualizerSegment(i);
-            StartCoroutine(findPathBetweenPoints(checkPointList[i].transform.position, checkPointList[i + 1].transform.position, i));
+            StartCoroutine(findPathBetweenPointsFast(checkPointList[i].transform.position, checkPointList[i + 1].transform.position, i));
         }
     }
 
@@ -237,7 +346,7 @@ public class Pathfinder : MonoBehaviour
                         removeSegmentFromDictionary(i);
                         removeVisualizerSegment(i);
                         numCoroutinesRunning++;
-                        StartCoroutine(findPathBetweenPoints(checkPointList[i].transform.position, checkPointList[i + 1].transform.position, i));
+                        StartCoroutine(findPathBetweenPointsFast(checkPointList[i].transform.position, checkPointList[i + 1].transform.position, i));
                         j = path[i].Count;
                     }
                 }

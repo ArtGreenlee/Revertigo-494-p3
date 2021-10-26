@@ -23,8 +23,7 @@ public class ShootsBullets : MonoBehaviour
     public float aoe_damage;
     public float cooldown;
     public GameObject bullet;
-    private List<GameObject> targets;
-    private List<float> targetCooldownTimer;
+    private Dictionary<GameObject, float> targets;
     EnemyStorage enemyStorage;
 
 
@@ -32,36 +31,28 @@ public class ShootsBullets : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        targets = new List<GameObject>();
+        targets = new Dictionary<GameObject, float>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
-        targetCooldownTimer = new List<float>();
-        for (int i = 0; i < numTargets; i++)
-        {
-            targetCooldownTimer.Add(0);
-        }
     }
 
-    private void setNewTarget()
+    private void setTargets()
     {
-        if (targetSelection == TargetSelectionType.closest)
+        foreach (GameObject enemy in enemyStorage.enemies)
         {
             float minDistance = range;
             GameObject tempTarget = null;
-            foreach (GameObject enemy in enemyStorage.enemies)
+            if (!targets.ContainsKey(enemy))
             {
-                if (!targets.Contains(enemy))
+                float curDistance = Vector3.Distance(enemy.transform.position, transform.position);
+                if (curDistance < minDistance)
                 {
-                    float curDistance = Vector3.Distance(enemy.transform.position, transform.position);
-                    if (curDistance < minDistance)
-                    {
-                        tempTarget = enemy;
-                        minDistance = curDistance;
-                    }
+                    tempTarget = enemy;
+                    minDistance = curDistance;
                 }
             }
-            if (minDistance < range && tempTarget != null && !targets.Contains(tempTarget))
+            if (minDistance < range)
             {
-                targets.Add(tempTarget);
+                targets.Add(tempTarget, 0);
             }
         }
     }
@@ -69,25 +60,22 @@ public class ShootsBullets : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < targets.Count; i++)
+        foreach (GameObject target in targets.Keys)
         {
-            if (!enemyStorage.enemyIsAlive(targets[i]) ||
-            Vector3.Distance(targets[i].transform.position, transform.position) >= range)
+            if (!enemyStorage.enemyIsAlive(target) ||
+            Vector3.Distance(target.transform.position, transform.position) >= range)
             {
-                targets.RemoveAt(i);
-                i--;
+                targets.Remove(target);
+                return;
             }
-            if (Time.time - targetCooldownTimer[i] > cooldown)
+            if (Time.time - targets[target] > cooldown)
             {
-                targetCooldownTimer[i] = Time.time;
+                targets[target] = Time.time;
                 GameObject tempBullet = Instantiate(bullet, transform.position,
                     new Quaternion());
-                tempBullet.GetComponent<Rigidbody>().velocity = (targets[i].transform.position - transform.position).normalized * bulletSpeed;
+                tempBullet.GetComponent<Rigidbody>().velocity = (target.transform.position - transform.position).normalized * bulletSpeed;
             }
         }
-        if (targets.Count < numTargets)
-        {
-            setNewTarget();
-        }
+        setTargets();
     }
 }
