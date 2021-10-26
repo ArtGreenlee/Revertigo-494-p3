@@ -10,12 +10,13 @@ public class EnemySpawner : MonoBehaviour
     private TowerPlacer towerPlacer;
     private List<List<Vector3> > enemyPath;
     public int numEnemiesPerRound;
-    public List<GameObject> enemies;
+    private EnemyStorage enemyStorage;
 
     private void Start()
     {
         pathFinder = GetComponent<Pathfinder>();
         towerPlacer = GetComponent<TowerPlacer>();
+        enemyStorage = GetComponent<EnemyStorage>();
     }
 
     private void Update()
@@ -37,8 +38,8 @@ public class EnemySpawner : MonoBehaviour
         }
         for (int i = 0; i < numEnemiesPerRound; i++)
         {
-            Debug.Log("spawn");
-            Instantiate(enemy, enemyPath[0][0], new Quaternion());
+            GameObject newEnemy = Instantiate(enemy, enemyPath[0][0], new Quaternion());
+            enemyStorage.addEnemy(newEnemy);
             yield return new WaitForSeconds(1);
         }
     }

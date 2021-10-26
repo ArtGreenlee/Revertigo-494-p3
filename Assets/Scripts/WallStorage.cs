@@ -5,6 +5,7 @@ using UnityEngine;
 public class WallStorage : MonoBehaviour
 {
     private Dictionary<Vector3, GameObject> storage = new Dictionary<Vector3, GameObject>();
+    public Dictionary<GameObject, GameObject> wallAndTowers = new Dictionary<GameObject, GameObject>();
     private Pathfinder pathFinder;
     Dictionary<Vector3, int> duplicates = new Dictionary<Vector3, int>();
     TowerPlacer towerPlacer;
@@ -24,6 +25,11 @@ public class WallStorage : MonoBehaviour
     public void popRecentWall()
     {
         removeWall(wallStack.Pop());
+    }
+
+    public void attachTowerToWall(GameObject towerIn, GameObject wallIn)
+    {
+        wallAndTowers.Add(wallIn, towerIn);
     }
 
     //add vec is the center of the wall
@@ -94,8 +100,12 @@ public class WallStorage : MonoBehaviour
         }
         if (!storage.ContainsValue(wallIn))
         {
+            if (wallAndTowers.ContainsKey(wallIn))
+            {
+                Destroy(wallAndTowers[wallIn]);
+            }
             Destroy(wallIn);
-        }
+        }   
         else
         {
             Debug.Log("ERROR: STORAGE STILL CONTAINS WALL AFTER REMOVAL");
