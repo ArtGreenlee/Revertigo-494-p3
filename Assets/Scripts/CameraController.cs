@@ -21,7 +21,8 @@ public class CameraController : MonoBehaviour
     private float ySpeed;
     private float rotY; // around y
     public float decelSpeed;
-    public float maxSpeed;
+    public float maxRotationSpeed;
+    public float moveSpeed;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,19 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        rb.AddRelativeForce(Vector3.forward * moveSpeed * Input.GetAxis("Vertical"));
+        rb.AddRelativeForce(Vector3.left * moveSpeed * Input.GetAxis("Horizontal") * -1);
+        if (Input.GetKey(KeyCode.Space))
+        {
+            rb.AddRelativeForce(Vector3.up * moveSpeed);
+        }
+        else if (Input.GetKey(KeyCode.LeftShift))
+        {
+            rb.AddRelativeForce(Vector3.down * moveSpeed);
+        }
+        
+
+        //handle rotation
         if (Input.GetMouseButton(1))
         {
             rotX += -Input.GetAxis("Mouse Y") * mouseRotateSpeed; // around X
@@ -46,21 +60,21 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            if (xSpeed > maxSpeed)
+            if (xSpeed > maxRotationSpeed)
             {
-                xSpeed = maxSpeed;
+                xSpeed = maxRotationSpeed;
             }
-            else if (xSpeed < -maxSpeed)
+            else if (xSpeed < -maxRotationSpeed)
             {
-                xSpeed = -maxSpeed;
+                xSpeed = -maxRotationSpeed;
             }
-            if (ySpeed > maxSpeed)
+            if (ySpeed > maxRotationSpeed)
             {
-                ySpeed = maxSpeed;
+                ySpeed = maxRotationSpeed;
             }
-            else if (ySpeed < -maxSpeed)
+            else if (ySpeed < -maxRotationSpeed)
             {
-                ySpeed = -maxSpeed;
+                ySpeed = -maxRotationSpeed;
             }
             if (xSpeed < 0)
             {

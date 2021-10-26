@@ -26,7 +26,7 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        fadeAway(transform);
+        StartCoroutine(fadeAway(transform));
     }
 
     private IEnumerator fadeAway(Transform fix)

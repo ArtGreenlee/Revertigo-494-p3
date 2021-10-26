@@ -36,23 +36,23 @@ public class TowerPlacer : MonoBehaviour
             curPoint = UtilityFunctions.snapVector(curPoint);
             if (!wallStorage.isWall(curPoint) && hit.collider.gameObject.tag != "Checkpoint")
             {
+                shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getSide(curPoint));
+                shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * -.5f + curPoint;
                 if (validTowerPlacement(curPoint))
                 {
-                    shadowTower.transform.position = shadowWall.transform.rotation * Vector3.forward * 1 + shadowWall.transform.position;
+                    shadowTower.transform.position = shadowWall.transform.rotation * Vector3.forward * 1.5f + shadowWall.transform.position;
                     shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getSide(curPoint));
                 }
                 else
                 {
                     shadowTower.transform.position = new Vector3(25, 0, 0);
                 }
-                
-                shadowWall.transform.position = curPoint;
-                shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getSide(curPoint));
                 if (Input.GetMouseButtonDown(0))
                 {
-                    GameObject newWall = Instantiate(wall, curPoint, shadowWall.transform.rotation);
+                    GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
                     GameObject newTower = Instantiate(getRandomGem(), shadowTower.transform.position, shadowTower.transform.rotation);
                     wallStorage.attachTowerToWall(newTower, newWall);
+                    shadowTower.transform.position = new Vector3(25, 0, 0);
                     shadowWall.transform.position = new Vector3(25, 0, 0);
                     wallStorage.addWall(curPoint, newWall);
                 }
