@@ -26,8 +26,6 @@ public class ShootsBullets : MonoBehaviour
     private Dictionary<GameObject, float> targets;
     EnemyStorage enemyStorage;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -60,20 +58,23 @@ public class ShootsBullets : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (GameObject target in targets.Keys)
+        foreach (GameObject target in enemyStorage.enemies) //bad bad bad hwy why why TODO
         {
-            if (!enemyStorage.enemyIsAlive(target) ||
-            Vector3.Distance(target.transform.position, transform.position) >= range)
+            if (targets.ContainsKey(target))
             {
-                targets.Remove(target);
-                return;
-            }
-            if (Time.time - targets[target] > cooldown)
-            {
-                targets[target] = Time.time;
-                GameObject tempBullet = Instantiate(bullet, transform.position,
-                    new Quaternion());
-                tempBullet.GetComponent<Rigidbody>().velocity = (target.transform.position - transform.position).normalized * bulletSpeed;
+                if (!enemyStorage.enemyIsAlive(target) ||
+                    Vector3.Distance(target.transform.position, transform.position) >= range)
+                {
+                    targets.Remove(target);
+                }
+                else if (Time.time - targets[target] > cooldown)
+                {
+                    targets[target] = Time.time;
+                    
+                    GameObject tempBullet = Instantiate(bullet, transform.position, new Quaternion());
+                    tempBullet.GetComponent<Rigidbody>().velocity = (target.transform.position - transform.position).normalized * bulletSpeed;
+                    tempBullet.GetComponent<TrailRenderer>().material.color = GetComponent<MeshRenderer>().material.color;
+                }
             }
         }
         setTargets();

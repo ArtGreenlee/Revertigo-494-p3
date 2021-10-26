@@ -10,6 +10,11 @@ public class EnemyStorage : MonoBehaviour
         enemies.Add(enemyIn);
     }
 
+    public void removeEnemy(GameObject enemyIn)
+    {
+        enemies.Remove(enemyIn);
+    }
+
     public bool enemyIsAlive(GameObject checkEnemy)
     {
         return enemies.Contains(checkEnemy);

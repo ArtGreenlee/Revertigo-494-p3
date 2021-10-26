@@ -29,13 +29,12 @@ public class TowerPlacer : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
         Vector3 curPoint;
-        Vector3 prevPoint = Vector3.zero;
         if (Physics.Raycast(ray, out hit) &&
             !Input.GetMouseButton(1))
         {
             curPoint = hit.point;
             curPoint = UtilityFunctions.snapVector(curPoint);
-            if (prevPoint != curPoint && !wallStorage.isWall(curPoint) && hit.collider.gameObject.tag != "Checkpoint")
+            if (!wallStorage.isWall(curPoint) && hit.collider.gameObject.tag != "Checkpoint")
             {
                 if (validTowerPlacement(curPoint))
                 {
@@ -58,7 +57,6 @@ public class TowerPlacer : MonoBehaviour
                     wallStorage.addWall(curPoint, newWall);
                 }
             }
-            prevPoint = curPoint;
         }
 
         if (Input.GetKeyDown(KeyCode.R))
