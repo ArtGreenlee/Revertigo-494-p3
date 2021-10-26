@@ -109,5 +109,5 @@ MonoBehaviour:
   slowDuration: 0
   aoe_range: 0
   aoe_damage: 0
-  cooldown: 1
+  cooldown: 0.75
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
