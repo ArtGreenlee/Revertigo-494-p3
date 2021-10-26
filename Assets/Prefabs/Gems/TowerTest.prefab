@@ -98,9 +98,9 @@ MonoBehaviour:
   slowsEnemy: 0
   canCriticallyHit: 0
   aoe: 0
-  range: 0
-  numTargets: 0
-  speed: 0
+  range: 5
+  numTargets: 5
+  bulletSpeed: 10
   damageMin: 0
   damageMax: 0
   critChance: 0
@@ -109,5 +109,5 @@ MonoBehaviour:
   slowDuration: 0
   aoe_range: 0
   aoe_damage: 0
-  cooldown: 0
-  bullet: {fileID: 0}
+  cooldown: 1
+  bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}

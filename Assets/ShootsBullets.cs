@@ -12,7 +12,7 @@ public class ShootsBullets : MonoBehaviour
     public bool aoe;
     public float range;
     public int numTargets;
-    public float speed;
+    public float bulletSpeed;
     public float damageMin;
     public float damageMax;
     public float critChance;
@@ -27,11 +27,14 @@ public class ShootsBullets : MonoBehaviour
     private List<float> targetCooldownTimer;
     EnemyStorage enemyStorage;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
         targets = new List<GameObject>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
+        targetCooldownTimer = new List<float>();
         for (int i = 0; i < numTargets; i++)
         {
             targetCooldownTimer.Add(0);
@@ -46,13 +49,17 @@ public class ShootsBullets : MonoBehaviour
             GameObject tempTarget = null;
             foreach (GameObject enemy in enemyStorage.enemies)
             {
-                if (Vector3.Distance(enemy.transform.position, transform.position) < minDistance)
+                if (!targets.Contains(enemy))
                 {
-                    tempTarget = enemy;
-                    minDistance = range;
+                    float curDistance = Vector3.Distance(enemy.transform.position, transform.position);
+                    if (curDistance < minDistance)
+                    {
+                        tempTarget = enemy;
+                        minDistance = curDistance;
+                    }
                 }
             }
-            if (minDistance < range)
+            if (minDistance < range && tempTarget != null && !targets.Contains(tempTarget))
             {
                 targets.Add(tempTarget);
             }
@@ -70,14 +77,12 @@ public class ShootsBullets : MonoBehaviour
                 targets.RemoveAt(i);
                 i--;
             }
-            else
+            if (Time.time - targetCooldownTimer[i] > cooldown)
             {
-                if (Time.time - targetCooldownTimer[i] > cooldown)
-                {
-                    targetCooldownTimer[i] = Time.time;
-                    //fire bullet at enemy
-                    Debug.Log("shoot");
-                }
+                targetCooldownTimer[i] = Time.time;
+                GameObject tempBullet = Instantiate(bullet, transform.position,
+                    new Quaternion());
+                tempBullet.GetComponent<Rigidbody>().velocity = (targets[i].transform.position - transform.position).normalized * bulletSpeed;
             }
         }
         if (targets.Count < numTargets)

@@ -26,7 +26,7 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * 5;
+        transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * 1;
         if (Vector3.Distance(transform.position, nextPoint) < .1f)
         {
             if (currentPointIndex == path.Count - 1)
