@@ -38,6 +38,7 @@ public class WallStorage : MonoBehaviour
         {
             return false;
         }
+        //check for checkpoints
         UtilityFunctions.Side side = UtilityFunctions.getSide(checkVec);
         for (float i = -1; i < 1.5f; i += .5f)
         {
@@ -46,7 +47,6 @@ public class WallStorage : MonoBehaviour
                 for (float k = -1; k < 1.5f; k += .5f)
                 {
                     Vector3 curVec = new Vector3(checkVec.x + i, checkVec.y + j, checkVec.z + k);
-                    Debug.Log(curVec.x);
                     if (side == UtilityFunctions.Side.front || side == UtilityFunctions.Side.back)
                     {
                         if (Mathf.Abs(curVec.y) > 10 || Mathf.Abs(curVec.x) > 10)

@@ -9,12 +9,27 @@ public class TowerPlacer : MonoBehaviour
     private WallStorage wallStorage;
     public GameObject shadowTower;
     private Pathfinder pathFinder;
+    private HashSet<Vector3> checkPointVectors;
 
     public List<GameObject> gemRoster;
     // Start is called before the first frame update
     void Start()
     {
-
+        checkPointVectors = new HashSet<Vector3>();
+        foreach (GameObject checkPoint in GameObject.FindGameObjectsWithTag("Checkpoint"))
+        {
+            Vector3 curVec = UtilityFunctions.snapVector(checkPoint.transform.position);
+            for (float i = -1; i < 1.5f; i += .5f)
+            {
+                for (float j = -1; j < 1.5f; j += .5f)
+                {
+                    for (float k = -1; k < 1.5f; k += .5f)
+                    {
+                        checkPointVectors.Add(new Vector3(curVec.x + i, curVec.y + j, curVec.z + k));
+                    }
+                }
+            }
+        }
         pathFinder = GetComponent<Pathfinder>();
         wallStorage = GetComponent<WallStorage>();
         shadowWall = Instantiate(shadowWall, new Vector3(25,0,0), new Quaternion());
@@ -34,7 +49,7 @@ public class TowerPlacer : MonoBehaviour
         {
             curPoint = hit.point;
             curPoint = UtilityFunctions.snapVector(curPoint);
-            if (wallStorage.validWallPosition(curPoint) && hit.collider.gameObject.tag != "Checkpoint")
+            if (wallStorage.validWallPosition(curPoint) && !isCheckpoint(curPoint))
             {
                 shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getSide(curPoint));
                 shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * -.5f + curPoint;
@@ -68,6 +83,11 @@ public class TowerPlacer : MonoBehaviour
     private GameObject getRandomGem()
     {
         return gemRoster[0];
+    }
+
+    private bool isCheckpoint(Vector3 checkVec)
+    {
+        return checkPointVectors.Contains(checkVec);
     }
 
     public static bool validTowerPlacement(Vector3 checkVec)
