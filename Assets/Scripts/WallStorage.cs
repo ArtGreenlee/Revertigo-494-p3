@@ -32,10 +32,53 @@ public class WallStorage : MonoBehaviour
         wallAndTowers.Add(wallIn, towerIn);
     }
 
+    public bool validWallPosition(Vector3 checkVec)
+    {
+        if (isWall(checkVec))
+        {
+            return false;
+        }
+        UtilityFunctions.Side side = UtilityFunctions.getSide(checkVec);
+        for (float i = -1; i < 1.5f; i += .5f)
+        {
+            for (float j = -1; j < 1.5f; j += .5f)
+            {
+                for (float k = -1; k < 1.5f; k += .5f)
+                {
+                    Vector3 curVec = new Vector3(checkVec.x + i, checkVec.y + j, checkVec.z + k);
+                    Debug.Log(curVec.x);
+                    if (side == UtilityFunctions.Side.front || side == UtilityFunctions.Side.back)
+                    {
+                        if (Mathf.Abs(curVec.y) > 10 || Mathf.Abs(curVec.x) > 10)
+                        {
+                            return false;
+                        }
+                    } 
+                    else if (side == UtilityFunctions.Side.left || side == UtilityFunctions.Side.right)
+                    {
+                        if (Mathf.Abs(curVec.z) > 10 || Mathf.Abs(curVec.y) > 10)
+                        {
+                            return false;
+                        }
+                    }
+                    else if (side == UtilityFunctions.Side.top || side == UtilityFunctions.Side.bottom)
+                    {
+                        if (Mathf.Abs(curVec.x) > 10 || Mathf.Abs(curVec.z) > 10)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     //add vec is the center of the wall
     public void addWall(Vector3 addVec, GameObject wallIn)
     {
         wallStack.Push(wallIn);
+        UtilityFunctions.Side addSide = UtilityFunctions.getSide(addVec);
         bool redo = false;
         for (float i = -1; i < 1.5f; i += .5f)
         {
@@ -44,7 +87,9 @@ public class WallStorage : MonoBehaviour
                 for (float k = -1; k < 1.5f; k += .5f)
                 {
                     Vector3 curVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
-                    if (!storage.ContainsKey(curVec) && UtilityFunctions.validEnemyVector(curVec))
+                    if (!storage.ContainsKey(curVec) &&
+                        UtilityFunctions.validEnemyVector(curVec) &&
+                        addSide == UtilityFunctions.getSide(curVec))
                     {
                         if (pathFinder.pathContainsVector(curVec))
                         {

@@ -60,7 +60,7 @@ public class UtilityFunctions : MonoBehaviour
         {
             return Side.back;
         }
-        if (pos.z <= 10)
+        if (pos.z == 10)
         {
             return Side.front;
         }

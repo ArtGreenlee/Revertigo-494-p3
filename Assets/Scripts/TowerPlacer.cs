@@ -34,7 +34,7 @@ public class TowerPlacer : MonoBehaviour
         {
             curPoint = hit.point;
             curPoint = UtilityFunctions.snapVector(curPoint);
-            if (!wallStorage.isWall(curPoint) && hit.collider.gameObject.tag != "Checkpoint")
+            if (wallStorage.validWallPosition(curPoint) && hit.collider.gameObject.tag != "Checkpoint")
             {
                 shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getSide(curPoint));
                 shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * -.5f + curPoint;
@@ -75,15 +75,15 @@ public class TowerPlacer : MonoBehaviour
         UtilityFunctions.Side side = UtilityFunctions.getSide(checkVec);
         if (side == UtilityFunctions.Side.front || side == UtilityFunctions.Side.back)
         {
-            return Mathf.Abs(checkVec.x) < 9 && Mathf.Abs(checkVec.y) < 9;
+            return Mathf.Abs(checkVec.x) < 8 && Mathf.Abs(checkVec.y) < 8;
         }
         else if (side == UtilityFunctions.Side.left || side == UtilityFunctions.Side.right)
         {
-            return Mathf.Abs(checkVec.z) < 9 && Mathf.Abs(checkVec.y) < 9;
+            return Mathf.Abs(checkVec.z) < 8 && Mathf.Abs(checkVec.y) < 8;
         }
         else if (side == UtilityFunctions.Side.top || side == UtilityFunctions.Side.bottom)
         {
-            return Mathf.Abs(checkVec.x) < 9 && Mathf.Abs(checkVec.z) < 9;
+            return Mathf.Abs(checkVec.x) < 8 && Mathf.Abs(checkVec.z) < 8;
         }
         else
         {
