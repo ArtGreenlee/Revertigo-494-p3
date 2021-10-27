@@ -23,10 +23,15 @@ public class CameraController : MonoBehaviour
     public float decelSpeed;
     public float maxRotationSpeed;
     public float moveSpeed;
+
+    public float zoomAcceleration;
+    public float zoomDecel;
+    private float zoomSpeed;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
+        zoomSpeed = 0;
         rb = GetComponent<Rigidbody>();
         rotX = transform.rotation.eulerAngles.x;
         rotY = transform.rotation.eulerAngles.y;
@@ -45,7 +50,39 @@ public class CameraController : MonoBehaviour
         {
             rb.AddRelativeForce(Vector3.down * moveSpeed);
         }
+
+        float zoomInput = Input.mouseScrollDelta.y;
         
+        if (zoomInput != 0)
+        {
+            zoomSpeed += zoomAcceleration * zoomInput * Time.deltaTime * -1;
+        }
+        else
+        {
+            if (zoomSpeed > 0)
+            {
+                zoomSpeed -= zoomDecel * Time.deltaTime;
+                if (zoomSpeed < 0)
+                {
+                    zoomSpeed = 0;
+                }
+            }
+            else if (zoomSpeed < 0)
+            {
+                zoomSpeed += zoomDecel * Time.deltaTime;
+                if (zoomSpeed > 0)
+                {
+                    zoomSpeed = 0;
+                }
+            }
+        }
+
+        mainCamera.fieldOfView += zoomSpeed;
+
+        if (mainCamera.fieldOfView > 90 || mainCamera.fieldOfView < 30)
+        {
+            zoomSpeed = 0;
+        }
 
         //handle rotation
         if (Input.GetMouseButton(1))
@@ -120,15 +157,6 @@ public class CameraController : MonoBehaviour
 
             rotX += xSpeed;
             rotY += ySpeed;
-        }
-
-        if (rotX < minXRotAngle)
-        {
-            rotX = minXRotAngle;
-        }
-        else if (rotX > maxXRotAngle)
-        {
-            rotX = maxXRotAngle;
         }
 
         transform.rotation = Quaternion.Euler(rotX, rotY, 0);

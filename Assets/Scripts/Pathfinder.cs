@@ -313,9 +313,7 @@ public class Pathfinder : MonoBehaviour
         {
             towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
             wallStorage.popRecentWall();
-            numCoroutinesRunning++;
-            StartCoroutine(findPathBetweenPointsFast(startVec, endVec, pathIndex));
-            numCoroutinesRunning--;
+            findPath();
             yield break;
         }
     }

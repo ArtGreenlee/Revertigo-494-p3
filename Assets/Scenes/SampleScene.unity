@@ -711,7 +711,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -760,8 +760,10 @@ MonoBehaviour:
   mouseRotateSpeed: 0.8
   slerpValue: 0.25
   decelSpeed: 1
-  maxRotationSpeed: 0
+  maxRotationSpeed: 0.4
   moveSpeed: 1
+  zoomAcceleration: 3
+  zoomDecel: 0.2
 --- !u!54 &963194230
 Rigidbody:
   m_ObjectHideFlags: 0
