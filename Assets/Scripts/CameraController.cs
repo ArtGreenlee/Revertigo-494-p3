@@ -44,11 +44,11 @@ public class CameraController : MonoBehaviour
         rb.AddRelativeForce(Vector3.left * moveSpeed * Input.GetAxis("Horizontal") * -1);
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.AddRelativeForce(Vector3.up * moveSpeed);
+            rb.AddForce(Vector3.up * moveSpeed);
         }
         else if (Input.GetKey(KeyCode.LeftShift))
         {
-            rb.AddRelativeForce(Vector3.down * moveSpeed);
+            rb.AddForce(Vector3.down * moveSpeed);
         }
 
         float zoomInput = Input.mouseScrollDelta.y;
