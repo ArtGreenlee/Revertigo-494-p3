@@ -123,5 +123,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   currentHealth: 0
-  HealthBarObject: {fileID: 5306666240509191818, guid: 1a8b7ac00460eff499d61ccfe39392a3,
+  healthBar: {fileID: 5306666240509191818, guid: 1a8b7ac00460eff499d61ccfe39392a3,
     type: 3}

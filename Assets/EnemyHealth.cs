@@ -7,16 +7,15 @@ public class EnemyHealth : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
     private EnemyStorage enemyStorage;
-    public GameObject HealthBarObject;
-    private HealthBar healthBar;
+    public GameObject healthBar;
     // Start is called before the first frame update
     void Start()
     {
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         currentHealth = maxHealth;
-        healthBar = Instantiate(HealthBarObject, transform.position, new Quaternion(), GameObject.FindGameObjectWithTag("Canvas").transform).GetComponent<HealthBar>();
-        healthBar.enemyTransform = transform;
-        healthBar.enemyHealth = this;
+        healthBar = Instantiate(healthBar, transform.position, new Quaternion(), GameObject.FindGameObjectWithTag("Canvas").transform);
+        healthBar.GetComponent<HealthBar>().enemyTransform = transform;
+        healthBar.GetComponent<HealthBar>().enemyHealth = this;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -35,6 +34,7 @@ public class EnemyHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             enemyStorage.removeEnemy(gameObject);
+            Destroy(healthBar);
             Destroy(gameObject);
         }
     }
