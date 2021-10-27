@@ -11,6 +11,7 @@ public class HealthBar : MonoBehaviour
     public EnemyHealth enemyHealth;
     private float maxWidth;
     private Image HealthBarImage;
+    public float healthBarOffset;
     void Start()
     {
         HealthBarImage = GetComponent<Image>();
@@ -20,10 +21,17 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
-
-        transform.position = (enemyTransform.position + (enemyTransform.position - cameraTransform.position).normalized * -2) + new Vector3(0, .3f, 0);
-        transform.LookAt(cameraTransform);
-        Debug.Log(HealthBarImage.rectTransform.sizeDelta);
+        Vector3 offsetVec = Vector3.zero;
+        if (Mathf.Abs(enemyTransform.position.y) > 9)
+        {
+            offsetVec.z = healthBarOffset;
+        }
+        else
+        {
+            offsetVec.y = healthBarOffset;
+        }
+        transform.position = (enemyTransform.position + (enemyTransform.position - cameraTransform.position).normalized * -2) + offsetVec;
+        transform.LookAt(cameraTransform);  
         HealthBarImage.rectTransform.sizeDelta = new Vector2((enemyHealth.currentHealth / enemyHealth.maxHealth) * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
     }
 }
