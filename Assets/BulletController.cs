@@ -7,6 +7,7 @@ public class BulletController : MonoBehaviour
 
     private float lifeStart;
     public float lifeTime;
+    public ShootsBullets parent;
     private Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,7 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        StartCoroutine(fadeAway(transform));
+        StartCoroutine(fadeAway(collision.gameObject.transform));
     }
 
     private IEnumerator fadeAway(Transform fix)

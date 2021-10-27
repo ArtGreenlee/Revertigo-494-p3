@@ -70,10 +70,10 @@ public class ShootsBullets : MonoBehaviour
                 else if (Time.time - targets[target] > cooldown)
                 {
                     targets[target] = Time.time;
-                    
                     GameObject tempBullet = Instantiate(bullet, transform.position, new Quaternion());
                     tempBullet.GetComponent<Rigidbody>().velocity = (target.transform.position - transform.position).normalized * bulletSpeed;
                     tempBullet.GetComponent<TrailRenderer>().material.color = GetComponent<MeshRenderer>().material.color;
+                    tempBullet.GetComponent<BulletController>().parent = this;
                 }
             }
         }

@@ -1289,7 +1289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   waveStarted: 0
-  numEnemiesPerRound: 5
+  numEnemiesPerRound: 1
 --- !u!114 &1399340149
 MonoBehaviour:
   m_ObjectHideFlags: 0
