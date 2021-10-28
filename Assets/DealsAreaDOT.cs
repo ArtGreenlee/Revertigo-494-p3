@@ -7,7 +7,7 @@ public class DealsAreaDOT : MonoBehaviour
     public float DPS;
     public GameObject DamageEffect;
     public float range;
-    public EnemyStorage enemyStorage;
+    private EnemyStorage enemyStorage;
 
     private void Awake()
     {
@@ -30,7 +30,6 @@ public class DealsAreaDOT : MonoBehaviour
             if (Vector3.Distance(enemy.transform.position, transform.position) <= range)
             {
                 //bad bad bad TODO: fix this, not optimized
-                Debug.Log(DPS * Time.deltaTime);
                 enemy.GetComponent<EnemyHealth>().takeDamage(DPS * Time.deltaTime);
             }
         }

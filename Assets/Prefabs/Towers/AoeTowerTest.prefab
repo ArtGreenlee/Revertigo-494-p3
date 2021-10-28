@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec71c07c5fd124cbba34a17dc5be4b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DPS: 1
+  DPS: 5
   DamageEffect: {fileID: 0}
-  range: 2
+  range: 3
   enemyStorage: {fileID: 0}

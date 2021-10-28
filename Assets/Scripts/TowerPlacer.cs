@@ -10,6 +10,7 @@ public class TowerPlacer : MonoBehaviour
     public GameObject shadowTower;
     private Pathfinder pathFinder;
     private HashSet<Vector3> checkPointVectors;
+    public GameObject onPlacementEffect;
 
     public List<GameObject> gemRoster;
     // Start is called before the first frame update
@@ -71,6 +72,7 @@ public class TowerPlacer : MonoBehaviour
                 {
                     GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
                     GameObject newTower = Instantiate(getRandomGem(), shadowTower.transform.position, shadowTower.transform.rotation);
+                    Instantiate(onPlacementEffect, shadowTower.transform.position, shadowTower.transform.rotation);
                     wallStorage.attachTowerToWall(newTower, newWall);
                     shadowTower.transform.position = new Vector3(25, 0, 0);
                     shadowWall.transform.position = new Vector3(25, 0, 0);
@@ -87,7 +89,7 @@ public class TowerPlacer : MonoBehaviour
 
     private GameObject getRandomGem()
     {
-        return gemRoster[0];
+        return gemRoster[Random.Range(0, 2)];
     }
 
     private bool isCheckpoint(Vector3 checkVec)

@@ -34,6 +34,7 @@ public class EnemyHealth : MonoBehaviour
             ShootsBullets tower = collision.gameObject.GetComponent<BulletController>().parent;
             float damage = Random.Range(tower.damageMin, tower.damageMax);
             takeDamage(damage);
+            flashOnHit.flash();
             healthBar.GetComponent<HealthBar>().showDamage();
         }
     }
@@ -41,7 +42,7 @@ public class EnemyHealth : MonoBehaviour
     public void takeDamage(float damage)
     {
         currentHealth -= damage;
-        flashOnHit.flash();
+        
         if (currentHealth <= 0)
         {
             enemyStorage.removeEnemy(gameObject);

@@ -99,7 +99,7 @@ MonoBehaviour:
   canCriticallyHit: 0
   aoe: 0
   range: 5
-  numTargets: 5
+  numTargets: 2
   bulletSpeed: 15
   damageMin: 2
   damageMax: 2

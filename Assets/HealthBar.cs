@@ -37,8 +37,5 @@ public class HealthBar : MonoBehaviour
     public void showDamage()
     {
         HealthBarImage.rectTransform.sizeDelta = new Vector2(enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
-        Debug.Log(maxWidth - enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth);
-        Debug.Log(HealthBarImage.rectTransform.localPosition.x);
-        HealthBarImage.rectTransform.localPosition = new Vector3(maxWidth - enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth, 0, 0);
     }
 }
