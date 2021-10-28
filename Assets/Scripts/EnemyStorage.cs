@@ -20,4 +20,20 @@ public class EnemyStorage : MonoBehaviour
     {
         return enemies.Contains(checkEnemy);
     }
+
+    public GameObject getClosestEnemyToPointWithinRange(Vector3 checkVec, float range)
+    {
+        GameObject temp = null;
+        float minDistance = range;
+        foreach (GameObject enemy in enemies)
+        {
+            float curDistance = Vector3.Distance(enemy.transform.position, checkVec);
+            if (curDistance < minDistance)
+            {
+                temp = enemy;
+                minDistance = curDistance;
+            }
+        }
+        return temp;
+    }
 }

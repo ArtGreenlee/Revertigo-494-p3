@@ -71,7 +71,7 @@ public class TowerPlacer : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
-                    GameObject newTower = Instantiate(getRandomGem(), shadowTower.transform.position, shadowTower.transform.rotation);
+                    GameObject newTower = Instantiate(getRandomTower(), shadowTower.transform.position, shadowTower.transform.rotation);
                     Instantiate(onPlacementEffect, shadowTower.transform.position, shadowTower.transform.rotation);
                     wallStorage.attachTowerToWall(newTower, newWall);
                     shadowTower.transform.position = new Vector3(25, 0, 0);
@@ -87,9 +87,9 @@ public class TowerPlacer : MonoBehaviour
         }
     }
 
-    private GameObject getRandomGem()
+    private GameObject getRandomTower()
     {
-        return gemRoster[Random.Range(0, 2)];
+        return gemRoster[0];
     }
 
     private bool isCheckpoint(Vector3 checkVec)

@@ -42,7 +42,6 @@ public class EnemyHealth : MonoBehaviour
     public void takeDamage(float damage)
     {
         currentHealth -= damage;
-        
         if (currentHealth <= 0)
         {
             enemyStorage.removeEnemy(gameObject);
