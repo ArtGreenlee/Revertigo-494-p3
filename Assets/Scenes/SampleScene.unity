@@ -1250,7 +1250,7 @@ MonoBehaviour:
   shadowTower: {fileID: 2335333269562642696, guid: 9ce6ce26983e0504b91e1bb88f1b2b90,
     type: 3}
   gemRoster:
-  - {fileID: 1295874507230250574, guid: be57a0b78d32e450788f1e795f31aac0, type: 3}
+  - {fileID: 1500977303583501118, guid: 457df2f6996e95c45927747af91e5aab, type: 3}
 --- !u!114 &1399340146
 MonoBehaviour:
   m_ObjectHideFlags: 0
