@@ -1249,8 +1249,9 @@ MonoBehaviour:
   wall: {fileID: 1985564498679554583, guid: de47b48e6d89ad24bb6f6c83bbcae1fc, type: 3}
   shadowTower: {fileID: 2335333269562642696, guid: 9ce6ce26983e0504b91e1bb88f1b2b90,
     type: 3}
+  onPlacementEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   gemRoster:
-  - {fileID: 1295874507230250574, guid: be57a0b78d32e450788f1e795f31aac0, type: 3}
+  - {fileID: 5996220971690792234, guid: 9e0557a4a0ffb44249ac95f8cc2cbf14, type: 3}
 --- !u!114 &1399340146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1289,7 +1290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   waveStarted: 0
-  numEnemiesPerRound: 1
+  numEnemiesPerRound: 5
 --- !u!114 &1399340149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1408,6 +1409,7 @@ GameObject:
   - component: {fileID: 1578175797}
   - component: {fileID: 1578175796}
   - component: {fileID: 1578175795}
+  - component: {fileID: 1578175794}
   m_Layer: 0
   m_Name: EnemySpawn
   m_TagString: Checkpoint
@@ -1415,6 +1417,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1578175794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578175793}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7471c1b98d24b724c9e3d0e23ca47019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathFindingVisualizerSphere: {fileID: 2318181038164239046, guid: 686e00cc8fd859247888fe3c5a7221cd,
+    type: 3}
+  pathFindingVisualizerBar: {fileID: 7143789394499126471, guid: 26035fbf286edd347b72f1d33c4ea68b,
+    type: 3}
+  checkPointList:
+  - {fileID: 1578175793}
+  - {fileID: 427843785}
+  - {fileID: 860353889}
+  - {fileID: 1064463317}
+  - {fileID: 886494683}
+  - {fileID: 138398287}
 --- !u!23 &1578175795
 MeshRenderer:
   m_ObjectHideFlags: 0
