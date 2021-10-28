@@ -31,7 +31,14 @@ public class HealthBar : MonoBehaviour
             offsetVec.y = healthBarOffset;
         }
         transform.position = (enemyTransform.position + (enemyTransform.position - cameraTransform.position).normalized * -2) + offsetVec;
-        transform.LookAt(cameraTransform);  
-        HealthBarImage.rectTransform.sizeDelta = new Vector2((enemyHealth.currentHealth / enemyHealth.maxHealth) * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
+        transform.LookAt(cameraTransform);
+    }
+
+    public void showDamage()
+    {
+        HealthBarImage.rectTransform.sizeDelta = new Vector2(enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
+        Debug.Log(maxWidth - enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth);
+        Debug.Log(HealthBarImage.rectTransform.localPosition.x);
+        HealthBarImage.rectTransform.localPosition = new Vector3(maxWidth - enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth, 0, 0);
     }
 }

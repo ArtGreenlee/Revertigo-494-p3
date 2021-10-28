@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5669806530767242407}
   - component: {fileID: 5669806530767242400}
   - component: {fileID: 1701556777800460827}
+  - component: {fileID: 1109769621377822002}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a54b7ad866d3a9b47bbf3b53baa0acc4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,3 +126,18 @@ MonoBehaviour:
   currentHealth: 0
   healthBar: {fileID: 5306666240509191818, guid: 1a8b7ac00460eff499d61ccfe39392a3,
     type: 3}
+  onDeathEffect: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
+--- !u!114 &1109769621377822002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5669806530767242401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc1235f0e37d849feb23b740df42e47e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 75831ab416cc9495b9d07e523d343de1, type: 2}
+  flashDuration: 0.05

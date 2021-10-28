@@ -8,11 +8,14 @@ public class EnemyHealth : MonoBehaviour
     public float currentHealth;
     private EnemyStorage enemyStorage;
     public GameObject healthBar;
+    private FlashOnHit flashOnHit;
+    public GameObject onDeathEffect;
     // Start is called before the first frame update
 
     private void Awake()
     {
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
+        flashOnHit = GetComponent<FlashOnHit>();
         currentHealth = maxHealth;
         healthBar = Instantiate(healthBar, transform.position, new Quaternion(), GameObject.FindGameObjectWithTag("Canvas").transform);
         healthBar.GetComponent<HealthBar>().enemyTransform = transform;
@@ -31,15 +34,18 @@ public class EnemyHealth : MonoBehaviour
             ShootsBullets tower = collision.gameObject.GetComponent<BulletController>().parent;
             float damage = Random.Range(tower.damageMin, tower.damageMax);
             takeDamage(damage);
+            healthBar.GetComponent<HealthBar>().showDamage();
         }
     }
 
     public void takeDamage(float damage)
     {
         currentHealth -= damage;
+        flashOnHit.flash();
         if (currentHealth <= 0)
         {
             enemyStorage.removeEnemy(gameObject);
+            Instantiate(onDeathEffect, transform.position, new Quaternion());
             Destroy(healthBar);
             Destroy(gameObject);
         }

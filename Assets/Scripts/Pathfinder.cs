@@ -79,15 +79,6 @@ public class Pathfinder : MonoBehaviour
         else return path;
     }
 
-    private void Update()
-    {
-        if (numCoroutinesRunning > 6)
-        {
-            Debug.Log("ERROR: TOO MANY PATHFINIDNG COROUTINES RUNNING");
-            findPath();
-        }
-    }
-
     public void resetCoroutineSpeed()
     {
         //maybe???
@@ -316,7 +307,7 @@ public class Pathfinder : MonoBehaviour
         }
         if (activePath.Count == 0 && !pathFound)
         {
-            towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
+            towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0); //why do this?
             wallStorage.popRecentWall();
             findPath();
             yield break;

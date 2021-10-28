@@ -101,8 +101,8 @@ MonoBehaviour:
   range: 5
   numTargets: 5
   bulletSpeed: 15
-  damageMin: 0
-  damageMax: 0.5
+  damageMin: 2
+  damageMax: 2
   critChance: 0
   critMult: 0
   slowPercent: 0

@@ -8,11 +8,20 @@ public class BulletController : MonoBehaviour
     private float lifeStart;
     public float lifeTime;
     public ShootsBullets parent;
+    private MeshRenderer meshRenderer;
+    private SphereCollider sphereCollider;
     private Rigidbody rb;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        sphereCollider = GetComponent<SphereCollider>();
+        rb = GetComponent<Rigidbody>();
+        meshRenderer = GetComponent<MeshRenderer>();
+    }
+
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        
         lifeStart = Time.time;
     }
 
@@ -33,7 +42,8 @@ public class BulletController : MonoBehaviour
     private IEnumerator fadeAway(Transform fix)
     {
         rb.velocity = Vector3.zero;
-        GetComponent<SphereCollider>().enabled = false;
+        sphereCollider.enabled = false;
+        meshRenderer.enabled = false;
         while (transform.localScale.magnitude > .05f && fix != null)
         {
             transform.position = fix.position;
