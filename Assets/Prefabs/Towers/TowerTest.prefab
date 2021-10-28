@@ -100,7 +100,7 @@ MonoBehaviour:
   aoe: 0
   range: 5
   numTargets: 5
-  bulletSpeed: 10
+  bulletSpeed: 15
   damageMin: 0
   damageMax: 0.5
   critChance: 0

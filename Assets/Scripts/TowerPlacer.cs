@@ -51,12 +51,12 @@ public class TowerPlacer : MonoBehaviour
             curPoint = UtilityFunctions.snapVector(curPoint);
             if (wallStorage.validWallPosition(curPoint) && !isCheckpoint(curPoint))
             {
-                shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getSide(curPoint));
-                shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * -.5f + curPoint;
+                shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
+                shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
                 if (validTowerPlacement(curPoint))
                 {
-                    shadowTower.transform.position = shadowWall.transform.rotation * Vector3.forward * 1.5f + shadowWall.transform.position;
-                    shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getSide(curPoint));
+                    shadowTower.transform.position = shadowWall.transform.rotation * Vector3.forward * -1.5f + shadowWall.transform.position;
+                    shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
                 }
                 else
                 {
@@ -92,16 +92,16 @@ public class TowerPlacer : MonoBehaviour
 
     public static bool validTowerPlacement(Vector3 checkVec)
     {
-        UtilityFunctions.Side side = UtilityFunctions.getSide(checkVec);
-        if (side == UtilityFunctions.Side.front || side == UtilityFunctions.Side.back)
+        Vector3 side = UtilityFunctions.getClosestSide(checkVec);
+        if (side == Vector3.forward || side == Vector3.back)
         {
             return Mathf.Abs(checkVec.x) < 8 && Mathf.Abs(checkVec.y) < 8;
         }
-        else if (side == UtilityFunctions.Side.left || side == UtilityFunctions.Side.right)
+        else if (side == Vector3.left || side == Vector3.right)
         {
             return Mathf.Abs(checkVec.z) < 8 && Mathf.Abs(checkVec.y) < 8;
         }
-        else if (side == UtilityFunctions.Side.top || side == UtilityFunctions.Side.bottom)
+        else if (side == Vector3.up || side == Vector3.down)
         {
             return Mathf.Abs(checkVec.x) < 8 && Mathf.Abs(checkVec.z) < 8;
         }

@@ -39,7 +39,7 @@ public class WallStorage : MonoBehaviour
             return false;
         }
         //check for checkpoints
-        UtilityFunctions.Side side = UtilityFunctions.getSide(checkVec);
+        Vector3 side = UtilityFunctions.getClosestSide(checkVec);
         for (float i = -1; i < 1.5f; i += .5f)
         {
             for (float j = -1; j < 1.5f; j += .5f)
@@ -47,21 +47,21 @@ public class WallStorage : MonoBehaviour
                 for (float k = -1; k < 1.5f; k += .5f)
                 {
                     Vector3 curVec = new Vector3(checkVec.x + i, checkVec.y + j, checkVec.z + k);
-                    if (side == UtilityFunctions.Side.front || side == UtilityFunctions.Side.back)
+                    if (side == Vector3.forward || side == Vector3.back)
                     {
                         if (Mathf.Abs(curVec.y) > 10 || Mathf.Abs(curVec.x) > 10)
                         {
                             return false;
                         }
                     } 
-                    else if (side == UtilityFunctions.Side.left || side == UtilityFunctions.Side.right)
+                    else if (side == Vector3.left || side == Vector3.right)
                     {
                         if (Mathf.Abs(curVec.z) > 10 || Mathf.Abs(curVec.y) > 10)
                         {
                             return false;
                         }
                     }
-                    else if (side == UtilityFunctions.Side.top || side == UtilityFunctions.Side.bottom)
+                    else if (side == Vector3.up || side == Vector3.down)
                     {
                         if (Mathf.Abs(curVec.x) > 10 || Mathf.Abs(curVec.z) > 10)
                         {
@@ -78,7 +78,7 @@ public class WallStorage : MonoBehaviour
     public void addWall(Vector3 addVec, GameObject wallIn)
     {
         wallStack.Push(wallIn);
-        UtilityFunctions.Side addSide = UtilityFunctions.getSide(addVec);
+        Vector3 addSide = UtilityFunctions.getClosestSide(addVec);
         bool redo = false;
         for (float i = -1; i < 1.5f; i += .5f)
         {
@@ -89,7 +89,7 @@ public class WallStorage : MonoBehaviour
                     Vector3 curVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
                     if (!storage.ContainsKey(curVec) &&
                         UtilityFunctions.validEnemyVector(curVec) &&
-                        addSide == UtilityFunctions.getSide(curVec))
+                        addSide == UtilityFunctions.getClosestSide(curVec))
                     {
                         if (pathFinder.pathContainsVector(curVec))
                         {
