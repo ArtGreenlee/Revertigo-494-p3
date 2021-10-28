@@ -10,6 +10,18 @@ public class FireEffect : MonoBehaviour
     void Start()
     {
         AreaSparksEffect = Instantiate(AreaSparksEffect, transform.position, new Quaternion(), transform);
+        /*float size = theGameObject.GetComponent<Renderer> ().bounds.size.y;
+
+    Vector3 rescale = theGameObject.transform.localScale;
+
+    rescale.y = newSize * rescale.y / size;
+
+    theGameObject.transform.localScale = rescale;*/
+        float size = AreaSparksEffect.GetComponent<ParticleSystem>().shape.radius;
+        Vector3 rescale = AreaSparksEffect.GetComponent<ParticleSystem>().shape.scale;
+        rescale = GetComponent<DealsAreaDOT>().range * rescale / size;
+        AreaSparksEffect.transform.localScale = rescale;
+
         TowerFireEffect = Instantiate(TowerFireEffect, transform.position, new Quaternion(), transform);
     }
 }

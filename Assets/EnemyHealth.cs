@@ -9,13 +9,19 @@ public class EnemyHealth : MonoBehaviour
     private EnemyStorage enemyStorage;
     public GameObject healthBar;
     // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         currentHealth = maxHealth;
         healthBar = Instantiate(healthBar, transform.position, new Quaternion(), GameObject.FindGameObjectWithTag("Canvas").transform);
         healthBar.GetComponent<HealthBar>().enemyTransform = transform;
         healthBar.GetComponent<HealthBar>().enemyHealth = this;
+    }
+
+    void Start()
+    {
+        
     }
 
     private void OnCollisionEnter(Collision collision)

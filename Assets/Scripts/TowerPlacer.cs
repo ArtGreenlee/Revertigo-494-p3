@@ -13,6 +13,13 @@ public class TowerPlacer : MonoBehaviour
 
     public List<GameObject> gemRoster;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        pathFinder = GetComponent<Pathfinder>();
+        wallStorage = GetComponent<WallStorage>();
+    }
+
     void Start()
     {
         checkPointVectors = new HashSet<Vector3>();
@@ -30,8 +37,6 @@ public class TowerPlacer : MonoBehaviour
                 }
             }
         }
-        pathFinder = GetComponent<Pathfinder>();
-        wallStorage = GetComponent<WallStorage>();
         shadowWall = Instantiate(shadowWall, new Vector3(25,0,0), new Quaternion());
         shadowTower = Instantiate(shadowTower, new Vector3(25, 0, 0), new Quaternion());
     }

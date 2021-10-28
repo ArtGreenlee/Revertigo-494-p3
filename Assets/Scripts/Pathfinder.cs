@@ -38,6 +38,12 @@ public class Pathfinder : MonoBehaviour
 
     int numCoroutinesRunning = 0;
 
+    private void Awake()
+    {
+        towerPlacer = GetComponent<TowerPlacer>();
+        wallStorage = GetComponent<WallStorage>();
+    }
+
     private void Start()
     {
         speedThreshold = 5;
@@ -50,8 +56,7 @@ public class Pathfinder : MonoBehaviour
             pathVectors.Add(new HashSet<Vector3>());
         }
 
-        towerPlacer = GetComponent<TowerPlacer>();
-        wallStorage = GetComponent<WallStorage>();
+        
         finishedPaths = new List<bool>();
         path = new List<List<Vector3>>();
         for (int i = 0; i < checkPointList.Count - 1; i++)
