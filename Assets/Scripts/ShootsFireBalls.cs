@@ -28,7 +28,8 @@ public class ShootsFireBalls : MonoBehaviour
                 //shoot fireball
                 GameObject fireBallTemp = Instantiate(fireBall, transform.position, new Quaternion());
                 fireBallTemp.transform.rotation = UtilityFunctions.getRotationawayFromSide(transform.position);
-                fireBallTemp.GetComponent<Rigidbody>().AddRelativeForce(Vector3.back * 3, ForceMode.Impulse);
+                fireBallTemp.GetComponent<Rigidbody>().AddRelativeForce(Vector3.back * 5, ForceMode.Impulse);
+                fireBallTemp.GetComponent<FireBallController>().target = target;
                 cooldownTimer = Time.time;
             }
         }
