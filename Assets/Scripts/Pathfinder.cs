@@ -79,11 +79,6 @@ public class Pathfinder : MonoBehaviour
         else return path;
     }
 
-    public void resetCoroutineSpeed()
-    {
-        //maybe???
-    }
-
     public IEnumerator findPathBetweenPointsSlow(Vector3 startVec, Vector3 endVec, int pathIndex)
     {
         currentCount = 0;
@@ -92,9 +87,6 @@ public class Pathfinder : MonoBehaviour
 
         pos start = new pos(startVec);
         pos end = new pos(endVec);
-        start.FCost = Vector3.Distance(start.v, end.v);
-        start.parent = start;
-        start.GCost = 0;
         start.FCost = Vector3.Distance(start.v, end.v);
         start.parent = start;
         start.GCost = 0;
@@ -297,7 +289,7 @@ public class Pathfinder : MonoBehaviour
                     {
                         while (activePath.ContainsKey(newPos.FCost))
                         {
-                            //holy fuck this is bad my god this needs to be fixed TODO TODO TODO
+                            //holy moly this is bad my god this needs to be fixed TODO TODO TODO
                             newPos.FCost -= .01f;
                         }
                         activePath.Add(newPos.FCost, newPos);
@@ -307,7 +299,7 @@ public class Pathfinder : MonoBehaviour
         }
         if (activePath.Count == 0 && !pathFound)
         {
-            towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0); //why do this?
+            towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
             wallStorage.popRecentWall();
             findPath();
             yield break;
