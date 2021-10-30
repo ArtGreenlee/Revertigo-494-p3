@@ -36,4 +36,33 @@ public class EnemyStorage : MonoBehaviour
         }
         return temp;
     }
+
+    public GameObject getStrongestEnemyWithinRange(Vector3 checkVec, float range)
+    {
+        GameObject temp = null;
+        float maxHealth = float.MaxValue;
+        foreach (GameObject enemy in enemies)
+        {
+            float curHealth = enemy.GetComponent<EnemyHealth>().currentHealth;
+            if (curHealth < maxHealth)
+            {
+                temp = enemy;
+                maxHealth = curHealth;
+            }
+        }
+        return temp;
+    }
+
+    public List<GameObject> getAllEnemiesWithinRange(Vector3 checkVec, float range)
+    {
+        List<GameObject> enemiesInRangeTemp = new List<GameObject>();
+        foreach (GameObject enemy in enemies)
+        {
+            if (Vector3.Distance(checkVec, enemy.transform.position) <= range)
+            {
+                enemiesInRangeTemp.Add(enemy);
+            }
+        }
+        return enemiesInRangeTemp;
+    }
 }

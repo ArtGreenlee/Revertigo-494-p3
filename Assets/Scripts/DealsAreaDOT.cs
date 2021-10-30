@@ -25,7 +25,7 @@ public class DealsAreaDOT : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (GameObject enemy in enemyStorage.enemies)
+        foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, range))
         {
             if (Vector3.Distance(enemy.transform.position, transform.position) <= range)
             {

@@ -5,7 +5,9 @@ using UnityEngine;
 public class ShootsFireBalls : MonoBehaviour
 {
     public GameObject fireBall;
-    public float damage;
+    public float damageMin;
+    public float damageMax;
+    public float aoeRange;
     public float range;
     private EnemyStorage enemyStorage;
     public float cooldown;
@@ -22,14 +24,16 @@ public class ShootsFireBalls : MonoBehaviour
     {
         if (Time.time - cooldownTimer > cooldown)
         {
-            GameObject target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, range);
+            GameObject target = enemyStorage.getStrongestEnemyWithinRange(transform.position, range);
             if (target != null)
             {
                 //shoot fireball
-                GameObject fireBallTemp = Instantiate(fireBall, transform.position, new Quaternion());
-                fireBallTemp.transform.rotation = UtilityFunctions.getRotationawayFromSide(transform.position);
-                fireBallTemp.GetComponent<Rigidbody>().AddRelativeForce(Vector3.back * 5, ForceMode.Impulse);
-                fireBallTemp.GetComponent<FireBallController>().target = target;
+                GameObject fireBallTemp = Instantiate(fireBall, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
+                fireBallTemp.GetComponent<Rigidbody>().AddRelativeForce(Vector3.back * 7, ForceMode.Impulse);
+                FireBallController fireBallControllerTemp = fireBallTemp.GetComponent<FireBallController>();
+                fireBallControllerTemp.target = target;
+                fireBallControllerTemp.damage = Random.Range(damageMin, damageMax);
+                fireBallControllerTemp.aoeRange = aoeRange;
                 cooldownTimer = Time.time;
             }
         }

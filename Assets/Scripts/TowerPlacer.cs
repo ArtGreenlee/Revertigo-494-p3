@@ -89,7 +89,7 @@ public class TowerPlacer : MonoBehaviour
 
     private GameObject getRandomTower()
     {
-        return gemRoster[0];
+        return gemRoster[Random.Range(0, gemRoster.Count)];
     }
 
     private bool isCheckpoint(Vector3 checkVec)

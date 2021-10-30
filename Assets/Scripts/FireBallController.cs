@@ -7,51 +7,67 @@ public class FireBallController : MonoBehaviour
 
     private Rigidbody rb;
     public GameObject target;
-    private TrailRenderer trailRenderer;
     public GameObject collisionEffect;
+    private EnemyStorage enemyStorage;
+    private TrailRenderer trailRenderer;
     public float speed;
     public float rotationSpeed;
     private bool thrusting;
+    public float damage;
+    public float aoeRange;
 
     private void Awake()
     {
-        trailRenderer = GetComponent<TrailRenderer>();
+        enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         rb = GetComponent<Rigidbody>();
+        trailRenderer = GetComponent<TrailRenderer>();
     }
 
     // Start is called before the first frame update
     IEnumerator Start()
     {
-        trailRenderer.enabled = false;
         thrusting = false;
+        trailRenderer.enabled = false;
         yield return new WaitForSeconds(1f);
-        thrusting = true;
         trailRenderer.enabled = true;
+        thrusting = true;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         Instantiate(collisionEffect, transform.position, new Quaternion());
+        foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, aoeRange))
+        {
+            enemy.GetComponent<EnemyHealth>().takeDamage(damage);
+        }
         Destroy(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        rb.MoveRotation(Quaternion.Slerp(transform.rotation,
-                   Quaternion.LookRotation(target.transform.position - transform.position),
-                   rotationSpeed * Time.deltaTime));
-        if (thrusting)
+        if (!enemyStorage.enemyIsAlive(target))
         {
+            GameObject newTarget = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 100);
+            if (newTarget == null)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                target = newTarget;
+            }
+        }
 
-            //transform.LookAt(target.transform);
-            /*var qTo = Quaternion.LookRotation(target.position - transform.position);
-     qTo = Quaternion.Slerp(transform.rotation, qTo, speed * Time.deltaTime);
-     rigidbody.MoveRotation(qTo);
-            */
-            
-            rb.AddRelativeForce(Vector3.forward * speed);
-            //rb.AddForce((target.transform.position - transform.position).normalized * speed);
+        if (target != null)
+        {
+            rb.MoveRotation(Quaternion.Slerp(transform.rotation,
+                               Quaternion.LookRotation(target.transform.position - transform.position),
+                               rotationSpeed * Time.deltaTime));
+            if (thrusting)
+            {
+                rb.AddRelativeForce(Vector3.forward * speed);
+            }
         }
     }
 }

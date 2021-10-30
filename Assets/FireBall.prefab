@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4217045304163983342}
   m_Layer: 3
   m_Name: FireBall
-  m_TagString: Untagged
+  m_TagString: Missile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -228,4 +228,6 @@ MonoBehaviour:
   collisionEffect: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56,
     type: 3}
   speed: 5
-  rotationSpeed: 5
+  rotationSpeed: 8
+  damage: 0
+  aoeRange: 0

@@ -29,19 +29,24 @@ public class EnemyHealth : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        
         if (collision.gameObject.CompareTag("Bullet"))
         {
             ShootsBullets tower = collision.gameObject.GetComponent<BulletController>().parent;
             float damage = Random.Range(tower.damageMin, tower.damageMax);
-            takeDamage(damage);
             flashOnHit.flash();
-            healthBar.GetComponent<HealthBar>().showDamage();
+            takeDamage(damage);
+        }
+        else if (collision.gameObject.CompareTag("Missile"))
+        {
+            flashOnHit.flash();
         }
     }
 
     public void takeDamage(float damage)
     {
         currentHealth -= damage;
+        healthBar.GetComponent<HealthBar>().showDamage();
         if (currentHealth <= 0)
         {
             enemyStorage.removeEnemy(gameObject);
