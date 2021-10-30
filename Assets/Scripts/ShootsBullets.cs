@@ -35,23 +35,10 @@ public class ShootsBullets : MonoBehaviour
 
     private void setTargets()
     {
-        foreach (GameObject enemy in enemyStorage.enemies)
+        GameObject tempEnemy = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, range);
+        if (tempEnemy != null)
         {
-            float minDistance = range;
-            GameObject tempTarget = null;
-            if (!targets.ContainsKey(enemy))
-            {
-                float curDistance = Vector3.Distance(enemy.transform.position, transform.position);
-                if (curDistance < minDistance)
-                {
-                    tempTarget = enemy;
-                    minDistance = curDistance;
-                }
-            }
-            if (minDistance < range)
-            {
-                targets.Add(tempTarget, 0);
-            }
+            targets.Add(tempEnemy, 0);
         }
     }
 
@@ -77,6 +64,9 @@ public class ShootsBullets : MonoBehaviour
                 }
             }
         }
-        setTargets();
+        if (targets.Count < numTargets)
+        {
+            setTargets();
+        }
     }
 }

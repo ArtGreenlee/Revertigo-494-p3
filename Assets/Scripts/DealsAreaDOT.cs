@@ -30,7 +30,7 @@ public class DealsAreaDOT : MonoBehaviour
             if (Vector3.Distance(enemy.transform.position, transform.position) <= range)
             {
                 //bad bad bad TODO: fix this, not optimized
-                enemy.GetComponent<EnemyHealth>().takeDamage(DPS * Time.deltaTime);
+                enemy.GetComponent<EnemyHealth>().takeDamage(DPS * Time.deltaTime, false);
             }
         }
     }

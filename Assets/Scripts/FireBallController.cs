@@ -38,7 +38,7 @@ public class FireBallController : MonoBehaviour
         Instantiate(collisionEffect, transform.position, new Quaternion());
         foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, aoeRange))
         {
-            enemy.GetComponent<EnemyHealth>().takeDamage(damage);
+            enemy.GetComponent<EnemyHealth>().takeDamage(damage, true);
         }
         Destroy(gameObject);
     }

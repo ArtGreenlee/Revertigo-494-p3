@@ -34,17 +34,16 @@ public class EnemyHealth : MonoBehaviour
         {
             ShootsBullets tower = collision.gameObject.GetComponent<BulletController>().parent;
             float damage = Random.Range(tower.damageMin, tower.damageMax);
-            flashOnHit.flash();
-            takeDamage(damage);
-        }
-        else if (collision.gameObject.CompareTag("Missile"))
-        {
-            flashOnHit.flash();
+            takeDamage(damage, true);
         }
     }
 
-    public void takeDamage(float damage)
+    public void takeDamage(float damage, bool flashingDamage)
     {
+        if (flashingDamage)
+        {
+            flashOnHit.flash();
+        }
         currentHealth -= damage;
         healthBar.GetComponent<HealthBar>().showDamage();
         if (currentHealth <= 0)
