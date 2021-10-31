@@ -35,6 +35,7 @@ public class WallStorage : MonoBehaviour
 
     public void detectPathCollision()
     {
+        Debug.Log("Detect run");
         HashSet<Pathfinder> redoBuffer = new HashSet<Pathfinder>();
         foreach (Vector3 checkVec in storage.Keys)
         {

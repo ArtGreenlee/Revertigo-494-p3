@@ -146,14 +146,16 @@ public class Pathfinder : MonoBehaviour
                             //rerun this coroutine
                             removeSegmentFromDictionary(pathIndex);
                             removeVisualizerSegment(pathIndex);
+                            numCoroutinesRunning++;
                             StartCoroutine(findPathBetweenPointsFast(startVec, endVec, pathIndex));
+                            numCoroutinesRunning--;
                             yield break;
                         }
                     }
                     temp.Reverse();
                     path[pathIndex] = temp;
-                    numCoroutinesRunning--;
                     finishedPaths[pathIndex] = true;
+                    numCoroutinesRunning--;
                     yield break;
                 }
 
@@ -193,10 +195,13 @@ public class Pathfinder : MonoBehaviour
         }
         if (activePath.Count == 0 && !pathFound)
         {
+            Debug.Log("Path not found");
             towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
             wallStorage.popRecentWall();
             //findPath();
+            numCoroutinesRunning++;
             StartCoroutine(findPathBetweenPointsFast(startVec, endVec, pathIndex));
+            numCoroutinesRunning--;
             yield break;
         }
     }
@@ -227,8 +232,8 @@ public class Pathfinder : MonoBehaviour
                     {
                         removeSegmentFromDictionary(i);
                         removeVisualizerSegment(i);
-                        numCoroutinesRunning++;
                         finishedPaths[i] = false;
+                        numCoroutinesRunning++;
                         StartCoroutine(findPathBetweenPointsFast(checkPointList[i].transform.position, checkPointList[i + 1].transform.position, i));
                         break;
                     }
