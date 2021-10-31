@@ -12,11 +12,14 @@ public class HealthBar : MonoBehaviour
     private float maxWidth;
     private Image HealthBarImage;
     public float healthBarOffset;
-    void Start()
+    private void Awake()
     {
         HealthBarImage = GetComponent<Image>();
-        maxWidth = HealthBarImage.rectTransform.sizeDelta.x;
         cameraTransform = Camera.main.transform;
+    }
+    void Start()
+    {
+        maxWidth = HealthBarImage.rectTransform.sizeDelta.x;
     }
 
     private void Update()
@@ -41,6 +44,9 @@ public class HealthBar : MonoBehaviour
 
     public void showDamage()
     {
-        HealthBarImage.rectTransform.sizeDelta = new Vector2(enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
+        if (enemyHealth != null)
+        {
+            HealthBarImage.rectTransform.sizeDelta = new Vector2(enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
+        }
     }
 }

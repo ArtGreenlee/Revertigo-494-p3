@@ -73,7 +73,6 @@ public class Pathfinder : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(numCoroutinesRunning);
         if (numCoroutinesRunning > checkPointList.Count)
         {
             Debug.LogError("ERROR: TOO MANY COROUTINES RUNNING");

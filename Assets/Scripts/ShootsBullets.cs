@@ -55,7 +55,7 @@ public class ShootsBullets : MonoBehaviour
             }
             if (addEnemy != null)
             {
-                targets.Add(addEnemy, 0);
+                targets.Add(addEnemy, Time.time);
             }
         }
         List<GameObject> enemyRemovalBuffer = new List<GameObject>();

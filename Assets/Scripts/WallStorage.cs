@@ -97,7 +97,6 @@ public class WallStorage : MonoBehaviour
     public void addWall(Vector3 addVec, GameObject wallIn)
     {
         wallStack.Push(wallIn);
-        Debug.Log("wall pushed");
         Vector3 addSide = UtilityFunctions.getClosestSide(addVec);
         for (float i = -1; i < 1.5f; i += .5f)
         {

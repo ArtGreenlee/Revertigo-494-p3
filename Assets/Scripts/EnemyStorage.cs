@@ -27,11 +27,14 @@ public class EnemyStorage : MonoBehaviour
         float minDistance = range;
         foreach (GameObject enemy in enemies)
         {
-            float curDistance = Vector3.Distance(enemy.transform.position, checkVec);
-            if (curDistance < minDistance)
+            if (enemy != null)
             {
-                temp = enemy;
-                minDistance = curDistance;
+                float curDistance = Vector3.Distance(enemy.transform.position, checkVec);
+                if (curDistance < minDistance)
+                {
+                    temp = enemy;
+                    minDistance = curDistance;
+                }
             }
         }
         return temp;

@@ -84,10 +84,10 @@ public class TowerPlacer : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        /*if (Input.GetKeyDown(KeyCode.R))
         {            wallStorage.popRecentWall();
             pathFinder.findPath();
-        }
+        }*/
     }
 
     private GameObject getRandomTower()
