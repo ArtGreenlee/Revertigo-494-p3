@@ -7,6 +7,7 @@ public class ShootsAlongAxis : MonoBehaviour
     public float cooldown;
     public float cooldownTimer;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +17,6 @@ public class ShootsAlongAxis : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
 
-        if (Physics.Raycast(UtilityFunctions.snapVector(transform.position), transform.TransformDirection(Vector3.up)))
-        {
-
-        }
     }
 }
