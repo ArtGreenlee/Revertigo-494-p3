@@ -44,7 +44,7 @@ public class FireBallController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!enemyStorage.enemyIsAlive(target))
         {
