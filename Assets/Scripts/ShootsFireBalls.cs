@@ -24,7 +24,7 @@ public class ShootsFireBalls : MonoBehaviour
     {
         if (Time.time - cooldownTimer > cooldown)
         {
-            GameObject target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, range);
+            GameObject target = enemyStorage.getStrongestEnemyWithinRange(transform.position, range);
             if (target != null)
             {
                 //shoot fireball

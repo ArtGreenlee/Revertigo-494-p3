@@ -24,7 +24,6 @@ public class WallStorage : MonoBehaviour
 
     public void popRecentWall()
     {
-        Debug.Log("wall popped");
         removeWall(wallStack.Pop());
     }
 
@@ -98,7 +97,6 @@ public class WallStorage : MonoBehaviour
     public void addWall(Vector3 addVec, GameObject wallIn)
     {
         wallStack.Push(wallIn);
-        Debug.Log("wall pushed");
         Vector3 addSide = UtilityFunctions.getClosestSide(addVec);
         for (int i = -1; i < 2; i++)
         {
@@ -107,22 +105,21 @@ public class WallStorage : MonoBehaviour
                 for (int k = -1; k < 2; k++)
                 {
                     Vector3 curVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
-                    if (UtilityFunctions.validEnemyVector(curVec) && addSide == UtilityFunctions.getClosestSide(curVec))
+                    if (!storage.ContainsKey(curVec) &&
+                        UtilityFunctions.validEnemyVector(curVec) &&
+                        addSide == UtilityFunctions.getClosestSide(curVec))
                     {
-                        if (!storage.ContainsKey(curVec))
+                        storage.Add(curVec, wallIn);
+                    }
+                    else if (storage.ContainsKey(curVec))
+                    {
+                        if (duplicates.ContainsKey(curVec))
                         {
-                            storage.Add(curVec, wallIn);
+                            duplicates[curVec]++;
                         }
-                        else if (storage.ContainsKey(curVec))
+                        else
                         {
-                            if (duplicates.ContainsKey(curVec))
-                            {
-                                duplicates[curVec]++;
-                            }
-                            else
-                            {
-                                duplicates.Add(curVec, 2);
-                            }
+                            duplicates.Add(curVec, 2);
                         }
                     }
                 }
