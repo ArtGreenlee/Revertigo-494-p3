@@ -228,6 +228,6 @@ MonoBehaviour:
   collisionEffect: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56,
     type: 3}
   speed: 8
-  rotationSpeed: 8
+  rotationSpeed: 4
   damage: 0
   aoeRange: 0

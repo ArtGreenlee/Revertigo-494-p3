@@ -6,14 +6,14 @@ public class WallStorage : MonoBehaviour
 {
     private Dictionary<Vector3, GameObject> storage = new Dictionary<Vector3, GameObject>();
     public Dictionary<GameObject, GameObject> wallAndTowers = new Dictionary<GameObject, GameObject>();
-    private Pathfinder pathFinder;
     Dictionary<Vector3, int> duplicates = new Dictionary<Vector3, int>();
     TowerPlacer towerPlacer;
     private Stack<GameObject> wallStack;
+
+    public List<Pathfinder> pathfinders;
     void Start()
     {
         towerPlacer = GetComponent<TowerPlacer>();
-        pathFinder = GetComponent<Pathfinder>();
         wallStack = new Stack<GameObject>();
     }
 
@@ -32,6 +32,25 @@ public class WallStorage : MonoBehaviour
         wallAndTowers.Add(wallIn, towerIn);
     }
 
+    public void detectPathCollision()
+    {
+        HashSet<Pathfinder> redoBuffer = new HashSet<Pathfinder>();
+        foreach (Vector3 checkVec in storage.Keys)
+        {
+            foreach (Pathfinder pathFinder in pathfinders)
+            {
+                if (!redoBuffer.Contains(pathFinder) && pathFinder.pathContainsVector(checkVec))
+                {
+                    redoBuffer.Add(pathFinder);
+                }
+            }
+        }
+        foreach (Pathfinder pathFinder in redoBuffer)
+        {
+            pathFinder.detectAndRedoPathSegments();
+        }
+    }
+
     public bool validWallPosition(Vector3 checkVec)
     {
         if (isWall(checkVec))
@@ -40,11 +59,11 @@ public class WallStorage : MonoBehaviour
         }
         //check for checkpoints
         Vector3 side = UtilityFunctions.getClosestSide(checkVec);
-        for (float i = -1; i < 1.5f; i += .5f)
+        for (int i = -1; i < 2; i++)
         {
-            for (float j = -1; j < 1.5f; j += .5f)
+            for (int j = -1; j < 2; j++)
             {
-                for (float k = -1; k < 1.5f; k += .5f)
+                for (int k = -1; k < 2; k++)
                 {
                     Vector3 curVec = new Vector3(checkVec.x + i, checkVec.y + j, checkVec.z + k);
                     if (side == Vector3.forward || side == Vector3.back)
@@ -79,22 +98,17 @@ public class WallStorage : MonoBehaviour
     {
         wallStack.Push(wallIn);
         Vector3 addSide = UtilityFunctions.getClosestSide(addVec);
-        bool redo = false;
-        for (float i = -1; i < 1.5f; i += .5f)
+        for (int i = -1; i < 2; i++)
         {
-            for (float j = -1; j < 1.5f; j += .5f)
+            for (int j = -1; j < 2; j++)
             {
-                for (float k = -1; k < 1.5f; k += .5f)
+                for (int k = -1; k < 2; k++)
                 {
                     Vector3 curVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
                     if (!storage.ContainsKey(curVec) &&
                         UtilityFunctions.validEnemyVector(curVec) &&
                         addSide == UtilityFunctions.getClosestSide(curVec))
                     {
-                        if (pathFinder.pathContainsVector(curVec))
-                        {
-                            redo = true;
-                        }
                         storage.Add(curVec, wallIn);
                     }
                     else if (storage.ContainsKey(curVec))
@@ -111,20 +125,17 @@ public class WallStorage : MonoBehaviour
                 }
             }
         }
-        if (redo)
-        {
-            pathFinder.detectAndRedoPathSegments();
-        }
+        detectPathCollision();
     }
 
     public void removeWall(GameObject wallIn)
     {
         Vector3 removeVec = wallIn.transform.position;
-        for (float i = -1; i < 1.5f; i += .5f)
+        for (int i = -1; i < 2; i++)
         {
-            for (float j = -1; j < 1.5f; j += .5f)
+            for (int j = -1; j < 2; j++)
             {
-                for (float k = -1; k < 1.5f; k += .5f)
+                for (int k = -1; k < 2; k++)
                 {
                     Vector3 curVec = new Vector3(removeVec.x + i, removeVec.y + j, removeVec.z + k);
                     if (duplicates.ContainsKey(curVec))

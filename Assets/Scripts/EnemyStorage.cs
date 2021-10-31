@@ -43,11 +43,14 @@ public class EnemyStorage : MonoBehaviour
         float maxHealth = float.MaxValue;
         foreach (GameObject enemy in enemies)
         {
-            float curHealth = enemy.GetComponent<EnemyHealth>().currentHealth;
-            if (curHealth < maxHealth)
+            if (enemy != null)
             {
-                temp = enemy;
-                maxHealth = curHealth;
+                float curHealth = enemy.GetComponent<EnemyHealth>().currentHealth;
+                if (curHealth < maxHealth)
+                {
+                    temp = enemy;
+                    maxHealth = curHealth;
+                }
             }
         }
         return temp;
@@ -58,7 +61,7 @@ public class EnemyStorage : MonoBehaviour
         List<GameObject> enemiesInRangeTemp = new List<GameObject>();
         foreach (GameObject enemy in enemies)
         {
-            if (Vector3.Distance(checkVec, enemy.transform.position) <= range)
+            if (enemy != null && Vector3.Distance(checkVec, enemy.transform.position) <= range)
             {
                 enemiesInRangeTemp.Add(enemy);
             }

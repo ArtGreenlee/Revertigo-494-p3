@@ -30,11 +30,11 @@ public class TowerPlacer : MonoBehaviour
         foreach (GameObject checkPoint in GameObject.FindGameObjectsWithTag("Checkpoint"))
         {
             Vector3 curVec = UtilityFunctions.snapVector(checkPoint.transform.position);
-            for (float i = -1; i < 1.5f; i += .5f)
+            for (int i = -1; i < 2; i++)
             {
-                for (float j = -1; j < 1.5f; j += .5f)
+                for (int j = -1; j < 2; j++)
                 {
-                    for (float k = -1; k < 1.5f; k += .5f)
+                    for (int k = -1; k < 2; k++)
                     {
                         checkPointVectors.Add(new Vector3(curVec.x + i, curVec.y + j, curVec.z + k));
                     }

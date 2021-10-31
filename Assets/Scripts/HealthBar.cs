@@ -21,6 +21,11 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
+        if (enemyTransform == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Vector3 offsetVec = Vector3.zero;
         if (Mathf.Abs(enemyTransform.position.y) > 9)
         {

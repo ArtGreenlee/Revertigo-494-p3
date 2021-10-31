@@ -51,6 +51,7 @@ public class FireBallController : MonoBehaviour
             GameObject newTarget = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 100);
             if (newTarget == null)
             {
+                Instantiate(collisionEffect, transform.position, new Quaternion());
                 Destroy(gameObject);
             }
             else
@@ -68,6 +69,11 @@ public class FireBallController : MonoBehaviour
             {
                 rb.AddRelativeForce(Vector3.forward * speed);
             }
+        }
+        else
+        {
+            Instantiate(collisionEffect, transform.position, new Quaternion());
+            Destroy(gameObject);
         }
     }
 }

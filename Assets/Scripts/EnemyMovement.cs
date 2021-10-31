@@ -7,27 +7,24 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 nextPoint;
     private int currentPointIndex;
     private List<Vector3> path;
-    private Pathfinder pathFinder;
     public float maxSpeed;
     public float curSpeed;
     public GameObject slowEffect;
 
-    private void Awake()
-    {
-        pathFinder = GameObject.Find("GameController").GetComponent<Pathfinder>();
-    }
-
     void Start()
     {
         curSpeed = maxSpeed;
-        path = new List<Vector3>();
         currentPointIndex = 1;
-        List<List<Vector3>> pathIn = pathFinder.getPath();
+        nextPoint = path[currentPointIndex];
+    }
+
+    public void setPath(List<List<Vector3>> pathIn)
+    {
+        path = new List<Vector3>();
         foreach (List<Vector3> pathTemp in pathIn)
         {
             path.AddRange(pathTemp);
         }
-        nextPoint = path[currentPointIndex];
     }
 
     private void OnCollisionEnter(Collision collision)
