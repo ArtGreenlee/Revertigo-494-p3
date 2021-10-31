@@ -24,7 +24,6 @@ public class WallStorage : MonoBehaviour
 
     public void popRecentWall()
     {
-        Debug.Log("wall popped");
         removeWall(wallStack.Pop());
     }
 
@@ -35,7 +34,6 @@ public class WallStorage : MonoBehaviour
 
     public void detectPathCollision()
     {
-        Debug.Log("Detect run");
         HashSet<Pathfinder> redoBuffer = new HashSet<Pathfinder>();
         foreach (Vector3 checkVec in storage.Keys)
         {
@@ -61,11 +59,11 @@ public class WallStorage : MonoBehaviour
         }
         //check for checkpoints
         Vector3 side = UtilityFunctions.getClosestSide(checkVec);
-        for (int i = -1; i < 2; i++)
+        for (float i = -1; i < 1.5f; i += .5f)
         {
-            for (int j = -1; j < 2; j++)
+            for (float j = -1; j < 1.5f; j += .5f)
             {
-                for (int k = -1; k < 2; k++)
+                for (float k = -1; k < 1.5f; k += .5f)
                 {
                     Vector3 curVec = new Vector3(checkVec.x + i, checkVec.y + j, checkVec.z + k);
                     if (side == Vector3.forward || side == Vector3.back)
@@ -101,29 +99,28 @@ public class WallStorage : MonoBehaviour
         wallStack.Push(wallIn);
         Debug.Log("wall pushed");
         Vector3 addSide = UtilityFunctions.getClosestSide(addVec);
-        for (int i = -1; i < 2; i++)
+        for (float i = -1; i < 1.5f; i += .5f)
         {
-            for (int j = -1; j < 2; j++)
+            for (float j = -1; j < 1.5f; j += .5f)
             {
-                for (int k = -1; k < 2; k++)
+                for (float k = -1; k < 1.5f; k += .5f)
                 {
                     Vector3 curVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
-                    if (UtilityFunctions.validEnemyVector(curVec) && addSide == UtilityFunctions.getClosestSide(curVec))
+                    if (!storage.ContainsKey(curVec) &&
+                        UtilityFunctions.validEnemyVector(curVec) &&
+                        addSide == UtilityFunctions.getClosestSide(curVec))
                     {
-                        if (!storage.ContainsKey(curVec))
+                        storage.Add(curVec, wallIn);
+                    }
+                    else if (storage.ContainsKey(curVec))
+                    {
+                        if (duplicates.ContainsKey(curVec))
                         {
-                            storage.Add(curVec, wallIn);
+                            duplicates[curVec]++;
                         }
-                        else if (storage.ContainsKey(curVec))
+                        else
                         {
-                            if (duplicates.ContainsKey(curVec))
-                            {
-                                duplicates[curVec]++;
-                            }
-                            else
-                            {
-                                duplicates.Add(curVec, 2);
-                            }
+                            duplicates.Add(curVec, 2);
                         }
                     }
                 }
@@ -135,11 +132,11 @@ public class WallStorage : MonoBehaviour
     public void removeWall(GameObject wallIn)
     {
         Vector3 removeVec = wallIn.transform.position;
-        for (int i = -1; i < 2; i++)
+        for (float i = -1; i < 1.5f; i += .5f)
         {
-            for (int j = -1; j < 2; j++)
+            for (float j = -1; j < 1.5f; j += .5f)
             {
-                for (int k = -1; k < 2; k++)
+                for (float k = -1; k < 1.5f; k += .5f)
                 {
                     Vector3 curVec = new Vector3(removeVec.x + i, removeVec.y + j, removeVec.z + k);
                     if (duplicates.ContainsKey(curVec))

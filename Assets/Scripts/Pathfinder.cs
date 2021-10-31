@@ -276,11 +276,11 @@ public class Pathfinder : MonoBehaviour
     private List<Vector3> walkableTiles(Vector3 vec)
     {
         List<Vector3> walkable = new List<Vector3>();
-        for (int i = -1; i < 2; i++)
+        for (float i = -.5f; i < 1; i += .5f)
         {
-            for (int j = -1; j < 2; j++)    
+            for (float j = -.5f; j < 1; j += .5f)
             {
-                for (int k = -1; k < 2; k++)
+                for (float k = -.5f; k < 1; k += .5f)
                 {
                     Vector3 checkVec = new Vector3(vec.x + i, vec.y + j, vec.z + k);
                     if (UtilityFunctions.validEnemyVector(checkVec) && !wallStorage.isWall(checkVec))
