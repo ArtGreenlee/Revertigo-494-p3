@@ -30,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
     public IEnumerator startWave()
     {
         enemyPath = pathFinder.getPath();
-        towerPlacer.enabled = false;
+        towerPlacer.enabled = true;
         //wait till path is finished
         while (pathFinder.getPath().Count == 0) {
             yield return new WaitForSeconds(.5f);

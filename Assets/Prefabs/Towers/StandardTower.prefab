@@ -12,8 +12,10 @@ GameObject:
   - component: {fileID: -8889782228104378305}
   - component: {fileID: 2973628510631241522}
   - component: {fileID: 3415830188489274692}
+  - component: {fileID: 1158445546626551160}
+  - component: {fileID: -724880093924197278}
   m_Layer: 0
-  m_Name: TowerTest
+  m_Name: StandardTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,3 +113,29 @@ MonoBehaviour:
   aoe_damage: 0
   cooldown: 0.75
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
+--- !u!65 &1158445546626551160
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295874507230250574}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-724880093924197278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295874507230250574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa39d4cffcd70406e945c91590ad6803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 3

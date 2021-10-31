@@ -213,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 10
   parent: {fileID: 0}
+  onHitEffect: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
 --- !u!135 &6128567203789746484
 SphereCollider:
   m_ObjectHideFlags: 0

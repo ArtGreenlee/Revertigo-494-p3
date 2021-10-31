@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ShootsBullets : MonoBehaviour
 {
@@ -33,40 +34,56 @@ public class ShootsBullets : MonoBehaviour
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
     }
 
-    private void setTargets()
-    {
-        GameObject tempEnemy = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, range);
-        if (tempEnemy != null)
-        {
-            targets.Add(tempEnemy, 0);
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {
-        foreach (GameObject target in enemyStorage.enemies) //bad bad bad hwy why why TODO
-        {
-            if (targets.ContainsKey(target))
+        if (targets.Count < numTargets) {
+            //look for a new target
+            float minDistance = float.MaxValue;
+            GameObject addEnemy = null;
+            foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, range))
             {
-                if (!enemyStorage.enemyIsAlive(target) ||
-                    Vector3.Distance(target.transform.position, transform.position) >= range)
+                if (!targets.ContainsKey(enemy))
                 {
-                    targets.Remove(target);
-                }
-                else if (Time.time - targets[target] > cooldown)
-                {
-                    targets[target] = Time.time;
-                    GameObject tempBullet = Instantiate(bullet, transform.position, new Quaternion());
-                    tempBullet.GetComponent<Rigidbody>().velocity = (target.transform.position - transform.position).normalized * bulletSpeed;
-                    tempBullet.GetComponent<TrailRenderer>().material.color = GetComponent<MeshRenderer>().material.color;
-                    tempBullet.GetComponent<BulletController>().parent = this;
+                    float curDistance = Vector3.Distance(transform.position, enemy.transform.position);
+                    if (curDistance < minDistance)
+                    {
+                        addEnemy = enemy;
+                        minDistance = curDistance;
+                    }
                 }
             }
+            if (addEnemy != null)
+            {
+                targets.Add(addEnemy, 0);
+            }
         }
-        if (targets.Count < numTargets)
+        List<GameObject> enemyRemovalBuffer = new List<GameObject>();
+        List<GameObject> tempTargets = targets.Keys.ToList();
+        foreach (GameObject target in tempTargets)
         {
-            setTargets();
+            if (target != null &&
+                enemyStorage.enemyIsAlive(target) &&
+                Vector3.Distance(target.transform.position, transform.position) < range)
+            {
+                if (Time.time - targets[target] > cooldown)
+                {
+                    //shoot
+                    GameObject tempBullet = Instantiate(bullet, transform.position, new Quaternion());
+                    tempBullet.GetComponent<Rigidbody>().velocity = (target.transform.position - transform.position).normalized * bulletSpeed;
+                    tempBullet.GetComponent<BulletController>().parent = this;
+                    targets[target] = Time.time;
+                }
+            }
+            else
+            {
+                enemyRemovalBuffer.Add(target);
+            }
         }
+        foreach (GameObject enemy in enemyRemovalBuffer)
+        {
+            targets.Remove(enemy);
+        }
+
     }
 }

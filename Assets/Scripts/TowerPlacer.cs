@@ -11,6 +11,9 @@ public class TowerPlacer : MonoBehaviour
     private Pathfinder pathFinder;
     private HashSet<Vector3> checkPointVectors;
     public GameObject onPlacementEffect;
+    public bool debugMode;
+
+    public List<GameObject> debugRoster;
 
     public List<GameObject> gemRoster;
     // Start is called before the first frame update
@@ -89,6 +92,10 @@ public class TowerPlacer : MonoBehaviour
 
     private GameObject getRandomTower()
     {
+        if (debugMode)
+        {
+            return debugRoster[Random.Range(0, debugRoster.Count)];
+        }
         return gemRoster[Random.Range(0, gemRoster.Count)];
     }
 

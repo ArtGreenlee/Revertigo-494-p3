@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4313914105244138813}
   - component: {fileID: 1601961281235685936}
   - component: {fileID: 1159759750949814342}
+  - component: {fileID: 6128606681395467051}
+  - component: {fileID: 5169750017986274120}
   m_Layer: 0
   m_Name: SlowTower
   m_TagString: Untagged
@@ -111,3 +113,29 @@ MonoBehaviour:
   aoe_damage: 0
   cooldown: 0.75
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
+--- !u!65 &6128606681395467051
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3352053421576041292}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5169750017986274120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3352053421576041292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa39d4cffcd70406e945c91590ad6803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 3

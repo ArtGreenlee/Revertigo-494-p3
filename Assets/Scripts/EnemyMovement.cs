@@ -37,7 +37,17 @@ public class EnemyMovement : MonoBehaviour
             ShootsBullets stats = collision.gameObject.GetComponent<BulletController>().parent;
             if (stats.slowsEnemy)
             {
-                slowEnemy(stats.slowPercent, stats.slowDuration);
+                if (stats.canCriticallyHit)
+                {
+                    if (Random.Range(0f, 1f) > stats.critChance)
+                    {
+                        slowEnemy(stats.slowPercent, stats.slowDuration);
+                    }
+                }
+                else
+                {
+                    slowEnemy(stats.slowPercent, stats.slowDuration);
+                }
             }
         }
     }
