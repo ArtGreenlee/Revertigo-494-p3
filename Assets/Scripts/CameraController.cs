@@ -47,7 +47,7 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()  
     {
         rotX = transform.rotation.eulerAngles.x;
         rotY = transform.rotation.eulerAngles.y;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.3587269, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 244962091}
   m_Layer: 7
   m_Name: LeftSide
-  m_TagString: Untagged
+  m_TagString: Playfield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -541,7 +541,7 @@ GameObject:
   - component: {fileID: 757324413}
   m_Layer: 7
   m_Name: BottomSide
-  m_TagString: Untagged
+  m_TagString: Playfield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1283,7 +1283,7 @@ GameObject:
   - component: {fileID: 989741946}
   m_Layer: 7
   m_Name: BackSide
-  m_TagString: Untagged
+  m_TagString: Playfield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1540,7 +1540,7 @@ GameObject:
   - component: {fileID: 1308395394}
   m_Layer: 7
   m_Name: FrontSide
-  m_TagString: Untagged
+  m_TagString: Playfield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1634,6 +1634,7 @@ GameObject:
   - component: {fileID: 1411751688}
   - component: {fileID: 1411751687}
   - component: {fileID: 1411751686}
+  - component: {fileID: 1411751691}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1684,7 +1685,6 @@ MonoBehaviour:
   shadowTower: {fileID: 2335333269562642696, guid: 9ce6ce26983e0504b91e1bb88f1b2b90,
     type: 3}
   onPlacementEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
-  CameraObj: {fileID: 1615446032}
   debugMode: 0
   debugRoster: []
   gemRoster:
@@ -1718,6 +1718,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1411751691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411751685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3693cd41808851b43a03f25ed3704807, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numLives: 20
 --- !u!1 &1539592333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,7 +1994,7 @@ Camera:
   m_GameObject: {fileID: 1615446032}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -2057,10 +2070,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1615446033}
-  mouseRotateSpeed: 2.35
+  mouseRotateSpeed: 2.93
   slerpValue: 0.25
   decelSpeed: 1
-  maxRotationSpeed: 0.4
+  maxRotationSpeed: 1
   moveSpeed: 5
   zoomAcceleration: 5
   zoomDecel: 0.4
@@ -2117,7 +2130,7 @@ GameObject:
   - component: {fileID: 1923379763}
   m_Layer: 7
   m_Name: RightSide
-  m_TagString: Untagged
+  m_TagString: Playfield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2293,7 +2306,7 @@ GameObject:
   - component: {fileID: 2123029421}
   m_Layer: 7
   m_Name: TopSide
-  m_TagString: Untagged
+  m_TagString: Playfield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

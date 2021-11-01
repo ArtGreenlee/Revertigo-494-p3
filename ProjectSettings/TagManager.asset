@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - FxTemporaire
   - Missile
+  - Playfield
   layers:
   - Default
   - TransparentFX

@@ -4,16 +4,20 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class PlayerLivesTemp : MonoBehaviour
 {
-    public int numLives = 10;
+    public int numLives = 20;
 
 
     private void Start()
     {
-        numLives = 10;
+        numLives = 20;
     }
     private void Update()
     {
         if (numLives <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
