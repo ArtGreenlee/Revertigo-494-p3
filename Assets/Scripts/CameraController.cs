@@ -28,6 +28,9 @@ public class CameraController : MonoBehaviour
     public float zoomAcceleration;
     public float zoomDecel;
     private float zoomSpeed;
+
+    public int inverted = 1;
+
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -35,6 +38,12 @@ public class CameraController : MonoBehaviour
         zoomSpeed = 0;
         rb = GetComponent<Rigidbody>();
         enabled = true;
+        if(inverted >= 0){
+            inverted = 1;
+        }
+        else{
+            inverted = -1;
+        }
     }
 
     // Update is called once per frame
@@ -51,6 +60,10 @@ public class CameraController : MonoBehaviour
         else if (Input.GetKey(KeyCode.LeftShift))
         {
             rb.AddForce(Vector3.down * moveSpeed);
+        }
+
+        if(Input.GetKey(KeyCode.I)){
+            inverted *= -1;
         }
 
         float zoomInput = Input.mouseScrollDelta.y;
@@ -89,13 +102,13 @@ public class CameraController : MonoBehaviour
         //handle rotation
         if (Input.GetMouseButton(1))
         {
-            rotX += -Input.GetAxis("Mouse Y") * mouseRotateSpeed; // around X
-            rotY += Input.GetAxis("Mouse X") * mouseRotateSpeed;
+            rotX += -Input.GetAxis("Mouse Y") * mouseRotateSpeed * inverted; // around X
+            rotY += Input.GetAxis("Mouse X") * mouseRotateSpeed * inverted;
         }
         else if (Input.GetMouseButtonUp(1))
         {
-            xSpeed = -Input.GetAxis("Mouse Y") * mouseRotateSpeed;
-            ySpeed = Input.GetAxis("Mouse X") * mouseRotateSpeed;
+            xSpeed = -Input.GetAxis("Mouse Y") * mouseRotateSpeed * inverted;
+            ySpeed = Input.GetAxis("Mouse X") * mouseRotateSpeed * inverted;
         }
         else
         {

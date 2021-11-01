@@ -2061,9 +2061,9 @@ MonoBehaviour:
   decelSpeed: 1
   maxRotationSpeed: 0.4
   moveSpeed: 5
-  enabled: 0
   zoomAcceleration: 5
-  zoomDecel: 0.2
+  zoomDecel: 0.4
+  inverted: 1
 --- !u!81 &1615446037
 AudioListener:
   m_ObjectHideFlags: 0
