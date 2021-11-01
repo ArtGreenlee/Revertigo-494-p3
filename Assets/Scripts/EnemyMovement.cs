@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 public class EnemyMovement : MonoBehaviour
 {
     private Vector3 nextPoint;
@@ -94,14 +94,14 @@ public class EnemyMovement : MonoBehaviour
                     pathIndex++;
                     if (pathIndex == path.Count)
                     {
+                        GameObject.Find("GameController").GetComponent<PlayerLivesTemp>().numLives--;
                         Destroy(gameObject);
-                        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                        
                     }
                 }
             }
             if (Vector3.Distance(transform.position, nextPoint) > pathResetThreshold)
             {
-                Debug.Log("enemy path threshold reset");
                 resetPath();
             }
         }
