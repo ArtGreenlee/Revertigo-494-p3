@@ -322,4 +322,5 @@ public class Pathfinder : MonoBehaviour
         }
         return walkable;
     }
+
 }
