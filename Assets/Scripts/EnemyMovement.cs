@@ -7,26 +7,52 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 nextPoint;
     private int currentPointIndex;
     private List<Vector3> path;
-    private Pathfinder pathFinder;
+    public float maxSpeed;
+    public float curSpeed;
+    public GameObject slowEffect;
 
-    // Start is called before the first frame update
     void Start()
     {
-        pathFinder = GameObject.Find("GameController").GetComponent<Pathfinder>();
-        path = new List<Vector3>();
+        curSpeed = maxSpeed;
         currentPointIndex = 1;
-        List<List<Vector3>> pathIn = pathFinder.getPath();
+        nextPoint = path[currentPointIndex];
+    }
+
+    public void setPath(List<List<Vector3>> pathIn)
+    {
+        path = new List<Vector3>();
         foreach (List<Vector3> pathTemp in pathIn)
         {
             path.AddRange(pathTemp);
         }
-        nextPoint = path[currentPointIndex];
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            ShootsBullets stats = collision.gameObject.GetComponent<BulletController>().parent;
+            if (stats.slowsEnemy)
+            {
+                if (stats.canCriticallyHit)
+                {
+                    if (Random.Range(0f, 1f) > stats.critChance)
+                    {
+                        slowEnemy(stats.slowPercent, stats.slowDuration);
+                    }
+                }
+                else
+                {
+                    slowEnemy(stats.slowPercent, stats.slowDuration);
+                }
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * 1;
+        transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * curSpeed;
         if (Vector3.Distance(transform.position, nextPoint) < .1f)
         {
             if (currentPointIndex == path.Count - 1)
@@ -37,5 +63,20 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    public void slowEnemy(float slowPercentage, float slowDuration)
+    {
+        if (slowPercentage < (curSpeed / maxSpeed))
+        {
+            StartCoroutine(slowEnemyCoroutine(slowPercentage, slowDuration));
+        }
+    }
+
+    private IEnumerator slowEnemyCoroutine(float slowPercentage, float slowDuration)
+    {
+        Instantiate(slowEffect, transform.position, new Quaternion());
+        curSpeed *= slowPercentage;
+        yield return new WaitForSeconds(slowDuration);
+        curSpeed = maxSpeed;
+    }
 
 }

@@ -5,18 +5,21 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemy;
-    public bool waveStarted;
     private Pathfinder pathFinder;
     private TowerPlacer towerPlacer;
     private List<List<Vector3> > enemyPath;
     public int numEnemiesPerRound;
     private EnemyStorage enemyStorage;
 
-    private void Start()
+    private void Awake()
     {
         pathFinder = GetComponent<Pathfinder>();
-        towerPlacer = GetComponent<TowerPlacer>();
-        enemyStorage = GetComponent<EnemyStorage>();
+        towerPlacer = GameObject.Find("GameController").GetComponent<TowerPlacer>();
+        enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
+    }
+    private void Start()
+    {
+        
     }
 
     private void Update()
@@ -30,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
     public IEnumerator startWave()
     {
         enemyPath = pathFinder.getPath();
-        towerPlacer.enabled = false;
+        //towerPlacer.enabled = false;
         //wait till path is finished
         while (pathFinder.getPath().Count == 0) {
             yield return new WaitForSeconds(.5f);
@@ -40,6 +43,7 @@ public class EnemySpawner : MonoBehaviour
         {
             GameObject newEnemy = Instantiate(enemy, enemyPath[0][0], new Quaternion());
             enemyStorage.addEnemy(newEnemy);
+            newEnemy.GetComponent<EnemyMovement>().setPath(enemyPath);
             yield return new WaitForSeconds(1);
         }
     }

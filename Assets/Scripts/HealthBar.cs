@@ -12,15 +12,23 @@ public class HealthBar : MonoBehaviour
     private float maxWidth;
     private Image HealthBarImage;
     public float healthBarOffset;
-    void Start()
+    private void Awake()
     {
         HealthBarImage = GetComponent<Image>();
-        maxWidth = HealthBarImage.rectTransform.sizeDelta.x;
         cameraTransform = Camera.main.transform;
+    }
+    void Start()
+    {
+        maxWidth = HealthBarImage.rectTransform.sizeDelta.x;
     }
 
     private void Update()
     {
+        if (enemyTransform == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Vector3 offsetVec = Vector3.zero;
         if (Mathf.Abs(enemyTransform.position.y) > 9)
         {
@@ -31,7 +39,14 @@ public class HealthBar : MonoBehaviour
             offsetVec.y = healthBarOffset;
         }
         transform.position = (enemyTransform.position + (enemyTransform.position - cameraTransform.position).normalized * -2) + offsetVec;
-        transform.LookAt(cameraTransform);  
-        HealthBarImage.rectTransform.sizeDelta = new Vector2((enemyHealth.currentHealth / enemyHealth.maxHealth) * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
+        transform.LookAt(cameraTransform);
+    }
+
+    public void showDamage()
+    {
+        if (enemyHealth != null)
+        {
+            HealthBarImage.rectTransform.sizeDelta = new Vector2(enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
+        }
     }
 }

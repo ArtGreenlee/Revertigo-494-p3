@@ -1,0 +1,2 @@
+Revertigo - Goldspike.txt
+We determined that the most important aspects of our game were the pathfinding algorithm/visualization and the first person camera controls. We wanted to optimize our pathfinding algorithm so that it returns a short path quickly, and clearly display that path for the player. For the camera, we wanted to make movement easy with options to move freely within the cube or snap to a side quickly using the number keys 1-6. These features made up our goldspike.

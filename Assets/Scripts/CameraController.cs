@@ -12,8 +12,8 @@ public class CameraController : MonoBehaviour
     [Tooltip("How sensitive the touch drag to camera rotation")]
     public float slerpValue = 0.25f;
 
-    private float minXRotAngle = -80; //min angle around x axis
-    private float maxXRotAngle = 80; // max angle around x axis
+    //private float minXRotAngle = -80; //min angle around x axis
+    //private float maxXRotAngle = 80; // max angle around x axis
 
     //Mouse rotation related
     private float rotX; // around x
@@ -23,6 +23,7 @@ public class CameraController : MonoBehaviour
     public float decelSpeed;
     public float maxRotationSpeed;
     public float moveSpeed;
+    // public bool enabled;
 
     public float zoomAcceleration;
     public float zoomDecel;
@@ -33,13 +34,14 @@ public class CameraController : MonoBehaviour
     {
         zoomSpeed = 0;
         rb = GetComponent<Rigidbody>();
-        rotX = transform.rotation.eulerAngles.x;
-        rotY = transform.rotation.eulerAngles.y;
+        enabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        rotX = transform.rotation.eulerAngles.x;
+        rotY = transform.rotation.eulerAngles.y;
         rb.AddRelativeForce(Vector3.forward * moveSpeed * Input.GetAxis("Vertical"));
         rb.AddRelativeForce(Vector3.left * moveSpeed * Input.GetAxis("Horizontal") * -1);
         if (Input.GetKey(KeyCode.Space))

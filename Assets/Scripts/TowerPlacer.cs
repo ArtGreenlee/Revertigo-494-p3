@@ -10,9 +10,20 @@ public class TowerPlacer : MonoBehaviour
     public GameObject shadowTower;
     private Pathfinder pathFinder;
     private HashSet<Vector3> checkPointVectors;
+    public GameObject onPlacementEffect;
+    public bool debugMode;
+
+    public List<GameObject> debugRoster;
 
     public List<GameObject> gemRoster;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        pathFinder = GetComponent<Pathfinder>();
+        wallStorage = GetComponent<WallStorage>();
+    }
+
     void Start()
     {
         checkPointVectors = new HashSet<Vector3>();
@@ -30,8 +41,6 @@ public class TowerPlacer : MonoBehaviour
                 }
             }
         }
-        pathFinder = GetComponent<Pathfinder>();
-        wallStorage = GetComponent<WallStorage>();
         shadowWall = Instantiate(shadowWall, new Vector3(25,0,0), new Quaternion());
         shadowTower = Instantiate(shadowTower, new Vector3(25, 0, 0), new Quaternion());
     }
@@ -51,12 +60,12 @@ public class TowerPlacer : MonoBehaviour
             curPoint = UtilityFunctions.snapVector(curPoint);
             if (wallStorage.validWallPosition(curPoint) && !isCheckpoint(curPoint))
             {
-                shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getSide(curPoint));
-                shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * -.5f + curPoint;
+                shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
+                shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
                 if (validTowerPlacement(curPoint))
                 {
-                    shadowTower.transform.position = shadowWall.transform.rotation * Vector3.forward * 1.5f + shadowWall.transform.position;
-                    shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getSide(curPoint));
+                    shadowTower.transform.position = shadowWall.transform.rotation * Vector3.forward * -1.5f + shadowWall.transform.position;
+                    shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
                 }
                 else
                 {
@@ -65,7 +74,8 @@ public class TowerPlacer : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
-                    GameObject newTower = Instantiate(getRandomGem(), shadowTower.transform.position, shadowTower.transform.rotation);
+                    GameObject newTower = Instantiate(getRandomTower(), shadowTower.transform.position, shadowTower.transform.rotation);
+                    Instantiate(onPlacementEffect, shadowTower.transform.position, shadowTower.transform.rotation);
                     wallStorage.attachTowerToWall(newTower, newWall);
                     shadowTower.transform.position = new Vector3(25, 0, 0);
                     shadowWall.transform.position = new Vector3(25, 0, 0);
@@ -74,15 +84,19 @@ public class TowerPlacer : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        /*if (Input.GetKeyDown(KeyCode.R))
         {            wallStorage.popRecentWall();
             pathFinder.findPath();
-        }
+        }*/
     }
 
-    private GameObject getRandomGem()
+    private GameObject getRandomTower()
     {
-        return gemRoster[0];
+        if (debugMode)
+        {
+            return debugRoster[Random.Range(0, debugRoster.Count)];
+        }
+        return gemRoster[Random.Range(0, gemRoster.Count)];
     }
 
     private bool isCheckpoint(Vector3 checkVec)
@@ -92,16 +106,16 @@ public class TowerPlacer : MonoBehaviour
 
     public static bool validTowerPlacement(Vector3 checkVec)
     {
-        UtilityFunctions.Side side = UtilityFunctions.getSide(checkVec);
-        if (side == UtilityFunctions.Side.front || side == UtilityFunctions.Side.back)
+        Vector3 side = UtilityFunctions.getClosestSide(checkVec);
+        if (side == Vector3.forward || side == Vector3.back)
         {
             return Mathf.Abs(checkVec.x) < 8 && Mathf.Abs(checkVec.y) < 8;
         }
-        else if (side == UtilityFunctions.Side.left || side == UtilityFunctions.Side.right)
+        else if (side == Vector3.left || side == Vector3.right)
         {
             return Mathf.Abs(checkVec.z) < 8 && Mathf.Abs(checkVec.y) < 8;
         }
-        else if (side == UtilityFunctions.Side.top || side == UtilityFunctions.Side.bottom)
+        else if (side == Vector3.up || side == Vector3.down)
         {
             return Mathf.Abs(checkVec.x) < 8 && Mathf.Abs(checkVec.z) < 8;
         }

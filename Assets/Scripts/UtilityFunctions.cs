@@ -4,67 +4,101 @@ using UnityEngine;
 
 public class UtilityFunctions : MonoBehaviour
 {
-    public enum Side { top, bottom, left, right, front, back, error }
 
-    public static Quaternion getRotationawayFromSide(Side sideIn)
+    public static List<Vector3> sideVectors = new List<Vector3>
     {
-        if (sideIn == Side.front)
+        Vector3.up,
+        Vector3.down,
+        Vector3.left,
+        Vector3.right,
+        Vector3.forward,
+        Vector3.back
+    };
+
+    public static Quaternion getRotationawayFromSide(Vector3 vecIn)
+    {
+        Vector3 side = getClosestSide(vecIn);
+        return Quaternion.LookRotation(side);
+        /*if (side == Vector3.forward)
         {
             return Quaternion.LookRotation(Vector3.back);
         }
-        else if (sideIn == Side.back)
+        else if (side == Vector3.back)
         {
             return Quaternion.LookRotation(Vector3.forward);
         }
-        else if (sideIn == Side.left)
+        else if (side == Vector3.left)
         {
             return Quaternion.LookRotation(Vector3.right);
         }
-        else if (sideIn == Side.right)
+        else if (side == Vector3.right)
         {
             return Quaternion.LookRotation(Vector3.left);
         }
-        else if (sideIn == Side.top)
+        else if (side == Vector3.up)
         {
             return Quaternion.LookRotation(Vector3.down);
         }
-        else if (sideIn == Side.bottom)
+        else if (side == Vector3.down)
         {
             return Quaternion.LookRotation(Vector3.up);
         }
         else {
             Debug.Log("ERROR: SIDE DOES NOT EXIST");
             return new Quaternion();
-        }
+        }*/
     }
 
-    public static Side getSide(Vector3 pos)
+    public static Quaternion getRotationawayFromSide(Vector3 vecIn, Vector3 upDirection)
     {
-        if (pos.x == 10)
+        Vector3 side = getClosestSide(vecIn);
+        return Quaternion.LookRotation(side, upDirection);
+        /*if (side == Vector3.forward)
         {
-            return Side.right;
+            return Quaternion.LookRotation(Vector3.back, upDirection);
         }
-        if (pos.x == -10)
+        else if (side == Vector3.back)
         {
-            return Side.left;
+            return Quaternion.LookRotation(Vector3.forward, upDirection);
         }
-        if (pos.y == 10)
+        else if (side == Vector3.left)
         {
-            return Side.top;
+            return Quaternion.LookRotation(Vector3.right, upDirection);
         }
-        if (pos.y == -10)
+        else if (side == Vector3.right)
         {
-            return Side.bottom;
+            return Quaternion.LookRotation(Vector3.left, upDirection);
         }
-        if (pos.z == -10)
+        else if (side == Vector3.up)
         {
-            return Side.back;
+            return Quaternion.LookRotation(Vector3.down, upDirection);
         }
-        if (pos.z == 10)
+        else if (side == Vector3.down)
         {
-            return Side.front;
+            return Quaternion.LookRotation(Vector3.up, upDirection);
         }
-        return Side.error;
+        else
+        {
+            Debug.Log("ERROR: SIDE DOES NOT EXIST");
+            return new Quaternion();
+        }*/
+    }
+
+    public static Vector3 getClosestSide(Vector3 checkVec)
+    {
+        checkVec = checkVec.normalized;
+        float minDistance = 10;
+        Vector3 returnSide = Vector3.zero;
+        foreach (Vector3 sideVec in sideVectors)
+        {
+            float curDistance = Vector3.Distance(checkVec, sideVec);
+            if (curDistance < minDistance)
+            {
+                minDistance = curDistance;
+                returnSide = sideVec;
+            }
+        }
+        return returnSide;
     }
     public static Vector3 snapVector(Vector3 vecInTemp)
     {
@@ -113,8 +147,8 @@ public class UtilityFunctions : MonoBehaviour
 
     public static bool validEnemyVector(Vector3 checkVec)
     {
-        Side side = getSide(checkVec);
-        if (side == Side.top || side == Side.bottom)
+        Vector3 side = getClosestSide(checkVec);
+        if (side == Vector3.up || side == Vector3.down)
         {
             if (Mathf.Abs(checkVec.x) > 10 || Mathf.Abs(checkVec.z) > 10)
             {
@@ -125,7 +159,7 @@ public class UtilityFunctions : MonoBehaviour
                 return false;
             }
         }
-        else if (side == Side.front || side == Side.back)
+        else if (side == Vector3.forward || side == Vector3.back)
         {
             if (Mathf.Abs(checkVec.x) > 10 || Mathf.Abs(checkVec.y) > 10)
             {
@@ -136,7 +170,7 @@ public class UtilityFunctions : MonoBehaviour
                 return false;
             }
         }
-        else if (side == Side.left || side == Side.right)
+        else if (side == Vector3.left || side == Vector3.right)
         {
             if (Mathf.Abs(checkVec.z) > 10 || Mathf.Abs(checkVec.y) > 10)
             {
@@ -152,6 +186,11 @@ public class UtilityFunctions : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public IEnumerator shrinkAndDisappear()
+    {
+        yield return new WaitForEndOfFrame();
     }
 
 }
