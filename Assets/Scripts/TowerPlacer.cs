@@ -11,6 +11,9 @@ public class TowerPlacer : MonoBehaviour
     private Pathfinder pathFinder;
     private HashSet<Vector3> checkPointVectors;
     public GameObject onPlacementEffect;
+    SnapToPosition CameraMovement;
+    MeshRenderer shadowRenderer;
+    MeshRenderer wallRenderer;
     public bool debugMode;
 
     public List<GameObject> debugRoster;
@@ -22,6 +25,8 @@ public class TowerPlacer : MonoBehaviour
     {
         pathFinder = GetComponent<Pathfinder>();
         wallStorage = GetComponent<WallStorage>();
+        
+        
     }
 
     void Start()
@@ -43,11 +48,16 @@ public class TowerPlacer : MonoBehaviour
         }
         shadowWall = Instantiate(shadowWall, new Vector3(25,0,0), new Quaternion());
         shadowTower = Instantiate(shadowTower, new Vector3(25, 0, 0), new Quaternion());
+        CameraMovement = Camera.main.GetComponent<SnapToPosition>();
+        shadowRenderer = shadowTower.GetComponent<MeshRenderer>();
+        wallRenderer = shadowWall.GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        shadowRenderer.enabled = !CameraMovement.isLerping;
+        wallRenderer.enabled = !CameraMovement.isLerping;
         RaycastHit hit;
         Vector2 mousePosition = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
@@ -62,6 +72,7 @@ public class TowerPlacer : MonoBehaviour
             {
                 shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
                 shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
+                
                 if (validTowerPlacement(curPoint))
                 {
                     shadowTower.transform.position = shadowWall.transform.rotation * Vector3.forward * -1.5f + shadowWall.transform.position;

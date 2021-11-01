@@ -9,7 +9,7 @@ public class SnapToPosition : MonoBehaviour
     public float posSpeed;
     CameraController controller;
     float startTime;
-    bool isLerping;
+    public bool isLerping;
     Vector3 endPos;
     Quaternion endRot;
     Vector3 startPos;
