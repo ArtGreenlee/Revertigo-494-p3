@@ -24,7 +24,7 @@ public class EnemySpawner : MonoBehaviour
 
     public IEnumerator startWave()
     {
-      
+        yield return new WaitForSeconds(1);
         for (int i = 0; i < numEnemiesPerRound; i++)
         {
             while (!pathFinder.pathFinished())

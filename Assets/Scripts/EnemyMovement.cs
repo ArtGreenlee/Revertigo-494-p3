@@ -13,6 +13,7 @@ public class EnemyMovement : MonoBehaviour
     private int pathIndex;
     private Pathfinder pathFinder;
     public float pathResetThreshold;
+    public GameObject onPathFinishEffect;
 
     private void Awake()
     {
@@ -94,6 +95,7 @@ public class EnemyMovement : MonoBehaviour
                     pathIndex++;
                     if (pathIndex == path.Count)
                     {
+                        Instantiate(onPathFinishEffect, transform.position, new Quaternion());
                         GameObject.Find("GameController").GetComponent<PlayerLivesTemp>().numLives--;
                         Destroy(gameObject);
                         

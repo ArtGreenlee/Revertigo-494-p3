@@ -115,6 +115,8 @@ MonoBehaviour:
   maxSpeed: 1
   slowEffect: {fileID: 100000, guid: 77ec3c4e07a36814fb3169ecef41b50a, type: 3}
   pathResetThreshold: 4
+  onPathFinishEffect: {fileID: 1280141305896002, guid: e473029e4c70ad543a6879b82a732f4f,
+    type: 3}
 --- !u!114 &1701556777800460827
 MonoBehaviour:
   m_ObjectHideFlags: 0
