@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
     public float decelSpeed;
     public float maxRotationSpeed;
     public float moveSpeed;
-    public bool enabled;
+    // public bool enabled;
 
     public float zoomAcceleration;
     public float zoomDecel;
@@ -34,17 +34,17 @@ public class CameraController : MonoBehaviour
     {
         zoomSpeed = 0;
         rb = GetComponent<Rigidbody>();
-        rotX = transform.rotation.eulerAngles.x;
-        rotY = transform.rotation.eulerAngles.y;
         enabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!enabled) {
-            return;
-        }
+        rotX = transform.rotation.eulerAngles.x;
+        rotY = transform.rotation.eulerAngles.y;
+        // if (!enabled) {
+        //     return;
+        // }
         rb.AddRelativeForce(Vector3.forward * moveSpeed * Input.GetAxis("Vertical"));
         rb.AddRelativeForce(Vector3.left * moveSpeed * Input.GetAxis("Horizontal") * -1);
         if (Input.GetKey(KeyCode.Space))
