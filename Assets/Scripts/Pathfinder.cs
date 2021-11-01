@@ -26,6 +26,7 @@ public class Pathfinder : MonoBehaviour
     }
     public GameObject pathFindingVisualizerSphere;
     public List<GameObject> checkPointList;
+    public List<Vector3> checkPointVectors;
     public List<List<Vector3>> path;
     private List<HashSet<GameObject>> visualizers;
     private List<HashSet<Vector3>> pathVectors;
@@ -36,6 +37,8 @@ public class Pathfinder : MonoBehaviour
     private const int speedThresholdTrigger = 1000;
     private int currentCount;
 
+    public EnemyMovement enemyMovement;
+
     int numCoroutinesRunning = 0;
 
     private void Awake()
@@ -43,46 +46,40 @@ public class Pathfinder : MonoBehaviour
         towerPlacer = GameObject.Find("GameController").GetComponent<TowerPlacer>();
         wallStorage = GameObject.Find("GameController").GetComponent<WallStorage>();
         wallStorage.pathfinders.Add(this);
-    }
-
-    private void Start()
-    {
+        ;
         speedThreshold = 5;
         currentCount = 0;
+
         checkPointList.Insert(0, gameObject);
+        checkPointVectors = new List<Vector3>();
 
-        visualizers = new List<HashSet<GameObject>>();
-        pathVectors = new List<HashSet<Vector3>>();
-        for (int i = 0; i < checkPointList.Count - 1; i++)
+        foreach (GameObject temp in checkPointList)
         {
-            visualizers.Add(new HashSet<GameObject>());
-            pathVectors.Add(new HashSet<Vector3>());
+            checkPointVectors.Add(temp.transform.position); 
         }
 
-        
-        finishedPaths = new List<bool>();
-        path = new List<List<Vector3>>();
-        for (int i = 0; i < checkPointList.Count - 1; i++)
+        if (!TryGetComponent(out enemyMovement))
         {
-            finishedPaths.Add(false);
-            path.Add(new List<Vector3>());
+            findPath();
         }
-
-        findPath();
+        else
+        {
+            enemyMovement = GetComponent<EnemyMovement>();
+        }
     }
 
     private void Update()
     {
-        if (numCoroutinesRunning > checkPointList.Count)
+        
+        if (numCoroutinesRunning >= checkPointVectors.Count)
         {
+            Debug.Log("curent: " + numCoroutinesRunning + " max: " + checkPointVectors.Count);
             Debug.LogError("ERROR: TOO MANY COROUTINES RUNNING");
         }
     }
 
     public List<List<Vector3> > getPath()
     {
-        speedThreshold = 100;
-
         if (finishedPaths.Contains(false))
         {
             return new List<List<Vector3>>();
@@ -139,7 +136,10 @@ public class Pathfinder : MonoBehaviour
                         end = end.parent;
                         temp.Add(end.v);
                         pathVectors[pathIndex].Add(end.v);
-                        visualizers[pathIndex].Add(Instantiate(pathFindingVisualizerSphere, end.v, new Quaternion()));
+                        if (enemyMovement == null)
+                        {
+                            visualizers[pathIndex].Add(Instantiate(pathFindingVisualizerSphere, end.v, new Quaternion()));
+                        }
                         if (wallStorage.isWall(end.v))
                         {
                             //rerun this coroutine
@@ -194,7 +194,6 @@ public class Pathfinder : MonoBehaviour
         }
         if (activePath.Count == 0 && !pathFound)
         {
-            Debug.Log("Path not found");
             towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
             wallStorage.popRecentWall();
             //findPath();
@@ -207,14 +206,33 @@ public class Pathfinder : MonoBehaviour
 
     public void findPath()
     {
-        StopAllCoroutines();
+        StopAllCoroutines(); //hmm this might break everything
         numCoroutinesRunning = 0;
-        for (int i = 0; i < checkPointList.Count - 1; i++)
+        if (visualizers != null)
+        {
+            for (int i = 0; i < visualizers.Count; i++)
+            {
+                removeVisualizerSegment(i);
+            }
+        }
+        visualizers = new List<HashSet<GameObject>>();
+        pathVectors = new List<HashSet<Vector3>>();
+        for (int i = 0; i < checkPointVectors.Count - 1; i++)
+        {
+            visualizers.Add(new HashSet<GameObject>());
+            pathVectors.Add(new HashSet<Vector3>());
+        }
+        path = new List<List<Vector3>>();
+        finishedPaths = new List<bool>();
+        for (int i = 0; i < checkPointVectors.Count - 1; i++)
+        {
+            finishedPaths.Add(false);
+            path.Add(new List<Vector3>());
+        }
+        for (int i = 0; i < checkPointVectors.Count - 1; i++)
         {
             numCoroutinesRunning++;
-            removeSegmentFromDictionary(i);
-            removeVisualizerSegment(i);
-            StartCoroutine(findPathBetweenPointsFast(checkPointList[i].transform.position, checkPointList[i + 1].transform.position, i));
+            StartCoroutine(findPathBetweenPointsFast(checkPointVectors[i], checkPointVectors[i + 1], i));
         }
     }
 
@@ -233,7 +251,11 @@ public class Pathfinder : MonoBehaviour
                         removeVisualizerSegment(i);
                         finishedPaths[i] = false;
                         numCoroutinesRunning++;
-                        StartCoroutine(findPathBetweenPointsFast(checkPointList[i].transform.position, checkPointList[i + 1].transform.position, i));
+                        if (this != null)
+                        {
+                            StartCoroutine(findPathBetweenPointsFast(checkPointVectors[i], checkPointVectors[i + 1], i));
+                        }
+                        
                         break;
                     }
                 }
@@ -243,13 +265,7 @@ public class Pathfinder : MonoBehaviour
 
     private void removeSegmentFromDictionary(int index)
     {
-        foreach (Vector3 checkVec in path[index])
-        {
-            if (pathVectors[index].Contains(checkVec))
-            {
-                pathVectors[index].Remove(checkVec);
-            }
-        }
+        pathVectors[index].Clear();
     }
 
     private void removeVisualizerSegment(int index)
@@ -260,13 +276,29 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
+    public bool pathFinished()
+    {
+        if (finishedPaths != null)
+        {
+            return !finishedPaths.Contains(false);
+        }
+        return false;
+    }
+
     public bool pathContainsVector(Vector3 checkVec)
     {
-        foreach (HashSet<Vector3> curSet in pathVectors)
+        if (pathVectors != null)
         {
-            if (curSet.Contains(checkVec))
+            foreach (HashSet<Vector3> curSet in pathVectors)
             {
-                return true;
+                if (curSet != null)
+                {
+                    if (curSet.Contains(checkVec))
+                    {
+                        return true;
+                    }
+                }
+                
             }
         }
         return false;
