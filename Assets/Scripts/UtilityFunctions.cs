@@ -188,4 +188,9 @@ public class UtilityFunctions : MonoBehaviour
         return true;
     }
 
+    public IEnumerator shrinkAndDisappear()
+    {
+        yield return new WaitForEndOfFrame();
+    }
+
 }
