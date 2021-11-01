@@ -33,7 +33,7 @@ public class FireBallController : MonoBehaviour
         thrusting = true;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         Instantiate(collisionEffect, transform.position, new Quaternion());
         foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, aoeRange))

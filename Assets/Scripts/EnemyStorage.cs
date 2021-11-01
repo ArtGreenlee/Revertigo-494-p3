@@ -21,6 +21,17 @@ public class EnemyStorage : MonoBehaviour
         return enemies.Contains(checkEnemy);
     }
 
+    public bool validWallPosition(Vector3 checkVec)
+    {
+        foreach (Collider tempCollider in Physics.OverlapBox(checkVec, new Vector3(1.5f, 1.5f, 1.5f))) {
+            if (enemies.Contains(tempCollider.gameObject))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public GameObject getClosestEnemyToPointWithinRange(Vector3 checkVec, float range)
     {
         GameObject temp = null;

@@ -7,6 +7,7 @@ public class TowerPlacer : MonoBehaviour
     public GameObject shadowWall;
     public GameObject wall;
     private WallStorage wallStorage;
+    private EnemyStorage enemyStorage;
     public GameObject shadowTower;
     private Pathfinder pathFinder;
     private HashSet<Vector3> checkPointVectors;
@@ -25,7 +26,7 @@ public class TowerPlacer : MonoBehaviour
     {
         pathFinder = GetComponent<Pathfinder>();
         wallStorage = GetComponent<WallStorage>();
-        
+        enemyStorage = GetComponent<EnemyStorage>();
         
     }
 
@@ -68,7 +69,10 @@ public class TowerPlacer : MonoBehaviour
         {
             curPoint = hit.point;
             curPoint = UtilityFunctions.snapVector(curPoint);
-            if (wallStorage.validWallPosition(curPoint) && !isCheckpoint(curPoint))
+            if (wallStorage.validWallPosition(curPoint) && 
+                !isCheckpoint(curPoint) && 
+                enemyStorage.validWallPosition(curPoint) &&
+                hit.collider.gameObject.CompareTag("Playfield"))
             {
                 shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
                 shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
@@ -92,6 +96,11 @@ public class TowerPlacer : MonoBehaviour
                     shadowWall.transform.position = new Vector3(25, 0, 0);
                     wallStorage.addWall(curPoint, newWall);
                 }
+            }
+            else
+            {
+                shadowTower.transform.position = new Vector3(25, 0, 0);
+                shadowWall.transform.position = new Vector3(25, 0, 0);
             }
         }
 

@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
             enemyStorage.addEnemy(newEnemy);
             newEnemy.GetComponent<EnemyHealth>().maxHealth = 20 + i * 2;
             newEnemy.GetComponent<EnemyMovement>().path = enemyPath;
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(5);
         }
     }
 }

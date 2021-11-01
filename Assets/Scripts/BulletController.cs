@@ -35,13 +35,13 @@ public class BulletController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             Instantiate(onHitEffect, transform.position, new Quaternion());
         }
-        StartCoroutine(fadeAway(collision.gameObject.transform));
+        StartCoroutine(fadeAway(other.gameObject.transform));
     }
 
     private IEnumerator fadeAway(Transform fix)

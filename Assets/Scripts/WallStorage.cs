@@ -23,7 +23,7 @@ public class WallStorage : MonoBehaviour
 
     public void popRecentWall()
     {
-        removeWall(wallStack.Pop());
+        //removeWall(wallStack.Pop());
     }
 
     public void attachTowerToWall(GameObject towerIn, GameObject wallIn)
@@ -50,34 +50,7 @@ public class WallStorage : MonoBehaviour
             {
                 pathFinder.detectAndRedoPathSegments();
             }
-            
         }
-        HashSet<EnemyMovement> enemyRedoBuffer = new HashSet<EnemyMovement>();
-        foreach (Vector3 checkVec in storage.Keys)
-        {
-            foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-            {
-                EnemyMovement curMovement = enemy.GetComponent<EnemyMovement>();
-                if (!enemyRedoBuffer.Contains(curMovement)) {
-                    if (curMovement.path != null)
-                    {
-                        foreach (List<Vector3> checkList in curMovement.path)
-                        {
-                            if (checkList.Contains(checkVec))
-                            {
-                                enemyRedoBuffer.Add(curMovement);
-                            }
-                        }
-                    }
-                    
-                }
-            }
-        }
-        foreach (EnemyMovement movement in enemyRedoBuffer)
-        {
-            movement.resetPath();
-        }
-        
     }
 
     public bool validWallPosition(Vector3 checkVec)

@@ -68,9 +68,8 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        
         if (numCoroutinesRunning >= checkPointVectors.Count)
         {
             Debug.Log("curent: " + numCoroutinesRunning + " max: " + checkPointVectors.Count);

@@ -12,6 +12,7 @@ public class EnemyMovement : MonoBehaviour
     public GameObject slowEffect;
     private int pathIndex;
     private Pathfinder pathFinder;
+    public float pathResetThreshold;
 
     private void Awake()
     {
@@ -24,11 +25,11 @@ public class EnemyMovement : MonoBehaviour
         pathIndex = 0;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (other.gameObject.CompareTag("Bullet"))
         {
-            ShootsBullets stats = collision.gameObject.GetComponent<BulletController>().parent;
+            ShootsBullets stats = other.gameObject.GetComponent<BulletController>().parent;
             if (stats.slowsEnemy)
             {
                 if (stats.canCriticallyHit)
@@ -44,19 +45,26 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
         }
+        else if (other.gameObject.CompareTag("Wall"))
+        {
+            resetPath();
+        }
     }
 
     public void resetPath()
     {
-        pathFinder.checkPointVectors = new List<Vector3>();
-        pathFinder.checkPointVectors.Add(UtilityFunctions.snapVector(transform.position));
-        for (int i = pathIndex; i < path.Count; i++)
+        if (path != null)
         {
-            pathFinder.checkPointVectors.Add(path[i][path[i].Count - 1]);
+            pathFinder.checkPointVectors = new List<Vector3>();
+            pathFinder.checkPointVectors.Add(UtilityFunctions.snapVector(transform.position));
+            for (int i = pathIndex; i < path.Count; i++)
+            {
+                pathFinder.checkPointVectors.Add(path[i][path[i].Count - 1]);
+            }
+            path = null;
+            pathFinder.findPath();
+            StartCoroutine(waitForPathToFinish());
         }
-        path = null;
-        pathFinder.findPath();
-        StartCoroutine(waitForPathToFinish());
     }
 
     private IEnumerator waitForPathToFinish()
@@ -71,9 +79,9 @@ public class EnemyMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (path != null)
+        if (path != null && path.Count != 0 && path[pathIndex].Count != 0)
         {
             nextPoint = path[pathIndex][currentPointIndex];
             transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * curSpeed;
@@ -86,9 +94,15 @@ public class EnemyMovement : MonoBehaviour
                     pathIndex++;
                     if (pathIndex == path.Count)
                     {
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                        Destroy(gameObject);
+                        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                     }
                 }
+            }
+            if (Vector3.Distance(transform.position, nextPoint) > pathResetThreshold)
+            {
+                Debug.Log("enemy path threshold reset");
+                resetPath();
             }
         }
     }

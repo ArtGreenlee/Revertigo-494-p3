@@ -26,12 +26,11 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (other.gameObject.CompareTag("Bullet"))
         {
-            ShootsBullets tower = collision.gameObject.GetComponent<BulletController>().parent;
+            ShootsBullets tower = other.gameObject.GetComponent<BulletController>().parent;
             float damage = Random.Range(tower.damageMin, tower.damageMax);
             takeDamage(damage, true);
         }
