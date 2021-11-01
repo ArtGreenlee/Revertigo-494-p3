@@ -19,32 +19,24 @@ public class EnemySpawner : MonoBehaviour
     }
     private void Start()
     {
-        
+        StartCoroutine(startWave());
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            
-            StartCoroutine(startWave());
-        }
-    }
     public IEnumerator startWave()
     {
-        enemyPath = pathFinder.getPath();
-        //towerPlacer.enabled = false;
-        //wait till path is finished
-        while (pathFinder.getPath().Count == 0) {
-            yield return new WaitForSeconds(.5f);
-            enemyPath = pathFinder.getPath();
-        }
+      
         for (int i = 0; i < numEnemiesPerRound; i++)
         {
+            while (!pathFinder.pathFinished())
+            {
+                yield return new WaitForSeconds(.5f);
+            }
+            enemyPath = pathFinder.getPath();
             GameObject newEnemy = Instantiate(enemy, enemyPath[0][0], new Quaternion());
             enemyStorage.addEnemy(newEnemy);
-            newEnemy.GetComponent<EnemyMovement>().setPath(enemyPath);
-            yield return new WaitForSeconds(1);
+            newEnemy.GetComponent<EnemyHealth>().maxHealth = 20 + i * 2;
+            newEnemy.GetComponent<EnemyMovement>().path = enemyPath;
+            yield return new WaitForSeconds(3);
         }
     }
 }

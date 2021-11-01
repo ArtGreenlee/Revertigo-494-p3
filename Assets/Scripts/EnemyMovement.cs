@@ -1,30 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class EnemyMovement : MonoBehaviour
 {
     private Vector3 nextPoint;
     private int currentPointIndex;
-    private List<Vector3> path;
+    public List<List<Vector3>> path;
     public float maxSpeed;
-    public float curSpeed;
+    private float curSpeed;
     public GameObject slowEffect;
+    private int pathIndex;
+    private Pathfinder pathFinder;
 
+    private void Awake()
+    {
+        pathFinder = GetComponent<Pathfinder>();
+    }
     void Start()
     {
         curSpeed = maxSpeed;
-        currentPointIndex = 1;
-        nextPoint = path[currentPointIndex];
-    }
-
-    public void setPath(List<List<Vector3>> pathIn)
-    {
-        path = new List<Vector3>();
-        foreach (List<Vector3> pathTemp in pathIn)
-        {
-            path.AddRange(pathTemp);
-        }
+        currentPointIndex = 0;
+        pathIndex = 0;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -49,17 +46,50 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    public void resetPath()
+    {
+        pathFinder.checkPointVectors = new List<Vector3>();
+        pathFinder.checkPointVectors.Add(UtilityFunctions.snapVector(transform.position));
+        for (int i = pathIndex; i < path.Count; i++)
+        {
+            pathFinder.checkPointVectors.Add(path[i][path[i].Count - 1]);
+        }
+        path = null;
+        pathFinder.findPath();
+        StartCoroutine(waitForPathToFinish());
+    }
+
+    private IEnumerator waitForPathToFinish()
+    {
+        while (!pathFinder.pathFinished())
+        {
+            yield return new WaitForSeconds(.5f); //totally arbitrary
+        }
+        path = pathFinder.getPath();
+        currentPointIndex = 0;
+        pathIndex = 0;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * curSpeed;
-        if (Vector3.Distance(transform.position, nextPoint) < .1f)
+        if (path != null)
         {
-            if (currentPointIndex == path.Count - 1)
+            nextPoint = path[pathIndex][currentPointIndex];
+            transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * curSpeed;
+            if (Vector3.Distance(transform.position, nextPoint) < .1f)
             {
-                Destroy(gameObject);
+                currentPointIndex++;
+                if (currentPointIndex == path[pathIndex].Count)
+                {
+                    currentPointIndex = 0;
+                    pathIndex++;
+                    if (pathIndex == path.Count)
+                    {
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    }
+                }
             }
-            nextPoint = path[currentPointIndex++];
         }
     }
 

@@ -16,7 +16,6 @@ public class EnemyHealth : MonoBehaviour
     {
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         flashOnHit = GetComponent<FlashOnHit>();
-        currentHealth = maxHealth;
         healthBar = Instantiate(healthBar, transform.position, new Quaternion(), GameObject.FindGameObjectWithTag("Canvas").transform);
         healthBar.GetComponent<HealthBar>().enemyTransform = transform;
         healthBar.GetComponent<HealthBar>().enemyHealth = this;
@@ -24,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
-        
+        currentHealth = maxHealth;
     }
 
     private void OnCollisionEnter(Collision collision)

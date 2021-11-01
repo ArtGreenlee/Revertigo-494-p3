@@ -99,10 +99,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireBall: {fileID: 7922299580369839075, guid: 59860587ca7ad459782ba35d16d20719,
     type: 3}
-  damageMin: 5
-  damageMax: 10
+  damageMin: 2
+  damageMax: 6
   aoeRange: 2
-  range: 10
+  range: 12
   cooldown: 6
 --- !u!114 &6972592042273126234
 MonoBehaviour:

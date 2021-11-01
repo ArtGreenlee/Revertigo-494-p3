@@ -9,7 +9,6 @@ public class WallStorage : MonoBehaviour
     Dictionary<Vector3, int> duplicates = new Dictionary<Vector3, int>();
     TowerPlacer towerPlacer;
     private Stack<GameObject> wallStack;
-
     public List<Pathfinder> pathfinders;
     void Start()
     {
@@ -47,8 +46,38 @@ public class WallStorage : MonoBehaviour
         }
         foreach (Pathfinder pathFinder in redoBuffer)
         {
-            pathFinder.detectAndRedoPathSegments();
+            if (pathFinder.enemyMovement == null)
+            {
+                pathFinder.detectAndRedoPathSegments();
+            }
+            
         }
+        HashSet<EnemyMovement> enemyRedoBuffer = new HashSet<EnemyMovement>();
+        foreach (Vector3 checkVec in storage.Keys)
+        {
+            foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                EnemyMovement curMovement = enemy.GetComponent<EnemyMovement>();
+                if (!enemyRedoBuffer.Contains(curMovement)) {
+                    if (curMovement.path != null)
+                    {
+                        foreach (List<Vector3> checkList in curMovement.path)
+                        {
+                            if (checkList.Contains(checkVec))
+                            {
+                                enemyRedoBuffer.Add(curMovement);
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+        foreach (EnemyMovement movement in enemyRedoBuffer)
+        {
+            movement.resetPath();
+        }
+        
     }
 
     public bool validWallPosition(Vector3 checkVec)
