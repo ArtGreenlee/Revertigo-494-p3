@@ -224,3 +224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb06768bd74d4f278a93e8d6f936c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  splitEffect: {fileID: 0}
+  clusterFireballMini: {fileID: 22643527409429894, guid: 1aea2fdefb4bc8d4ab0d116d3e6aa0f8,
+    type: 3}
+  speed: 0
+  damage: 0
+  aoeRange: 0

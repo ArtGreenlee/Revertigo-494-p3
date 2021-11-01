@@ -87,7 +87,7 @@ public class UtilityFunctions : MonoBehaviour
     public static Vector3 getClosestSide(Vector3 checkVec)
     {
         checkVec = checkVec.normalized;
-        float minDistance = 10;
+        float minDistance = 35;
         Vector3 returnSide = Vector3.zero;
         foreach (Vector3 sideVec in sideVectors)
         {
@@ -103,39 +103,39 @@ public class UtilityFunctions : MonoBehaviour
     public static Vector3 snapVector(Vector3 vecInTemp)
     {
         Vector3 vecIn = vecInTemp;
-        if (vecIn.z <= -10)
+        if (vecIn.z <= -16)
         {
-            vecIn.z = -10;
+            vecIn.z = -16;
         }
-        else if (vecIn.z >= 10)
+        else if (vecIn.z >= 16)
         {
-            vecIn.z = 10;
+            vecIn.z = 16;
         }
         else
         {
             vecIn.z = Mathf.Round(vecIn.z);
         }
 
-        if (vecIn.y <= -10)
+        if (vecIn.y <= -16)
         {
-            vecIn.y = -10;
+            vecIn.y = -16;
         }
-        else if (vecIn.y >= 10)
+        else if (vecIn.y >= 16)
         {
-            vecIn.y = 10;
+            vecIn.y = 16;
         }
         else
         {
             vecIn.y = Mathf.Round(vecIn.y);
         }
 
-        if (vecIn.x <= -10)
+        if (vecIn.x <= -16)
         {
-            vecIn.x = -10;
+            vecIn.x = -16;
         }
-        else if (vecIn.x >= 10)
+        else if (vecIn.x >= 16)
         {
-            vecIn.x = 10;
+            vecIn.x = 16;
         }
         else
         {
@@ -150,33 +150,33 @@ public class UtilityFunctions : MonoBehaviour
         Vector3 side = getClosestSide(checkVec);
         if (side == Vector3.up || side == Vector3.down)
         {
-            if (Mathf.Abs(checkVec.x) > 10 || Mathf.Abs(checkVec.z) > 10)
+            if (Mathf.Abs(checkVec.x) > 16 || Mathf.Abs(checkVec.z) > 16)
             {
                 return false;
             }
-            if (Mathf.Abs(checkVec.y) != 10)
+            if (Mathf.Abs(checkVec.y) != 16)
             {
                 return false;
             }
         }
         else if (side == Vector3.forward || side == Vector3.back)
         {
-            if (Mathf.Abs(checkVec.x) > 10 || Mathf.Abs(checkVec.y) > 10)
+            if (Mathf.Abs(checkVec.x) > 16 || Mathf.Abs(checkVec.y) > 16)
             {
                 return false;
             }
-            if (Mathf.Abs(checkVec.z) != 10)
+            if (Mathf.Abs(checkVec.z) != 16)
             {
                 return false;
             }
         }
         else if (side == Vector3.left || side == Vector3.right)
         {
-            if (Mathf.Abs(checkVec.z) > 10 || Mathf.Abs(checkVec.y) > 10)
+            if (Mathf.Abs(checkVec.z) > 16 || Mathf.Abs(checkVec.y) > 16)
             {
                 return false;
             }
-            if (Mathf.Abs(checkVec.x) != 10)
+            if (Mathf.Abs(checkVec.x) != 16)
             {
                 return false;
             }

@@ -193,6 +193,7 @@ public class Pathfinder : MonoBehaviour
         }
         if (activePath.Count == 0 && !pathFound)
         {
+            Debug.Log("path not found");
             towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
             wallStorage.popRecentWall();
             //findPath();

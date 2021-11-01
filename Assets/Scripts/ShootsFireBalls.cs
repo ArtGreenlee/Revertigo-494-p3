@@ -24,14 +24,12 @@ public class ShootsFireBalls : MonoBehaviour
     {
         if (Time.time - cooldownTimer > cooldown)
         {
-            GameObject target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, range);
-            if (target != null)
+            if (enemyStorage.getClosestEnemyToPointWithinRange(transform.position, range) != null)
             {
                 //shoot fireball
                 GameObject fireBallTemp = Instantiate(fireBall, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
                 fireBallTemp.GetComponent<Rigidbody>().AddRelativeForce(Vector3.back * 3, ForceMode.Impulse);
                 FireBallController fireBallControllerTemp = fireBallTemp.GetComponent<FireBallController>();
-                fireBallControllerTemp.target = target;
                 fireBallControllerTemp.damage = Random.Range(damageMin, damageMax);
                 fireBallControllerTemp.aoeRange = aoeRange;
                 cooldownTimer = Time.time;

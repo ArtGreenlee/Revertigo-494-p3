@@ -7,7 +7,8 @@ public class ClusterFireballController : MonoBehaviour
 
     private Rigidbody rb;
     public GameObject splitEffect;
-    private EnemyStorage enemyStorage;  
+    private EnemyStorage enemyStorage;
+    public GameObject fireBall;
     public float speed;
     public float damage;
     public float aoeRange;
@@ -24,7 +25,8 @@ public class ClusterFireballController : MonoBehaviour
         Vector3 side = UtilityFunctions.getClosestSide(transform.position);
         foreach (Vector3 sideDirection in UtilityFunctions.sideVectors)
         {
-
+            GameObject tempRocket = Instantiate(fireBall, transform.position, Quaternion.LookRotation(sideDirection));
+            yield break;
         }
     }
 }

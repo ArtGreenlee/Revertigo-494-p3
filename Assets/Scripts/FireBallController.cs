@@ -28,6 +28,7 @@ public class FireBallController : MonoBehaviour
     {
         thrusting = false;
         trailRenderer.enabled = false;
+        target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 10);
         yield return new WaitForSeconds(1f);
         trailRenderer.enabled = true;
         thrusting = true;

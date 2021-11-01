@@ -129,15 +129,15 @@ public class TowerPlacer : MonoBehaviour
         Vector3 side = UtilityFunctions.getClosestSide(checkVec);
         if (side == Vector3.forward || side == Vector3.back)
         {
-            return Mathf.Abs(checkVec.x) < 8 && Mathf.Abs(checkVec.y) < 8;
+            return Mathf.Abs(checkVec.x) < 14 && Mathf.Abs(checkVec.y) < 14;
         }
         else if (side == Vector3.left || side == Vector3.right)
         {
-            return Mathf.Abs(checkVec.z) < 8 && Mathf.Abs(checkVec.y) < 8;
+            return Mathf.Abs(checkVec.z) < 14 && Mathf.Abs(checkVec.y) < 14;
         }
         else if (side == Vector3.up || side == Vector3.down)
         {
-            return Mathf.Abs(checkVec.x) < 8 && Mathf.Abs(checkVec.z) < 8;
+            return Mathf.Abs(checkVec.x) < 14 && Mathf.Abs(checkVec.z) < 14;
         }
         else
         {

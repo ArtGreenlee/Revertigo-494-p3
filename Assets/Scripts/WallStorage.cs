@@ -70,21 +70,21 @@ public class WallStorage : MonoBehaviour
                     Vector3 curVec = new Vector3(checkVec.x + i, checkVec.y + j, checkVec.z + k);
                     if (side == Vector3.forward || side == Vector3.back)
                     {
-                        if (Mathf.Abs(curVec.y) > 10 || Mathf.Abs(curVec.x) > 10)
+                        if (Mathf.Abs(curVec.y) > 16 || Mathf.Abs(curVec.x) > 16)
                         {
                             return false;
                         }
                     } 
                     else if (side == Vector3.left || side == Vector3.right)
                     {
-                        if (Mathf.Abs(curVec.z) > 10 || Mathf.Abs(curVec.y) > 10)
+                        if (Mathf.Abs(curVec.z) > 16 || Mathf.Abs(curVec.y) > 16)
                         {
                             return false;
                         }
                     }
                     else if (side == Vector3.up || side == Vector3.down)
                     {
-                        if (Mathf.Abs(curVec.x) > 10 || Mathf.Abs(curVec.z) > 10)
+                        if (Mathf.Abs(curVec.x) > 16 || Mathf.Abs(curVec.z) > 16)
                         {
                             return false;
                         }
