@@ -37,7 +37,7 @@ public class SnapToPosition : MonoBehaviour
             }
             
             // check if done
-            if (transform.position == endPos && transform.rotation == endRot) {
+            if (Time.time - startTime > 0.3f) {
                 isLerping = false;
             }
         }
@@ -46,7 +46,7 @@ public class SnapToPosition : MonoBehaviour
             // -Z
             Debug.Log("hit 1");
             endPos = new Vector3(0.0f, 0.0f, 7.66f);
-            endRot = Quaternion.Euler(180, 0, 0);
+            endRot = Quaternion.Euler(0, 180, 0);
             StartLerp();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2)) {
