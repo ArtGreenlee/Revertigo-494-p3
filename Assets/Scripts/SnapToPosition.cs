@@ -41,9 +41,10 @@ public class SnapToPosition : MonoBehaviour
                 isLerping = false;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
             //red - back
             // -Z
+            Debug.Log("hit 1");
             endPos = new Vector3(0.0f, 0.0f, 7.66f);
             endRot = Quaternion.Euler(180, 0, 0);
             StartLerp();
