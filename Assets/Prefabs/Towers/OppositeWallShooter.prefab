@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 3145325515985381395}
   - component: {fileID: 8191806857984499036}
   - component: {fileID: -3832321598855478913}
-  - component: {fileID: 6545421611466829855}
+  - component: {fileID: -2700447248407274329}
+  - component: {fileID: -278692146787397993}
   m_Layer: 0
   m_Name: OppositeWallShooter
   m_TagString: Untagged
@@ -109,7 +110,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6545421611466829855
+--- !u!114 &-2700447248407274329
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +119,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 1376374685273442671}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa39d4cffcd70406e945c91590ad6803, type: 3}
+  m_Script: {fileID: 11500000, guid: 784ba9d6e741fd14b877cc68bbefeeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 3
+  slowsEnemy: 0
+  canCriticallyHit: 0
+  aoe: 0
+  range: 0
+  numTargets: 0
+  damageMin: 0
+  damageMax: 0
+  critChance: 0
+  critMult: 0
+  slowPercent: 0
+  slowDuration: 0
+  aoe_range: 0
+  aoe_damage: 0
+  cooldown: 0
+--- !u!114 &-278692146787397993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376374685273442671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecf6c09eb3c7d43cb90ec0dfc5f96e11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeIndicator: {fileID: 4373264351769506584, guid: e0c0da19961e1aa428c7afa7a3225e73,
+    type: 3}

@@ -30,8 +30,8 @@ public class EnemyHealth : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
-            ShootsBullets tower = other.gameObject.GetComponent<BulletController>().parent;
-            float damage = Random.Range(tower.damageMin, tower.damageMax);
+            float damage = Random.Range(other.gameObject.GetComponent<BulletController>().towerStats.damageMin, 
+                other.gameObject.GetComponent<BulletController>().towerStats.damageMax);
             takeDamage(damage, true);
         }
     }

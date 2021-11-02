@@ -11,13 +11,15 @@ public class FireBallController : MonoBehaviour
     private EnemyStorage enemyStorage;
     private TrailRenderer trailRenderer;
     public float speed;
+    public TowerStats towerStats;
     public float rotationSpeed;
     private bool thrusting;
-    public float damage;
-    public float aoeRange;
+    private SphereCollider sphereCollider;
+    public float disableDuration;
 
     private void Awake()
     {
+        sphereCollider = GetComponent<SphereCollider>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         rb = GetComponent<Rigidbody>();
         trailRenderer = GetComponent<TrailRenderer>();
@@ -28,18 +30,23 @@ public class FireBallController : MonoBehaviour
     {
         thrusting = false;
         trailRenderer.enabled = false;
-        target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 10);
-        yield return new WaitForSeconds(1f);
+        sphereCollider.enabled = false;
+        if (target == null)
+        {
+            target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 10);
+        }
+        yield return new WaitForSeconds(disableDuration);
         trailRenderer.enabled = true;
         thrusting = true;
+        sphereCollider.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Instantiate(collisionEffect, transform.position, new Quaternion());
-        foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, aoeRange))
+        foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
         {
-            enemy.GetComponent<EnemyHealth>().takeDamage(damage, true);
+            enemy.GetComponent<EnemyHealth>().takeDamage(towerStats.aoe_damage, true);
         }
         Destroy(gameObject);
     }

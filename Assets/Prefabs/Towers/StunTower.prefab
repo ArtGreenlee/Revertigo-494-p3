@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 8062554489390571327}
   - component: {fileID: 7620361608682294601}
   - component: {fileID: -891712502276487879}
-  - component: {fileID: 8106311143796066430}
+  - component: {fileID: 367614570133185073}
+  - component: {fileID: -1565504870855722576}
   m_Layer: 0
   m_Name: StunTower
   m_TagString: Untagged
@@ -97,22 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSelection: 0
-  slowsEnemy: 1
-  canCriticallyHit: 1
-  aoe: 0
-  range: 5
-  numTargets: 1
-  bulletSpeed: 15
-  damageMin: 2
-  damageMax: 2
-  critChance: 0.95
-  critMult: 1
-  slowPercent: 0
-  slowDuration: 2
-  aoe_range: 0
-  aoe_damage: 0
-  cooldown: 1
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
+  bulletSpeed: 15
 --- !u!65 &-891712502276487879
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -126,7 +113,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8106311143796066430
+--- !u!114 &367614570133185073
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,7 +122,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 6295010870351937091}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa39d4cffcd70406e945c91590ad6803, type: 3}
+  m_Script: {fileID: 11500000, guid: 784ba9d6e741fd14b877cc68bbefeeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 3
+  slowsEnemy: 0
+  canCriticallyHit: 0
+  aoe: 0
+  range: 0
+  numTargets: 0
+  damageMin: 0
+  damageMax: 0
+  critChance: 0
+  critMult: 0
+  slowPercent: 0
+  slowDuration: 0
+  aoe_range: 0
+  aoe_damage: 0
+  cooldown: 0
+--- !u!114 &-1565504870855722576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6295010870351937091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecf6c09eb3c7d43cb90ec0dfc5f96e11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeIndicator: {fileID: 4373264351769506584, guid: e0c0da19961e1aa428c7afa7a3225e73,
+    type: 3}

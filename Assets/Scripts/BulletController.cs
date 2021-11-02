@@ -7,7 +7,7 @@ public class BulletController : MonoBehaviour
 
     private float lifeStart;
     public float lifeTime;
-    public ShootsBullets parent;
+    public TowerStats towerStats;
     private MeshRenderer meshRenderer;
     private SphereCollider sphereCollider;
     public GameObject onHitEffect;

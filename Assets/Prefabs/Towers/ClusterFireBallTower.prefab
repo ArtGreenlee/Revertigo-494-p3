@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 8402121761330943427}
   - component: {fileID: 1427899370295128172}
   - component: {fileID: 6937924089115662549}
-  - component: {fileID: 3557534861641477403}
+  - component: {fileID: -8904312220338457768}
+  - component: {fileID: 7516395724962424619}
   m_Layer: 0
   m_Name: ClusterFireBallTower
   m_TagString: Untagged
@@ -43,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2316449276373684764}
-  m_Mesh: {fileID: 4300000, guid: 0ecc4766a87e040f2852a6de64cc0f86, type: 3}
+  m_Mesh: {fileID: 4300000, guid: e42e76fa501384474973c559bf5d9fb4, type: 3}
 --- !u!23 &1772733558715151200
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -99,11 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireBall: {fileID: 7095344946395577795, guid: 60b240ac263ee43e881e62e893b2f9e4,
     type: 3}
-  damageMin: 2
-  damageMax: 6
-  aoeRange: 2
-  range: 12
-  cooldown: 6
 --- !u!114 &1427899370295128172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +127,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3557534861641477403
+--- !u!114 &-8904312220338457768
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,7 +136,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 2316449276373684764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa39d4cffcd70406e945c91590ad6803, type: 3}
+  m_Script: {fileID: 11500000, guid: 784ba9d6e741fd14b877cc68bbefeeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 3
+  slowsEnemy: 0
+  canCriticallyHit: 0
+  aoe: 1
+  range: 10
+  numTargets: 1
+  damageMin: 5
+  damageMax: 5
+  critChance: 0
+  critMult: 0
+  slowPercent: 0
+  slowDuration: 0
+  aoe_range: 2
+  aoe_damage: 5
+  cooldown: 5
+--- !u!114 &7516395724962424619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2316449276373684764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecf6c09eb3c7d43cb90ec0dfc5f96e11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeIndicator: {fileID: 4373264351769506584, guid: e0c0da19961e1aa428c7afa7a3225e73,
+    type: 3}

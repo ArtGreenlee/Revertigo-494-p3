@@ -15,7 +15,7 @@ public class FireEffect : MonoBehaviour
 
             float size = AreaSparksEffect.GetComponent<ParticleSystem>().shape.radius;
             Vector3 rescale = AreaSparksEffect.GetComponent<ParticleSystem>().shape.scale;
-            rescale = GetComponent<DealsAreaDOT>().range * rescale / size;
+            rescale = GetComponent<TowerStats>().range * rescale / size;
             AreaSparksEffect.transform.localScale = rescale;
         }
         

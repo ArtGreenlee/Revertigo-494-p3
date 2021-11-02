@@ -4,29 +4,73 @@ using UnityEngine;
 
 public class ClusterFireballController : MonoBehaviour
 {
-
-    private Rigidbody rb;
     public GameObject splitEffect;
     private EnemyStorage enemyStorage;
     public GameObject fireBall;
-    public float speed;
-    public float damage;
-    public float aoeRange;
+    public TowerStats towerStats;
+    private Rigidbody rb;
 
     private void Awake()
     {
-        enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         rb = GetComponent<Rigidbody>();
+        enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
+    }
+
+    private List<GameObject> getTargets()
+    {
+        List<GameObject> targets = new List<GameObject>();
+        foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.range * 2))
+        {
+            if (!targets.Contains(enemy))
+            {
+                targets.Add(enemy);
+                if (targets.Count >= 5)
+                {
+                    return targets;
+                }
+            }
+        }
+        if (targets.Count < 5)
+        {
+            foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.range * 2))
+            {
+                targets.Add(enemy);
+                if (targets.Count >= 5)
+                {
+                    return targets;
+                }
+            }
+        }
+        return targets;
     }
 
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(1);
+        rb.angularVelocity = Random.onUnitSphere * 3;
+        yield return new WaitForSeconds(2f);
         Vector3 side = UtilityFunctions.getClosestSide(transform.position);
-        foreach (Vector3 sideDirection in UtilityFunctions.sideVectors)
+        List<GameObject> targets = getTargets();
+        List<Vector3> launchDirections = UtilityFunctions.sideVectors;
+        int launchDirectionIndex = 0;
+        Instantiate(splitEffect, transform.position, UtilityFunctions.getRotationawayFromSide(side));
+        foreach (GameObject target in targets)
         {
-            GameObject tempRocket = Instantiate(fireBall, transform.position, Quaternion.LookRotation(sideDirection));
-            yield break;
+            if (side == launchDirections[launchDirectionIndex])
+            {
+                launchDirectionIndex++;
+            }
+            Vector3 launchDirection = launchDirections[launchDirectionIndex];
+            launchDirectionIndex++;
+            GameObject tempRocket = Instantiate(fireBall, transform.position, Quaternion.LookRotation(launchDirection));
+            FireBallController tempController = tempRocket.GetComponent<FireBallController>();
+            tempController.disableDuration = .75f;
+            tempController.target = target;
+            tempController.towerStats = towerStats;
+            Vector3 initialForce = new Vector3(launchDirection.x * 16, launchDirection.y * 16, launchDirection.z * 16);
+            initialForce = (transform.position - initialForce).normalized * 2;
+            tempRocket.GetComponent<Rigidbody>().AddForce(initialForce, ForceMode.Impulse);
+            //yield return new WaitForSeconds(.5f);
         }
+        Destroy(gameObject);
     }
 }

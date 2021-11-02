@@ -30,7 +30,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
-            ShootsBullets stats = other.gameObject.GetComponent<BulletController>().parent;
+            TowerStats stats = other.gameObject.GetComponent<BulletController>().towerStats;
             if (stats.slowsEnemy)
             {
                 if (stats.canCriticallyHit)
