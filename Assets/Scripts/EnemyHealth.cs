@@ -10,10 +10,14 @@ public class EnemyHealth : MonoBehaviour
     public GameObject healthBar;
     private FlashOnHit flashOnHit;
     public GameObject onDeathEffect;
+    private WallStorage wallStorage;
+    private Pathfinder pathfinder;
     // Start is called before the first frame update
 
     private void Awake()
     {
+        pathfinder = GetComponent<Pathfinder>();
+        wallStorage = GameObject.Find("GameController").GetComponent<WallStorage>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         flashOnHit = GetComponent<FlashOnHit>();
         healthBar = Instantiate(healthBar, transform.position, new Quaternion(), GameObject.FindGameObjectWithTag("Canvas").transform);
@@ -47,6 +51,7 @@ public class EnemyHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             enemyStorage.removeEnemy(gameObject);
+            wallStorage.pathfinders.Remove(pathfinder);
             Instantiate(onDeathEffect, transform.position, new Quaternion());
             Destroy(healthBar);
             Destroy(gameObject);

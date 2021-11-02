@@ -97,6 +97,7 @@ public class EnemyMovement : MonoBehaviour
                     {
                         Instantiate(onPathFinishEffect, transform.position, new Quaternion());
                         GameObject.Find("GameController").GetComponent<PlayerLivesTemp>().numLives--;
+                        pathFinder.StopAllCoroutines();
                         Destroy(gameObject);
                         
                     }

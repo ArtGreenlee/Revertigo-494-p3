@@ -27,7 +27,6 @@ public class TowerPlacer : MonoBehaviour
         pathFinder = GetComponent<Pathfinder>();
         wallStorage = GetComponent<WallStorage>();
         enemyStorage = GetComponent<EnemyStorage>();
-        
     }
 
     void Start()

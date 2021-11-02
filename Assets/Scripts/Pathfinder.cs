@@ -41,12 +41,16 @@ public class Pathfinder : MonoBehaviour
 
     int numCoroutinesRunning = 0;
 
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
     private void Awake()
     {
         towerPlacer = GameObject.Find("GameController").GetComponent<TowerPlacer>();
         wallStorage = GameObject.Find("GameController").GetComponent<WallStorage>();
         wallStorage.pathfinders.Add(this);
-        ;
         speedThreshold = 5;
         currentCount = 0;
 
@@ -135,6 +139,7 @@ public class Pathfinder : MonoBehaviour
                         end = end.parent;
                         temp.Add(end.v);
                         pathVectors[pathIndex].Add(end.v);
+                        //only show visualizer if this is a main path
                         if (enemyMovement == null)
                         {
                             visualizers[pathIndex].Add(Instantiate(pathFindingVisualizerSphere, end.v, new Quaternion()));
@@ -160,8 +165,6 @@ public class Pathfinder : MonoBehaviour
 
                 if (!closedPath.ContainsKey(newVec))
                 {
-
-
                     pos newPos = new pos(newVec);
                     newPos.parent = curPos;
                     float GCost = curPos.GCost + Vector3.Distance(newVec, curPos.v);
@@ -194,9 +197,15 @@ public class Pathfinder : MonoBehaviour
         if (activePath.Count == 0 && !pathFound)
         {
             Debug.Log("path not found");
+            if (enemyMovement == null) {
+                wallStorage.removeMostRecentWall();
+            }
+            else
+            {
+                yield return new WaitForSeconds(.5f);
+            }
+            
             towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
-            wallStorage.popRecentWall();
-            //findPath();
             numCoroutinesRunning++;
             StartCoroutine(findPathBetweenPointsFast(startVec, endVec, pathIndex));
             numCoroutinesRunning--;
@@ -206,7 +215,7 @@ public class Pathfinder : MonoBehaviour
 
     public void findPath()
     {
-        StopAllCoroutines(); //hmm this might break everything
+        StopAllCoroutines(); //only applies to this script instance
         numCoroutinesRunning = 0;
         if (visualizers != null)
         {
@@ -255,7 +264,6 @@ public class Pathfinder : MonoBehaviour
                         {
                             StartCoroutine(findPathBetweenPointsFast(checkPointVectors[i], checkPointVectors[i + 1], i));
                         }
-                        
                         break;
                     }
                 }

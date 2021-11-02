@@ -8,12 +8,36 @@ public class WallStorage : MonoBehaviour
     public Dictionary<GameObject, GameObject> wallAndTowers = new Dictionary<GameObject, GameObject>();
     Dictionary<Vector3, int> duplicates = new Dictionary<Vector3, int>();
     TowerPlacer towerPlacer;
-    private Stack<GameObject> wallStack;
     public List<Pathfinder> pathfinders;
+    private Stack<GameObject> wallStack;
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T)) {
+            removeMostRecentWall();
+        }
+    }
+
+    public void removeMostRecentWall()
+    {
+        if (wallStack.Count > 0)
+        {
+            removeWall(wallStack.Pop());
+            foreach (Pathfinder pathFinder in pathfinders)
+            {
+                if (pathFinder != null)
+                {
+                    pathFinder.findPath();
+                }
+            }
+        }
+    }
+
     void Start()
     {
-        towerPlacer = GetComponent<TowerPlacer>();
         wallStack = new Stack<GameObject>();
+        towerPlacer = GetComponent<TowerPlacer>();
     }
 
     public bool isWall(Vector3 checkVec)
@@ -21,9 +45,9 @@ public class WallStorage : MonoBehaviour
         return storage.ContainsKey(checkVec);
     }
 
-    public void popRecentWall()
+    public GameObject getWall(Vector3 wallVec)
     {
-        //removeWall(wallStack.Pop());
+        return storage[wallVec];
     }
 
     public void attachTowerToWall(GameObject towerIn, GameObject wallIn)
@@ -38,7 +62,7 @@ public class WallStorage : MonoBehaviour
         {
             foreach (Pathfinder pathFinder in pathfinders)
             {
-                if (!redoBuffer.Contains(pathFinder) && pathFinder.pathContainsVector(checkVec))
+                if (!redoBuffer.Contains(pathFinder) && pathFinder.pathContainsVector(checkVec) && pathFinder != null)
                 {
                     redoBuffer.Add(pathFinder);
                 }
