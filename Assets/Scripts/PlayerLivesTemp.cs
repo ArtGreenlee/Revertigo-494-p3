@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class PlayerLivesTemp : MonoBehaviour
 {
-    public int numLives = 20;
+    public int numLives;
 
 
     private void Start()
     {
-        numLives = 20;
     }
     private void Update()
     {

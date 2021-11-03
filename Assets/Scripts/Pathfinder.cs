@@ -343,18 +343,18 @@ public class Pathfinder : MonoBehaviour
                         //only show visualizer if this is a main path
                         if (enemyMovement == null)
                         {
-                            visualizers[pathIndex].Add(Instantiate(pathFindingVisualizerSphere, end.v, new Quaternion()));
+                            GameObject newVisualizer = Instantiate(pathFindingVisualizerSphere, end.v, new Quaternion());
+                            StartCoroutine(newVisualizer.GetComponent<PathVisualizerEffects>().fadeIn());
+                            visualizers[pathIndex].Add(newVisualizer);
                         }
                         if (wallStorage.isWall(end.v))
                         {
                             //rerun this coroutine
                             removeSegmentFromDictionary(pathIndex);
-                            removeVisualizerSegment(pathIndex);
                             StartCoroutine(findPathBetweenPointsLyft(startVec, endVec, pathIndex));
                             yield break;
                         }
                     }
-                    Debug.Log(currentCount);
                     temp.Reverse();
                     path[pathIndex] = temp;
                     finishedPaths[pathIndex] = true;
@@ -592,9 +592,14 @@ public class Pathfinder : MonoBehaviour
 
     private void removeVisualizerSegment(int index)
     {
-        foreach (GameObject visualizer in visualizers[index])
+        if (enemyMovement == null)
         {
-            Destroy(visualizer);
+            foreach (GameObject visualizer in visualizers[index])
+            {
+                StartCoroutine(Instantiate(pathFindingVisualizerSphere, visualizer.transform.position, new Quaternion()).GetComponent<PathVisualizerEffects>().fadeOut());
+                Destroy(visualizer);
+            }
+            visualizers[index].Clear();
         }
     }
 
