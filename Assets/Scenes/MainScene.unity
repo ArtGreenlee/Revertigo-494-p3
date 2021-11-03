@@ -1689,6 +1689,10 @@ MonoBehaviour:
   debugRoster: []
   gemRoster:
   - {fileID: 1295874507230250574, guid: be57a0b78d32e450788f1e795f31aac0, type: 3}
+  - {fileID: 2316449276373684764, guid: 60e2b97239ddca54cb96274189d72e3c, type: 3}
+  - {fileID: 5996220971690792234, guid: 9e0557a4a0ffb44249ac95f8cc2cbf14, type: 3}
+  - {fileID: 3352053421576041292, guid: 0eb7a7e06af6c41d0884752d0c78ca82, type: 3}
+  - {fileID: 6295010870351937091, guid: 9ee3e41aee2ee47b09d04ee24cc22682, type: 3}
 --- !u!114 &1411751689
 MonoBehaviour:
   m_ObjectHideFlags: 0
