@@ -22,7 +22,17 @@ public class PathVisualizerEffects : MonoBehaviour
         StopAllCoroutines();
     }
 
-    public IEnumerator fadeOut()
+    public void fadeOut()
+    {
+        StartCoroutine(fadeOutRoutine());
+    }
+
+    public void fadeIn()
+    {
+        StartCoroutine(fadeInRoutine());
+    }
+
+    private IEnumerator fadeOutRoutine()
     {
         transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         while (transform.localScale.x > .01f)
@@ -35,7 +45,7 @@ public class PathVisualizerEffects : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public IEnumerator fadeIn()
+    private IEnumerator fadeInRoutine()
     {
         transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
         while (this != null && transform.localScale.x < .2f)

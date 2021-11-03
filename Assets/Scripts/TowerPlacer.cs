@@ -16,6 +16,7 @@ public class TowerPlacer : MonoBehaviour
     MeshRenderer shadowRenderer;
     MeshRenderer wallRenderer;
     public bool debugMode;
+    public bool towerPlacementEnabled;
 
     public List<GameObject> debugRoster;
 
@@ -76,7 +77,7 @@ public class TowerPlacer : MonoBehaviour
                 shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
                 shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
                 
-                if (validTowerPlacement(curPoint))
+                if (validTowerPlacement(curPoint) && towerPlacementEnabled)
                 {
                     shadowTower.transform.position = shadowWall.transform.rotation * Vector3.forward * -1.5f + shadowWall.transform.position;
                     shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));

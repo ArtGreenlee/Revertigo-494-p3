@@ -305,8 +305,9 @@ public class Pathfinder : MonoBehaviour
         activePath.Add(start.FCost, start);
         activePathVectors.Add(start.v);
         HashSet<Vector3> closedPath = new HashSet<Vector3>();
+        Dictionary<float, List<pos>> FCostDuplicates = new Dictionary<float, List<pos>>();
 
-        int speedSwitch = 0;
+        int speedSwitch = 5;
         currentCount = 0;
         speedThreshold = 1000;
         while (activePath.Count > 0)
@@ -324,6 +325,18 @@ public class Pathfinder : MonoBehaviour
                 speedSwitch = 0;
             }
             pos curPos = activePath.Values[0];
+            if (FCostDuplicates.ContainsKey(curPos.FCost))
+            {
+                float minHCost = 1000;
+                int minHCostIndex = -1;
+                foreach (pos checkPos in FCostDuplicates[curPos.FCost])
+                {
+                    if (checkPos.HCost < minHCost) {
+                        
+                    }
+
+                }
+            }
             activePath.RemoveAt(0);
             activePathVectors.Remove(curPos.v);
             closedPath.Add(curPos.v);
@@ -344,7 +357,7 @@ public class Pathfinder : MonoBehaviour
                         if (enemyMovement == null)
                         {
                             GameObject newVisualizer = Instantiate(pathFindingVisualizerSphere, end.v, new Quaternion());
-                            StartCoroutine(newVisualizer.GetComponent<PathVisualizerEffects>().fadeIn());
+                            newVisualizer.GetComponent<PathVisualizerEffects>().fadeIn();
                             visualizers[pathIndex].Add(newVisualizer);
                         }
                         if (wallStorage.isWall(end.v))
@@ -367,8 +380,11 @@ public class Pathfinder : MonoBehaviour
                 {
                     pos newPos = new pos(newVec);
                     newPos.parent = curPos;
+                    //this distance calculation could be optimized
                     float GCost = curPos.GCost + Vector3.Distance(newVec, curPos.v);
-                    float Fcost = Vector3.Distance(end.v, newVec) + GCost;
+                    float HCost = Vector3.Distance(end.v, newVec);
+                    float Fcost = GCost + HCost;
+                    newPos.HCost = HCost;
                     newPos.GCost = GCost;
                     newPos.FCost = Fcost;
                     newPos.parent = curPos;
@@ -377,6 +393,16 @@ public class Pathfinder : MonoBehaviour
                     {
                         while (activePath.ContainsKey(newPos.FCost))
                         {
+                            if (FCostDuplicates.ContainsKey(newPos.FCost))
+                            {
+                                FCostDuplicates[newPos.FCost].Add(newPos);
+                            }
+                            else
+                            {
+                                List<pos> tempNewList = new List<pos>();
+                                tempNewList.Add(newPos);
+                                FCostDuplicates.Add(newPos.FCost, tempNewList);
+                            }
                             //holy moly this is bad my god this needs to be fixed TODO TODO TODO
                             newPos.FCost += .01f;
                         }
@@ -596,7 +622,7 @@ public class Pathfinder : MonoBehaviour
         {
             foreach (GameObject visualizer in visualizers[index])
             {
-                StartCoroutine(Instantiate(pathFindingVisualizerSphere, visualizer.transform.position, new Quaternion()).GetComponent<PathVisualizerEffects>().fadeOut());
+                Instantiate(pathFindingVisualizerSphere, visualizer.transform.position, new Quaternion()).GetComponent<PathVisualizerEffects>().fadeOut();
                 Destroy(visualizer);
             }
             visualizers[index].Clear();
