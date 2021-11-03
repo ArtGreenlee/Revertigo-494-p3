@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     private List<List<Vector3> > enemyPath;
     public int numEnemiesPerRound;
     private EnemyStorage enemyStorage;
+    public float enemyStartingHealth;
 
     private void Awake()
     {
@@ -34,7 +35,7 @@ public class EnemySpawner : MonoBehaviour
             enemyPath = pathFinder.getPath();
             GameObject newEnemy = Instantiate(enemy, enemyPath[0][0], new Quaternion());
             enemyStorage.addEnemy(newEnemy);
-            newEnemy.GetComponent<EnemyHealth>().maxHealth = 20 + i * 2;
+            newEnemy.GetComponent<EnemyHealth>().setMaxHealth(enemyStartingHealth + i * 2);
             newEnemy.GetComponent<EnemyMovement>().path = enemyPath;
             yield return new WaitForSeconds(5);
         }

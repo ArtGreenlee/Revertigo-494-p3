@@ -125,20 +125,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784ba9d6e741fd14b877cc68bbefeeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowsEnemy: 0
-  canCriticallyHit: 0
+  slowsEnemy: 1
+  canCriticallyHit: 1
   aoe: 0
-  range: 0
-  numTargets: 0
-  damageMin: 0
-  damageMax: 0
-  critChance: 0
+  range: 4
+  numTargets: 1
+  damageMin: 8
+  damageMax: 9
+  critChance: 0.3
   critMult: 0
   slowPercent: 0
-  slowDuration: 0
+  slowDuration: 1
   aoe_range: 0
   aoe_damage: 0
-  cooldown: 0
+  cooldown: 1.25
 --- !u!114 &-1565504870855722576
 MonoBehaviour:
   m_ObjectHideFlags: 0

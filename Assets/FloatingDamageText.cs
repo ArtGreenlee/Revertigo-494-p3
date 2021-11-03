@@ -10,7 +10,7 @@ public class FloatingDamageText : MonoBehaviour
     private RectTransform rectTransform;
     public void setDamage(float damageIn)
     {
-        textMesh.SetText(damageIn.ToString());
+        textMesh.SetText(Mathf.Round(damageIn).ToString());
     }
 
     private void Awake()
@@ -24,7 +24,7 @@ public class FloatingDamageText : MonoBehaviour
     void Start()
     {
         StartCoroutine(growShrinkFade());
-        Vector3 randomOffset = Random.insideUnitCircle / 2;
+        Vector3 randomOffset = Random.insideUnitCircle / 4;
         transform.Translate((cameraTransform.position - transform.position).normalized + randomOffset);
     }
 

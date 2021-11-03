@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
-    public float maxHealth;
+    private float maxHealth;
     public float currentHealth;
     private EnemyStorage enemyStorage;
     public GameObject healthBar;
@@ -15,6 +15,16 @@ public class EnemyHealth : MonoBehaviour
     public GameObject FloatingDamageText;
     public float floatingDamageTextThreshold;
     // Start is called before the first frame update
+
+    public void setMaxHealth(float maxHealthIn)
+    {
+        maxHealth = maxHealthIn;
+    }
+
+    public float getMaxHealth()
+    {
+        return maxHealth;
+    }
 
     private void Awake()
     {
@@ -50,7 +60,7 @@ public class EnemyHealth : MonoBehaviour
         }
         currentHealth -= damage;
         healthBar.GetComponent<HealthBar>().showDamage();
-        if (damage >= floatingDamageTextThreshold)
+        if (damage >= floatingDamageTextThreshold && Vector3.Distance(Camera.main.transform.position, transform.position) < 16)
         {
             Instantiate(FloatingDamageText, transform.position, new Quaternion()).GetComponent<FloatingDamageText>().setDamage(damage);
         }

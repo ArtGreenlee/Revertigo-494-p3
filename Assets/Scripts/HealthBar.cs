@@ -46,7 +46,7 @@ public class HealthBar : MonoBehaviour
     {
         if (enemyHealth != null)
         {
-            HealthBarImage.rectTransform.sizeDelta = new Vector2(enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
+            HealthBarImage.rectTransform.sizeDelta = new Vector2(enemyHealth.currentHealth / enemyHealth.getMaxHealth() * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
         }
     }
 }

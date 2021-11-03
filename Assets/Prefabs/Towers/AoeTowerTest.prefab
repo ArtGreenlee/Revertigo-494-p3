@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3200695357446228546}
   - component: {fileID: 5246805330479562802}
   - component: {fileID: 7553335563348361235}
-  - component: {fileID: 7105909957969492074}
   - component: {fileID: -1084148103072750769}
   - component: {fileID: 5333142360876244}
   - component: {fileID: -6796755658044133398}
@@ -114,19 +113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageEffect: {fileID: 0}
---- !u!114 &7105909957969492074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1500977303583501118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecf6c09eb3c7d43cb90ec0dfc5f96e11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rangeIndicator: {fileID: 0}
 --- !u!65 &-1084148103072750769
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -155,10 +141,10 @@ MonoBehaviour:
   slowsEnemy: 0
   canCriticallyHit: 0
   aoe: 0
-  range: 0
+  range: 4
   numTargets: 0
-  damageMin: 0
-  damageMax: 0
+  damageMin: 1
+  damageMax: 1
   critChance: 0
   critMult: 0
   slowPercent: 0

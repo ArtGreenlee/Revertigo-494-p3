@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.3587269, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -656,6 +656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
+  enemyStartingHealth: 1000
 --- !u!114 &763991227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,6 +915,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
+  enemyStartingHealth: 1000
 --- !u!114 &913350419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1686,7 +1688,7 @@ MonoBehaviour:
     type: 3}
   onPlacementEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   debugMode: 0
-  towerPlacementEnabled: 0
+  towerPlacementEnabled: 1
   debugRoster: []
   gemRoster:
   - {fileID: 1295874507230250574, guid: be57a0b78d32e450788f1e795f31aac0, type: 3}
@@ -1694,6 +1696,7 @@ MonoBehaviour:
   - {fileID: 5996220971690792234, guid: 9e0557a4a0ffb44249ac95f8cc2cbf14, type: 3}
   - {fileID: 3352053421576041292, guid: 0eb7a7e06af6c41d0884752d0c78ca82, type: 3}
   - {fileID: 6295010870351937091, guid: 9ee3e41aee2ee47b09d04ee24cc22682, type: 3}
+  - {fileID: 1500977303583501118, guid: 67de91da6d357884280607c513a8ec78, type: 3}
 --- !u!114 &1411751689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1767,6 +1770,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
+  enemyStartingHealth: 1000
 --- !u!114 &1539592335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1883,6 +1887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
+  enemyStartingHealth: 1000
 --- !u!114 &1580393135
 MonoBehaviour:
   m_ObjectHideFlags: 0
