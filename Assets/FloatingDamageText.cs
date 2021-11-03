@@ -7,7 +7,7 @@ public class FloatingDamageText : MonoBehaviour
 {
     private TextMeshPro textMesh;
     private Transform cameraTransform;
-
+    private RectTransform rectTransform;
     public void setDamage(float damageIn)
     {
         textMesh.SetText(damageIn.ToString());
@@ -15,6 +15,7 @@ public class FloatingDamageText : MonoBehaviour
 
     private void Awake()
     {
+        rectTransform = GetComponent<RectTransform>();
         cameraTransform = Camera.main.transform;
         textMesh = GetComponent<TextMeshPro>();
     }
@@ -22,48 +23,34 @@ public class FloatingDamageText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(growShrinkFade());
+        transform.Translate((cameraTransform.position - transform.position).normalized);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //transform.LookAt(cameraTransform);
         transform.rotation = Quaternion.LookRotation(transform.position - cameraTransform.position);
-        /*var forward = camera.transform.forward;
-        var right = camera.transform.right;
- 
-        //project forward and right vectors on the horizontal plane (y = 0)
-        forward.y = 0f;
-        right.y = 0f;
-        forward.Normalize();
-        right.Normalize();
- 
-        //this is the direction in the world space we want to move:
-        var desiredMoveDirection = forward * verticalAxis + right * horizontalAxis;
- 
-        //now we can apply the movement:
-        transform.Translate(desiredMoveDirection * speedMeUp * Time.deltaTime);
-        */
         transform.Translate(transform.up * Time.deltaTime);
     }
 
     private IEnumerator growShrinkFade()
     {
-        Vector3 startScale = transform.localScale;
-        float startMagnitute = startScale.magnitude;
-        while (startMagnitute < startMagnitute + .2f)
+        float startMagnitute = rectTransform.localScale.magnitude;
+        /*while (rectTransform.localScale.magnitude < startMagnitute + .1f)
         {
             float increase = .1f * Time.deltaTime;
-            startScale = new Vector3(startScale.x + increase, startScale.y + increase, startScale.z + increase);
+            Vector3 newScale = new Vector3(rectTransform.localScale.x + increase, rectTransform.localScale.y + increase, rectTransform.localScale.z + increase);
+            rectTransform.localScale = newScale;
             yield return new WaitForEndOfFrame();
         }
-        yield return new WaitForSeconds(.1f);
-        startMagnitute = startScale.magnitude;
-        while (startMagnitute > startMagnitute - .5f)
+        yield return new WaitForSeconds(.1f);*/
+        startMagnitute = rectTransform.localScale.magnitude;
+        while (rectTransform.localScale.magnitude > startMagnitute - .05f)
         {
-            float decrease = -.1f * Time.deltaTime;
-            startScale = new Vector3(startScale.x + decrease, startScale.y + decrease, startScale.z + decrease);
+            float decrease = -.02f * Time.deltaTime;
+            Vector3 newScale = new Vector3(rectTransform.localScale.x + decrease, rectTransform.localScale.y + decrease, rectTransform.localScale.z + decrease);
+            rectTransform.localScale = newScale;
             yield return new WaitForEndOfFrame();
         }
         Destroy(gameObject);

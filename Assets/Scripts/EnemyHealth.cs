@@ -13,6 +13,7 @@ public class EnemyHealth : MonoBehaviour
     private WallStorage wallStorage;
     private Pathfinder pathfinder;
     public GameObject FloatingDamageText;
+    public float floatingDamageTextThreshold;
     // Start is called before the first frame update
 
     private void Awake()
@@ -49,9 +50,9 @@ public class EnemyHealth : MonoBehaviour
         }
         currentHealth -= damage;
         healthBar.GetComponent<HealthBar>().showDamage();
-        if (damage >= 1)
+        if (damage >= floatingDamageTextThreshold)
         {
-            Instantiate(FloatingDamageText, transform.position, new Quaternion(), transform).GetComponent<FloatingDamageText>().setDamage(damage);
+            Instantiate(FloatingDamageText, transform.position, new Quaternion()).GetComponent<FloatingDamageText>().setDamage(damage);
         }
         if (currentHealth <= 0)
         {
