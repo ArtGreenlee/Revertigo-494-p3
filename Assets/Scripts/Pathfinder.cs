@@ -328,13 +328,12 @@ public class Pathfinder : MonoBehaviour
             if (FCostDuplicates.ContainsKey(curPos.FCost))
             {
                 float minHCost = 1000;
-                int minHCostIndex = -1;
+                //int minHCostIndex = -1;
                 foreach (pos checkPos in FCostDuplicates[curPos.FCost])
                 {
                     if (checkPos.HCost < minHCost) {
                         
                     }
-
                 }
             }
             activePath.RemoveAt(0);

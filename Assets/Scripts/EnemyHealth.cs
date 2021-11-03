@@ -12,6 +12,7 @@ public class EnemyHealth : MonoBehaviour
     public GameObject onDeathEffect;
     private WallStorage wallStorage;
     private Pathfinder pathfinder;
+    public GameObject FloatingDamageText;
     // Start is called before the first frame update
 
     private void Awake()
@@ -48,6 +49,10 @@ public class EnemyHealth : MonoBehaviour
         }
         currentHealth -= damage;
         healthBar.GetComponent<HealthBar>().showDamage();
+        if (damage >= 1)
+        {
+            Instantiate(FloatingDamageText, transform.position, new Quaternion(), transform).GetComponent<FloatingDamageText>().setDamage(damage);
+        }
         if (currentHealth <= 0)
         {
             enemyStorage.removeEnemy(gameObject);
