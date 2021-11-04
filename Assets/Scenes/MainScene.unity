@@ -2259,6 +2259,7 @@ MonoBehaviour:
   distanceFromZero: 2
   zoomAcceleration: 5
   zoomDecel: 0.4
+  rotateSpeed: 0
 --- !u!1 &1674321091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2524,6 +2525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
+  knockBackForce: 1.75
 --- !u!1 &1923379762
 GameObject:
   m_ObjectHideFlags: 0
