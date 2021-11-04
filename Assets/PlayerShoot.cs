@@ -8,8 +8,11 @@ public class PlayerShoot : MonoBehaviour
     private TowerStats towerStats;
     private float cooldownUtility;
     private ObjectPooler objectPooler;
+    private Rigidbody rb;
+    public float knockBackForce;
     private void Awake()
     {
+        rb = GetComponent<Rigidbody>();
         objectPooler = ObjectPooler.Instance;
         towerStats = GetComponent<TowerStats>();
     }
@@ -29,6 +32,7 @@ public class PlayerShoot : MonoBehaviour
             GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, new Quaternion());
             tempBullet.GetComponent<Rigidbody>().velocity = transform.forward * towerStats.bulletSpeed;
             tempBullet.GetComponent<BulletController>().towerStats = towerStats;
+            rb.AddForce(transform.forward * -1 * knockBackForce, ForceMode.Impulse);
             cooldownUtility = Time.time;
         }
     }

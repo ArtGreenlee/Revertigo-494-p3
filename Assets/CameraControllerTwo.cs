@@ -9,12 +9,23 @@ public class CameraControllerTwo : MonoBehaviour
     public float zoomAcceleration;
     public float zoomDecel;
     private float zoomSpeed;
+    private Rigidbody rb;
+    public float rotateSpeed;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     private void Update()
     {
+
+        /*rb.MoveRotation(Quaternion.Slerp(transform.rotation,
+                               Quaternion.LookRotation(transform.position - player.transform.position),
+                               rotateSpeed * Time.deltaTime));*/
+
         transform.position = (Vector3.zero - player.transform.position).normalized * distanceFromZero;
         transform.LookAt(player.transform);
-
         float zoomInput = Input.mouseScrollDelta.y;
 
         if (zoomInput != 0)

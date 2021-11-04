@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -891712502276487879}
   - component: {fileID: 367614570133185073}
   - component: {fileID: -1565504870855722576}
+  - component: {fileID: 5240440133200724803}
   m_Layer: 0
   m_Name: StunTower
   m_TagString: Untagged
@@ -137,8 +138,8 @@ MonoBehaviour:
   slowPercent: 0
   slowDuration: 1
   aoe_range: 0
-  aoe_damage: 0
   cooldown: 1.25
+  bulletSpeed: 0
 --- !u!114 &-1565504870855722576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,4 +153,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeIndicator: {fileID: 4373264351769506584, guid: e0c0da19961e1aa428c7afa7a3225e73,
+    type: 3}
+--- !u!114 &5240440133200724803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6295010870351937091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f7a3df63a0f544187bd5c2e53aa5e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AreaSparksEffect: {fileID: 0}
+  TowerFireEffect: {fileID: 8987286653350352418, guid: 2d8ae677441387442896756dffc0079d,
     type: 3}
