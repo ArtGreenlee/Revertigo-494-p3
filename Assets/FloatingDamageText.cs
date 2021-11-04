@@ -24,7 +24,7 @@ public class FloatingDamageText : MonoBehaviour
     void Start()
     {
         StartCoroutine(growShrinkFade());
-        Vector3 randomOffset = Random.insideUnitCircle / 4;
+        Vector3 randomOffset = Random.insideUnitCircle / 3;
         transform.Translate((cameraTransform.position - transform.position).normalized + randomOffset);
     }
 

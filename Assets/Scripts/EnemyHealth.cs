@@ -60,7 +60,7 @@ public class EnemyHealth : MonoBehaviour
         }
         currentHealth -= damage;
         healthBar.GetComponent<HealthBar>().showDamage();
-        if (damage >= floatingDamageTextThreshold && Vector3.Distance(Camera.main.transform.position, transform.position) < 16)
+        if (damage >= floatingDamageTextThreshold)
         {
             Instantiate(FloatingDamageText, transform.position, new Quaternion()).GetComponent<FloatingDamageText>().setDamage(damage);
         }

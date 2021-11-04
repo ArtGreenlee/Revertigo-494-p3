@@ -129,14 +129,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eccd53f30f1c72449984e373e698f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
   currentHealth: 0
   healthBar: {fileID: 5306666240509191818, guid: 1a8b7ac00460eff499d61ccfe39392a3,
     type: 3}
   onDeathEffect: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
   FloatingDamageText: {fileID: 6088574729931538350, guid: b96b5b4e223c0403784e8aba3914e6cb,
     type: 3}
-  floatingDamageTextThreshold: 5
+  floatingDamageTextThreshold: 1
 --- !u!114 &1109769621377822002
 MonoBehaviour:
   m_ObjectHideFlags: 0

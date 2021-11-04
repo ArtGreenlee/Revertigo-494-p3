@@ -19,4 +19,5 @@ public class TowerStats : MonoBehaviour
     public float aoe_range;
     public float aoe_damage;
     public float cooldown;
+    public float bulletSpeed;
 }

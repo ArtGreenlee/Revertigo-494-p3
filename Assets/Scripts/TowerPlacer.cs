@@ -64,8 +64,7 @@ public class TowerPlacer : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
         Vector3 curPoint;
-        if (Physics.Raycast(ray, out hit) &&
-            !Input.GetMouseButton(1))
+        if (Physics.Raycast(ray, out hit))
         {
             curPoint = hit.point;
             curPoint = UtilityFunctions.snapVector(curPoint);
@@ -86,7 +85,7 @@ public class TowerPlacer : MonoBehaviour
                 {
                     shadowTower.transform.position = new Vector3(25, 0, 0);
                 }
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(1))
                 {
                     GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
                     GameObject newTower = Instantiate(getRandomTower(), shadowTower.transform.position, shadowTower.transform.rotation);

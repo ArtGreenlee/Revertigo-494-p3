@@ -12,9 +12,12 @@ public class BulletController : MonoBehaviour
     private SphereCollider sphereCollider;
     public GameObject onHitEffect;
     private Rigidbody rb;
+    public GameObject onHitAoeEffect;
+    private EnemyStorage enemyStorage;
     // Start is called before the first frame update
     private void Awake()
     {
+        enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         sphereCollider = GetComponent<SphereCollider>();
         rb = GetComponent<Rigidbody>();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -40,8 +43,23 @@ public class BulletController : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             Instantiate(onHitEffect, transform.position, new Quaternion());
+            StartCoroutine(fadeAway(other.gameObject.transform));
         }
-        StartCoroutine(fadeAway(other.gameObject.transform));
+        else
+        {
+            if (towerStats.aoe)
+            {
+                Instantiate(onHitAoeEffect, Vector3.Lerp(Vector3.zero, transform.position, .95f), new Quaternion());
+                Debug.Log(enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range).Count);
+                foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
+                {
+                    enemy.GetComponent<EnemyHealth>().takeDamage(towerStats.aoe_damage, true);
+                }
+            }
+            Destroy(gameObject);
+        }
+
+        
     }
 
     private IEnumerator fadeAway(Transform fix)
