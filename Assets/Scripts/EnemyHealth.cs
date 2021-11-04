@@ -14,11 +14,13 @@ public class EnemyHealth : MonoBehaviour
     private Pathfinder pathfinder;
     public GameObject FloatingDamageText;
     public float floatingDamageTextThreshold;
+    private ObjectPooler objectPooler;
     // Start is called before the first frame update
 
     public void setMaxHealth(float maxHealthIn)
     {
         maxHealth = maxHealthIn;
+        objectPooler = ObjectPooler.Instance;
     }
 
     public float getMaxHealth()
@@ -62,7 +64,7 @@ public class EnemyHealth : MonoBehaviour
         healthBar.GetComponent<HealthBar>().showDamage();
         if (damage >= floatingDamageTextThreshold)
         {
-            Instantiate(FloatingDamageText, transform.position, new Quaternion()).GetComponent<FloatingDamageText>().setDamage(damage);
+            objectPooler.getObjectFromPool("FloatingDamageText", transform.position, new Quaternion()).GetComponent<FloatingDamageText>().setDamage(damage);
         }
         if (currentHealth <= 0)
         {

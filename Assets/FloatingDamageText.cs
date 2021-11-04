@@ -57,6 +57,6 @@ public class FloatingDamageText : MonoBehaviour
             rectTransform.localScale = newScale;
             yield return new WaitForEndOfFrame();
         }
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

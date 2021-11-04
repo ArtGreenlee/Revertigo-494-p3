@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-
-    private float lifeStart;
-    public float lifeTime;
     public TowerStats towerStats;
     private MeshRenderer meshRenderer;
     private SphereCollider sphereCollider;
@@ -26,16 +23,12 @@ public class BulletController : MonoBehaviour
     void Start()
     {
         
-        lifeStart = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.time - lifeStart > lifeTime)
-        {
-            Destroy(gameObject);
-        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,8 +52,7 @@ public class BulletController : MonoBehaviour
             {
                 enemy.GetComponent<EnemyHealth>().takeDamage(Random.Range(towerStats.damageMin, towerStats.damageMax), true);
             }
-
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
 
@@ -79,6 +71,6 @@ public class BulletController : MonoBehaviour
             transform.localScale = newScale;
             yield return new WaitForEndOfFrame();
         }
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
