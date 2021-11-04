@@ -45,21 +45,25 @@ public class BulletController : MonoBehaviour
             Instantiate(onHitEffect, transform.position, new Quaternion());
             StartCoroutine(fadeAway(other.gameObject.transform));
         }
-        else
+        if (towerStats.aoe)
         {
-            if (towerStats.aoe)
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                Instantiate(onHitAoeEffect, transform.position, new Quaternion());
+            }
+            else
             {
                 Instantiate(onHitAoeEffect, Vector3.Lerp(Vector3.zero, transform.position, .95f), new Quaternion());
-                Debug.Log(enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range).Count);
-                foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
-                {
-                    enemy.GetComponent<EnemyHealth>().takeDamage(towerStats.aoe_damage, true);
-                }
             }
+            foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
+            {
+                enemy.GetComponent<EnemyHealth>().takeDamage(Random.Range(towerStats.damageMin, towerStats.damageMax), true);
+            }
+
             Destroy(gameObject);
         }
 
-        
+
     }
 
     private IEnumerator fadeAway(Transform fix)

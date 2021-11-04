@@ -25,7 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SubtractiveShadowColor: {r: 0.077830195, g: 0.1973121, b: 0.5, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 06c9fc71e78725b4eb2ad8ceb6d179a0,
+    type: 2}
   m_LightingSettings: {fileID: 832024523}
 --- !u!196 &4
 NavMeshSettings:
@@ -656,7 +657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
-  enemyStartingHealth: 1000
+  enemyStartingHealth: 100
 --- !u!114 &763991227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,7 +916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
-  enemyStartingHealth: 1000
+  enemyStartingHealth: 100
 --- !u!114 &913350419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1770,7 +1771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
-  enemyStartingHealth: 1000
+  enemyStartingHealth: 100
 --- !u!114 &1539592335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1887,7 +1888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
-  enemyStartingHealth: 1000
+  enemyStartingHealth: 100
 --- !u!114 &1580393135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2018,7 +2019,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 45
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2186,7 +2187,7 @@ GameObject:
   - component: {fileID: 1880758163}
   - component: {fileID: 1880758165}
   - component: {fileID: 1880758164}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2205,8 +2206,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20774f44c3a5f3749946dedb0d508092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 7
   rotateSpeed: 14
+  mainCamera: {fileID: 1615446032}
 --- !u!65 &1880758159
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2292,7 +2294,7 @@ Rigidbody:
   m_GameObject: {fileID: 1880758157}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 3
+  m_Drag: 1
   m_AngularDrag: 0.5
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -2322,9 +2324,8 @@ MonoBehaviour:
   critMult: 0
   slowPercent: 0
   slowDuration: 0
-  aoe_range: 4
-  aoe_damage: 20
-  cooldown: 0
+  aoe_range: 2
+  cooldown: 0.2
   bulletSpeed: 20
 --- !u!114 &1880758165
 MonoBehaviour:

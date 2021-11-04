@@ -7,18 +7,20 @@ public class PlayerInputControl : MonoBehaviour
 
     public float moveSpeed;
     public float rotateSpeed;
+    public GameObject mainCamera;
+    private CameraControllerTwo cameraController;
     // public bool enabled;
-
 
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
+        cameraController = mainCamera.GetComponent<CameraControllerTwo>();
         rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.W))
         {
@@ -39,11 +41,11 @@ public class PlayerInputControl : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.AddForce(Vector3.up * moveSpeed);
+            rb.AddRelativeForce(Vector3.up * moveSpeed);
         }
         else if (Input.GetKey(KeyCode.LeftShift))
         {
-            rb.AddForce(Vector3.down * moveSpeed);
+            rb.AddRelativeForce(Vector3.down * moveSpeed);
         }
 
         RaycastHit hit;
