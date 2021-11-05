@@ -51,6 +51,10 @@ public class BulletController : MonoBehaviour
             foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
             {
                 enemy.GetComponent<EnemyHealth>().takeDamage(Random.Range(towerStats.damageMin, towerStats.damageMax), true);
+                if (towerStats.slowsEnemy)
+                {
+                    enemy.GetComponent<EnemyMovement>().slowEnemy(towerStats.slowPercent, towerStats.slowDuration);
+                }
             }
             gameObject.SetActive(false);
         }

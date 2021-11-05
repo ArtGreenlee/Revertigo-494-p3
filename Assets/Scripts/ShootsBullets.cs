@@ -35,8 +35,8 @@ public class ShootsBullets : MonoBehaviour
             {
                 if (!targets.ContainsKey(enemy))
                 {
-                    float curDistance = Vector3.Distance(transform.position, enemy.transform.position);
-                    if (curDistance < minDistance)
+                    float curDistance = (transform.position - enemy.transform.position).sqrMagnitude;
+                    if (curDistance < minDistance * minDistance)
                     {
                         addEnemy = enemy;
                         minDistance = curDistance;
@@ -54,7 +54,7 @@ public class ShootsBullets : MonoBehaviour
         {
             if (target != null &&
                 enemyStorage.enemyIsAlive(target) &&
-                Vector3.Distance(target.transform.position, transform.position) < towerStats.range)
+                (target.transform.position - transform.position).sqrMagnitude < towerStats.range * towerStats.range)
             {
                 if (Time.time - targets[target] > towerStats.cooldown)
                 {
