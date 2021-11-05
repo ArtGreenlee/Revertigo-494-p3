@@ -87,11 +87,11 @@ public class UtilityFunctions : MonoBehaviour
     public static Vector3 getClosestSide(Vector3 checkVec)
     {
         checkVec = checkVec.normalized;
-        float minDistance = 35;
+        float minDistance = float.MaxValue;
         Vector3 returnSide = Vector3.zero;
         foreach (Vector3 sideVec in sideVectors)
         {
-            float curDistance = Vector3.Distance(checkVec, sideVec);
+            float curDistance = (checkVec - sideVec).sqrMagnitude;
             if (curDistance < minDistance)
             {
                 minDistance = curDistance;

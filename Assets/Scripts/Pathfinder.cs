@@ -296,7 +296,7 @@ public class Pathfinder : MonoBehaviour
         
         pos start = new pos(startVec);
         pos end = new pos(endVec);
-        start.FCost = Vector3.Distance(start.v, end.v);
+        start.FCost = (start.v - end.v).sqrMagnitude; 
         start.parent = start;
         start.GCost = 0;
 
@@ -380,8 +380,8 @@ public class Pathfinder : MonoBehaviour
                     pos newPos = new pos(newVec);
                     newPos.parent = curPos;
                     //this distance calculation could be optimized
-                    float GCost = curPos.GCost + Vector3.Distance(newVec, curPos.v);
-                    float HCost = Vector3.Distance(end.v, newVec);
+                    float GCost = curPos.GCost + (newVec - curPos.v).sqrMagnitude;
+                    float HCost = (end.v - newVec).sqrMagnitude; 
                     float Fcost = GCost + HCost;
                     newPos.HCost = HCost;
                     newPos.GCost = GCost;
