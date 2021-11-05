@@ -14,7 +14,7 @@ public class BulletController : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
+        enemyStorage = EnemyStorage.instance;
         sphereCollider = GetComponent<SphereCollider>();
         rb = GetComponent<Rigidbody>();
         meshRenderer = GetComponent<MeshRenderer>();

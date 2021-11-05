@@ -12,15 +12,20 @@ public class ShootsBullets : MonoBehaviour
     public float bulletSpeed;
     private Dictionary<GameObject, float> targets;
     EnemyStorage enemyStorage;
+    private float playerShootCooldownUtility;
+
+    private ObjectPooler objectPooler;
 
     private void Awake()
     {
+        objectPooler = ObjectPooler.Instance;
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         towerStats = GetComponent<TowerStats>();
     }
     // Start is called before the first frame update
     void Start()
     {
+        playerShootCooldownUtility = 0;
         targets = new Dictionary<GameObject, float>();
     }
 
@@ -59,9 +64,7 @@ public class ShootsBullets : MonoBehaviour
                 if (Time.time - targets[target] > towerStats.cooldown)
                 {
                     //shoot
-                    GameObject tempBullet = Instantiate(bullet, transform.position, new Quaternion());
-                    tempBullet.GetComponent<Rigidbody>().velocity = (target.transform.position - transform.position).normalized * bulletSpeed;
-                    tempBullet.GetComponent<BulletController>().towerStats = towerStats;
+                    shootBullet(transform.position - target.transform.position);
                     targets[target] = Time.time;
                 }
             }
@@ -75,5 +78,18 @@ public class ShootsBullets : MonoBehaviour
             targets.Remove(enemy);
         }
 
+        
+    }
+
+    public void shootBullet(Vector3 direction)
+    {
+        if (Time.time - playerShootCooldownUtility > towerStats.cooldown)
+        {
+            playerShootCooldownUtility = Time.time;
+            GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, new Quaternion());
+            tempBullet.GetComponent<Rigidbody>().velocity = direction.normalized * bulletSpeed;
+            tempBullet.GetComponent<BulletController>().towerStats = towerStats;
+        }
+       
     }
 }

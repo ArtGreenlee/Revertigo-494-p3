@@ -9,6 +9,7 @@ public class PlayerInputControl : MonoBehaviour
     public float rotateSpeed;
     public GameObject mainCamera;
     private CameraControllerTwo cameraController;
+    public Vector3 currentLookPoint;
     // public bool enabled;
 
     Rigidbody rb;
@@ -53,9 +54,9 @@ public class PlayerInputControl : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
         if (Physics.Raycast(ray, out hit))
         {
-            Vector3 rotatePoint = hit.point;
+            currentLookPoint = hit.point;
             rb.MoveRotation(Quaternion.Slerp(transform.rotation,
-                               Quaternion.LookRotation(rotatePoint - transform.position),
+                               Quaternion.LookRotation(currentLookPoint - transform.position),
                                rotateSpeed * Time.deltaTime));
         }
 

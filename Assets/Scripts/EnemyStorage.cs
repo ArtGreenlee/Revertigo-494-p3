@@ -6,6 +6,16 @@ public class EnemyStorage : MonoBehaviour
 {
     public HashSet<GameObject> enemies = new HashSet<GameObject>();
 
+    public static EnemyStorage instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     public void addEnemy(GameObject enemyIn)
     {
         enemies.Add(enemyIn);
