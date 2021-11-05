@@ -16,11 +16,14 @@ public class FireBallController : MonoBehaviour
     private bool thrusting;
     private SphereCollider sphereCollider;
     public float disableDuration;
+    public bool controlledByPlayer;
+    public PlayerInputControl playerInputControl;
 
     private void Awake()
     {
+        playerInputControl = PlayerInputControl.instance;
         sphereCollider = GetComponent<SphereCollider>();
-        enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
+        enemyStorage = EnemyStorage.instance.GetComponent<EnemyStorage>();
         rb = GetComponent<Rigidbody>();
         trailRenderer = GetComponent<TrailRenderer>();
     }
@@ -70,9 +73,17 @@ public class FireBallController : MonoBehaviour
 
         if (target != null)
         {
-            rb.MoveRotation(Quaternion.Slerp(transform.rotation,
+            if (controlledByPlayer)
+            {
+                transform.LookAt(playerInputControl.currentLookPoint);
+            }
+            else
+            {
+                rb.MoveRotation(Quaternion.Slerp(transform.rotation,
                                Quaternion.LookRotation(target.transform.position - transform.position),
                                rotationSpeed * Time.deltaTime));
+            }
+            
             if (thrusting)
             {
                 rb.AddRelativeForce(Vector3.forward * speed);

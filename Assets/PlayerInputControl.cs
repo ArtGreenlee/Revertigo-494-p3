@@ -10,14 +10,24 @@ public class PlayerInputControl : MonoBehaviour
     public GameObject mainCamera;
     private CameraControllerTwo cameraController;
     public Vector3 currentLookPoint;
-    // public bool enabled;
 
+    public static PlayerInputControl instance;
+    // public bool enabled;
+    
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
         cameraController = mainCamera.GetComponent<CameraControllerTwo>();
         rb = GetComponent<Rigidbody>();
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
 
     // Update is called once per frame

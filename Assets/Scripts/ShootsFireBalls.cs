@@ -8,6 +8,7 @@ public class ShootsFireBalls : MonoBehaviour
     private EnemyStorage enemyStorage;
     private float cooldownTimer;
     private TowerStats towerStats;
+    public bool controlledByPlayer;
     private void Awake()
     {
         towerStats = GetComponent<TowerStats>();
@@ -30,10 +31,12 @@ public class ShootsFireBalls : MonoBehaviour
                 if (fireBallTemp.TryGetComponent<FireBallController>(out fireBallControllerTemp))
                 {
                     fireBallControllerTemp.towerStats = towerStats;
+                    fireBallControllerTemp.controlledByPlayer = false;
                 }
                 else if (fireBallTemp.TryGetComponent<ClusterFireballController>(out clusterFireballControllerTemp))
                 {
                     clusterFireballControllerTemp.towerStats = towerStats;
+                    clusterFireballControllerTemp.controlledByPlayer = false;
                 }
                 cooldownTimer = Time.time;
             }
@@ -52,11 +55,13 @@ public class ShootsFireBalls : MonoBehaviour
             {
                 fireBallControllerTemp.towerStats = towerStats;
                 fireBallControllerTemp.disableDuration = 0;
+                fireBallControllerTemp.controlledByPlayer = true;
             }
             else if (fireBallTemp.TryGetComponent<ClusterFireballController>(out clusterFireballControllerTemp))
             {
                 clusterFireballControllerTemp.towerStats = towerStats;
                 clusterFireballControllerTemp.disableDuration = .5f;
+                clusterFireballControllerTemp.controlledByPlayer = true;
             }
             cooldownTimer = Time.time;
         }

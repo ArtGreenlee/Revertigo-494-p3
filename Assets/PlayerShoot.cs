@@ -53,6 +53,7 @@ public class PlayerShoot : MonoBehaviour
                 else if (tower.TryGetComponent<ShootsFireBalls>(out shootsFireballs))
                 {
                     shootsFireballs.ShootFireball(transform.forward);
+                    shootsFireballs.controlledByPlayer = true;
                 }
             }
         }
