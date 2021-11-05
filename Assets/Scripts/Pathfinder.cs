@@ -32,7 +32,7 @@ public class Pathfinder : MonoBehaviour
     private List<HashSet<Vector3>> pathVectors;
     private List<bool> finishedPaths;
     private WallStorage wallStorage;
-    private TowerPlacer towerPlacer;
+    private WallPlacer towerPlacer;
     private int speedThreshold;
     private const int speedThresholdTrigger = 1000;
     private int currentCount;
@@ -48,7 +48,7 @@ public class Pathfinder : MonoBehaviour
 
     private void Awake()
     {
-        towerPlacer = GameObject.Find("GameController").GetComponent<TowerPlacer>();
+        towerPlacer = GameObject.Find("GameController").GetComponent<WallPlacer>();
         wallStorage = GameObject.Find("GameController").GetComponent<WallStorage>();
         wallStorage.pathfinders.Add(this);
         speedThreshold = 5;
@@ -423,7 +423,7 @@ public class Pathfinder : MonoBehaviour
                 yield return new WaitForSeconds(.5f);
             }
 
-            towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
+            //towerPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
             StartCoroutine(findPathBetweenPointsLyft(startVec, endVec, pathIndex));
             yield break;
         }

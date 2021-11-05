@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TowerStats : MonoBehaviour
 {
-
     public bool slowsEnemy;
     public bool canCriticallyHit;
     public bool aoe;
@@ -19,4 +18,7 @@ public class TowerStats : MonoBehaviour
     public float aoe_range;
     public float cooldown;
     public float bulletSpeed;
+
+    public int numberOfBulletsPerShot;
+    public enum shotSpread { Standard, Cone, SideBySide}
 }

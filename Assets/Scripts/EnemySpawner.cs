@@ -6,7 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemy;
     private Pathfinder pathFinder;
-    private TowerPlacer towerPlacer;
+    private WallPlacer towerPlacer;
     private List<List<Vector3> > enemyPath;
     public int numEnemiesPerRound;
     private EnemyStorage enemyStorage;
@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
     private void Awake()
     {
         pathFinder = GetComponent<Pathfinder>();
-        towerPlacer = GameObject.Find("GameController").GetComponent<TowerPlacer>();
+        towerPlacer = GameObject.Find("GameController").GetComponent<WallPlacer>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
     }
     private void Start()

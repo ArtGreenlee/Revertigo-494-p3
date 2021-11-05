@@ -24,7 +24,7 @@ public class FloatingDamageText : MonoBehaviour
     void Start()
     {
         StartCoroutine(growShrinkFade());
-        Vector3 randomOffset = Random.insideUnitCircle / 2;
+        Vector3 randomOffset = Random.insideUnitCircle;
         transform.Translate((cameraTransform.position - transform.position).normalized + randomOffset);
     }
 
@@ -32,7 +32,7 @@ public class FloatingDamageText : MonoBehaviour
     void Update()
     {
         transform.rotation = Quaternion.LookRotation(transform.position - cameraTransform.position);
-        transform.Translate(transform.up * Time.deltaTime);
+        transform.Translate(transform.up * Time.deltaTime * 1.2f);
     }
 
     private IEnumerator growShrinkFade()
@@ -47,12 +47,12 @@ public class FloatingDamageText : MonoBehaviour
         }
         yield return new WaitForSeconds(.1f);
         startMagnitute = rectTransform.localScale.magnitude;
-        while (rectTransform.localScale.magnitude > startMagnitute - .2f)
+        while (rectTransform.localScale.magnitude > startMagnitute - .3f)
         {
             Color curColor = textMesh.color;
-            curColor.a -= 1 * Time.deltaTime;
+            curColor.a -= 2 * Time.deltaTime;
             textMesh.color = curColor;
-            float decrease = -.02f * Time.deltaTime;
+            float decrease = -.1f * Time.deltaTime;
             Vector3 newScale = new Vector3(rectTransform.localScale.x + decrease, rectTransform.localScale.y + decrease, rectTransform.localScale.z + decrease);
             rectTransform.localScale = newScale;
             yield return new WaitForEndOfFrame();

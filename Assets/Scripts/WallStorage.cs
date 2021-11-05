@@ -7,10 +7,14 @@ public class WallStorage : MonoBehaviour
     private Dictionary<Vector3, GameObject> storage = new Dictionary<Vector3, GameObject>();
     public Dictionary<GameObject, GameObject> wallAndTowers = new Dictionary<GameObject, GameObject>();
     Dictionary<Vector3, int> duplicates = new Dictionary<Vector3, int>();
-    TowerPlacer towerPlacer;
+    private WallPlacer wallPlacer;
     public List<Pathfinder> pathfinders;
     private Stack<GameObject> wallStack;
 
+    private void Awake()
+    {
+        wallPlacer = GetComponent<WallPlacer>();
+    }
 
     private void Update()
     {
@@ -37,7 +41,6 @@ public class WallStorage : MonoBehaviour
     void Start()
     {
         wallStack = new Stack<GameObject>();
-        towerPlacer = GetComponent<TowerPlacer>();
     }
 
     public bool isWall(Vector3 checkVec)

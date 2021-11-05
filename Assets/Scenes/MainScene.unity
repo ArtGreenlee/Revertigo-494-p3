@@ -1803,19 +1803,7 @@ MonoBehaviour:
   shadowWall: {fileID: 8003085649397535219, guid: c3aeed2409bafc24aa4eae540f04dccd,
     type: 3}
   wall: {fileID: 1985564498679554583, guid: de47b48e6d89ad24bb6f6c83bbcae1fc, type: 3}
-  shadowTower: {fileID: 2335333269562642696, guid: 9ce6ce26983e0504b91e1bb88f1b2b90,
-    type: 3}
   onPlacementEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
-  debugMode: 0
-  towerPlacementEnabled: 1
-  debugRoster: []
-  gemRoster:
-  - {fileID: 1295874507230250574, guid: be57a0b78d32e450788f1e795f31aac0, type: 3}
-  - {fileID: 2316449276373684764, guid: 60e2b97239ddca54cb96274189d72e3c, type: 3}
-  - {fileID: 5996220971690792234, guid: 9e0557a4a0ffb44249ac95f8cc2cbf14, type: 3}
-  - {fileID: 3352053421576041292, guid: 0eb7a7e06af6c41d0884752d0c78ca82, type: 3}
-  - {fileID: 6295010870351937091, guid: 9ee3e41aee2ee47b09d04ee24cc22682, type: 3}
-  - {fileID: 1500977303583501118, guid: 67de91da6d357884280607c513a8ec78, type: 3}
 --- !u!114 &1411751689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2221,7 +2209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615446032}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: -2}
+  m_LocalPosition: {x: -0, y: 0, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 937717176}
@@ -2256,7 +2244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1880758157}
-  distanceFromZero: 2
+  distanceFromZero: 8
   zoomAcceleration: 5
   zoomDecel: 0.4
   rotateSpeed: 0
@@ -2372,6 +2360,8 @@ GameObject:
   - component: {fileID: 1880758163}
   - component: {fileID: 1880758165}
   - component: {fileID: 1880758164}
+  - component: {fileID: 1880758166}
+  - component: {fileID: 1880758167}
   m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
@@ -2392,7 +2382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  rotateSpeed: 14
+  rotateSpeed: 3
   mainCamera: {fileID: 1615446032}
 --- !u!65 &1880758159
 BoxCollider:
@@ -2498,20 +2488,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784ba9d6e741fd14b877cc68bbefeeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowsEnemy: 0
+  slowsEnemy: 1
   canCriticallyHit: 0
   aoe: 1
   range: 0
   numTargets: 0
-  damageMin: 10
-  damageMax: 20
+  damageMin: 5
+  damageMax: 10
   critChance: 0
   critMult: 0
-  slowPercent: 0
-  slowDuration: 0
+  slowPercent: 0.8
+  slowDuration: 5
   aoe_range: 2
   cooldown: 0.2
-  bulletSpeed: 20
+  bulletSpeed: 18
+  numberOfBulletsPerShot: 0
 --- !u!114 &1880758165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2526,6 +2517,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
   knockBackForce: 1.75
+--- !u!114 &1880758166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880758157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23558ea807bd38046a6d165870e4ab3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1880758167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880758157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f309d4b288b843e4baf492fc320a3e2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxGemInventory: 5
+  debugMode: 1
+  towerPlacementEnabled: 0
+  inventoryDistanceFromPlayer: 2
+  debugRoster:
+  - {fileID: 1295874507230250574, guid: 1c7b4cc7605f978438b633cd91773085, type: 3}
+  towerRoster: []
 --- !u!1 &1923379762
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,25 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerPlacer : MonoBehaviour
+public class WallPlacer : MonoBehaviour
 {
     public GameObject shadowWall;
     public GameObject wall;
     private WallStorage wallStorage;
     private EnemyStorage enemyStorage;
-    public GameObject shadowTower;
+    //public GameObject shadowTower;
     private Pathfinder pathFinder;
     private HashSet<Vector3> checkPointVectors;
     public GameObject onPlacementEffect;
-    SnapToPosition CameraMovement;
     MeshRenderer shadowRenderer;
     MeshRenderer wallRenderer;
-    public bool debugMode;
-    public bool towerPlacementEnabled;
-
-    public List<GameObject> debugRoster;
-
-    public List<GameObject> gemRoster;
+    
     // Start is called before the first frame update
 
     private void Awake()
@@ -48,17 +42,14 @@ public class TowerPlacer : MonoBehaviour
             }
         }
         shadowWall = Instantiate(shadowWall, new Vector3(25,0,0), new Quaternion());
-        shadowTower = Instantiate(shadowTower, new Vector3(25, 0, 0), new Quaternion());
-        CameraMovement = Camera.main.GetComponent<SnapToPosition>();
-        shadowRenderer = shadowTower.GetComponent<MeshRenderer>();
+        //shadowTower = Instantiate(shadowTower, new Vector3(25, 0, 0), new Quaternion());
+        //shadowRenderer = shadowTower.GetComponent<MeshRenderer>();
         wallRenderer = shadowWall.GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        shadowRenderer.enabled = !CameraMovement.isLerping;
-        wallRenderer.enabled = !CameraMovement.isLerping;
         RaycastHit hit;
         Vector2 mousePosition = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
@@ -76,29 +67,29 @@ public class TowerPlacer : MonoBehaviour
                 shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
                 shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
                 
-                if (validTowerPlacement(curPoint) && towerPlacementEnabled)
+                /*if (validTowerPlacement(curPoint) && towerPlacementEnabled)
                 {
-                    shadowTower.transform.position = shadowWall.transform.rotation * Vector3.forward * -1.5f + shadowWall.transform.position;
-                    shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
+                    //shadowTower.transform.position = shadowWall.transform.rotation * Vector3.forward * -1.5f + shadowWall.transform.position;
+                    //shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
                 }
                 else
                 {
-                    shadowTower.transform.position = new Vector3(25, 0, 0);
-                }
+                    //shadowTower.transform.position = new Vector3(25, 0, 0);
+                }*/
                 if (Input.GetMouseButtonDown(1))
                 {
                     GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
-                    GameObject newTower = Instantiate(getRandomTower(), shadowTower.transform.position, shadowTower.transform.rotation);
-                    Instantiate(onPlacementEffect, shadowTower.transform.position, shadowTower.transform.rotation);
-                    wallStorage.attachTowerToWall(newTower, newWall);
-                    shadowTower.transform.position = new Vector3(25, 0, 0);
+                    //GameObject newTower = Instantiate(getRandomTower(), shadowTower.transform.position, shadowTower.transform.rotation);
+                    //Instantiate(onPlacementEffect, shadowTower.transform.position, shadowTower.transform.rotation);
+                    //wallStorage.attachTowerToWall(newTower, newWall);
+                    //shadowTower.transform.position = new Vector3(25, 0, 0);
                     shadowWall.transform.position = new Vector3(25, 0, 0);
                     wallStorage.addWall(curPoint, newWall);
                 }
             }
             else
             {
-                shadowTower.transform.position = new Vector3(25, 0, 0);
+                //shadowTower.transform.position = new Vector3(25, 0, 0);
                 shadowWall.transform.position = new Vector3(25, 0, 0);
             }
         }
@@ -109,14 +100,7 @@ public class TowerPlacer : MonoBehaviour
         }*/
     }
 
-    private GameObject getRandomTower()
-    {
-        if (debugMode)
-        {
-            return debugRoster[Random.Range(0, debugRoster.Count)];
-        }
-        return gemRoster[Random.Range(0, gemRoster.Count)];
-    }
+    
 
     private bool isCheckpoint(Vector3 checkVec)
     {

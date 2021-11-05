@@ -35,7 +35,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 if (stats.canCriticallyHit)
                 {
-                    if (Random.Range(0f, 1f) > stats.critChance)
+                    if (Random.Range(0f, 1f) < stats.critChance)
                     {
                         slowEnemy(stats.slowPercent, stats.slowDuration);
                     }
