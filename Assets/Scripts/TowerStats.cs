@@ -18,6 +18,7 @@ public class TowerStats : MonoBehaviour
     public float aoe_range;
     public float cooldown;
     public float bulletSpeed;
+    public Color trailRendererColor;
 
     public int numberOfBulletsPerShot;
     public enum shotSpread { Standard, Cone, SideBySide}

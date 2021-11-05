@@ -44,7 +44,16 @@ public class PlayerShoot : MonoBehaviour
 
             foreach (GameObject tower in towerInventory.playerInventory)
             {
-                tower.GetComponent<ShootsBullets>().shootBullet(playerInputControl.currentLookPoint - tower.transform.position + Random.insideUnitSphere / 2);
+                ShootsBullets shootsBullets;
+                ShootsFireBalls shootsFireballs;
+                if (tower.TryGetComponent<ShootsBullets>(out shootsBullets))
+                {
+                    shootsBullets.shootBullet(playerInputControl.currentLookPoint - tower.transform.position + Random.insideUnitSphere / 1.5f);
+                }
+                else if (tower.TryGetComponent<ShootsFireBalls>(out shootsFireballs))
+                {
+                    shootsFireballs.ShootFireball(transform.forward);
+                }
             }
         }
     }

@@ -11,9 +11,11 @@ public class BulletController : MonoBehaviour
     private Rigidbody rb;
     public GameObject onHitAoeEffect;
     private EnemyStorage enemyStorage;
+    private TrailRenderer trailRenderer;
     // Start is called before the first frame update
     private void Awake()
     {
+        trailRenderer = GetComponent<TrailRenderer>();
         enemyStorage = EnemyStorage.instance;
         sphereCollider = GetComponent<SphereCollider>();
         rb = GetComponent<Rigidbody>();
@@ -22,7 +24,7 @@ public class BulletController : MonoBehaviour
 
     void Start()
     {
-        
+        trailRenderer.startColor = towerStats.trailRendererColor;
     }
 
     // Update is called once per frame

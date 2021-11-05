@@ -9,11 +9,21 @@ public class ClusterFireballController : MonoBehaviour
     public GameObject fireBall;
     public TowerStats towerStats;
     private Rigidbody rb;
+    public float disableDuration;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Playfield") || other.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("big explosion");
+            Destroy(gameObject);
+        }
     }
 
     private List<GameObject> getTargets()
@@ -47,7 +57,7 @@ public class ClusterFireballController : MonoBehaviour
     private IEnumerator Start()
     {
         rb.angularVelocity = Random.onUnitSphere * 3;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(disableDuration);
         Vector3 side = UtilityFunctions.getClosestSide(transform.position);
         List<GameObject> targets = getTargets();
         List<Vector3> launchDirections = UtilityFunctions.sideVectors;

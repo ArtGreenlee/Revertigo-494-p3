@@ -2456,7 +2456,7 @@ Transform:
   m_GameObject: {fileID: 1880758157}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 6}
-  m_LocalScale: {x: 1, y: 1, z: 2}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
@@ -2503,6 +2503,7 @@ MonoBehaviour:
   aoe_range: 1.5
   cooldown: 0.2
   bulletSpeed: 20
+  trailRendererColor: {r: 0, g: 0, b: 0, a: 0}
   numberOfBulletsPerShot: 0
 --- !u!114 &1880758165
 MonoBehaviour:
@@ -2517,7 +2518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
-  knockBackForce: 1
+  knockBackForce: 0
 --- !u!114 &1880758166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2543,14 +2544,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxGemInventory: 5
-  debugMode: 1
+  debugMode: 0
   towerPlacementEnabled: 0
-  inventoryDistanceFromPlayer: 2
+  inventoryDistanceFromPlayer: 1.5
   towerSnapSpeed: 5
   playerInventory: []
   debugRoster:
   - {fileID: 1295874507230250574, guid: 1c7b4cc7605f978438b633cd91773085, type: 3}
-  towerRoster: []
+  towerRoster:
+  - {fileID: 6295010870351937091, guid: 82b7e8fad8308ed4cb407bbaa7e9f6d4, type: 3}
+  - {fileID: 1295874507230250574, guid: 1c7b4cc7605f978438b633cd91773085, type: 3}
+  - {fileID: 3352053421576041292, guid: a36e7de485185644884e4d6a03918aaa, type: 3}
+  - {fileID: 5996220971690792234, guid: 1f7e3583f07ac2a4787c3fd2e5c57412, type: 3}
+  - {fileID: 2316449276373684764, guid: fa9ee0c353bf14a48bed9e232a048f2a, type: 3}
 --- !u!1 &1923379762
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,9 +35,31 @@ public class ShootsFireBalls : MonoBehaviour
                 {
                     clusterFireballControllerTemp.towerStats = towerStats;
                 }
-                
                 cooldownTimer = Time.time;
             }
         }
+    }
+     
+    public void ShootFireball(Vector3 direction)
+    {
+        if (Time.time - cooldownTimer > towerStats.cooldown)
+        {
+            GameObject fireBallTemp = Instantiate(fireBall, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
+            fireBallTemp.GetComponent<Rigidbody>().AddForce(direction * 7, ForceMode.Impulse);
+            FireBallController fireBallControllerTemp;
+            ClusterFireballController clusterFireballControllerTemp;
+            if (fireBallTemp.TryGetComponent<FireBallController>(out fireBallControllerTemp))
+            {
+                fireBallControllerTemp.towerStats = towerStats;
+                fireBallControllerTemp.disableDuration = 0;
+            }
+            else if (fireBallTemp.TryGetComponent<ClusterFireballController>(out clusterFireballControllerTemp))
+            {
+                clusterFireballControllerTemp.towerStats = towerStats;
+                clusterFireballControllerTemp.disableDuration = .5f;
+            }
+            cooldownTimer = Time.time;
+        }
+        
     }
 }

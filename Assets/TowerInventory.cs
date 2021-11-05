@@ -26,6 +26,7 @@ public class TowerInventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             GameObject newTower = Instantiate(getRandomTower(), transform.position, new Quaternion());
+            newTower.transform.localScale = new Vector3(newTower.transform.localScale.x / 2, newTower.transform.localScale.y / 2, newTower.transform.localScale.z / 2);
             playerInventory.Add(newTower);
             newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;
         }
@@ -34,8 +35,6 @@ public class TowerInventory : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
-
         float degreesBetween = (2 * Mathf.PI) / playerInventory.Count;
         for (int i = 0; i < playerInventory.Count; i++)
         {
