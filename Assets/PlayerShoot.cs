@@ -17,7 +17,7 @@ public class PlayerShoot : MonoBehaviour
         playerInputControl = GetComponent<PlayerInputControl>();
         towerInventory = GetComponent<TowerInventory>();
         rb = GetComponent<Rigidbody>();
-        objectPooler = ObjectPooler.Instance;
+        
         towerStats = GetComponent<TowerStats>();
     }
 
@@ -25,6 +25,7 @@ public class PlayerShoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        objectPooler = ObjectPooler.Instance;
         cooldownUtility = 0;
     }
 

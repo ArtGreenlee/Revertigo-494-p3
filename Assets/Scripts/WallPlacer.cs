@@ -9,7 +9,6 @@ public class WallPlacer : MonoBehaviour
     private WallStorage wallStorage;
     private EnemyStorage enemyStorage;
     //public GameObject shadowTower;
-    private Pathfinder pathFinder;
     private HashSet<Vector3> checkPointVectors;
     public GameObject onPlacementEffect;
     MeshRenderer shadowRenderer;
@@ -19,13 +18,13 @@ public class WallPlacer : MonoBehaviour
 
     private void Awake()
     {
-        pathFinder = GetComponent<Pathfinder>();
-        wallStorage = GetComponent<WallStorage>();
-        enemyStorage = GetComponent<EnemyStorage>();
+        
     }
 
     void Start()
     {
+        wallStorage = WallStorage.instance;
+        enemyStorage = EnemyStorage.instance;
         checkPointVectors = new HashSet<Vector3>();
         foreach (GameObject checkPoint in GameObject.FindGameObjectsWithTag("Checkpoint"))
         {
@@ -107,25 +106,5 @@ public class WallPlacer : MonoBehaviour
         return checkPointVectors.Contains(checkVec);
     }
 
-    public static bool validTowerPlacement(Vector3 checkVec)
-    {
-        Vector3 side = UtilityFunctions.getClosestSide(checkVec);
-        if (side == Vector3.forward || side == Vector3.back)
-        {
-            return Mathf.Abs(checkVec.x) < 14 && Mathf.Abs(checkVec.y) < 14;
-        }
-        else if (side == Vector3.left || side == Vector3.right)
-        {
-            return Mathf.Abs(checkVec.z) < 14 && Mathf.Abs(checkVec.y) < 14;
-        }
-        else if (side == Vector3.up || side == Vector3.down)
-        {
-            return Mathf.Abs(checkVec.x) < 14 && Mathf.Abs(checkVec.z) < 14;
-        }
-        else
-        {
-            Debug.Log("ERROR: SIDE DOES NOT EXIST");
-            return false;
-        }
-    }
+    
 }

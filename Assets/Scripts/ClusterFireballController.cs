@@ -15,9 +15,9 @@ public class ClusterFireballController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        enemyStorage = EnemyStorage.instance.GetComponent<EnemyStorage>();
+        
     }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Playfield") || other.gameObject.CompareTag("Enemy"))
@@ -57,6 +57,7 @@ public class ClusterFireballController : MonoBehaviour
 
     private IEnumerator Start()
     {
+        enemyStorage = EnemyStorage.instance;
         rb.angularVelocity = Random.onUnitSphere * 3;
         yield return new WaitForSeconds(disableDuration);
         Vector3 side = UtilityFunctions.getClosestSide(transform.position);

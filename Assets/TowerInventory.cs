@@ -6,6 +6,8 @@ public class TowerInventory : MonoBehaviour
 {
     public int maxGemInventory;
 
+    public static TowerInventory instance;
+
     public bool debugMode;
     public bool towerPlacementEnabled;
     public float inventoryDistanceFromPlayer;
@@ -15,6 +17,14 @@ public class TowerInventory : MonoBehaviour
     public List<GameObject> debugRoster;
 
     public List<GameObject> towerRoster;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +33,7 @@ public class TowerInventory : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && playerInventory.Count < maxGemInventory)
         {
             GameObject newTower = Instantiate(getRandomTower(), transform.position, new Quaternion());
             newTower.transform.localScale = new Vector3(newTower.transform.localScale.x / 2, newTower.transform.localScale.y / 2, newTower.transform.localScale.z / 2);
@@ -42,7 +52,8 @@ public class TowerInventory : MonoBehaviour
             Vector3 position = transform.position;
             position.x += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
             position.z -= inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad);
-            //position.z += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
+            
+            position.z += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
 
 
             position.y += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);

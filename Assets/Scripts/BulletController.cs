@@ -16,7 +16,7 @@ public class BulletController : MonoBehaviour
     private void Awake()
     {
         trailRenderer = GetComponent<TrailRenderer>();
-        enemyStorage = EnemyStorage.instance;
+        
         sphereCollider = GetComponent<SphereCollider>();
         rb = GetComponent<Rigidbody>();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -24,6 +24,7 @@ public class BulletController : MonoBehaviour
 
     void Start()
     {
+        enemyStorage = EnemyStorage.instance;
         trailRenderer.startColor = towerStats.trailRendererColor;
     }
 

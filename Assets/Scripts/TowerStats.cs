@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TowerStats : MonoBehaviour
 {
+    public bool automaticallyShoots = false;
     public bool slowsEnemy;
     public bool canCriticallyHit;
     public bool aoe;

@@ -1752,7 +1752,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1411751690}
   - component: {fileID: 1411751689}
-  - component: {fileID: 1411751688}
   - component: {fileID: 1411751687}
   - component: {fileID: 1411751686}
   - component: {fileID: 1411751691}
@@ -1788,22 +1787,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathfinders: []
---- !u!114 &1411751688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1411751685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52c299488e029f846b1bf25663a1583b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shadowWall: {fileID: 8003085649397535219, guid: c3aeed2409bafc24aa4eae540f04dccd,
-    type: 3}
-  wall: {fileID: 1985564498679554583, guid: de47b48e6d89ad24bb6f6c83bbcae1fc, type: 3}
-  onPlacementEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
 --- !u!114 &1411751689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2125,7 +2108,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 45
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2166,7 +2149,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 1
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.5
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -2244,10 +2227,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1880758157}
-  distanceFromZero: 8
+  distanceFromZero: 12
   zoomAcceleration: 5
   zoomDecel: 0.4
-  rotateSpeed: 0
+  rotateSpeed: 5
 --- !u!1 &1674321091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2362,6 +2345,8 @@ GameObject:
   - component: {fileID: 1880758164}
   - component: {fileID: 1880758166}
   - component: {fileID: 1880758167}
+  - component: {fileID: 1880758169}
+  - component: {fileID: 1880758168}
   m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
@@ -2489,6 +2474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784ba9d6e741fd14b877cc68bbefeeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  automaticallyShoots: 0
   slowsEnemy: 0
   canCriticallyHit: 0
   aoe: 1
@@ -2500,10 +2486,10 @@ MonoBehaviour:
   critMult: 0
   slowPercent: 0.8
   slowDuration: 5
-  aoe_range: 1.5
+  aoe_range: 3
   cooldown: 0.2
   bulletSpeed: 20
-  trailRendererColor: {r: 0, g: 0, b: 0, a: 0}
+  trailRendererColor: {r: 0, g: 0, b: 0, a: 1}
   numberOfBulletsPerShot: 0
 --- !u!114 &1880758165
 MonoBehaviour:
@@ -2557,6 +2543,34 @@ MonoBehaviour:
   - {fileID: 3352053421576041292, guid: a36e7de485185644884e4d6a03918aaa, type: 3}
   - {fileID: 5996220971690792234, guid: 1f7e3583f07ac2a4787c3fd2e5c57412, type: 3}
   - {fileID: 2316449276373684764, guid: fa9ee0c353bf14a48bed9e232a048f2a, type: 3}
+--- !u!114 &1880758168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880758157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 320c3242866b3f644bb4d0f2807632ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1880758169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880758157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c299488e029f846b1bf25663a1583b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowWall: {fileID: 8003085649397535219, guid: c3aeed2409bafc24aa4eae540f04dccd,
+    type: 3}
+  wall: {fileID: 1985564498679554583, guid: de47b48e6d89ad24bb6f6c83bbcae1fc, type: 3}
+  onPlacementEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
 --- !u!1 &1923379762
 GameObject:
   m_ObjectHideFlags: 0

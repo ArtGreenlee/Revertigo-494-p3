@@ -21,9 +21,8 @@ public class FireBallController : MonoBehaviour
 
     private void Awake()
     {
-        playerInputControl = PlayerInputControl.instance;
+        
         sphereCollider = GetComponent<SphereCollider>();
-        enemyStorage = EnemyStorage.instance.GetComponent<EnemyStorage>();
         rb = GetComponent<Rigidbody>();
         trailRenderer = GetComponent<TrailRenderer>();
     }
@@ -31,6 +30,8 @@ public class FireBallController : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        enemyStorage = EnemyStorage.instance;
+        playerInputControl = PlayerInputControl.instance;
         thrusting = false;
         trailRenderer.enabled = false;
         sphereCollider.enabled = false;

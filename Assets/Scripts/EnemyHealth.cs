@@ -20,7 +20,7 @@ public class EnemyHealth : MonoBehaviour
     public void setMaxHealth(float maxHealthIn)
     {
         maxHealth = maxHealthIn;
-        objectPooler = ObjectPooler.Instance;
+        
     }
 
     public float getMaxHealth()
@@ -41,6 +41,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
+        objectPooler = ObjectPooler.Instance;
         currentHealth = maxHealth;
     }
 

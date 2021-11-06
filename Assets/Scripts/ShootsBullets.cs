@@ -55,29 +55,30 @@ public class ShootsBullets : MonoBehaviour
         }
         List<GameObject> enemyRemovalBuffer = new List<GameObject>();
         List<GameObject> tempTargets = targets.Keys.ToList();
-        foreach (GameObject target in tempTargets)
+        if (towerStats.automaticallyShoots)
         {
-            if (target != null &&
-                enemyStorage.enemyIsAlive(target) &&
-                (target.transform.position - transform.position).sqrMagnitude < towerStats.range * towerStats.range)
+            foreach (GameObject target in tempTargets)
             {
-                if (Time.time - targets[target] > towerStats.cooldown)
+                if (target != null &&
+                    enemyStorage.enemyIsAlive(target) &&
+                    (target.transform.position - transform.position).sqrMagnitude < towerStats.range * towerStats.range)
                 {
-                    //shoot
-                    shootBullet(transform.position - target.transform.position);
-                    targets[target] = Time.time;
+                    if (Time.time - targets[target] > towerStats.cooldown)
+                    {
+                        shootBullet(transform.position - target.transform.position);
+                        targets[target] = Time.time;
+                    }
+                }
+                else
+                {
+                    enemyRemovalBuffer.Add(target);
                 }
             }
-            else
+            foreach (GameObject enemy in enemyRemovalBuffer)
             {
-                enemyRemovalBuffer.Add(target);
+                targets.Remove(enemy);
             }
         }
-        foreach (GameObject enemy in enemyRemovalBuffer)
-        {
-            targets.Remove(enemy);
-        }
-
         
     }
 

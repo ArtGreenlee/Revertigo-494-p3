@@ -12,14 +12,19 @@ public class ShootsFireBalls : MonoBehaviour
     private void Awake()
     {
         towerStats = GetComponent<TowerStats>();
-        enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
+        
         cooldownTimer = 0;
+    }
+
+    private void Start()
+    {
+        enemyStorage = EnemyStorage.instance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.time - cooldownTimer > towerStats.cooldown)
+        if (towerStats.automaticallyShoots && Time.time - cooldownTimer > towerStats.cooldown)
         {
             if (enemyStorage.getClosestEnemyToPointWithinRange(transform.position, towerStats.range) != null)
             {
