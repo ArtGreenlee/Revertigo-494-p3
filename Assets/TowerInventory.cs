@@ -36,7 +36,6 @@ public class TowerInventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G) && playerInventory.Count < maxGemInventory)
         {
             GameObject newTower = Instantiate(getRandomTower(), transform.position, new Quaternion());
-            newTower.transform.localScale = new Vector3(newTower.transform.localScale.x / 2, newTower.transform.localScale.y / 2, newTower.transform.localScale.z / 2);
             playerInventory.Add(newTower);
             newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;
         }
@@ -63,13 +62,36 @@ public class TowerInventory : MonoBehaviour
         {
             Vector3 vecRotation = transform.rotation.eulerAngles;
             Vector3 position = transform.position;
-            position.x += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
-            position.z -= inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad);
+
+            float xDiff = inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
+            float yDiff = inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
+            float zDiffHorizontal = inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad) * -1;
+            float zDiffVertical = inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
+
+            //i dont know why, I shouldnt HAVE to know why, but for whatever god awful reason this is the closest i can get to the desired behaviour.
+
+            //float zDiffHorizontal = xDiff;
+            //float zDiffVertical = yDiff;
+            //position.z += zDiffHorizontal - zDiffVertical;
+            //.Log(zDiffHorizontal);
+
+            position.z += zDiffHorizontal + zDiffVertical;
+            position.x += xDiff;
+            position.y += yDiff;
             
-            //position.z += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
+            
+            //position.z += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
 
+            /*position.x += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad);
+            position.x -= inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
 
-            position.y += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
+            position.z += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
+            position.z -= inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad);
+
+            position.y += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
+            position.y -= inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
+            */
+
             //position.z += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
             playerInventory[i].transform.position = Vector3.Slerp(playerInventory[i].transform.position, position, towerSnapSpeed * Time.deltaTime);
             //PlayerInventory[i].transform.position = position;

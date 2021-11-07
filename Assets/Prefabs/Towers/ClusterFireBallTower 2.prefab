@@ -34,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 2316449276373684764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.48043117, y: -1.4537271, z: -10.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireBall: {fileID: 7095344946395577795, guid: 60b240ac263ee43e881e62e893b2f9e4,
     type: 3}
+  controlledByPlayer: 0
 --- !u!114 &1427899370295128172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784ba9d6e741fd14b877cc68bbefeeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  automaticallyShoots: 0
   slowsEnemy: 0
   canCriticallyHit: 0
   aoe: 1
@@ -156,6 +158,15 @@ MonoBehaviour:
   cooldown: 5
   bulletSpeed: 0
   trailRendererColor: {r: 0.990566, g: 0.0046724924, b: 0.0046724924, a: 0}
+  upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
+  specialTower: 0
+  towerLevelMeshList:
+  - {fileID: 4300000, guid: 6bd1688c4b7d0499586a92ae1b8d925a, type: 3}
+  - {fileID: 4300000, guid: 4ee4ee93a9a684deca32b2f27ff174b0, type: 3}
+  - {fileID: 4300000, guid: 12749e99d620c4aa0923fe97ba0de20c, type: 3}
+  - {fileID: 4300000, guid: 79b2a5cdd70824e3d9b3acf2ddc79f4d, type: 3}
+  - {fileID: 4300000, guid: 04a69148d0283440c96e0a776ed3bf53, type: 3}
+  - {fileID: 4300000, guid: e53910dd9ff52433db8fc7f84a2318bb, type: 3}
   numberOfBulletsPerShot: 0
 --- !u!114 &7516395724962424619
 MonoBehaviour:

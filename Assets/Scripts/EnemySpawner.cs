@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     public int numEnemiesPerRound;
     private EnemyStorage enemyStorage;
     public float enemyStartingHealth;
+    public float startDelay;
 
     private void Awake()
     {
@@ -18,8 +19,9 @@ public class EnemySpawner : MonoBehaviour
         towerPlacer = GameObject.Find("GameController").GetComponent<WallPlacer>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
     }
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitForSeconds(startDelay);
         StartCoroutine(startWave());
     }
 

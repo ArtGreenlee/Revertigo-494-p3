@@ -8,6 +8,7 @@ public class BulletController : MonoBehaviour
     private MeshRenderer meshRenderer;
     private SphereCollider sphereCollider;
     public GameObject onHitEffect;
+    public GameObject criticalEffect;
     private Rigidbody rb;
     public GameObject onHitAoeEffect;
     private EnemyStorage enemyStorage;
@@ -26,6 +27,7 @@ public class BulletController : MonoBehaviour
     {
         enemyStorage = EnemyStorage.instance;
         trailRenderer.startColor = towerStats.trailRendererColor;
+        
     }
 
     // Update is called once per frame
@@ -34,34 +36,93 @@ public class BulletController : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Instantiate(onHitEffect, transform.position, new Quaternion());
-            StartCoroutine(fadeAway(other.gameObject.transform));
-        }
+        StartCoroutine(fadeAway(collision.gameObject.transform));
+
+        List<GameObject> hitEnemies = new List<GameObject>();
+
         if (towerStats.aoe)
         {
-            if (other.gameObject.CompareTag("Enemy"))
-            {
-                Instantiate(onHitAoeEffect, transform.position, new Quaternion());
-            }
-            else
-            {
-                Instantiate(onHitAoeEffect, Vector3.Lerp(Vector3.zero, transform.position, .95f), new Quaternion());
-            }
+            UtilityFunctions.changeScaleOfTransform(Instantiate(onHitAoeEffect, collision.contacts[0].point, new Quaternion()).transform, towerStats.aoe_range);
             foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
             {
-                enemy.GetComponent<EnemyHealth>().takeDamage(Random.Range(towerStats.damageMin, towerStats.damageMax), true);
-                if (towerStats.slowsEnemy)
-                {
-                    enemy.GetComponent<EnemyMovement>().slowEnemy(towerStats.slowPercent, towerStats.slowDuration);
-                }
+                hitEnemies.Add(enemy);
             }
-            gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Instantiate(onHitEffect, collision.contacts[0].point, new Quaternion());
+            hitEnemies.Add(collision.gameObject);
         }
 
+        float damage = Random.Range(towerStats.damageMin, towerStats.damageMax);
+        if (towerStats.canCriticallyHit && Random.value > towerStats.critChance)
+        {
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                Instantiate(criticalEffect, collision.contacts[0].point, new Quaternion());
+            }
+            damage *= towerStats.critMult;
+        }
+
+        foreach (GameObject enemy in hitEnemies)
+        {
+            if (towerStats.slowsEnemy)
+            {
+                enemy.GetComponent<EnemyMovement>().slowEnemy(towerStats.slowPercent, towerStats.slowDuration);
+            }
+
+            EnemyHealth tempHealth = enemy.GetComponent<EnemyHealth>();
+            if (tempHealth.currentHealth - damage < 0)
+            {
+                towerStats.increaseKills();
+            }
+            tempHealth.takeDamage(damage, true);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        StartCoroutine(fadeAway(other.gameObject.transform));
+
+        List<GameObject> hitEnemies = new List<GameObject>();
+
+        if (towerStats.aoe)
+        {
+            UtilityFunctions.changeScaleOfTransform(Instantiate(onHitAoeEffect, other.transform.position, new Quaternion()).transform, towerStats.aoe_range);
+            foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
+            {
+                hitEnemies.Add(enemy);
+            }
+        }
+        else if (other.gameObject.CompareTag("Enemy"))
+        {
+            Instantiate(onHitEffect, other.transform.position, new Quaternion());
+            hitEnemies.Add(other.gameObject);
+        }
+
+        float damage = Random.Range(towerStats.damageMin, towerStats.damageMax);
+        if (towerStats.canCriticallyHit && Random.value > towerStats.critChance)
+        {
+            Instantiate(criticalEffect, Vector3.Lerp(transform.position, Vector3.zero, .05f), new Quaternion());
+            damage *= towerStats.critMult;
+        }
+
+        foreach (GameObject enemy in hitEnemies)
+        {
+            if (towerStats.slowsEnemy)
+            {
+                enemy.GetComponent<EnemyMovement>().slowEnemy(towerStats.slowPercent, towerStats.slowDuration);
+            }
+
+            EnemyHealth tempHealth = enemy.GetComponent<EnemyHealth>();
+            tempHealth.takeDamage(damage, true);
+            if (tempHealth == null)
+            {
+                towerStats.increaseKills();
+            }
+        }
 
     }
 

@@ -35,7 +35,9 @@ public class TowerPlacer : MonoBehaviour
                 shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
                 if (Input.GetMouseButtonDown(2))
                 {
+                    
                     StartCoroutine(placeTowerOnBoard(towerInventory.playerInventory[0], towerInventory.playerInventory[0].transform.position, shadowTower.transform.position, tempWall));
+                    wallStorage.attachTowerToWall(towerInventory.playerInventory[0], tempWall);
                     towerInventory.playerInventory.RemoveAt(0);
                 }
             }
@@ -74,19 +76,28 @@ public class TowerPlacer : MonoBehaviour
 
     private IEnumerator placeTowerOnBoard(GameObject tower, Vector3 start, Vector3 end, GameObject attachWall)
     {
+        //StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(tower.transform, 1, 1));
         while (Vector3.Distance(tower.transform.position, end) > .05f )
         {
             tower.transform.position = Vector3.Lerp(tower.transform.position, end, 3 * Time.deltaTime);
+            if (attachWall == null)
+            {
+                //UtilityFunctions.changeScaleOfTransform(tower.transform, .5f);
+                StopAllCoroutines();
+                
+                yield break;
+            }
             yield return new WaitForEndOfFrame();
         }
         if (attachWall == null)
         {
-            towerInventory.playerInventory.Add(tower);
+            //UtilityFunctions.changeScaleOfTransform(tower.transform, .5f);
+            StopAllCoroutines();
+            
             yield break;
         }
         else
         {
-            wallStorage.attachTowerToWall(tower, attachWall);
             tower.transform.position = end;
             tower.GetComponent<TowerStats>().automaticallyShoots = true;
         }

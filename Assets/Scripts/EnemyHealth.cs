@@ -47,12 +47,12 @@ public class EnemyHealth : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Bullet"))
+        /*if (other.gameObject.CompareTag("Bullet"))
         {
             TowerStats tempStats = other.gameObject.GetComponent<BulletController>().towerStats;
             float damage = Random.Range(tempStats.damageMin, tempStats.damageMax);
             takeDamage(damage, true);
-        }
+        }*/
     }
 
     public void takeDamage(float damage, bool flashingDamage)

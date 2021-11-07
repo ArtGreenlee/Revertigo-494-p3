@@ -22,8 +22,6 @@ public class CameraControllerTwo : MonoBehaviour
     {
         transform.position = Vector3.Lerp(transform.position, (Vector3.zero - player.transform.position).normalized * distanceFromZero, moveSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(player.transform.position), rotateSpeed * Time.deltaTime);
-
-        
     }
 
     private void Update()

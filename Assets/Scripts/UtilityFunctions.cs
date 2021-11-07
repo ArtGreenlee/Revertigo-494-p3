@@ -15,6 +15,17 @@ public class UtilityFunctions : MonoBehaviour
         Vector3.back
     };
 
+    public static List<float> killsToUpgrade = new List<float>
+    {
+        1,
+        15,
+        30,
+        50,
+        75
+    };
+
+    public List<Mesh> towerLevelMeshList;
+
     public static Quaternion getRotationawayFromSide(Vector3 vecIn)
     {
         Vector3 side = getClosestSide(vecIn);
@@ -188,9 +199,21 @@ public class UtilityFunctions : MonoBehaviour
         return true;
     }
 
-    public IEnumerator shrinkAndDisappear()
+    public static IEnumerator changeScaleOfTransformOverTime(Transform transform, float scale, float changeSpeed)
     {
-        yield return new WaitForEndOfFrame();
+        Vector3 startScale = transform.localScale;
+        Vector3 endScale = new Vector3(scale, scale, scale);
+        
+        while (startScale != endScale)
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, endScale, changeSpeed * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    public static void changeScaleOfTransform(Transform transform, float scale)
+    {
+        transform.localScale = new Vector3(scale, scale, scale);
     }
 
 }

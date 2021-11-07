@@ -445,7 +445,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1853792828}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &634957473
 GameObject:
@@ -691,6 +691,7 @@ MonoBehaviour:
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
   enemyStartingHealth: 100
+  startDelay: 60
 --- !u!114 &763991227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,6 +1036,7 @@ MonoBehaviour:
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
   enemyStartingHealth: 100
+  startDelay: 120
 --- !u!114 &913350419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1645,7 +1647,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1853792828}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1308395393
 GameObject:
@@ -1861,6 +1863,7 @@ MonoBehaviour:
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
   enemyStartingHealth: 100
+  startDelay: 180
 --- !u!114 &1539592335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1978,6 +1981,7 @@ MonoBehaviour:
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
   enemyStartingHealth: 100
+  startDelay: 0
 --- !u!114 &1580393135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2058,7 +2062,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1853792828}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1615446032
 GameObject:
@@ -2231,6 +2235,7 @@ MonoBehaviour:
   zoomAcceleration: 5
   zoomDecel: 0.4
   rotateSpeed: 5
+  moveSpeed: 2
 --- !u!1 &1674321091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2321,9 +2326,9 @@ Transform:
   m_LocalPosition: {x: -8, y: 16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1580393138}
   - {fileID: 281059164}
   - {fileID: 1085238383}
-  - {fileID: 1580393138}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2455,7 +2460,7 @@ Rigidbody:
   m_GameObject: {fileID: 1880758157}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 1
+  m_Drag: 2
   m_AngularDrag: 0.23
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -2481,14 +2486,14 @@ MonoBehaviour:
   range: 0
   numTargets: 0
   damageMin: 5
-  damageMax: 7
+  damageMax: 50
   critChance: 0
   critMult: 0
   slowPercent: 0.8
   slowDuration: 5
-  aoe_range: 3
-  cooldown: 0.2
-  bulletSpeed: 20
+  aoe_range: 2.5
+  cooldown: 0.5
+  bulletSpeed: 30
   trailRendererColor: {r: 0, g: 0, b: 0, a: 1}
   numberOfBulletsPerShot: 0
 --- !u!114 &1880758165
@@ -2529,7 +2534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f309d4b288b843e4baf492fc320a3e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxGemInventory: 5
+  maxGemInventory: 6
   debugMode: 0
   towerPlacementEnabled: 0
   inventoryDistanceFromPlayer: 1.5
@@ -2555,6 +2560,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320c3242866b3f644bb4d0f2807632ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shadowTower: {fileID: 2335333269562642696, guid: 9ce6ce26983e0504b91e1bb88f1b2b90,
+    type: 3}
 --- !u!114 &1880758169
 MonoBehaviour:
   m_ObjectHideFlags: 0
