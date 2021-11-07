@@ -40,29 +40,30 @@ public class TowerStats : MonoBehaviour
 
     public void increaseKills()
     {
+        if (gameObject.name != "Player")
+        {
+            kills++;
+            int tempLevel = level;
+            for (int i = 0; i < UtilityFunctions.killsToUpgrade.Count; i++)
+            {
+                if (kills >= UtilityFunctions.killsToUpgrade[i])
+                {
+                    tempLevel = i + 1;
+                }
+            }
+            //Debug.Log(tempLevel);
+            if (tempLevel != level)
+            {
+                level = tempLevel;
+                if (!specialTower)
+                {
+                    UtilityFunctions.changeScaleOfTransform(transform, transform.localScale.x + .1f);
+                    Instantiate(upgradeEffect, transform.position, new Quaternion());
+                    GetComponent<MeshFilter>().mesh = towerLevelMeshList[level];
+                }
+                //upgrade the tower;
+            }
+        }
         
-        kills++;
-        int tempLevel = level;
-        for (int i = 0; i < UtilityFunctions.killsToUpgrade.Count; i++)
-        {
-            if (kills >= UtilityFunctions.killsToUpgrade[i])
-            {
-                Debug.Log(i);
-                tempLevel = i + 1;
-            }
-        }
-        //Debug.Log(tempLevel);
-        if (tempLevel != level)
-        {
-            level = tempLevel;
-            if (!specialTower)
-            {
-                Debug.Log("tower upgraded");
-                StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(transform, transform.localScale.x + .1f, .5f));
-                Instantiate(upgradeEffect, transform.position, new Quaternion());
-                GetComponent<MeshFilter>().mesh = towerLevelMeshList[level];
-            }
-            //upgrade the tower;
-        }
     } 
 }

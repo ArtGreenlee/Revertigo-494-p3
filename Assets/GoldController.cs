@@ -15,13 +15,14 @@ public class GoldController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         rb.AddForce((player.transform.position - transform.position).normalized * atttraction);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("coin inactive");
         gameObject.SetActive(false);
     }
 }

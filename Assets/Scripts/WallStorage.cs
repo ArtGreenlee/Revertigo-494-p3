@@ -195,7 +195,6 @@ public class WallStorage : MonoBehaviour
             if (wallAndTowers.ContainsKey(wallIn))
             {
                 //RETURN Tower TO PLAYER INVENTORY;
-                UtilityFunctions.changeScaleOfTransform(wallAndTowers[wallIn].transform, .5f);
                 towerInventory.playerInventory.Add(wallAndTowers[wallIn]);
                 wallAndTowers.Remove(wallIn);
             }

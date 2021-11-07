@@ -83,6 +83,7 @@ public class EnemyHealth : MonoBehaviour
             wallStorage.pathfinders.Remove(pathfinder);
             Instantiate(onDeathEffect, transform.position, new Quaternion());
             Destroy(healthBar);
+            Debug.Log("enemy destroyed");
             Destroy(gameObject);
         }
     }

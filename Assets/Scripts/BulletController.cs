@@ -13,6 +13,8 @@ public class BulletController : MonoBehaviour
     public GameObject onHitAoeEffect;
     private EnemyStorage enemyStorage;
     private TrailRenderer trailRenderer;
+    private float lifeTime = 10;
+    private float lifeTimeStart;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -25,6 +27,7 @@ public class BulletController : MonoBehaviour
 
     void Start()
     {
+        lifeTimeStart = Time.time;
         enemyStorage = EnemyStorage.instance;
         trailRenderer.startColor = towerStats.trailRendererColor;
         
@@ -33,7 +36,10 @@ public class BulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Time.time - lifeTimeStart > lifeTime)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
