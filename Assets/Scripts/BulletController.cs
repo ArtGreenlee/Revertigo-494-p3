@@ -45,7 +45,7 @@ public class BulletController : MonoBehaviour
         if (towerStats.aoe)
         {
             UtilityFunctions.changeScaleOfTransform(Instantiate(onHitAoeEffect, collision.contacts[0].point, new Quaternion()).transform, towerStats.aoe_range);
-            foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
+            foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(collision.contacts[0].point, towerStats.aoe_range))
             {
                 hitEnemies.Add(enemy);
             }
@@ -57,7 +57,7 @@ public class BulletController : MonoBehaviour
         }
 
         float damage = Random.Range(towerStats.damageMin, towerStats.damageMax);
-        if (towerStats.canCriticallyHit && Random.value > towerStats.critChance)
+        if (towerStats.canCriticallyHit && Random.value < towerStats.critChance)
         {
             if (collision.gameObject.CompareTag("Enemy"))
             {

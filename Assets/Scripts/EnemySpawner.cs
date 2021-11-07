@@ -12,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
     private EnemyStorage enemyStorage;
     public float enemyStartingHealth;
     public float startDelay;
+    public float startInterval;
 
     private void Awake()
     {
@@ -39,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
             enemyStorage.addEnemy(newEnemy);
             newEnemy.GetComponent<EnemyHealth>().setMaxHealth(enemyStartingHealth + i * 2);
             newEnemy.GetComponent<EnemyMovement>().path = enemyPath;
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(startInterval);
         }
     }
 }

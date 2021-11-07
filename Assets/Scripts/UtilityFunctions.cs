@@ -17,7 +17,7 @@ public class UtilityFunctions : MonoBehaviour
 
     public static List<float> killsToUpgrade = new List<float>
     {
-        1,
+        5,
         15,
         30,
         50,

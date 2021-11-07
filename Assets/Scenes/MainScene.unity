@@ -692,6 +692,7 @@ MonoBehaviour:
   numEnemiesPerRound: 1000
   enemyStartingHealth: 100
   startDelay: 60
+  startInterval: 0
 --- !u!114 &763991227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -954,6 +955,10 @@ MonoBehaviour:
     prefab: {fileID: 6088574729931538350, guid: b96b5b4e223c0403784e8aba3914e6cb,
       type: 3}
     size: 1000
+  - tag: Gold
+    prefab: {fileID: 4981611155386590553, guid: 2789caed006def44c8290da6fc8dfd85,
+      type: 3}
+    size: 1000
 --- !u!4 &853922187
 Transform:
   m_ObjectHideFlags: 0
@@ -1037,6 +1042,7 @@ MonoBehaviour:
   numEnemiesPerRound: 1000
   enemyStartingHealth: 100
   startDelay: 120
+  startInterval: 0
 --- !u!114 &913350419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1801,6 +1807,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f36b34cac863541afdf5e45d4a859f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerLevelMeshList:
+  - {fileID: 4300000, guid: 6bd1688c4b7d0499586a92ae1b8d925a, type: 3}
+  - {fileID: 4300000, guid: 4ee4ee93a9a684deca32b2f27ff174b0, type: 3}
+  - {fileID: 4300000, guid: 12749e99d620c4aa0923fe97ba0de20c, type: 3}
+  - {fileID: 4300000, guid: 79b2a5cdd70824e3d9b3acf2ddc79f4d, type: 3}
+  - {fileID: 4300000, guid: 04a69148d0283440c96e0a776ed3bf53, type: 3}
+  - {fileID: 4300000, guid: e53910dd9ff52433db8fc7f84a2318bb, type: 3}
 --- !u!4 &1411751690
 Transform:
   m_ObjectHideFlags: 0
@@ -1864,6 +1877,7 @@ MonoBehaviour:
   numEnemiesPerRound: 1000
   enemyStartingHealth: 100
   startDelay: 180
+  startInterval: 0
 --- !u!114 &1539592335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1980,8 +1994,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
-  enemyStartingHealth: 100
+  enemyStartingHealth: 10
   startDelay: 0
+  startInterval: 1
 --- !u!114 &1580393135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2486,7 +2501,7 @@ MonoBehaviour:
   range: 0
   numTargets: 0
   damageMin: 5
-  damageMax: 50
+  damageMax: 10
   critChance: 0
   critMult: 0
   slowPercent: 0.8
@@ -2495,6 +2510,9 @@ MonoBehaviour:
   cooldown: 0.5
   bulletSpeed: 30
   trailRendererColor: {r: 0, g: 0, b: 0, a: 1}
+  upgradeEffect: {fileID: 0}
+  specialTower: 0
+  towerLevelMeshList: []
   numberOfBulletsPerShot: 0
 --- !u!114 &1880758165
 MonoBehaviour:
@@ -2535,13 +2553,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxGemInventory: 6
-  debugMode: 0
+  debugMode: 1
   towerPlacementEnabled: 0
   inventoryDistanceFromPlayer: 1.5
   towerSnapSpeed: 5
   playerInventory: []
   debugRoster:
   - {fileID: 1295874507230250574, guid: 1c7b4cc7605f978438b633cd91773085, type: 3}
+  - {fileID: 3352053421576041292, guid: a36e7de485185644884e4d6a03918aaa, type: 3}
+  - {fileID: 8789188252500577817, guid: bf41b97af53cddd4491351d8a5b810fb, type: 3}
   towerRoster:
   - {fileID: 6295010870351937091, guid: 82b7e8fad8308ed4cb407bbaa7e9f6d4, type: 3}
   - {fileID: 1295874507230250574, guid: 1c7b4cc7605f978438b633cd91773085, type: 3}
