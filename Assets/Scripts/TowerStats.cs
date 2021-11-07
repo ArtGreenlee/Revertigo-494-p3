@@ -23,4 +23,15 @@ public class TowerStats : MonoBehaviour
 
     public int numberOfBulletsPerShot;
     public enum shotSpread { Standard, Cone, SideBySide}
+
+    private void Start()
+    {
+        if (gameObject.name != "Player")
+        {
+            GetComponent<TrailRenderer>().startColor = trailRendererColor;
+        }
+        
+        
+       
+    }
 }

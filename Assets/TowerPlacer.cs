@@ -6,12 +6,15 @@ public class TowerPlacer : MonoBehaviour
 {
 
     private WallStorage wallStorage;
+    public GameObject shadowTower;
     private TowerInventory towerInventory; 
     // Start is called before the first frame update
     void Start()
     {
         wallStorage = WallStorage.instance;
         towerInventory = TowerInventory.instance;
+        shadowTower = Instantiate(shadowTower, transform.position, new Quaternion());
+        shadowTower.transform.position = new Vector3(25, 0, 0);
     }
 
     // Update is called once per frame
@@ -22,14 +25,28 @@ public class TowerPlacer : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
         Vector3 curPoint;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit) && towerInventory.playerInventory.Count > 0)
         {
-            curPoint = hit.point;
-            curPoint = UtilityFunctions.snapVector(curPoint);
-            if (wallStorage.isWall(curPoint))
+            curPoint = UtilityFunctions.snapVector(hit.point);
+            if (wallStorage.isWall(curPoint) && !wallStorage.wallHasTower(wallStorage.getWall(curPoint)) && validTowerPlacement(curPoint))
             {
-                Debug.Log("valid tower spot");
+                GameObject tempWall = wallStorage.getWall(curPoint);
+                shadowTower.transform.position = tempWall.transform.rotation * Vector3.forward * -1.5f + tempWall.transform.position;
+                shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
+                if (Input.GetMouseButtonDown(2))
+                {
+                    StartCoroutine(placeTowerOnBoard(towerInventory.playerInventory[0], towerInventory.playerInventory[0].transform.position, shadowTower.transform.position, tempWall));
+                    towerInventory.playerInventory.RemoveAt(0);
+                }
             }
+            else
+            {
+                shadowTower.transform.position = new Vector3(25, 0, 0);
+            }
+        }
+        else
+        {
+            shadowTower.transform.position = new Vector3(25, 0, 0);
         }
     }
 
@@ -52,6 +69,26 @@ public class TowerPlacer : MonoBehaviour
         {
             Debug.Log("ERROR: SIDE DOES NOT EXIST");
             return false;
+        }
+    }
+
+    private IEnumerator placeTowerOnBoard(GameObject tower, Vector3 start, Vector3 end, GameObject attachWall)
+    {
+        while (Vector3.Distance(tower.transform.position, end) > .05f )
+        {
+            tower.transform.position = Vector3.Lerp(tower.transform.position, end, 3 * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        if (attachWall == null)
+        {
+            towerInventory.playerInventory.Add(tower);
+            yield break;
+        }
+        else
+        {
+            wallStorage.attachTowerToWall(tower, attachWall);
+            tower.transform.position = end;
+            tower.GetComponent<TowerStats>().automaticallyShoots = true;
         }
     }
 }

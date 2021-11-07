@@ -65,7 +65,7 @@ public class ShootsBullets : MonoBehaviour
                 {
                     if (Time.time - targets[target] > towerStats.cooldown)
                     {
-                        shootBullet(transform.position - target.transform.position);
+                        shootBullet(target.transform.position - transform.position);
                         targets[target] = Time.time;
                     }
                 }

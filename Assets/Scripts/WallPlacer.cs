@@ -8,7 +8,7 @@ public class WallPlacer : MonoBehaviour
     public GameObject wall;
     private WallStorage wallStorage;
     private EnemyStorage enemyStorage;
-    //public GameObject shadowTower;
+    
     private HashSet<Vector3> checkPointVectors;
     public GameObject onPlacementEffect;
     MeshRenderer shadowRenderer;

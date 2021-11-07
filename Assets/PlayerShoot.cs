@@ -49,7 +49,7 @@ public class PlayerShoot : MonoBehaviour
                 ShootsFireBalls shootsFireballs;
                 if (tower.TryGetComponent<ShootsBullets>(out shootsBullets))
                 {
-                    shootsBullets.shootBullet(playerInputControl.currentLookPoint - tower.transform.position + Random.insideUnitSphere / 1.5f);
+                    shootsBullets.shootBullet(playerInputControl.currentLookPoint - tower.transform.position);
                 }
                 else if (tower.TryGetComponent<ShootsFireBalls>(out shootsFireballs))
                 {

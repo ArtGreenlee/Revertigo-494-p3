@@ -40,6 +40,19 @@ public class TowerInventory : MonoBehaviour
             playerInventory.Add(newTower);
             newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            GameObject rotateTemp = playerInventory[playerInventory.Count - 1];
+            playerInventory.RemoveAt(playerInventory.Count - 1);
+            playerInventory.Insert(0, rotateTemp);
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            GameObject rotateTemp = playerInventory[0];
+            playerInventory.RemoveAt(0);
+            playerInventory.Add(rotateTemp);
+        }
     }
 
     // Update is called once per frame
@@ -53,7 +66,7 @@ public class TowerInventory : MonoBehaviour
             position.x += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
             position.z -= inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad);
             
-            position.z += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
+            //position.z += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
 
 
             position.y += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);

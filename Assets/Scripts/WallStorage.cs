@@ -10,6 +10,8 @@ public class WallStorage : MonoBehaviour
     public List<Pathfinder> pathfinders;
     private Stack<GameObject> wallStack;
 
+    private TowerInventory towerInventory;
+
     public static WallStorage instance;
 
     private void Awake()
@@ -44,6 +46,7 @@ public class WallStorage : MonoBehaviour
 
     void Start()
     {
+        towerInventory = TowerInventory.instance;
         wallStack = new Stack<GameObject>();
     }
 
@@ -191,7 +194,9 @@ public class WallStorage : MonoBehaviour
         {
             if (wallAndTowers.ContainsKey(wallIn))
             {
-                Destroy(wallAndTowers[wallIn]);
+                //RETURN WALL TO PLAYER INVENTORY;
+                towerInventory.playerInventory.Add(wallAndTowers[wallIn]);
+                wallAndTowers.Remove(wallIn);
             }
             Destroy(wallIn);
         }   
@@ -199,5 +204,10 @@ public class WallStorage : MonoBehaviour
         {
             Debug.Log("ERROR: STORAGE STILL CONTAINS WALL AFTER REMOVAL");
         }
+    }
+
+    public bool wallHasTower(GameObject wall)
+    {
+        return wallAndTowers.ContainsKey(wall);
     }
 }

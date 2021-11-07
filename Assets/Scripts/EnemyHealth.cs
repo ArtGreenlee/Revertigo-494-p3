@@ -65,7 +65,10 @@ public class EnemyHealth : MonoBehaviour
         healthBar.GetComponent<HealthBar>().showDamage();
         if (damage >= floatingDamageTextThreshold)
         {
-            objectPooler.getObjectFromPool("FloatingDamageText", transform.position, new Quaternion()).GetComponent<FloatingDamageText>().setDamage(damage);
+            FloatingDamageText damageText = objectPooler.getObjectFromPool("FloatingDamageText", transform.position, new Quaternion()).GetComponent<FloatingDamageText>();
+            damageText.setDamage(damage);
+            float redColorRatio = (maxHealth - damage) / (maxHealth * 1.5f);
+            damageText.color = new Color(1, redColorRatio, redColorRatio);
         }
         if (currentHealth <= 0)
         {

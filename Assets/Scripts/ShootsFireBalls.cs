@@ -40,6 +40,7 @@ public class ShootsFireBalls : MonoBehaviour
                 }
                 else if (fireBallTemp.TryGetComponent<ClusterFireballController>(out clusterFireballControllerTemp))
                 {
+                    clusterFireballControllerTemp.disableDuration = 1f;
                     clusterFireballControllerTemp.towerStats = towerStats;
                     clusterFireballControllerTemp.controlledByPlayer = false;
                 }

@@ -8,6 +8,8 @@ public class FloatingDamageText : MonoBehaviour
     private TextMeshPro textMesh;
     private Transform cameraTransform;
     private RectTransform rectTransform;
+    public Color color;
+
     public void setDamage(float damageIn)
     {
         textMesh.SetText(Mathf.Round(damageIn).ToString());
@@ -23,6 +25,7 @@ public class FloatingDamageText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        textMesh.color = color;
         StartCoroutine(growShrinkFade());
         Vector3 randomOffset = Random.insideUnitCircle;
         transform.Translate((cameraTransform.position - transform.position).normalized + randomOffset);

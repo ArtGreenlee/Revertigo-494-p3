@@ -22,6 +22,8 @@ public class CameraControllerTwo : MonoBehaviour
     {
         transform.position = Vector3.Lerp(transform.position, (Vector3.zero - player.transform.position).normalized * distanceFromZero, moveSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(player.transform.position), rotateSpeed * Time.deltaTime);
+
+        
     }
 
     private void Update()
@@ -65,8 +67,14 @@ public class CameraControllerTwo : MonoBehaviour
 
         Camera.main.fieldOfView += zoomSpeed;
 
-        if (Camera.main.fieldOfView > 90 || Camera.main.fieldOfView < 30)
+        if (Camera.main.fieldOfView > 90)
         {
+            Camera.main.fieldOfView = 90;
+            zoomSpeed = 0;
+        }
+        else if (Camera.main.fieldOfView < 30)
+        {
+            Camera.main.fieldOfView = 30;
             zoomSpeed = 0;
         }
     }
