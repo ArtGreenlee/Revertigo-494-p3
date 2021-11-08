@@ -26,6 +26,9 @@ public class EnemyHealth : MonoBehaviour
         enemyStorage = EnemyStorage.instance;
         flashOnHit = GetComponent<FlashOnHit>();
         healthBar = Instantiate(healthBar, transform.position, Quaternion.identity);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         healthBar.GetComponent<HealthBar>().enemyTransform = transform;
         healthBar.GetComponent<HealthBar>().enemyHealth = this;

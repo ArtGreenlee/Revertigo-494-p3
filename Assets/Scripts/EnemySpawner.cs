@@ -16,6 +16,9 @@ public class EnemySpawner : MonoBehaviour
     public float startDelay;
     public float startInterval;
     public TextMeshPro countDownText;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
     private void Awake()
@@ -27,8 +30,11 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         
 =======
+=======
+>>>>>>> Stashed changes
         if (startDelay > 0 && countDownText != null)
         {
             for (int i = 0; i < startDelay; i++)
@@ -54,6 +60,7 @@ public class EnemySpawner : MonoBehaviour
     public IEnumerator startWave()
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         enemyPath = pathFinder.getPath();
         //towerPlacer.enabled = false;
         //wait till path is finished
@@ -63,14 +70,19 @@ public class EnemySpawner : MonoBehaviour
         }
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
         for (int i = 0; i < numEnemiesPerRound; i++)
         {
             GameObject newEnemy = Instantiate(enemy, enemyPath[0][0], new Quaternion());
             enemyStorage.addEnemy(newEnemy);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             newEnemy.GetComponent<EnemyMovement>().setPath(enemyPath);
             yield return new WaitForSeconds(1);
 =======
+=======
+>>>>>>> Stashed changes
             newEnemy.GetComponent<EnemyHealth>().setMaxHealth(enemyStartingHealth + i * 8);
             newEnemy.GetComponent<EnemyMovement>().path = enemyPath;
             yield return new WaitForSeconds(startInterval);

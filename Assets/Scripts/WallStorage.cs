@@ -15,8 +15,11 @@ public class WallStorage : MonoBehaviour
     void Start()
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         towerPlacer = GetComponent<TowerPlacer>();
 =======
+=======
+>>>>>>> Stashed changes
         goldStorage = GoldStorage.instance;
         towerInventory = TowerInventory.instance;
 >>>>>>> Stashed changes
