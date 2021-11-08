@@ -46,7 +46,11 @@ public class HealthBar : MonoBehaviour
         {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             HealthBarImage.rectTransform.sizeDelta = new Vector2(enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
+=======
+            transform.localScale = new Vector3((enemyHealth.currentHealth / enemyHealth.getMaxHealth()) * maxWidth, transform.localScale.y, transform.localScale.z);
+>>>>>>> Stashed changes
 =======
             transform.localScale = new Vector3((enemyHealth.currentHealth / enemyHealth.getMaxHealth()) * maxWidth, transform.localScale.y, transform.localScale.z);
 >>>>>>> Stashed changes

@@ -27,6 +27,9 @@ public class EnemyHealth : MonoBehaviour
         flashOnHit = GetComponent<FlashOnHit>();
         healthBar = Instantiate(healthBar, transform.position, Quaternion.identity);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
