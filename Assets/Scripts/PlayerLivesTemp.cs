@@ -35,6 +35,6 @@ public class PlayerLivesTemp : MonoBehaviour
     public void loseLife()
     {
         numLives--;
-        livesCounter.text = "Lives: " + numLives.ToString();
+        livesCounter.text = "Lives " + numLives.ToString();
     }
 }

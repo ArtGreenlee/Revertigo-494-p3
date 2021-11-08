@@ -31,6 +31,6 @@ public class GoldStorage : MonoBehaviour
     public void changeGoldAmount(float amount)
     {
         gold += amount;
-        goldText.text = "Gold: " + gold.ToString();
+        goldText.text = "Gold " + gold.ToString();
     }
 }

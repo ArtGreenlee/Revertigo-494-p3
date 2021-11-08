@@ -31,7 +31,7 @@ public class TowerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        priceText.text = "Tower Cost: " + price.ToString();
+        priceText.text = "Tower Cost " + price.ToString();
         goldStorage = GoldStorage.instance;
         playerInventory = new List<GameObject>();
     }
@@ -42,7 +42,7 @@ public class TowerInventory : MonoBehaviour
         {
             goldStorage.changeGoldAmount(-price);
             price++;
-            priceText.text = "Tower Cost: " + price.ToString();
+            priceText.text = "Tower Cost " + price.ToString();
             GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
             playerInventory.Add(newTower);
             newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;
