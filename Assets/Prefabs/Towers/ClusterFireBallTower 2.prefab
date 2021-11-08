@@ -146,7 +146,7 @@ MonoBehaviour:
   slowsEnemy: 0
   canCriticallyHit: 0
   aoe: 1
-  range: 8
+  range: 100
   numTargets: 1
   damageMin: 25
   damageMax: 30
