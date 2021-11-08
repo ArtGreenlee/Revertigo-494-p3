@@ -9,11 +9,17 @@ public class WallStorage : MonoBehaviour
     Dictionary<Vector3, int> duplicates = new Dictionary<Vector3, int>();
     TowerPlacer towerPlacer;
     private Stack<GameObject> wallStack;
+    private GoldStorage goldStorage;
 
     public List<Pathfinder> pathfinders;
     void Start()
     {
+<<<<<<< Updated upstream
         towerPlacer = GetComponent<TowerPlacer>();
+=======
+        goldStorage = GoldStorage.instance;
+        towerInventory = TowerInventory.instance;
+>>>>>>> Stashed changes
         wallStack = new Stack<GameObject>();
     }
 
@@ -130,6 +136,7 @@ public class WallStorage : MonoBehaviour
 
     public void removeWall(GameObject wallIn)
     {
+        goldStorage.changeGoldAmount(1);
         Vector3 removeVec = wallIn.transform.position;
         for (float i = -1; i < 1.5f; i += .5f)
         {

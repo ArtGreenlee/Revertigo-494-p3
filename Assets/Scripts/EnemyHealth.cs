@@ -14,10 +14,19 @@ public class EnemyHealth : MonoBehaviour
 
     private void Awake()
     {
+<<<<<<< Updated upstream
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         flashOnHit = GetComponent<FlashOnHit>();
         currentHealth = maxHealth;
         healthBar = Instantiate(healthBar, transform.position, new Quaternion(), GameObject.FindGameObjectWithTag("Canvas").transform);
+=======
+        cameraTransform = Camera.main.transform;
+        pathfinder = GetComponent<Pathfinder>();
+        wallStorage = WallStorage.instance;
+        enemyStorage = EnemyStorage.instance;
+        flashOnHit = GetComponent<FlashOnHit>();
+        healthBar = Instantiate(healthBar, transform.position, Quaternion.identity);
+>>>>>>> Stashed changes
         healthBar.GetComponent<HealthBar>().enemyTransform = transform;
         healthBar.GetComponent<HealthBar>().enemyHealth = this;
     }

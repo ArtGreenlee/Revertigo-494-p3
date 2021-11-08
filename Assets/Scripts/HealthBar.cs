@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
@@ -10,16 +9,14 @@ public class HealthBar : MonoBehaviour
     private Transform cameraTransform;
     public EnemyHealth enemyHealth;
     private float maxWidth;
-    private Image HealthBarImage;
     public float healthBarOffset;
     private void Awake()
     {
-        HealthBarImage = GetComponent<Image>();
         cameraTransform = Camera.main.transform;
     }
     void Start()
     {
-        maxWidth = HealthBarImage.rectTransform.sizeDelta.x;
+        maxWidth = transform.localScale.x;
     }
 
     private void Update()
@@ -40,13 +37,18 @@ public class HealthBar : MonoBehaviour
         }
         transform.position = (enemyTransform.position + (enemyTransform.position - cameraTransform.position).normalized * -2) + offsetVec;
         transform.LookAt(cameraTransform);
+        //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x * -1, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
 
     public void showDamage()
     {
         if (enemyHealth != null)
         {
+<<<<<<< Updated upstream
             HealthBarImage.rectTransform.sizeDelta = new Vector2(enemyHealth.currentHealth / enemyHealth.maxHealth * maxWidth, HealthBarImage.rectTransform.sizeDelta.y);
+=======
+            transform.localScale = new Vector3((enemyHealth.currentHealth / enemyHealth.getMaxHealth()) * maxWidth, transform.localScale.y, transform.localScale.z);
+>>>>>>> Stashed changes
         }
     }
 }

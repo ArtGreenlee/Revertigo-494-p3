@@ -10,9 +10,23 @@ public class EnemyMovement : MonoBehaviour
     public float maxSpeed;
     public float curSpeed;
     public GameObject slowEffect;
+<<<<<<< Updated upstream
 
+=======
+    private int pathIndex;
+    private Pathfinder pathFinder;
+    public float pathResetThreshold;
+    public GameObject onPathFinishEffect;
+    private PlayerLivesTemp playerLives;
+    bool lookingForPath;
+    private void Awake()
+    {
+        pathFinder = GetComponent<Pathfinder>();
+    }
+>>>>>>> Stashed changes
     void Start()
     {
+        playerLives = PlayerLivesTemp.instance;
         curSpeed = maxSpeed;
         currentPointIndex = 1;
         nextPoint = path[currentPointIndex];
@@ -55,7 +69,30 @@ public class EnemyMovement : MonoBehaviour
         transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * curSpeed;
         if (Vector3.Distance(transform.position, nextPoint) < .1f)
         {
+<<<<<<< Updated upstream
             if (currentPointIndex == path.Count - 1)
+=======
+            nextPoint = path[pathIndex][currentPointIndex];
+            transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * curSpeed;
+            if (Vector3.Distance(transform.position, nextPoint) < .1f)
+            {
+                currentPointIndex++;
+                if (currentPointIndex == path[pathIndex].Count)
+                {
+                    currentPointIndex = 0;
+                    pathIndex++;
+                    if (pathIndex == path.Count)
+                    {
+                        Instantiate(onPathFinishEffect, transform.position, Quaternion.identity);
+                        playerLives.decreaseNumLives(1);
+                        pathFinder.StopAllCoroutines();
+                        Destroy(gameObject);
+                        
+                    }
+                }
+            }
+            if (Vector3.Distance(transform.position, nextPoint) > pathResetThreshold)
+>>>>>>> Stashed changes
             {
                 Destroy(gameObject);
             }

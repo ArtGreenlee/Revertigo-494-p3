@@ -127,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   currentHealth: 0
-  healthBar: {fileID: 5306666240509191818, guid: 1a8b7ac00460eff499d61ccfe39392a3,
+  healthBar: {fileID: 5118362979720843286, guid: 1a8b7ac00460eff499d61ccfe39392a3,
     type: 3}
   onDeathEffect: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
 --- !u!114 &1109769621377822002
