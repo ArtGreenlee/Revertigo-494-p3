@@ -11,14 +11,18 @@ public class FireBallController : MonoBehaviour
     private EnemyStorage enemyStorage;
     private TrailRenderer trailRenderer;
     public float speed;
+    public TowerStats towerStats;
     public float rotationSpeed;
     private bool thrusting;
-    public float damage;
-    public float aoeRange;
+    private SphereCollider sphereCollider;
+    public float disableDuration;
+    public bool controlledByPlayer;
+    public PlayerInputControl playerInputControl;
 
     private void Awake()
     {
-        enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
+        
+        sphereCollider = GetComponent<SphereCollider>();
         rb = GetComponent<Rigidbody>();
         trailRenderer = GetComponent<TrailRenderer>();
     }
@@ -26,19 +30,27 @@ public class FireBallController : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        enemyStorage = EnemyStorage.instance;
+        playerInputControl = PlayerInputControl.instance;
         thrusting = false;
         trailRenderer.enabled = false;
-        yield return new WaitForSeconds(1f);
+        sphereCollider.enabled = false;
+        if (target == null)
+        {
+            target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 10);
+        }
+        yield return new WaitForSeconds(disableDuration);
         trailRenderer.enabled = true;
         thrusting = true;
+        sphereCollider.enabled = true;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        Instantiate(collisionEffect, transform.position, new Quaternion());
-        foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, aoeRange))
+        Instantiate(collisionEffect, transform.position, Quaternion.identity);
+        foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
         {
-            enemy.GetComponent<EnemyHealth>().takeDamage(damage, true);
+            enemy.GetComponent<EnemyHealth>().takeDamage(Random.Range(towerStats.damageMin, towerStats.damageMax), true);
         }
         Destroy(gameObject);
     }
@@ -51,7 +63,7 @@ public class FireBallController : MonoBehaviour
             GameObject newTarget = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 100);
             if (newTarget == null)
             {
-                Instantiate(collisionEffect, transform.position, new Quaternion());
+                Instantiate(collisionEffect, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
             else
@@ -62,9 +74,17 @@ public class FireBallController : MonoBehaviour
 
         if (target != null)
         {
-            rb.MoveRotation(Quaternion.Slerp(transform.rotation,
+            if (controlledByPlayer)
+            {
+                transform.LookAt(playerInputControl.currentLookPoint);
+            }
+            else
+            {
+                rb.MoveRotation(Quaternion.Slerp(transform.rotation,
                                Quaternion.LookRotation(target.transform.position - transform.position),
                                rotationSpeed * Time.deltaTime));
+            }
+            
             if (thrusting)
             {
                 rb.AddRelativeForce(Vector3.forward * speed);
@@ -72,7 +92,7 @@ public class FireBallController : MonoBehaviour
         }
         else
         {
-            Instantiate(collisionEffect, transform.position, new Quaternion());
+            Instantiate(collisionEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

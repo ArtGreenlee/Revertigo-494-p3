@@ -7,31 +7,48 @@ public class WallStorage : MonoBehaviour
     private Dictionary<Vector3, GameObject> storage = new Dictionary<Vector3, GameObject>();
     public Dictionary<GameObject, GameObject> wallAndTowers = new Dictionary<GameObject, GameObject>();
     Dictionary<Vector3, int> duplicates = new Dictionary<Vector3, int>();
-    TowerPlacer towerPlacer;
+    public List<Pathfinder> pathfinders;
     private Stack<GameObject> wallStack;
     private GoldStorage goldStorage;
 
-    public List<Pathfinder> pathfinders;
+    private TowerInventory towerInventory;
+
+    public static WallStorage instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            removeMostRecentWall();
+        }
+    }
+
+    public void removeMostRecentWall()
+    {
+        if (wallStack.Count > 0)
+        {
+            removeWall(wallStack.Pop());
+            foreach (Pathfinder pathFinder in pathfinders)
+            {
+                if (pathFinder != null)
+                {
+                    pathFinder.findPath();
+                }
+            }
+        }
+    }
+
     void Start()
     {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        towerPlacer = GetComponent<TowerPlacer>();
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         goldStorage = GoldStorage.instance;
         towerInventory = TowerInventory.instance;
->>>>>>> Stashed changes
         wallStack = new Stack<GameObject>();
     }
 
@@ -40,9 +57,9 @@ public class WallStorage : MonoBehaviour
         return storage.ContainsKey(checkVec);
     }
 
-    public void popRecentWall()
+    public GameObject getWall(Vector3 wallVec)
     {
-        removeWall(wallStack.Pop());
+        return storage[wallVec];
     }
 
     public void attachTowerToWall(GameObject towerIn, GameObject wallIn)
@@ -57,7 +74,7 @@ public class WallStorage : MonoBehaviour
         {
             foreach (Pathfinder pathFinder in pathfinders)
             {
-                if (!redoBuffer.Contains(pathFinder) && pathFinder.pathContainsVector(checkVec))
+                if (!redoBuffer.Contains(pathFinder) && pathFinder.pathContainsVector(checkVec) && pathFinder != null)
                 {
                     redoBuffer.Add(pathFinder);
                 }
@@ -65,7 +82,10 @@ public class WallStorage : MonoBehaviour
         }
         foreach (Pathfinder pathFinder in redoBuffer)
         {
-            pathFinder.detectAndRedoPathSegments();
+            if (pathFinder.enemyMovement == null)
+            {
+                pathFinder.detectAndRedoPathSegments();
+            }
         }
     }
 
@@ -86,21 +106,21 @@ public class WallStorage : MonoBehaviour
                     Vector3 curVec = new Vector3(checkVec.x + i, checkVec.y + j, checkVec.z + k);
                     if (side == Vector3.forward || side == Vector3.back)
                     {
-                        if (Mathf.Abs(curVec.y) > 10 || Mathf.Abs(curVec.x) > 10)
+                        if (Mathf.Abs(curVec.y) > 16 || Mathf.Abs(curVec.x) > 16)
                         {
                             return false;
                         }
                     } 
                     else if (side == Vector3.left || side == Vector3.right)
                     {
-                        if (Mathf.Abs(curVec.z) > 10 || Mathf.Abs(curVec.y) > 10)
+                        if (Mathf.Abs(curVec.z) > 16 || Mathf.Abs(curVec.y) > 16)
                         {
                             return false;
                         }
                     }
                     else if (side == Vector3.up || side == Vector3.down)
                     {
-                        if (Mathf.Abs(curVec.x) > 10 || Mathf.Abs(curVec.z) > 10)
+                        if (Mathf.Abs(curVec.x) > 16 || Mathf.Abs(curVec.z) > 16)
                         {
                             return false;
                         }
@@ -177,7 +197,7 @@ public class WallStorage : MonoBehaviour
         {
             if (wallAndTowers.ContainsKey(wallIn))
             {
-                Destroy(wallAndTowers[wallIn]);
+                detatchTowerAndReturn(wallIn);
             }
             Destroy(wallIn);
         }   
@@ -185,5 +205,16 @@ public class WallStorage : MonoBehaviour
         {
             Debug.Log("ERROR: STORAGE STILL CONTAINS WALL AFTER REMOVAL");
         }
+    }
+
+    public void detatchTowerAndReturn(GameObject wallIn)
+    {
+        towerInventory.playerInventory.Add(wallAndTowers[wallIn]);
+        wallAndTowers.Remove(wallIn);
+    }
+
+    public bool wallHasTower(GameObject wall)
+    {
+        return wallAndTowers.ContainsKey(wall);
     }
 }

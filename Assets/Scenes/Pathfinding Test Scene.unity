@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -330,6 +330,7 @@ GameObject:
   - component: {fileID: 245367558}
   - component: {fileID: 245367557}
   - component: {fileID: 245367561}
+  - component: {fileID: 245367562}
   m_Layer: 0
   m_Name: EnemySpawnBottomRIght
   m_TagString: Checkpoint
@@ -431,6 +432,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 5
+--- !u!114 &245367562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245367556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b093ce34fd877c4c9e1e06ed36ad620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightprefab: {fileID: 4846663992426653573, guid: 5139d9bca77838f4a963c9e51608c549,
+    type: 3}
 --- !u!1 &634520384
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,6 +540,7 @@ GameObject:
   - component: {fileID: 653000932}
   - component: {fileID: 653000931}
   - component: {fileID: 653000935}
+  - component: {fileID: 653000936}
   m_Layer: 0
   m_Name: EnemySpawnTopRight
   m_TagString: Checkpoint
@@ -626,6 +642,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 5
+--- !u!114 &653000936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653000930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b093ce34fd877c4c9e1e06ed36ad620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightprefab: {fileID: 4846663992426653573, guid: 5139d9bca77838f4a963c9e51608c549,
+    type: 3}
 --- !u!1 &729178955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,6 +1250,7 @@ GameObject:
   - component: {fileID: 1195307800}
   - component: {fileID: 1195307799}
   - component: {fileID: 1195307803}
+  - component: {fileID: 1195307804}
   m_Layer: 0
   m_Name: EnemySpawnTopLeft
   m_TagString: Checkpoint
@@ -1321,6 +1352,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 5
+--- !u!114 &1195307804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195307798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b093ce34fd877c4c9e1e06ed36ad620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightprefab: {fileID: 4846663992426653573, guid: 5139d9bca77838f4a963c9e51608c549,
+    type: 3}
 --- !u!1 &1195936862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,6 +1460,7 @@ GameObject:
   - component: {fileID: 1280362594}
   - component: {fileID: 1280362593}
   - component: {fileID: 1280362597}
+  - component: {fileID: 1280362598}
   m_Layer: 0
   m_Name: EnemySpawnBottomLeft
   m_TagString: Checkpoint
@@ -1516,6 +1562,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 5
+--- !u!114 &1280362598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280362592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b093ce34fd877c4c9e1e06ed36ad620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightprefab: {fileID: 4846663992426653573, guid: 5139d9bca77838f4a963c9e51608c549,
+    type: 3}
 --- !u!1 &1354810484
 GameObject:
   m_ObjectHideFlags: 0

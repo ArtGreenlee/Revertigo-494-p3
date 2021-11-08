@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-
-    private float lifeStart;
-    public float lifeTime;
-    public ShootsBullets parent;
+    public TowerStats towerStats;
     private MeshRenderer meshRenderer;
     private SphereCollider sphereCollider;
     public GameObject onHitEffect;
+    public GameObject criticalEffect;
     private Rigidbody rb;
+    public GameObject onHitAoeEffect;
+    private EnemyStorage enemyStorage;
+    private TrailRenderer trailRenderer;
+    private float lifeTime = 10;
+    private float lifeTimeStart;
     // Start is called before the first frame update
     private void Awake()
     {
+        trailRenderer = GetComponent<TrailRenderer>();
+        
         sphereCollider = GetComponent<SphereCollider>();
         rb = GetComponent<Rigidbody>();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -22,41 +27,71 @@ public class BulletController : MonoBehaviour
 
     void Start()
     {
+        lifeTimeStart = Time.time;
+        enemyStorage = EnemyStorage.instance;
+        trailRenderer.startColor = towerStats.trailRendererColor;
         
-        lifeStart = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.time - lifeStart > lifeTime)
+        if (Time.time - lifeTimeStart > lifeTime)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
+    }
+
+    private void OnEnable()
+    {
+        lifeTimeStart = Time.time;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Instantiate(onHitEffect, transform.position, new Quaternion());
-        }
-        StartCoroutine(fadeAway(collision.gameObject.transform));
-    }
+        
 
-    private IEnumerator fadeAway(Transform fix)
-    {
-        rb.velocity = Vector3.zero;
-        sphereCollider.enabled = false;
-        meshRenderer.enabled = false;
-        while (transform.localScale.magnitude > .05f && fix != null)
+        List<GameObject> hitEnemies = new List<GameObject>();
+
+        if (towerStats.aoe)
         {
-            transform.position = fix.position;
-            float decreaseScale = .1f * Time.deltaTime;
-            Vector3 newScale = new Vector3(transform.localScale.x - decreaseScale, transform.localScale.y - decreaseScale, transform.localScale.z - decreaseScale);
-            transform.localScale = newScale;
-            yield return new WaitForEndOfFrame();
+            UtilityFunctions.changeScaleOfTransform(Instantiate(onHitAoeEffect, collision.contacts[0].point, Quaternion.identity).transform, towerStats.aoe_range);
+            foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(collision.contacts[0].point, towerStats.aoe_range))
+            {
+                hitEnemies.Add(enemy);
+            }
         }
-        Destroy(gameObject);
+        else if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Instantiate(onHitEffect, collision.contacts[0].point, Quaternion.identity);
+            hitEnemies.Add(collision.gameObject);
+        }
+
+        float damage = Random.Range(towerStats.damageMin, towerStats.damageMax);
+        if (towerStats.canCriticallyHit && Random.value < towerStats.critChance)
+        {
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                Instantiate(criticalEffect, collision.contacts[0].point, Quaternion.identity);
+            }
+            damage *= towerStats.critMult;
+        }
+
+        foreach (GameObject enemy in hitEnemies)
+        {
+            if (towerStats.slowsEnemy)
+            {
+                enemy.GetComponent<EnemyMovement>().slowEnemy(towerStats.slowPercent, towerStats.slowDuration);
+            }
+
+            EnemyHealth tempHealth = enemy.GetComponent<EnemyHealth>();
+            if (tempHealth.currentHealth - damage < 0)
+            {
+                towerStats.increaseKills();
+            }
+            tempHealth.takeDamage(damage, true);
+        }
+
+        gameObject.SetActive(false);
     }
 }

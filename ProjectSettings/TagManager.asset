@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - FxTemporaire
   - Missile
+  - Playfield
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - UI
   - Enemy
   - Playfield
-  - 
-  - 
+  - Gold
+  - Wall
   - 
   - 
   - 

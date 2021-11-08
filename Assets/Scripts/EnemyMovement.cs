@@ -6,13 +6,10 @@ public class EnemyMovement : MonoBehaviour
 {
     private Vector3 nextPoint;
     private int currentPointIndex;
-    private List<Vector3> path;
+    public List<List<Vector3>> path;
     public float maxSpeed;
-    public float curSpeed;
+    private float curSpeed;
     public GameObject slowEffect;
-<<<<<<< Updated upstream
-
-=======
     private int pathIndex;
     private Pathfinder pathFinder;
     public float pathResetThreshold;
@@ -23,34 +20,25 @@ public class EnemyMovement : MonoBehaviour
     {
         pathFinder = GetComponent<Pathfinder>();
     }
->>>>>>> Stashed changes
     void Start()
     {
         playerLives = PlayerLivesTemp.instance;
         curSpeed = maxSpeed;
-        currentPointIndex = 1;
-        nextPoint = path[currentPointIndex];
-    }
-
-    public void setPath(List<List<Vector3>> pathIn)
-    {
-        path = new List<Vector3>();
-        foreach (List<Vector3> pathTemp in pathIn)
-        {
-            path.AddRange(pathTemp);
-        }
+        currentPointIndex = 0;
+        pathIndex = 0;
+        lookingForPath = false;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            ShootsBullets stats = collision.gameObject.GetComponent<BulletController>().parent;
+            TowerStats stats = collision.gameObject.GetComponent<BulletController>().towerStats;
             if (stats.slowsEnemy)
             {
-                if (stats.canCriticallyHit)
+                if (stats.canCriticallyHit) // its a critcal slow!! 
                 {
-                    if (Random.Range(0f, 1f) > stats.critChance)
+                    if (Random.Range(0f, 1f) < stats.critChance)
                     {
                         slowEnemy(stats.slowPercent, stats.slowDuration);
                     }
@@ -61,17 +49,74 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
         }
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            Debug.Log("enemy wall collision");
+            resetPath();
+        }
+    }
+
+    /*private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Bullet"))
+        {
+            TowerStats stats = other.gameObject.GetComponent<BulletController>().towerStats;
+            if (stats.slowsEnemy)
+            {
+                if (stats.canCriticallyHit)
+                {
+                    if (Random.Range(0f, 1f) < stats.critChance)
+                    {
+                        slowEnemy(stats.slowPercent, stats.slowDuration);
+                    }
+                }
+                else
+                {
+                    slowEnemy(stats.slowPercent, stats.slowDuration);
+                }
+            }
+        }
+        else if (other.gameObject.CompareTag("Wall"))
+        {
+            resetPath();
+        }
+    }*/
+
+    public void resetPath()
+    {
+        if (path != null && !lookingForPath)
+        {
+            lookingForPath = true;
+            pathFinder.checkPointVectors = new List<Vector3>();
+            pathFinder.checkPointVectors.Add(UtilityFunctions.snapVector(transform.position));
+            for (int i = pathIndex; i < path.Count; i++)
+            {
+                pathFinder.checkPointVectors.Add(path[i][path[i].Count - 1]);
+            }
+            path = null;
+            pathFinder.findPath();
+            StartCoroutine(waitForPathToFinish());
+        }
+    }
+
+    private IEnumerator waitForPathToFinish()
+    {
+        
+        while (!pathFinder.pathFinished())
+        {
+            yield return new WaitForSeconds(.5f); //totally arbitrary
+        }
+        path = pathFinder.getPath();
+        currentPointIndex = 0;
+        pathIndex = 0;
+        lookingForPath = false;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * curSpeed;
-        if (Vector3.Distance(transform.position, nextPoint) < .1f)
+        if (path != null && path.Count != 0 && path[pathIndex].Count != 0)
         {
-<<<<<<< Updated upstream
-            if (currentPointIndex == path.Count - 1)
-=======
             nextPoint = path[pathIndex][currentPointIndex];
             transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * curSpeed;
             if (Vector3.Distance(transform.position, nextPoint) < .1f)
@@ -92,11 +137,9 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
             if (Vector3.Distance(transform.position, nextPoint) > pathResetThreshold)
->>>>>>> Stashed changes
             {
-                Destroy(gameObject);
+                resetPath();
             }
-            nextPoint = path[currentPointIndex++];
         }
     }
 
@@ -110,7 +153,7 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator slowEnemyCoroutine(float slowPercentage, float slowDuration)
     {
-        Instantiate(slowEffect, transform.position, new Quaternion());
+        Instantiate(slowEffect, transform.position, Quaternion.identity);
         curSpeed *= slowPercentage;
         yield return new WaitForSeconds(slowDuration);
         curSpeed = maxSpeed;

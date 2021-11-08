@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 5669806530767242400}
   - component: {fileID: 1701556777800460827}
   - component: {fileID: 1109769621377822002}
+  - component: {fileID: 2893364299099313480}
+  - component: {fileID: 8303443927132647237}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -31,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 5669806530767242401}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -111,8 +113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 1
-  curSpeed: 1
   slowEffect: {fileID: 100000, guid: 77ec3c4e07a36814fb3169ecef41b50a, type: 3}
+  pathResetThreshold: 4
+  onPathFinishEffect: {fileID: 1280141305896002, guid: e473029e4c70ad543a6879b82a732f4f,
+    type: 3}
 --- !u!114 &1701556777800460827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,11 +129,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eccd53f30f1c72449984e373e698f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
   currentHealth: 0
   healthBar: {fileID: 5118362979720843286, guid: 1a8b7ac00460eff499d61ccfe39392a3,
     type: 3}
   onDeathEffect: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
+  FloatingDamageText: {fileID: 6088574729931538350, guid: b96b5b4e223c0403784e8aba3914e6cb,
+    type: 3}
+  floatingDamageTextThreshold: 1
+  goldValue: 5
 --- !u!114 &1109769621377822002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,3 +151,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: 75831ab416cc9495b9d07e523d343de1, type: 2}
   flashDuration: 0.05
+--- !u!114 &2893364299099313480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5669806530767242401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7471c1b98d24b724c9e3d0e23ca47019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathFindingVisualizerSphere: {fileID: 2318181038164239046, guid: 686e00cc8fd859247888fe3c5a7221cd,
+    type: 3}
+  checkPointList: []
+  checkPointVectors: []
+  enemyMovement: {fileID: 0}
+--- !u!54 &8303443927132647237
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5669806530767242401}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

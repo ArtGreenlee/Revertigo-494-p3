@@ -6,6 +6,16 @@ public class EnemyStorage : MonoBehaviour
 {
     public HashSet<GameObject> enemies = new HashSet<GameObject>();
 
+    public static EnemyStorage instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     public void addEnemy(GameObject enemyIn)
     {
         enemies.Add(enemyIn);
@@ -19,6 +29,17 @@ public class EnemyStorage : MonoBehaviour
     public bool enemyIsAlive(GameObject checkEnemy)
     {
         return enemies.Contains(checkEnemy);
+    }
+
+    public bool validWallPosition(Vector3 checkVec)
+    {
+        foreach (Collider tempCollider in Physics.OverlapBox(checkVec, new Vector3(1f, 1f, 1f))) {
+            if (enemies.Contains(tempCollider.gameObject))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public GameObject getClosestEnemyToPointWithinRange(Vector3 checkVec, float range)
