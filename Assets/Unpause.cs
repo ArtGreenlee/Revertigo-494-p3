@@ -15,7 +15,7 @@ public class Unpause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.P))
+        if (Input.GetKeyUp(KeyCode.P) && cv != null)
         {
             if (cv.activeSelf == false)
             {
