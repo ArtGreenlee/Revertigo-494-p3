@@ -148,8 +148,8 @@ MonoBehaviour:
   aoe: 1
   range: 8
   numTargets: 1
-  damageMin: 5
-  damageMax: 5
+  damageMin: 25
+  damageMax: 30
   critChance: 0
   critMult: 0
   slowPercent: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
   bulletSpeed: 0
   trailRendererColor: {r: 0.990566, g: 0.0046724924, b: 0.0046724924, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
-  specialTower: 0
+  specialTower: 1
   towerLevelMeshList:
   - {fileID: 4300000, guid: 6bd1688c4b7d0499586a92ae1b8d925a, type: 3}
   - {fileID: 4300000, guid: 4ee4ee93a9a684deca32b2f27ff174b0, type: 3}

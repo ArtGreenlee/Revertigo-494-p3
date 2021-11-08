@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class TowerStats : MonoBehaviour
 {
+    public static List<float> killsToUpgrade = new List<float>
+    {
+        5,
+        10,
+        15,
+        20,
+        30
+    };
+
     private int kills = 0;
     private int level = 0;
     public bool automaticallyShoots = false;
@@ -44,9 +53,9 @@ public class TowerStats : MonoBehaviour
         {
             kills++;
             int tempLevel = level;
-            for (int i = 0; i < UtilityFunctions.killsToUpgrade.Count; i++)
+            for (int i = 0; i < killsToUpgrade.Count; i++)
             {
-                if (kills >= UtilityFunctions.killsToUpgrade[i])
+                if (kills >= killsToUpgrade[i])
                 {
                     tempLevel = i + 1;
                 }

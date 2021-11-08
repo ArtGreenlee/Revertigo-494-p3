@@ -15,15 +15,6 @@ public class UtilityFunctions : MonoBehaviour
         Vector3.back
     };
 
-    public static List<float> killsToUpgrade = new List<float>
-    {
-        1,
-        2,
-        3,
-        4,
-        5
-    };
-
     public List<Mesh> towerLevelMeshList;
 
     public static Quaternion getRotationawayFromSide(Vector3 vecIn)

@@ -7,8 +7,7 @@ public class PlayerInputControl : MonoBehaviour
 
     public float moveSpeed;
     public float rotateSpeed;
-    public GameObject mainCamera;
-    private CameraControllerTwo cameraController;
+    public Transform cameraTransform;
     public Vector3 currentLookPoint;
 
     public static PlayerInputControl instance;
@@ -18,7 +17,7 @@ public class PlayerInputControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cameraController = mainCamera.GetComponent<CameraControllerTwo>();
+        cameraTransform = Camera.main.transform;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -33,6 +32,17 @@ public class PlayerInputControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //if the player is far enough from the camera, push them back
+
+        if ((transform.position - cameraTransform.position).sqrMagnitude > 100)
+        {
+            rb.AddForce(Vector3.zero - transform.position);
+        }
+        /*else if ((transform.position - cameraTransform.position).sqrMagnitude < 25)
+        {
+            rb.AddForce(transform.position);
+        }*/
+
         if (Input.GetKey(KeyCode.W))
         {
             rb.AddRelativeForce(Vector3.forward * moveSpeed);

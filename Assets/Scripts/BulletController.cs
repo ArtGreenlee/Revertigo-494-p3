@@ -44,7 +44,7 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        StartCoroutine(fadeAway(collision.gameObject.transform));
+        
 
         List<GameObject> hitEnemies = new List<GameObject>();
 
@@ -86,65 +86,7 @@ public class BulletController : MonoBehaviour
             }
             tempHealth.takeDamage(damage, true);
         }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        StartCoroutine(fadeAway(other.gameObject.transform));
-
-        List<GameObject> hitEnemies = new List<GameObject>();
-
-        if (towerStats.aoe)
-        {
-            UtilityFunctions.changeScaleOfTransform(Instantiate(onHitAoeEffect, other.transform.position, Quaternion.identity).transform, towerStats.aoe_range);
-            foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
-            {
-                hitEnemies.Add(enemy);
-            }
-        }
-        else if (other.gameObject.CompareTag("Enemy"))
-        {
-            Instantiate(onHitEffect, other.transform.position, Quaternion.identity);
-            hitEnemies.Add(other.gameObject);
-        }
-
-        float damage = Random.Range(towerStats.damageMin, towerStats.damageMax);
-        if (towerStats.canCriticallyHit && Random.value > towerStats.critChance)
-        {
-            Instantiate(criticalEffect, Vector3.Lerp(transform.position, Vector3.zero, .05f), Quaternion.identity);
-            damage *= towerStats.critMult;
-        }
-
-        foreach (GameObject enemy in hitEnemies)
-        {
-            if (towerStats.slowsEnemy)
-            {
-                enemy.GetComponent<EnemyMovement>().slowEnemy(towerStats.slowPercent, towerStats.slowDuration);
-            }
-
-            EnemyHealth tempHealth = enemy.GetComponent<EnemyHealth>();
-            tempHealth.takeDamage(damage, true);
-            if (tempHealth == null)
-            {
-                towerStats.increaseKills();
-            }
-        }
-
-    }
-
-    private IEnumerator fadeAway(Transform fix)
-    {
-        rb.velocity = Vector3.zero;
-        sphereCollider.enabled = false;
-        meshRenderer.enabled = false;
-        while (transform.localScale.magnitude > .05f && fix != null)
-        {
-            transform.position = fix.position;
-            float decreaseScale = .1f * Time.deltaTime;
-            Vector3 newScale = new Vector3(transform.localScale.x - decreaseScale, transform.localScale.y - decreaseScale, transform.localScale.z - decreaseScale);
-            transform.localScale = newScale;
-            yield return new WaitForEndOfFrame();
-        }
         gameObject.SetActive(false);
     }
 }

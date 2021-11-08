@@ -63,6 +63,10 @@ public class ObjectPooler : MonoBehaviour
         returnObject.transform.rotation = rotation;
 
         poolDictionary[tag].Enqueue(returnObject);
+        if (returnObject == null)
+        {
+            Debug.LogError("ERROR: OBJECT RETURNED BY POOL IS NULL");
+        }
         return returnObject;
     }
 }

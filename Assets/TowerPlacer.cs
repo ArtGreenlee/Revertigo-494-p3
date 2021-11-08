@@ -31,11 +31,11 @@ public class TowerPlacer : MonoBehaviour
             if (wallStorage.isWall(curPoint))
             {
                 GameObject tempWall = wallStorage.getWall(curPoint);
-                if (!wallStorage.wallHasTower(tempWall) && validTowerPlacement(curPoint))
+                if (!wallStorage.wallHasTower(tempWall) && validTowerPlacement(curPoint) && towerInventory.playerInventory.Count > 0)
                 {
                     shadowTower.transform.position = tempWall.transform.rotation * Vector3.forward * -1.5f + tempWall.transform.position;
                     shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
-                    if (Input.GetKeyDown(KeyCode.F) && towerInventory.playerInventory.Count > 0)
+                    if (Input.GetKeyDown(KeyCode.F) )
                     {
                         
                         wallStorage.attachTowerToWall(towerInventory.playerInventory[0], tempWall);
