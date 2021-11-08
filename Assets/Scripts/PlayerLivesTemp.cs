@@ -2,13 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 public class PlayerLivesTemp : MonoBehaviour
 {
     public int numLives;
+    public TextMeshProUGUI livesCounter;
+    public static PlayerLivesTemp instance;
 
-
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
     private void Start()
     {
+
     }
     private void Update()
     {
@@ -20,5 +30,11 @@ public class PlayerLivesTemp : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+    }
+
+    public void loseLife()
+    {
+        numLives--;
+        livesCounter.text = "Lives: " + numLives.ToString();
     }
 }

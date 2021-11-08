@@ -66,6 +66,24 @@ public class TowerStats : MonoBehaviour
                 level = tempLevel;
                 if (!specialTower)
                 {
+                    damageMax += 5;
+                    damageMin += 2;
+                    cooldown *= .9f;
+                    if (level == 2)
+                    {
+                        numTargets++;
+                    }
+                    if (slowsEnemy)
+                    {
+                        if (slowPercent > 0)
+                        {
+                            slowPercent *= .9f;
+                        }
+                    }
+                    if (aoe)
+                    {
+                        aoe_range += .5f;
+                    }
                     UtilityFunctions.changeScaleOfTransform(transform, transform.localScale.x + .1f);
                     Instantiate(upgradeEffect, transform.position, Quaternion.identity);
                     GetComponent<MeshFilter>().mesh = towerLevelMeshList[level];

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemy;
@@ -13,7 +13,7 @@ public class EnemySpawner : MonoBehaviour
     public float enemyStartingHealth;
     public float startDelay;
     public float startInterval;
-
+    public TextMeshPro countdownText;
     private void Awake()
     {
         pathFinder = GetComponent<Pathfinder>();
@@ -22,13 +22,21 @@ public class EnemySpawner : MonoBehaviour
     }
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(startDelay);
+        if (countdownText != null && startDelay > 0)
+        {
+            for (int i = 0; i < startDelay; i++)
+            {
+                countdownText.text = (startDelay - i).ToString();
+                yield return new WaitForSeconds(1);
+            }
+            Destroy(countdownText);
+        }
+       
         StartCoroutine(startWave());
     }
 
     public IEnumerator startWave()
     {
-        yield return new WaitForSeconds(1);
         for (int i = 0; i < numEnemiesPerRound; i++)
         {
             while (!pathFinder.pathFinished())
@@ -38,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
             enemyPath = pathFinder.getPath();
             GameObject newEnemy = Instantiate(enemy, enemyPath[0][0], Quaternion.identity);
             enemyStorage.addEnemy(newEnemy);
-            newEnemy.GetComponent<EnemyHealth>().setMaxHealth(enemyStartingHealth + i * 5);
+            newEnemy.GetComponent<EnemyHealth>().setMaxHealth(enemyStartingHealth + i * 9);
             newEnemy.GetComponent<EnemyMovement>().path = enemyPath;
             yield return new WaitForSeconds(startInterval);
         }

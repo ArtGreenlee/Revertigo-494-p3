@@ -137,9 +137,9 @@ MonoBehaviour:
   damageMin: 8
   damageMax: 9
   critChance: 0.3
-  critMult: 0
+  critMult: 1
   slowPercent: 0
-  slowDuration: 1
+  slowDuration: 0.6
   aoe_range: 0
   cooldown: 1.25
   bulletSpeed: 0

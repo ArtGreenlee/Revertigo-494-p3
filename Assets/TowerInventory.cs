@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class TowerInventory : MonoBehaviour
 {
     public int maxGemInventory;
@@ -17,6 +17,9 @@ public class TowerInventory : MonoBehaviour
     public List<GameObject> debugRoster;
 
     public List<GameObject> towerRoster;
+    private GoldStorage goldStorage;
+    public float price;
+    public TextMeshProUGUI priceText;
 
     private void Awake()
     {
@@ -28,13 +31,18 @@ public class TowerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        priceText.text = "Tower Cost: " + price.ToString();
+        goldStorage = GoldStorage.instance;
         playerInventory = new List<GameObject>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && playerInventory.Count < maxGemInventory)
+        if (Input.GetKeyDown(KeyCode.G) && playerInventory.Count < maxGemInventory && goldStorage.gold >= price)
         {
+            goldStorage.changeGoldAmount(-price);
+            price++;
+            priceText.text = "Tower Cost: " + price.ToString();
             GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
             playerInventory.Add(newTower);
             newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;

@@ -13,6 +13,7 @@ public class WallPlacer : MonoBehaviour
     public GameObject onPlacementEffect;
     MeshRenderer shadowRenderer;
     MeshRenderer wallRenderer;
+    private GoldStorage goldStorage;
     
     // Start is called before the first frame update
 
@@ -23,6 +24,7 @@ public class WallPlacer : MonoBehaviour
 
     void Start()
     {
+        goldStorage = GoldStorage.instance;
         wallStorage = WallStorage.instance;
         enemyStorage = EnemyStorage.instance;
         checkPointVectors = new HashSet<Vector3>();
@@ -54,7 +56,7 @@ public class WallPlacer : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
         Vector3 curPoint;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit) && goldStorage.gold >= 1)
         {
             curPoint = hit.point;
             curPoint = UtilityFunctions.snapVector(curPoint);
@@ -77,6 +79,7 @@ public class WallPlacer : MonoBehaviour
                 }*/
                 if (Input.GetMouseButtonDown(1))
                 {
+                    goldStorage.changeGoldAmount(-1);
                     GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
                     //GameObject newTower = Instantiate(getRandomTower(), shadowTower.transform.position, shadowTower.transform.rotation);
                     //Instantiate(onPlacementEffect, shadowTower.transform.position, shadowTower.transform.rotation);

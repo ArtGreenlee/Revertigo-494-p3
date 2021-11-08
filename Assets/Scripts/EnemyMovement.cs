@@ -15,12 +15,14 @@ public class EnemyMovement : MonoBehaviour
     public float pathResetThreshold;
     public GameObject onPathFinishEffect;
     bool lookingForPath;
+    private PlayerLivesTemp playerLifes;
     private void Awake()
     {
         pathFinder = GetComponent<Pathfinder>();
     }
     void Start()
     {
+        playerLifes = PlayerLivesTemp.instance;
         curSpeed = maxSpeed;
         currentPointIndex = 0;
         pathIndex = 0;
@@ -127,10 +129,9 @@ public class EnemyMovement : MonoBehaviour
                     if (pathIndex == path.Count)
                     {
                         Instantiate(onPathFinishEffect, transform.position, Quaternion.identity);
-                        GameObject.Find("GameController").GetComponent<PlayerLivesTemp>().numLives--;
                         pathFinder.StopAllCoroutines();
                         Destroy(gameObject);
-                        
+                        playerLifes.loseLife();
                     }
                 }
             }

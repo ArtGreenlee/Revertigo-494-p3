@@ -70,6 +70,7 @@ public class BulletController : MonoBehaviour
         float damage = Random.Range(towerStats.damageMin, towerStats.damageMax);
         if (towerStats.canCriticallyHit && Random.value < towerStats.critChance)
         {
+            
             if (collision.gameObject.CompareTag("Enemy"))
             {
                 Instantiate(criticalEffect, collision.contacts[0].point, Quaternion.identity);
@@ -77,13 +78,23 @@ public class BulletController : MonoBehaviour
             damage *= towerStats.critMult;
         }
 
+        float slowPercentage = 1;
+        if (towerStats.slowsEnemy)
+        {
+            if ((towerStats.canCriticallyHit && Random.value < towerStats.critChance) || !towerStats.canCriticallyHit)
+            {
+                slowPercentage = towerStats.slowPercent;
+            }
+        }
+
+
+
         foreach (GameObject enemy in hitEnemies)
         {
-            if (towerStats.slowsEnemy)
+            if (slowPercentage != 1)
             {
-                enemy.GetComponent<EnemyMovement>().slowEnemy(towerStats.slowPercent, towerStats.slowDuration);
+                enemy.GetComponent<EnemyMovement>().slowEnemy(slowPercentage, towerStats.slowDuration);
             }
-
             EnemyHealth tempHealth = enemy.GetComponent<EnemyHealth>();
             if (tempHealth.currentHealth - damage < 0)
             {
