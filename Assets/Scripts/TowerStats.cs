@@ -58,7 +58,7 @@ public class TowerStats : MonoBehaviour
                 if (!specialTower)
                 {
                     UtilityFunctions.changeScaleOfTransform(transform, transform.localScale.x + .1f);
-                    Instantiate(upgradeEffect, transform.position, new Quaternion());
+                    Instantiate(upgradeEffect, transform.position, Quaternion.identity);
                     GetComponent<MeshFilter>().mesh = towerLevelMeshList[level];
                 }
                 //upgrade the tower;

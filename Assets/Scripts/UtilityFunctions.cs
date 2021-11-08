@@ -56,7 +56,7 @@ public class UtilityFunctions : MonoBehaviour
         }
         else {
             Debug.Log("ERROR: SIDE DOES NOT EXIST");
-            return new Quaternion();
+            return Quaternion.identity;
         }*/
     }
 
@@ -91,7 +91,7 @@ public class UtilityFunctions : MonoBehaviour
         else
         {
             Debug.Log("ERROR: SIDE DOES NOT EXIST");
-            return new Quaternion();
+            return Quaternion.identity;
         }*/
     }
 

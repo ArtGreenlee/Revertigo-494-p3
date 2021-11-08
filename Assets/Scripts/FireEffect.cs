@@ -11,7 +11,7 @@ public class FireEffect : MonoBehaviour
     {
         if (AreaSparksEffect != null)
         {
-            AreaSparksEffect = Instantiate(AreaSparksEffect, transform.position, new Quaternion(), transform);
+            AreaSparksEffect = Instantiate(AreaSparksEffect, transform.position, Quaternion.identity, transform);
 
             float size = AreaSparksEffect.GetComponent<ParticleSystem>().shape.radius;
             Vector3 rescale = AreaSparksEffect.GetComponent<ParticleSystem>().shape.scale;
@@ -20,6 +20,6 @@ public class FireEffect : MonoBehaviour
         }
         
 
-        TowerFireEffect = Instantiate(TowerFireEffect, transform.position, new Quaternion(), transform);
+        TowerFireEffect = Instantiate(TowerFireEffect, transform.position, Quaternion.identity, transform);
     }
 }

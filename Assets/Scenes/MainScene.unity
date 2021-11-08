@@ -692,7 +692,7 @@ MonoBehaviour:
   numEnemiesPerRound: 1000
   enemyStartingHealth: 100
   startDelay: 60
-  startInterval: 0
+  startInterval: 5
 --- !u!114 &763991227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -954,9 +954,13 @@ MonoBehaviour:
   - tag: FloatingDamageText
     prefab: {fileID: 6088574729931538350, guid: b96b5b4e223c0403784e8aba3914e6cb,
       type: 3}
-    size: 1000
+    size: 5000
   - tag: Gold
     prefab: {fileID: 4981611155386590553, guid: 2789caed006def44c8290da6fc8dfd85,
+      type: 3}
+    size: 1000
+  - tag: PathVisualizer
+    prefab: {fileID: 2318181038164239046, guid: 686e00cc8fd859247888fe3c5a7221cd,
       type: 3}
     size: 1000
 --- !u!4 &853922187
@@ -1042,7 +1046,7 @@ MonoBehaviour:
   numEnemiesPerRound: 1000
   enemyStartingHealth: 100
   startDelay: 120
-  startInterval: 0
+  startInterval: 5
 --- !u!114 &913350419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1877,7 +1881,7 @@ MonoBehaviour:
   numEnemiesPerRound: 1000
   enemyStartingHealth: 100
   startDelay: 180
-  startInterval: 0
+  startInterval: 5
 --- !u!114 &1539592335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1996,7 +2000,7 @@ MonoBehaviour:
   numEnemiesPerRound: 1000
   enemyStartingHealth: 10
   startDelay: 0
-  startInterval: 1
+  startInterval: 5
 --- !u!114 &1580393135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2500,8 +2504,8 @@ MonoBehaviour:
   aoe: 1
   range: 0
   numTargets: 0
-  damageMin: 5
-  damageMax: 10
+  damageMin: 1
+  damageMax: 2
   critChance: 0
   critMult: 0
   slowPercent: 0.8

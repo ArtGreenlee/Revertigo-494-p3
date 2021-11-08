@@ -53,6 +53,11 @@ public class ObjectPooler : MonoBehaviour
 
         GameObject returnObject = poolDictionary[tag].Dequeue();
 
+        if (returnObject.activeInHierarchy)
+        {
+            Debug.LogError("object pool overflow: " + tag);
+        }
+
         returnObject.SetActive(true);
         returnObject.transform.position = position;
         returnObject.transform.rotation = rotation;

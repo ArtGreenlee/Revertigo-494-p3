@@ -47,7 +47,7 @@ public class FireBallController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Instantiate(collisionEffect, transform.position, new Quaternion());
+        Instantiate(collisionEffect, transform.position, Quaternion.identity);
         foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
         {
             enemy.GetComponent<EnemyHealth>().takeDamage(Random.Range(towerStats.damageMin, towerStats.damageMax), true);
@@ -63,7 +63,7 @@ public class FireBallController : MonoBehaviour
             GameObject newTarget = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 100);
             if (newTarget == null)
             {
-                Instantiate(collisionEffect, transform.position, new Quaternion());
+                Instantiate(collisionEffect, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
             else
@@ -92,7 +92,7 @@ public class FireBallController : MonoBehaviour
         }
         else
         {
-            Instantiate(collisionEffect, transform.position, new Quaternion());
+            Instantiate(collisionEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

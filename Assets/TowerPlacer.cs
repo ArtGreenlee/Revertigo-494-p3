@@ -13,7 +13,7 @@ public class TowerPlacer : MonoBehaviour
     {
         wallStorage = WallStorage.instance;
         towerInventory = TowerInventory.instance;
-        shadowTower = Instantiate(shadowTower, transform.position, new Quaternion());
+        shadowTower = Instantiate(shadowTower, transform.position, Quaternion.identity);
         shadowTower.transform.position = new Vector3(25, 0, 0);
     }
 
@@ -25,20 +25,31 @@ public class TowerPlacer : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
         Vector3 curPoint;
-        if (Physics.Raycast(ray, out hit) && towerInventory.playerInventory.Count > 0)
+        if (Physics.Raycast(ray, out hit))
         {
             curPoint = UtilityFunctions.snapVector(hit.point);
-            if (wallStorage.isWall(curPoint) && !wallStorage.wallHasTower(wallStorage.getWall(curPoint)) && validTowerPlacement(curPoint))
+            if (wallStorage.isWall(curPoint))
             {
                 GameObject tempWall = wallStorage.getWall(curPoint);
-                shadowTower.transform.position = tempWall.transform.rotation * Vector3.forward * -1.5f + tempWall.transform.position;
-                shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
-                if (Input.GetKeyDown(KeyCode.F))
+                if (!wallStorage.wallHasTower(tempWall) && validTowerPlacement(curPoint))
                 {
-                    
-                    StartCoroutine(placeTowerOnBoard(towerInventory.playerInventory[0], towerInventory.playerInventory[0].transform.position, shadowTower.transform.position, tempWall));
-                    wallStorage.attachTowerToWall(towerInventory.playerInventory[0], tempWall);
-                    towerInventory.playerInventory.RemoveAt(0);
+                    shadowTower.transform.position = tempWall.transform.rotation * Vector3.forward * -1.5f + tempWall.transform.position;
+                    shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
+                    if (Input.GetKeyDown(KeyCode.F) && towerInventory.playerInventory.Count > 0)
+                    {
+                        
+                        wallStorage.attachTowerToWall(towerInventory.playerInventory[0], tempWall);
+                        StartCoroutine(placeTowerOnBoard(towerInventory.playerInventory[0], towerInventory.playerInventory[0].transform.position, shadowTower.transform.position, tempWall));
+                        towerInventory.playerInventory.RemoveAt(0);
+                        shadowTower.transform.position = new Vector3(25, 0, 0);
+                    }
+
+                }
+                else if (wallStorage.wallHasTower(tempWall) && Input.GetKeyDown(KeyCode.T))
+                {
+                    Debug.Log("return tower");
+
+                    wallStorage.detatchTowerAndReturn(tempWall);
                 }
             }
             else
@@ -76,14 +87,16 @@ public class TowerPlacer : MonoBehaviour
 
     private IEnumerator placeTowerOnBoard(GameObject tower, Vector3 start, Vector3 end, GameObject attachWall)
     {
+
+
         //StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(tower.transform, 1, 1));
         while (Vector3.Distance(tower.transform.position, end) > .05f )
         {
             tower.transform.position = Vector3.Lerp(tower.transform.position, end, 3 * Time.deltaTime);
-            if (attachWall == null)
+            if (attachWall == null || !wallStorage.wallHasTower(attachWall))
             {
                 //UtilityFunctions.changeScaleOfTransform(tower.transform, .5f);
-                StopAllCoroutines();
+                //StopAllCoroutines();
                 
                 yield break;
             }

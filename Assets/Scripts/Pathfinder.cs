@@ -37,6 +37,8 @@ public class Pathfinder : MonoBehaviour
     private const int speedThresholdTrigger = 1000;
     private int currentCount;
 
+    private ObjectPooler objectPooler;
+
     public EnemyMovement enemyMovement;
 
     int numCoroutinesRunning = 0;
@@ -44,6 +46,11 @@ public class Pathfinder : MonoBehaviour
     private void OnDestroy()
     {
         StopAllCoroutines();
+    }
+
+    private void Start()
+    {
+        objectPooler = ObjectPooler.Instance;
     }
 
     private void Awake()
@@ -160,7 +167,7 @@ public class Pathfinder : MonoBehaviour
                     pathVectors[pathIndex].Add(curPosOne.v);
                     if (enemyMovement == null)
                     {
-                        visualizers[pathIndex].Add(Instantiate(pathFindingVisualizerSphere, curPosOne.v, new Quaternion()));
+                        visualizers[pathIndex].Add(Instantiate(pathFindingVisualizerSphere, curPosOne.v, Quaternion.identity));
                     }
                     curPosOne = curPosOne.parent;
                 }
@@ -180,7 +187,7 @@ public class Pathfinder : MonoBehaviour
                     pathVectors[pathIndex].Add(curPosTwo.v);
                     if (enemyMovement == null)
                     {
-                        visualizers[pathIndex].Add(Instantiate(pathFindingVisualizerSphere, curPosTwo.v, new Quaternion()));
+                        visualizers[pathIndex].Add(Instantiate(pathFindingVisualizerSphere, curPosTwo.v, Quaternion.identity));
                     }
                     curPosTwo = curPosTwo.parent;
                 }
@@ -193,7 +200,7 @@ public class Pathfinder : MonoBehaviour
 
             foreach (Vector3 newVec in walkableTiles(curPosOne.v))
             {
-                Instantiate(pathFindingVisualizerSphere, curPosOne.v, new Quaternion());
+                Instantiate(pathFindingVisualizerSphere, curPosOne.v, Quaternion.identity);
                 yield return new WaitForSeconds(.1f);
                 if (!closedPathOne.Contains(newVec) && !activePathVectorsOne.Contains(newVec))
                 {
@@ -236,7 +243,7 @@ public class Pathfinder : MonoBehaviour
 
             foreach (Vector3 newVec in walkableTiles(curPosTwo.v))
             {
-                Instantiate(pathFindingVisualizerSphere, curPosTwo.v, new Quaternion());
+                Instantiate(pathFindingVisualizerSphere, curPosTwo.v, Quaternion.identity);
                 yield return new WaitForSeconds(.1f);
                 if (!closedPathTwo.Contains(newVec) && !activePathVectorsTwo.Contains(newVec))
                 {
@@ -355,7 +362,7 @@ public class Pathfinder : MonoBehaviour
                         //only show visualizer if this is a main path
                         if (enemyMovement == null)
                         {
-                            GameObject newVisualizer = Instantiate(pathFindingVisualizerSphere, end.v, new Quaternion());
+                            GameObject newVisualizer = Instantiate(pathFindingVisualizerSphere, end.v, Quaternion.identity);
                             newVisualizer.GetComponent<PathVisualizerEffects>().fadeIn();
                             visualizers[pathIndex].Add(newVisualizer);
                         }
@@ -481,7 +488,7 @@ public class Pathfinder : MonoBehaviour
                         //only show visualizer if this is a main path
                         if (enemyMovement == null)
                         {
-                            visualizers[pathIndex].Add(Instantiate(pathFindingVisualizerSphere, end.v, new Quaternion()));
+                            visualizers[pathIndex].Add(Instantiate(pathFindingVisualizerSphere, end.v, Quaternion.identity));
                         }
                         if (wallStorage.isWall(end.v))
                         {
@@ -621,7 +628,8 @@ public class Pathfinder : MonoBehaviour
         {
             foreach (GameObject visualizer in visualizers[index])
             {
-                Instantiate(pathFindingVisualizerSphere, visualizer.transform.position, new Quaternion()).GetComponent<PathVisualizerEffects>().fadeOut();
+
+                Instantiate(pathFindingVisualizerSphere, visualizer.transform.position, Quaternion.identity).GetComponent<PathVisualizerEffects>().fadeOut();
                 Destroy(visualizer);
             }
             visualizers[index].Clear();

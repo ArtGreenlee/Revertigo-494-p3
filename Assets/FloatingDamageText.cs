@@ -21,7 +21,7 @@ public class FloatingDamageText : MonoBehaviour
         cameraTransform = Camera.main.transform;
         textMesh = GetComponent<TextMeshPro>();
     }
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +40,7 @@ public class FloatingDamageText : MonoBehaviour
 
     private IEnumerator growShrinkFade()
     {
+        StartCoroutine(destroyaftertime(2));
         float startMagnitute = rectTransform.localScale.magnitude;
         while (rectTransform.localScale.magnitude < startMagnitute + .2f)
         {
@@ -60,6 +61,12 @@ public class FloatingDamageText : MonoBehaviour
             rectTransform.localScale = newScale;
             yield return new WaitForEndOfFrame();
         }
+        gameObject.SetActive(false);
+    }
+
+    private IEnumerator destroyaftertime(float timer)
+    {
+        yield return new WaitForSeconds(timer);
         gameObject.SetActive(false);
     }
 }

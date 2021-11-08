@@ -50,7 +50,7 @@ public class BulletController : MonoBehaviour
 
         if (towerStats.aoe)
         {
-            UtilityFunctions.changeScaleOfTransform(Instantiate(onHitAoeEffect, collision.contacts[0].point, new Quaternion()).transform, towerStats.aoe_range);
+            UtilityFunctions.changeScaleOfTransform(Instantiate(onHitAoeEffect, collision.contacts[0].point, Quaternion.identity).transform, towerStats.aoe_range);
             foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(collision.contacts[0].point, towerStats.aoe_range))
             {
                 hitEnemies.Add(enemy);
@@ -58,7 +58,7 @@ public class BulletController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            Instantiate(onHitEffect, collision.contacts[0].point, new Quaternion());
+            Instantiate(onHitEffect, collision.contacts[0].point, Quaternion.identity);
             hitEnemies.Add(collision.gameObject);
         }
 
@@ -67,7 +67,7 @@ public class BulletController : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Enemy"))
             {
-                Instantiate(criticalEffect, collision.contacts[0].point, new Quaternion());
+                Instantiate(criticalEffect, collision.contacts[0].point, Quaternion.identity);
             }
             damage *= towerStats.critMult;
         }
@@ -96,7 +96,7 @@ public class BulletController : MonoBehaviour
 
         if (towerStats.aoe)
         {
-            UtilityFunctions.changeScaleOfTransform(Instantiate(onHitAoeEffect, other.transform.position, new Quaternion()).transform, towerStats.aoe_range);
+            UtilityFunctions.changeScaleOfTransform(Instantiate(onHitAoeEffect, other.transform.position, Quaternion.identity).transform, towerStats.aoe_range);
             foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
             {
                 hitEnemies.Add(enemy);
@@ -104,14 +104,14 @@ public class BulletController : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Enemy"))
         {
-            Instantiate(onHitEffect, other.transform.position, new Quaternion());
+            Instantiate(onHitEffect, other.transform.position, Quaternion.identity);
             hitEnemies.Add(other.gameObject);
         }
 
         float damage = Random.Range(towerStats.damageMin, towerStats.damageMax);
         if (towerStats.canCriticallyHit && Random.value > towerStats.critChance)
         {
-            Instantiate(criticalEffect, Vector3.Lerp(transform.position, Vector3.zero, .05f), new Quaternion());
+            Instantiate(criticalEffect, Vector3.Lerp(transform.position, Vector3.zero, .05f), Quaternion.identity);
             damage *= towerStats.critMult;
         }
 
