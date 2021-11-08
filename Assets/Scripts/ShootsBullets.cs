@@ -55,7 +55,7 @@ public class ShootsBullets : MonoBehaviour
         }
         List<GameObject> enemyRemovalBuffer = new List<GameObject>();
         List<GameObject> tempTargets = targets.Keys.ToList();
-        if (towerStats.automaticallyShoots)
+        if (!towerStats.attachedToPlayer)
         {
             foreach (GameObject target in tempTargets)
             {

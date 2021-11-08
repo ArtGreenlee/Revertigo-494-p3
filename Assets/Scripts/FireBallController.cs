@@ -50,7 +50,13 @@ public class FireBallController : MonoBehaviour
         Instantiate(collisionEffect, transform.position, Quaternion.identity);
         foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
         {
-            enemy.GetComponent<EnemyHealth>().takeDamage(Random.Range(towerStats.damageMin, towerStats.damageMax), true);
+            EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+            float damage = Random.Range(towerStats.damageMin, towerStats.damageMax);
+            if (enemyHealth.currentHealth - damage < 0)
+            {
+                towerStats.increaseKills();
+            }
+            enemy.GetComponent<EnemyHealth>().takeDamage(damage, true);
         }
         Destroy(gameObject);
     }

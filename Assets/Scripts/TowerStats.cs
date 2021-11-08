@@ -13,9 +13,20 @@ public class TowerStats : MonoBehaviour
         30
     };
 
+    public enum towerNames
+    {
+        Blue,
+        Green,
+        Red,
+        White,
+        Fireball,
+        ClusterFireball,
+        StunTower,
+    };
+
     private int kills = 0;
     private int level = 0;
-    public bool automaticallyShoots = false;
+    public bool attachedToPlayer = false;
     public bool slowsEnemy;
     public bool canCriticallyHit;
     public bool aoe;

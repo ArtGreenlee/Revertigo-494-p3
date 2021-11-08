@@ -112,7 +112,7 @@ public class TowerPlacer : MonoBehaviour
         else
         {
             tower.transform.position = end;
-            tower.GetComponent<TowerStats>().automaticallyShoots = true;
+            tower.GetComponent<TowerStats>().attachedToPlayer = true;
         }
     }
 }

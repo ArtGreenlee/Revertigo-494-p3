@@ -87,8 +87,6 @@ public class BulletController : MonoBehaviour
             }
         }
 
-
-
         foreach (GameObject enemy in hitEnemies)
         {
             if (slowPercentage != 1)
@@ -96,7 +94,7 @@ public class BulletController : MonoBehaviour
                 enemy.GetComponent<EnemyMovement>().slowEnemy(slowPercentage, towerStats.slowDuration);
             }
             EnemyHealth tempHealth = enemy.GetComponent<EnemyHealth>();
-            if (tempHealth.currentHealth - damage < 0)
+            if (tempHealth.currentHealth - damage < 0 && !towerStats.attachedToPlayer)
             {
                 towerStats.increaseKills();
             }

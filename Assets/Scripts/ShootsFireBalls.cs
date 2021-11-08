@@ -24,12 +24,13 @@ public class ShootsFireBalls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (towerStats.automaticallyShoots && Time.time - cooldownTimer > towerStats.cooldown)
+        if (!towerStats.attachedToPlayer && Time.time - cooldownTimer > towerStats.cooldown)
         {
             if (enemyStorage.getClosestEnemyToPointWithinRange(transform.position, towerStats.range) != null)
             {
                 //shoot fireball
-                GameObject fireBallTemp = Instantiate(fireBall, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
+                ShootFireball(Vector3.back);
+                /*meObject fireBallTemp = Instantiate(fireBall, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
                 fireBallTemp.GetComponent<Rigidbody>().AddRelativeForce(Vector3.back * 3, ForceMode.Impulse);
                 FireBallController fireBallControllerTemp;
                 ClusterFireballController clusterFireballControllerTemp;
@@ -43,7 +44,7 @@ public class ShootsFireBalls : MonoBehaviour
                     clusterFireballControllerTemp.disableDuration = 1f;
                     clusterFireballControllerTemp.towerStats = towerStats;
                     clusterFireballControllerTemp.controlledByPlayer = false;
-                }
+                }*/
                 cooldownTimer = Time.time;
             }
         }
