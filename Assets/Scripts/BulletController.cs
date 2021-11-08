@@ -42,6 +42,11 @@ public class BulletController : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        lifeTimeStart = Time.time;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         

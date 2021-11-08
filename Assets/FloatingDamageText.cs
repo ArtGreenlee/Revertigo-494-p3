@@ -10,6 +10,8 @@ public class FloatingDamageText : MonoBehaviour
     private RectTransform rectTransform;
     public Color color;
 
+    private Vector3 startScale;
+
     public void setDamage(float damageIn)
     {
         textMesh.SetText(Mathf.Round(damageIn).ToString());
@@ -25,10 +27,15 @@ public class FloatingDamageText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        startScale = transform.localScale;
         textMesh.color = color;
         StartCoroutine(growShrinkFade());
-        Vector3 randomOffset = Random.insideUnitCircle;
-        transform.Translate((cameraTransform.position - transform.position).normalized + randomOffset);
+    }
+
+    private void OnEnable()
+    {
+        textMesh.color = color;
+        StartCoroutine(growShrinkFade());
     }
 
     // Update is called once per frame
@@ -40,6 +47,7 @@ public class FloatingDamageText : MonoBehaviour
 
     private IEnumerator growShrinkFade()
     {
+        
         StartCoroutine(destroyaftertime(2));
         float startMagnitute = rectTransform.localScale.magnitude;
         while (rectTransform.localScale.magnitude < startMagnitute + .2f)
@@ -61,12 +69,15 @@ public class FloatingDamageText : MonoBehaviour
             rectTransform.localScale = newScale;
             yield return new WaitForEndOfFrame();
         }
-        gameObject.SetActive(false);
     }
 
     private IEnumerator destroyaftertime(float timer)
     {
         yield return new WaitForSeconds(timer);
+        transform.localScale = startScale;
+        textMesh.color = new Color(1, 1, 1);
         gameObject.SetActive(false);
+        StopAllCoroutines();
+        
     }
 }

@@ -34,10 +34,10 @@ public class PlayerInputControl : MonoBehaviour
     {
         //if the player is far enough from the camera, push them back
 
-        if ((transform.position - cameraTransform.position).sqrMagnitude > 100)
+        /*if ((transform.position - cameraTransform.position).sqrMagnitude > 100)
         {
             rb.AddForce(Vector3.zero - transform.position);
-        }
+        }*/
         /*else if ((transform.position - cameraTransform.position).sqrMagnitude < 25)
         {
             rb.AddForce(transform.position);
