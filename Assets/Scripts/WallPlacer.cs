@@ -65,7 +65,7 @@ public class WallPlacer : MonoBehaviour
                 enemyStorage.validWallPosition(curPoint) &&
                 hit.collider.gameObject.CompareTag("Playfield"))
             {
-                shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
+                shadowWall.transform.rotation = UtilityFunctions.getRotationTowardSide(curPoint);
                 shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
                 
                 /*if (validTowerPlacement(curPoint) && towerPlacementEnabled)

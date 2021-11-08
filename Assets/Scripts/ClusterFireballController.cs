@@ -78,7 +78,6 @@ public class ClusterFireballController : MonoBehaviour
             tempController.disableDuration = .75f;
             tempController.target = target;
             tempController.towerStats = towerStats;
-            tempController.controlledByPlayer = controlledByPlayer;
             Vector3 initialForce = new Vector3(launchDirection.x * 16, launchDirection.y * 16, launchDirection.z * 16);
             initialForce = (transform.position - initialForce).normalized * 2;
             tempRocket.GetComponent<Rigidbody>().AddForce(initialForce, ForceMode.Impulse);

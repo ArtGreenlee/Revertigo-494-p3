@@ -207,6 +207,7 @@ public class WallStorage : MonoBehaviour
     public void detatchTowerAndReturn(GameObject wallIn)
     {
         towerInventory.playerInventory.Add(wallAndTowers[wallIn]);
+        wallAndTowers[wallIn].GetComponent<TowerStats>().attachedToPlayer = true;
         wallAndTowers.Remove(wallIn);
     }
 

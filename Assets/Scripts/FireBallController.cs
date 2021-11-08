@@ -16,7 +16,6 @@ public class FireBallController : MonoBehaviour
     private bool thrusting;
     private SphereCollider sphereCollider;
     public float disableDuration;
-    public bool controlledByPlayer;
     public PlayerInputControl playerInputControl;
 
     private void Awake()
@@ -80,7 +79,7 @@ public class FireBallController : MonoBehaviour
 
         if (target != null)
         {
-            if (controlledByPlayer)
+            if (towerStats.attachedToPlayer)
             {
                 transform.LookAt(playerInputControl.currentLookPoint);
             }

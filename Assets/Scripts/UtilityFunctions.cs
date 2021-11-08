@@ -17,10 +17,16 @@ public class UtilityFunctions : MonoBehaviour
 
     public List<Mesh> towerLevelMeshList;
 
-    public static Quaternion getRotationawayFromSide(Vector3 vecIn)
+    public static Quaternion getRotationTowardSide(Vector3 vecIn)
     {
         Vector3 side = getClosestSide(vecIn);
         return Quaternion.LookRotation(side);
+    }
+
+    public static Quaternion getRotationawayFromSide(Vector3 vecIn)
+    {
+        Vector3 side = getClosestSide(vecIn);
+        return Quaternion.LookRotation(side * -1);
         /*if (side == Vector3.forward)
         {
             return Quaternion.LookRotation(Vector3.back);

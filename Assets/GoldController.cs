@@ -33,7 +33,6 @@ public class GoldController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("coin inactive");
         goldStorage.changeGoldAmount(1);
         gameObject.SetActive(false);
     }

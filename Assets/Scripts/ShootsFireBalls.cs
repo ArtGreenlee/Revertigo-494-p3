@@ -29,7 +29,8 @@ public class ShootsFireBalls : MonoBehaviour
             if (enemyStorage.getClosestEnemyToPointWithinRange(transform.position, towerStats.range) != null)
             {
                 //shoot fireball
-                ShootFireball(Vector3.back);
+                //Debug.Log(UtilityFunctions.getRotationawayFromSide(transform.position).eulerAngles * -1);
+                ShootFireball(UtilityFunctions.getClosestSide(transform.position) * -1);
                 /*meObject fireBallTemp = Instantiate(fireBall, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
                 fireBallTemp.GetComponent<Rigidbody>().AddRelativeForce(Vector3.back * 3, ForceMode.Impulse);
                 FireBallController fireBallControllerTemp;
@@ -55,20 +56,19 @@ public class ShootsFireBalls : MonoBehaviour
         if (Time.time - cooldownTimer > towerStats.cooldown)
         {
             GameObject fireBallTemp = Instantiate(fireBall, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
-            fireBallTemp.GetComponent<Rigidbody>().AddForce(direction * 7, ForceMode.Impulse);
+            fireBallTemp.GetComponent<Rigidbody>().AddForce(direction.normalized * 4, ForceMode.Impulse);
             FireBallController fireBallControllerTemp;
             ClusterFireballController clusterFireballControllerTemp;
             if (fireBallTemp.TryGetComponent<FireBallController>(out fireBallControllerTemp))
             {
                 fireBallControllerTemp.towerStats = towerStats;
                 fireBallControllerTemp.disableDuration = 0;
-                fireBallControllerTemp.controlledByPlayer = true;
             }
             else if (fireBallTemp.TryGetComponent<ClusterFireballController>(out clusterFireballControllerTemp))
             {
                 clusterFireballControllerTemp.towerStats = towerStats;
                 clusterFireballControllerTemp.disableDuration = .5f;
-                clusterFireballControllerTemp.controlledByPlayer = true;
+                clusterFireballControllerTemp.controlledByPlayer = towerStats.attachedToPlayer;
             }
             cooldownTimer = Time.time;
         }

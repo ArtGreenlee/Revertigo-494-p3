@@ -26,7 +26,7 @@ public class TowerStats : MonoBehaviour
 
     private int kills = 0;
     private int level = 0;
-    public bool attachedToPlayer = false;
+    public bool attachedToPlayer = true;
     public bool slowsEnemy;
     public bool canCriticallyHit;
     public bool aoe;

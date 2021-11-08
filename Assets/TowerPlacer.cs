@@ -34,7 +34,7 @@ public class TowerPlacer : MonoBehaviour
                 if (!wallStorage.wallHasTower(tempWall) && validTowerPlacement(curPoint) && towerInventory.playerInventory.Count > 0)
                 {
                     shadowTower.transform.position = tempWall.transform.rotation * Vector3.forward * -1.5f + tempWall.transform.position;
-                    shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
+                    shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(curPoint);
                     if (Input.GetKeyDown(KeyCode.F) )
                     {
                         
@@ -65,7 +65,7 @@ public class TowerPlacer : MonoBehaviour
 
     public static bool validTowerPlacement(Vector3 checkVec)
     {
-        Vector3 side = UtilityFunctions.getClosestSide(checkVec);
+        /*Vector3 side = UtilityFunctions.getClosestSide(checkVec);
         if (side == Vector3.forward || side == Vector3.back)
         {
             return Mathf.Abs(checkVec.x) < 14 && Mathf.Abs(checkVec.y) < 14;
@@ -82,7 +82,8 @@ public class TowerPlacer : MonoBehaviour
         {
             Debug.Log("ERROR: SIDE DOES NOT EXIST");
             return false;
-        }
+        }*/
+        return true;
     }
 
     private IEnumerator placeTowerOnBoard(GameObject tower, Vector3 start, Vector3 end, GameObject attachWall)
@@ -111,8 +112,9 @@ public class TowerPlacer : MonoBehaviour
         }
         else
         {
+
             tower.transform.position = end;
-            tower.GetComponent<TowerStats>().attachedToPlayer = true;
+            tower.GetComponent<TowerStats>().attachedToPlayer = false;
         }
     }
 }

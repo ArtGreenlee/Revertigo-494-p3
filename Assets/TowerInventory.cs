@@ -34,6 +34,10 @@ public class TowerInventory : MonoBehaviour
         priceText.text = "Tower Cost " + price.ToString();
         goldStorage = GoldStorage.instance;
         playerInventory = new List<GameObject>();
+        if (debugMode)
+        {
+            price = -10;
+        }
     }
 
     private void Update()
@@ -44,6 +48,7 @@ public class TowerInventory : MonoBehaviour
             price++;
             priceText.text = "Tower Cost " + price.ToString();
             GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
+            newTower.GetComponent<TowerStats>().attachedToPlayer = true;
             playerInventory.Add(newTower);
             newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;
         }
