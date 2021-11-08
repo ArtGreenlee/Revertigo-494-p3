@@ -18,10 +18,10 @@ public class UtilityFunctions : MonoBehaviour
     public static List<float> killsToUpgrade = new List<float>
     {
         1,
-        15,
-        30,
-        50,
-        75
+        2,
+        3,
+        4,
+        5
     };
 
     public List<Mesh> towerLevelMeshList;

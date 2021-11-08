@@ -15,6 +15,8 @@ public class EnemyHealth : MonoBehaviour
     public GameObject FloatingDamageText;
     public float floatingDamageTextThreshold;
     private ObjectPooler objectPooler;
+    private GameObject gold;
+    public int goldValue;
     // Start is called before the first frame update
 
     public void setMaxHealth(float maxHealthIn)
@@ -72,10 +74,16 @@ public class EnemyHealth : MonoBehaviour
         }
         if (currentHealth <= 0)
         {
+            for (int i = 0; i < goldValue; i++)
+            {
+                GameObject tempGold = objectPooler.getObjectFromPool("Gold", transform.position + Random.insideUnitSphere / 2, Quaternion.LookRotation(Random.insideUnitSphere));
+                tempGold.GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere * 10, ForceMode.Impulse);
+            }
             enemyStorage.removeEnemy(gameObject);
             wallStorage.pathfinders.Remove(pathfinder);
             Instantiate(onDeathEffect, transform.position, new Quaternion());
             Destroy(healthBar);
+            Debug.Log("enemy destroyed");
             Destroy(gameObject);
         }
     }

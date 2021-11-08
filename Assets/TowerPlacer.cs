@@ -33,7 +33,7 @@ public class TowerPlacer : MonoBehaviour
                 GameObject tempWall = wallStorage.getWall(curPoint);
                 shadowTower.transform.position = tempWall.transform.rotation * Vector3.forward * -1.5f + tempWall.transform.position;
                 shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
-                if (Input.GetMouseButtonDown(2))
+                if (Input.GetKeyDown(KeyCode.F))
                 {
                     
                     StartCoroutine(placeTowerOnBoard(towerInventory.playerInventory[0], towerInventory.playerInventory[0].transform.position, shadowTower.transform.position, tempWall));
