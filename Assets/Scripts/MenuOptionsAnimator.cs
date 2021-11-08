@@ -26,7 +26,7 @@ public class MenuOptionsAnimator : MonoBehaviour
         {
             //animate(Options[cur_option % Options.Count]);
         }
-        if (Input.GetKey("escape"))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             Application.Quit();
         }
