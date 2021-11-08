@@ -24,7 +24,7 @@ public class WallStorage : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T)) {
+        if (Input.GetKeyDown(KeyCode.R)) {
             removeMostRecentWall();
         }
     }
@@ -194,9 +194,7 @@ public class WallStorage : MonoBehaviour
         {
             if (wallAndTowers.ContainsKey(wallIn))
             {
-                //RETURN Tower TO PLAYER INVENTORY;
-                towerInventory.playerInventory.Add(wallAndTowers[wallIn]);
-                wallAndTowers.Remove(wallIn);
+                detatchTowerAndReturn(wallIn);
             }
             Destroy(wallIn);
         }   
@@ -204,6 +202,12 @@ public class WallStorage : MonoBehaviour
         {
             Debug.Log("ERROR: STORAGE STILL CONTAINS WALL AFTER REMOVAL");
         }
+    }
+
+    public void detatchTowerAndReturn(GameObject wallIn)
+    {
+        towerInventory.playerInventory.Add(wallAndTowers[wallIn]);
+        wallAndTowers.Remove(wallIn);
     }
 
     public bool wallHasTower(GameObject wall)

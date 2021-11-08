@@ -35,7 +35,7 @@ public class TowerInventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G) && playerInventory.Count < maxGemInventory)
         {
-            GameObject newTower = Instantiate(getRandomTower(), transform.position, new Quaternion());
+            GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
             playerInventory.Add(newTower);
             newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;
         }

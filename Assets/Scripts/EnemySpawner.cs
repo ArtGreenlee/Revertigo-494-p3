@@ -36,9 +36,9 @@ public class EnemySpawner : MonoBehaviour
                 yield return new WaitForSeconds(.5f);
             }
             enemyPath = pathFinder.getPath();
-            GameObject newEnemy = Instantiate(enemy, enemyPath[0][0], new Quaternion());
+            GameObject newEnemy = Instantiate(enemy, enemyPath[0][0], Quaternion.identity);
             enemyStorage.addEnemy(newEnemy);
-            newEnemy.GetComponent<EnemyHealth>().setMaxHealth(enemyStartingHealth + i * 2);
+            newEnemy.GetComponent<EnemyHealth>().setMaxHealth(enemyStartingHealth + i * 5);
             newEnemy.GetComponent<EnemyMovement>().path = enemyPath;
             yield return new WaitForSeconds(startInterval);
         }

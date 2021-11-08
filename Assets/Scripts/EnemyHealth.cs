@@ -17,6 +17,7 @@ public class EnemyHealth : MonoBehaviour
     private ObjectPooler objectPooler;
     private GameObject gold;
     public int goldValue;
+    private Transform cameraTransform;
     // Start is called before the first frame update
 
     public void setMaxHealth(float maxHealthIn)
@@ -32,11 +33,12 @@ public class EnemyHealth : MonoBehaviour
 
     private void Awake()
     {
+        cameraTransform = Camera.main.transform;
         pathfinder = GetComponent<Pathfinder>();
         wallStorage = GameObject.Find("GameController").GetComponent<WallStorage>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         flashOnHit = GetComponent<FlashOnHit>();
-        healthBar = Instantiate(healthBar, transform.position, new Quaternion(), GameObject.FindGameObjectWithTag("Canvas").transform);
+        healthBar = Instantiate(healthBar, transform.position, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
         healthBar.GetComponent<HealthBar>().enemyTransform = transform;
         healthBar.GetComponent<HealthBar>().enemyHealth = this;
     }
@@ -67,7 +69,8 @@ public class EnemyHealth : MonoBehaviour
         healthBar.GetComponent<HealthBar>().showDamage();
         if (damage >= floatingDamageTextThreshold)
         {
-            FloatingDamageText damageText = objectPooler.getObjectFromPool("FloatingDamageText", transform.position, new Quaternion()).GetComponent<FloatingDamageText>();
+            Vector3 textPos = Vector3.Lerp(transform.position, cameraTransform.position, .05f) + Random.insideUnitSphere;
+            FloatingDamageText damageText = objectPooler.getObjectFromPool("FloatingDamageText", textPos, Quaternion.identity).GetComponent<FloatingDamageText>();
             damageText.setDamage(damage);
             float redColorRatio = (maxHealth - damage) / (maxHealth * 1.5f);
             damageText.color = new Color(1, redColorRatio, redColorRatio);
@@ -81,7 +84,7 @@ public class EnemyHealth : MonoBehaviour
             }
             enemyStorage.removeEnemy(gameObject);
             wallStorage.pathfinders.Remove(pathfinder);
-            Instantiate(onDeathEffect, transform.position, new Quaternion());
+            Instantiate(onDeathEffect, transform.position, Quaternion.identity);
             Destroy(healthBar);
             Debug.Log("enemy destroyed");
             Destroy(gameObject);

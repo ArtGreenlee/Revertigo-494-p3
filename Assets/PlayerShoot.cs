@@ -36,7 +36,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if (Time.time - cooldownUtility > towerStats.cooldown)
             {
-                GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, new Quaternion());
+                GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.identity);
                 tempBullet.GetComponent<Rigidbody>().velocity = transform.forward * towerStats.bulletSpeed;
                 tempBullet.GetComponent<BulletController>().towerStats = towerStats;
                 rb.AddForce(transform.forward * -1 * knockBackForce, ForceMode.Impulse);

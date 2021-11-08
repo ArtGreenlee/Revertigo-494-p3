@@ -40,8 +40,8 @@ public class WallPlacer : MonoBehaviour
                 }
             }
         }
-        shadowWall = Instantiate(shadowWall, new Vector3(25,0,0), new Quaternion());
-        //shadowTower = Instantiate(shadowTower, new Vector3(25, 0, 0), new Quaternion());
+        shadowWall = Instantiate(shadowWall, new Vector3(25,0,0), Quaternion.identity);
+        //shadowTower = Instantiate(shadowTower, new Vector3(25, 0, 0), Quaternion.identity);
         //shadowRenderer = shadowTower.GetComponent<MeshRenderer>();
         wallRenderer = shadowWall.GetComponent<MeshRenderer>();
     }

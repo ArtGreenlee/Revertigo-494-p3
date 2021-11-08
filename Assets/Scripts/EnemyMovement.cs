@@ -14,7 +14,7 @@ public class EnemyMovement : MonoBehaviour
     private Pathfinder pathFinder;
     public float pathResetThreshold;
     public GameObject onPathFinishEffect;
-
+    bool lookingForPath;
     private void Awake()
     {
         pathFinder = GetComponent<Pathfinder>();
@@ -24,9 +24,37 @@ public class EnemyMovement : MonoBehaviour
         curSpeed = maxSpeed;
         currentPointIndex = 0;
         pathIndex = 0;
+        lookingForPath = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            TowerStats stats = collision.gameObject.GetComponent<BulletController>().towerStats;
+            if (stats.slowsEnemy)
+            {
+                if (stats.canCriticallyHit) // its a critcal slow!! 
+                {
+                    if (Random.Range(0f, 1f) < stats.critChance)
+                    {
+                        slowEnemy(stats.slowPercent, stats.slowDuration);
+                    }
+                }
+                else
+                {
+                    slowEnemy(stats.slowPercent, stats.slowDuration);
+                }
+            }
+        }
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            Debug.Log("enemy wall collision");
+            resetPath();
+        }
+    }
+
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
@@ -50,12 +78,13 @@ public class EnemyMovement : MonoBehaviour
         {
             resetPath();
         }
-    }
+    }*/
 
     public void resetPath()
     {
-        if (path != null)
+        if (path != null && !lookingForPath)
         {
+            lookingForPath = true;
             pathFinder.checkPointVectors = new List<Vector3>();
             pathFinder.checkPointVectors.Add(UtilityFunctions.snapVector(transform.position));
             for (int i = pathIndex; i < path.Count; i++)
@@ -70,6 +99,7 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator waitForPathToFinish()
     {
+        
         while (!pathFinder.pathFinished())
         {
             yield return new WaitForSeconds(.5f); //totally arbitrary
@@ -77,6 +107,7 @@ public class EnemyMovement : MonoBehaviour
         path = pathFinder.getPath();
         currentPointIndex = 0;
         pathIndex = 0;
+        lookingForPath = false;
     }
 
     // Update is called once per frame
@@ -95,7 +126,7 @@ public class EnemyMovement : MonoBehaviour
                     pathIndex++;
                     if (pathIndex == path.Count)
                     {
-                        Instantiate(onPathFinishEffect, transform.position, new Quaternion());
+                        Instantiate(onPathFinishEffect, transform.position, Quaternion.identity);
                         GameObject.Find("GameController").GetComponent<PlayerLivesTemp>().numLives--;
                         pathFinder.StopAllCoroutines();
                         Destroy(gameObject);
@@ -120,7 +151,7 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator slowEnemyCoroutine(float slowPercentage, float slowDuration)
     {
-        Instantiate(slowEffect, transform.position, new Quaternion());
+        Instantiate(slowEffect, transform.position, Quaternion.identity);
         curSpeed *= slowPercentage;
         yield return new WaitForSeconds(slowDuration);
         curSpeed = maxSpeed;

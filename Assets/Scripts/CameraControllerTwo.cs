@@ -21,7 +21,10 @@ public class CameraControllerTwo : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position = Vector3.Lerp(transform.position, (Vector3.zero - player.transform.position).normalized * distanceFromZero, moveSpeed * Time.deltaTime);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(player.transform.position), rotateSpeed * Time.deltaTime);
+        if (player.transform.position != Vector3.zero)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position), rotateSpeed * Time.deltaTime);
+        }
     }
 
     private void Update()

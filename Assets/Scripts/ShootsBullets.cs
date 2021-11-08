@@ -87,7 +87,7 @@ public class ShootsBullets : MonoBehaviour
         if (Time.time - playerShootCooldownUtility > towerStats.cooldown)
         {
             playerShootCooldownUtility = Time.time;
-            GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, new Quaternion());
+            GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.identity);
             tempBullet.GetComponent<Rigidbody>().velocity = direction.normalized * bulletSpeed;
             tempBullet.GetComponent<BulletController>().towerStats = towerStats;
         }

@@ -31,7 +31,7 @@ public class RangeIndicator : MonoBehaviour
                // Debug.Log("range indicator");
                 rangeDisplayed = true;
                 float range = towerStats.range;
-                rangeIndicatorInstance = Instantiate(rangeIndicator, transform.position, new Quaternion());
+                rangeIndicatorInstance = Instantiate(rangeIndicator, transform.position, Quaternion.identity);
                 /*Mesh m = gameObject.GetComponent<MeshFilter>().sharedMesh;
          Bounds meshBounds = m.bounds;
          Vector3 meshSize = meshBounds.size;
