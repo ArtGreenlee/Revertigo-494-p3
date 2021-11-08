@@ -19,6 +19,9 @@ public class EnemySpawner : MonoBehaviour
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -39,8 +42,11 @@ public class EnemySpawner : MonoBehaviour
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -75,6 +81,7 @@ public class EnemySpawner : MonoBehaviour
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         enemyPath = pathFinder.getPath();
         //towerPlacer.enabled = false;
         //wait till path is finished
@@ -82,6 +89,8 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(.5f);
             enemyPath = pathFinder.getPath();
         }
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -98,9 +107,12 @@ public class EnemySpawner : MonoBehaviour
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             newEnemy.GetComponent<EnemyMovement>().setPath(enemyPath);
             yield return new WaitForSeconds(1);
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
