@@ -38,10 +38,10 @@ public class PlayerInputControl : MonoBehaviour
         {
             rb.AddForce(Vector3.zero - transform.position);
         }*/
-        /*else if ((transform.position - cameraTransform.position).sqrMagnitude < 25)
+        if (transform.position.sqrMagnitude < 10)
         {
             rb.AddForce(transform.position);
-        }*/
+        }
 
         if (Input.GetKey(KeyCode.W))
         {

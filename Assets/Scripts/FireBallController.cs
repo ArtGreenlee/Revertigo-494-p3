@@ -53,6 +53,7 @@ public class FireBallController : MonoBehaviour
             float damage = Random.Range(towerStats.damageMin, towerStats.damageMax);
             if (enemyHealth.currentHealth - damage < 0)
             {
+                Debug.Log("fireball kill count");   
                 towerStats.increaseKills();
             }
             enemy.GetComponent<EnemyHealth>().takeDamage(damage, true);
@@ -63,7 +64,7 @@ public class FireBallController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!enemyStorage.enemyIsAlive(target))
+        if (!enemyStorage.enemyIsAlive(target) && !towerStats.attachedToPlayer)
         {
             GameObject newTarget = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 100);
             if (newTarget == null)
@@ -77,28 +78,25 @@ public class FireBallController : MonoBehaviour
             }
         }
 
-        if (target != null)
+        if (towerStats.attachedToPlayer)
         {
-            if (towerStats.attachedToPlayer)
-            {
-                transform.LookAt(playerInputControl.currentLookPoint);
-            }
-            else
-            {
-                rb.MoveRotation(Quaternion.Slerp(transform.rotation,
-                               Quaternion.LookRotation(target.transform.position - transform.position),
-                               rotationSpeed * Time.deltaTime));
-            }
-            
-            if (thrusting)
-            {
-                rb.AddRelativeForce(Vector3.forward * speed);
-            }
+            transform.LookAt(playerInputControl.currentLookPoint);
+        }
+        else if (target != null)
+        {
+            rb.MoveRotation(Quaternion.Slerp(transform.rotation,
+                           Quaternion.LookRotation(target.transform.position - transform.position),
+                           rotationSpeed * Time.deltaTime));
         }
         else
         {
             Instantiate(collisionEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
+        }
+
+        if (thrusting)
+        {
+            rb.AddRelativeForce(Vector3.forward * speed);
         }
     }
 }

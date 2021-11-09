@@ -62,12 +62,25 @@ public class ShootsFireBalls : MonoBehaviour
             if (fireBallTemp.TryGetComponent<FireBallController>(out fireBallControllerTemp))
             {
                 fireBallControllerTemp.towerStats = towerStats;
-                fireBallControllerTemp.disableDuration = 0;
+                if (towerStats.attachedToPlayer) {
+                    fireBallControllerTemp.disableDuration = 0;
+                }
+                else
+                {
+                    fireBallControllerTemp.disableDuration = .5f;
+                }
             }
             else if (fireBallTemp.TryGetComponent<ClusterFireballController>(out clusterFireballControllerTemp))
             {
                 clusterFireballControllerTemp.towerStats = towerStats;
-                clusterFireballControllerTemp.disableDuration = .5f;
+                if (towerStats.attachedToPlayer)
+                {
+                    clusterFireballControllerTemp.disableDuration = .5f;
+                }
+                else
+                {
+                    clusterFireballControllerTemp.disableDuration = 1f;
+                }
                 clusterFireballControllerTemp.controlledByPlayer = towerStats.attachedToPlayer;
             }
             cooldownTimer = Time.time;
