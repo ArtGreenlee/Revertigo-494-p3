@@ -8,6 +8,8 @@ public class PlayerLivesTemp : MonoBehaviour
     public int numLives;
     public TextMeshProUGUI livesCounter;
     public static PlayerLivesTemp instance;
+   
+
 
     private void Awake()
     {
