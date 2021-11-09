@@ -22,6 +22,7 @@ public class TowerStats : MonoBehaviour
         Fireball,
         ClusterFireball,
         StunTower,
+        SpiritTower
     };
 
     private int kills = 0;

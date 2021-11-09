@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1714425775481449065}
   - component: {fileID: 2459105251653409855}
   - component: {fileID: 110078967280339102}
+  - component: {fileID: 5784374940973590993}
   m_Layer: 2
   m_Name: SpiritTower
   m_TagString: Untagged
@@ -117,7 +118,7 @@ MonoBehaviour:
   slowsEnemy: 0
   canCriticallyHit: 0
   aoe: 0
-  range: 5
+  range: 7
   numTargets: 1
   damageMin: 5
   damageMax: 10
@@ -128,9 +129,9 @@ MonoBehaviour:
   aoe_range: 1
   cooldown: 1
   bulletSpeed: 15
-  trailRendererColor: {r: 1, g: 1, b: 1, a: 0}
+  trailRendererColor: {r: 0, g: 1, b: 0.9608457, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
-  specialTower: 0
+  specialTower: 1
   towerLevelMeshList:
   - {fileID: 4300000, guid: 6bd1688c4b7d0499586a92ae1b8d925a, type: 3}
   - {fileID: 4300000, guid: 4ee4ee93a9a684deca32b2f27ff174b0, type: 3}
@@ -153,7 +154,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!96 &2363735974794418862
 TrailRenderer:
@@ -4862,3 +4863,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &5784374940973590993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7940872050863963642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f7a3df63a0f544187bd5c2e53aa5e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AreaSparksEffect: {fileID: 0}
+  TowerFireEffect: {fileID: 8987286653350352418, guid: 2d8ae677441387442896756dffc0079d,
+    type: 3}

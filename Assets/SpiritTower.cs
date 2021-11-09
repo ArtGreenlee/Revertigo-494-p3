@@ -9,22 +9,45 @@ public class SpiritTower : MonoBehaviour
     private ParticleSystem spiritSystem;
     private GameObject target;
     private ParticleSystem.Particle[] m_Particles;
+    private PlayerInputControl playerControl;
+
+    private float emissionRate;
+
     private void Start()
     {
         spiritSystem = GetComponent<ParticleSystem>();
         m_Particles = new ParticleSystem.Particle[spiritSystem.main.maxParticles];
 
-
+        playerControl = PlayerInputControl.instance;
         towerStats = GetComponent<TowerStats>();
         enemyStorage = EnemyStorage.instance;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (target == null || (transform.position - target.transform.position).sqrMagnitude > towerStats.range * towerStats.range)
+        if (!towerStats.attachedToPlayer && (target == null || (transform.position - target.transform.position).sqrMagnitude > towerStats.range * towerStats.range))
         {
             target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, towerStats.range);
+        }
+
+        if (towerStats.attachedToPlayer)
+        {
+            transform.rotation.SetLookRotation(playerControl.currentLookPoint);
+            if (Input.GetKeyDown(0))
+            {
+                enableParticles();
+            }
+            else
+            {
+                disableParticles();
+            }
+        }
+        else
+        {
+            enableParticles();
+            transform.rotation = UtilityFunctions.getRotationawayFromSide(transform.position);
         }
 
         if (target != null)
@@ -41,13 +64,27 @@ public class SpiritTower : MonoBehaviour
             // Apply the particle changes to the Particle System
             spiritSystem.SetParticles(m_Particles, numParticlesAlive);
         }
+    }
 
-        
+    public void enableParticles()
+    {
+        if (!spiritSystem.emission.enabled)
+        {
+            spiritSystem.Play();
+        }
+    }
+
+    public void disableParticles()
+    {
+        if (spiritSystem.emission.enabled)
+        {
+            spiritSystem.Play();
+        }
     }
 
     private void OnParticleCollision(GameObject other)
     {
         Debug.Log("test");
-        other.gameObject.GetComponent<EnemyHealth>().takeDamage(.1f, true);
+        other.gameObject.GetComponent<EnemyHealth>().takeDamage(.5f, true);
     }
 }

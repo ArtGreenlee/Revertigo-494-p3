@@ -37,7 +37,7 @@ public class TowerPlacer : MonoBehaviour
                     shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(curPoint);
                     if (Input.GetKeyDown(KeyCode.F) )
                     {
-                        
+                        towerInventory.playerInventory[0].GetComponent<TowerStats>().attachedToPlayer = false;
                         wallStorage.attachTowerToWall(towerInventory.playerInventory[0], tempWall);
                         StartCoroutine(placeTowerOnBoard(towerInventory.playerInventory[0], towerInventory.playerInventory[0].transform.position, shadowTower.transform.position, tempWall));
                         towerInventory.playerInventory.RemoveAt(0);
