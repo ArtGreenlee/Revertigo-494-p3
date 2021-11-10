@@ -61,9 +61,19 @@ public class TowerStats : MonoBehaviour
         SpiritTower
     };
 
+    public enum buffTypes
+    {
+        damageBuff,
+        cooldownBuff
+    };
+
     private int kills = 0;
     private int level = 0;
     public bool attachedToPlayer = true;
+
+    public bool buffsTowers;
+    public List<buffTypes> buffs;
+
     public bool slowsEnemy;
     public bool canCriticallyHit;
     public bool aoe;
@@ -88,7 +98,7 @@ public class TowerStats : MonoBehaviour
 
     public List<Mesh> towerLevelMeshList;
 
-    public int numberOfBulletsPerShot;
+
     //public enum shotSpread { Standard, Cone, SideBySide }
 
     private void Start()

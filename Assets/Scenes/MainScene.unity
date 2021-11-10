@@ -2206,7 +2206,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &937717176
 Transform:
   m_ObjectHideFlags: 0
@@ -5163,7 +5163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxGemInventory: 6
-  debugMode: 1
+  debugMode: 0
   towerPlacementEnabled: 0
   inventoryDistanceFromPlayer: 1.5
   towerSnapSpeed: 5
