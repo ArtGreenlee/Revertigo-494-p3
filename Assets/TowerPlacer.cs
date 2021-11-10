@@ -37,7 +37,7 @@ public class TowerPlacer : MonoBehaviour
                 {
                     shadowTower.transform.position = tempWall.transform.rotation * Vector3.forward * -1.5f + tempWall.transform.position;
                     shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(curPoint);
-                    if (Input.GetKeyDown(KeyCode.F) )
+                    if (Input.GetKeyDown(KeyCode.F))
                     {
                         GameObject tempTower = towerInventory.playerInventory[0];
                         wallStorage.attachTowerToWall(tempTower, tempWall);

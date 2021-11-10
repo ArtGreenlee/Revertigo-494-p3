@@ -128,13 +128,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachedToPlayer: 1
+  buffsTowers: 0
+  buffs: 
   slowsEnemy: 0
   canCriticallyHit: 0
   aoe: 0
   poisons: 0
   poisonDPS: 0
   poisonDuration: 0
-  range: 100
+  range: 10
   numTargets: 2
   damageMin: 3
   damageMax: 5
@@ -156,7 +158,6 @@ MonoBehaviour:
   - {fileID: 4300000, guid: 79b2a5cdd70824e3d9b3acf2ddc79f4d, type: 3}
   - {fileID: 4300000, guid: 04a69148d0283440c96e0a776ed3bf53, type: 3}
   - {fileID: 4300000, guid: e53910dd9ff52433db8fc7f84a2318bb, type: 3}
-  numberOfBulletsPerShot: 0
 --- !u!114 &3209652144451414576
 MonoBehaviour:
   m_ObjectHideFlags: 0

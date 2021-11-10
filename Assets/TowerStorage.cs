@@ -13,6 +13,7 @@ public class TowerStorage : MonoBehaviour
             instance = this;
         }
     }
+
     private List<GameObject> towers; // ONLY APPLIES TO THE TOWERS ON THE FIELD
 
 
