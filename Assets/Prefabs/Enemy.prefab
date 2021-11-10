@@ -136,7 +136,7 @@ MonoBehaviour:
   FloatingDamageText: {fileID: 6088574729931538350, guid: b96b5b4e223c0403784e8aba3914e6cb,
     type: 3}
   floatingDamageTextThreshold: 1
-  goldValue: 20
+  goldValue: 5
 --- !u!114 &1109769621377822002
 MonoBehaviour:
   m_ObjectHideFlags: 0

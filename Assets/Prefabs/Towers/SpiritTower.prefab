@@ -115,23 +115,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachedToPlayer: 0
-  slowsEnemy: 0
+  slowsEnemy: 1
   canCriticallyHit: 0
   aoe: 0
   range: 7
   numTargets: 1
-  damageMin: 5
-  damageMax: 10
-  critChance: 0.3
-  critMult: 2
-  slowPercent: 0
-  slowDuration: 0
-  aoe_range: 1
+  damageMin: 0.25
+  damageMax: 1
+  critChance: 0
+  critMult: 0
+  slowPercent: 0.3
+  slowDuration: 5
+  aoe_range: 0
   cooldown: 1
-  bulletSpeed: 15
+  bulletSpeed: 0
   trailRendererColor: {r: 0, g: 1, b: 0.9608457, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   specialTower: 1
+  slowEffect: {fileID: 1844191813266838, guid: 968c924d2be019d4b9e67647551eec3e, type: 3}
   towerLevelMeshList:
   - {fileID: 4300000, guid: 6bd1688c4b7d0499586a92ae1b8d925a, type: 3}
   - {fileID: 4300000, guid: 4ee4ee93a9a684deca32b2f27ff174b0, type: 3}
@@ -275,6 +276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb8eab07a34aa7545ac17d94c0f380bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slowPercentageMin: 0.9
+  slowPercentageMax: 0.3
+  timeToGetToMaxSlow: 4
 --- !u!199 &2459105251653409855
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -1085,7 +1089,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 5
       minScalar: 10
       maxCurve:
         serializedVersion: 2

@@ -5130,6 +5130,7 @@ MonoBehaviour:
   trailRendererColor: {r: 0, g: 0, b: 0, a: 1}
   upgradeEffect: {fileID: 0}
   specialTower: 0
+  slowEffect: {fileID: 0}
   towerLevelMeshList: []
   numberOfBulletsPerShot: 0
 --- !u!114 &1880758165
@@ -5173,6 +5174,7 @@ MonoBehaviour:
   - {fileID: 5996220971690792234, guid: 1f7e3583f07ac2a4787c3fd2e5c57412, type: 3}
   - {fileID: 2316449276373684764, guid: fa9ee0c353bf14a48bed9e232a048f2a, type: 3}
   - {fileID: 8789188252500577817, guid: bf41b97af53cddd4491351d8a5b810fb, type: 3}
+  - {fileID: 7940872050863963642, guid: c1c1b12a278de74468bfd002d0afcc80, type: 3}
   price: 10
   priceText: {fileID: 1113210396}
 --- !u!114 &1880758168

@@ -91,7 +91,7 @@ public class BulletController : MonoBehaviour
         {
             if (slowPercentage != 1)
             {
-                enemy.GetComponent<EnemyMovement>().slowEnemy(slowPercentage, towerStats.slowDuration);
+                enemy.GetComponent<EnemyMovement>().slowEnemy(slowPercentage, towerStats.slowDuration, towerStats.slowEffect);
             }
             EnemyHealth tempHealth = enemy.GetComponent<EnemyHealth>();
             if (tempHealth.currentHealth - damage < 0 && !towerStats.attachedToPlayer)

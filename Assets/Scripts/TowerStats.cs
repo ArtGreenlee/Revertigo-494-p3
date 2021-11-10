@@ -13,6 +13,42 @@ public class TowerStats : MonoBehaviour
         30
     };
 
+    public static List<float> slowPercentageAtLevel = new List<float>
+    {
+        .9f,
+        .85f,
+        .8f,
+        .7f,
+        .6f
+    };
+
+    public static List<float> damageIncreaseAtLevel = new List<float>
+    {
+        1.1f,
+        1.1f,
+        1.1f,
+        1.1f,
+        1.1f
+    };
+
+    public static List<float> cooldownDecreaseAtLevel = new List<float>
+    {
+        .9f,
+        .9f,
+        .9f,
+        .9f,
+        .9f
+    };
+
+    public static List<float> aoeRangeIncreasePerLevel = new List<float>
+    {
+        .5f,
+        .5f,
+        .5f,
+        .5f,
+        .5f
+    };
+
     public enum towerNames
     {
         Blue,
@@ -45,11 +81,12 @@ public class TowerStats : MonoBehaviour
     public Color trailRendererColor;
     public GameObject upgradeEffect;
     public bool specialTower;
+    public GameObject slowEffect;
 
     public List<Mesh> towerLevelMeshList;
 
     public int numberOfBulletsPerShot;
-    public enum shotSpread { Standard, Cone, SideBySide }
+    //public enum shotSpread { Standard, Cone, SideBySide }
 
     private void Start()
     {
@@ -78,23 +115,19 @@ public class TowerStats : MonoBehaviour
                 level = tempLevel;
                 if (!specialTower)
                 {
-                    damageMax += 5;
-                    damageMin += 2;
+                    damageMin *= damageIncreaseAtLevel[level];
+                    damageMax *= damageIncreaseAtLevel[level];
                     cooldown *= .9f;
-                    if (level == 2)
-                    {
-                        numTargets++;
-                    }
                     if (slowsEnemy)
                     {
                         if (slowPercent > 0)
                         {
-                            slowPercent *= .9f;
+                            slowPercent = slowPercentageAtLevel[level];
                         }
                     }
                     if (aoe)
                     {
-                        aoe_range += .5f;
+                        aoe_range += aoeRangeIncreasePerLevel[level];
                     }
                     UtilityFunctions.changeScaleOfTransform(transform, transform.localScale.x + .1f);
                     Instantiate(upgradeEffect, transform.position, Quaternion.identity);

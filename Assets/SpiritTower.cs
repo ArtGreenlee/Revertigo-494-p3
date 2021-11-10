@@ -11,6 +11,12 @@ public class SpiritTower : MonoBehaviour
     private ParticleSystem.Particle[] m_Particles;
     private PlayerInputControl playerControl;
 
+    public float slowPercentageMin;
+    public float slowPercentageMax;
+    private GameObject currentEnemyBeingSlowed;
+    public float timeToGetToMaxSlow;
+    private float slowStartTime;
+
     private float emissionRate;
 
     private void Start()
@@ -21,12 +27,13 @@ public class SpiritTower : MonoBehaviour
         playerControl = PlayerInputControl.instance;
         towerStats = GetComponent<TowerStats>();
         enemyStorage = EnemyStorage.instance;
-
+        setSpawnRate(towerStats.cooldown);
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (!towerStats.attachedToPlayer && (target == null || (transform.position - target.transform.position).sqrMagnitude > towerStats.range * towerStats.range))
         {
             target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, towerStats.range);
@@ -66,6 +73,14 @@ public class SpiritTower : MonoBehaviour
         }
     }
 
+    public void setSpawnRate(float newCooldown)
+    {
+        ParticleSystem.EmissionModule emission = spiritSystem.emission;
+        //max = 20, min = 5, 
+        Debug.Log(Mathf.Lerp(20, 5, newCooldown));
+        emission.rateOverTime = Mathf.Lerp(20, 5, newCooldown);
+    }
+
     public void enableParticles()
     {
         if (!spiritSystem.emission.enabled)
@@ -84,7 +99,15 @@ public class SpiritTower : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        Debug.Log("test");
-        other.gameObject.GetComponent<EnemyHealth>().takeDamage(.5f, true);
+        if (other != currentEnemyBeingSlowed)
+        {
+            slowStartTime = Time.time;
+            currentEnemyBeingSlowed = other;
+        }
+        else
+        {
+            currentEnemyBeingSlowed.gameObject.GetComponent<EnemyMovement>().slowEnemy(Mathf.Lerp(slowPercentageMin, slowPercentageMax, (Time.time - slowStartTime) / timeToGetToMaxSlow), towerStats.slowDuration, towerStats.slowEffect);
+        }
+        other.gameObject.GetComponent<EnemyHealth>().takeDamage(Random.Range(towerStats.damageMin, towerStats.damageMax), true);
     }
 }

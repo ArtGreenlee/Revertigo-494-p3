@@ -9,7 +9,6 @@ public class EnemyMovement : MonoBehaviour
     public List<List<Vector3>> path;
     public float maxSpeed;
     private float curSpeed;
-    public GameObject slowEffect;
     private int pathIndex;
     private Pathfinder pathFinder;
     public float pathResetThreshold;
@@ -28,34 +27,6 @@ public class EnemyMovement : MonoBehaviour
         pathIndex = 0;
         lookingForPath = false;
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Bullet"))
-        {
-            TowerStats stats = collision.gameObject.GetComponent<BulletController>().towerStats;
-            if (stats.slowsEnemy)
-            {
-                if (stats.canCriticallyHit) // its a critcal slow!! 
-                {
-                    if (Random.Range(0f, 1f) < stats.critChance)
-                    {
-                        slowEnemy(stats.slowPercent, stats.slowDuration);
-                    }
-                }
-                else
-                {
-                    slowEnemy(stats.slowPercent, stats.slowDuration);
-                }
-            }
-        }
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            Debug.Log("enemy wall collision");
-            resetPath();
-        }
-    }
-
     /*private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Bullet"))
@@ -142,15 +113,15 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void slowEnemy(float slowPercentage, float slowDuration)
+    public void slowEnemy(float slowPercentage, float slowDuration, GameObject slowEffect)
     {
         if (slowPercentage < (curSpeed / maxSpeed))
         {
-            StartCoroutine(slowEnemyCoroutine(slowPercentage, slowDuration));
+            StartCoroutine(slowEnemyCoroutine(slowPercentage, slowDuration, slowEffect));
         }
     }
 
-    private IEnumerator slowEnemyCoroutine(float slowPercentage, float slowDuration)
+    private IEnumerator slowEnemyCoroutine(float slowPercentage, float slowDuration, GameObject slowEffect)
     {
         Instantiate(slowEffect, transform.position, Quaternion.identity);
         curSpeed *= slowPercentage;
