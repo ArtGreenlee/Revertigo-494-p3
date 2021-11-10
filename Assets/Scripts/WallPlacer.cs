@@ -77,7 +77,7 @@ public class WallPlacer : MonoBehaviour
                 {
                     //shadowTower.transform.position = new Vector3(25, 0, 0);
                 }*/
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetMouseButton(1))
                 {
                     goldStorage.changeGoldAmount(-1);
                     GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);

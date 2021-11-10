@@ -42,6 +42,10 @@ public class PlayerInputControl : MonoBehaviour
         {
             rb.AddForce(transform.position);
         }
+        else if (transform.position.sqrMagnitude > 150)
+        {
+            rb.AddForce(-transform.position);
+        }
 
         if (Input.GetKey(KeyCode.W))
         {

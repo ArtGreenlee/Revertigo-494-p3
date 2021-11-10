@@ -27,6 +27,16 @@ public class EnemyMovement : MonoBehaviour
         pathIndex = 0;
         lookingForPath = false;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            Debug.Log("enemy wall collision");
+            resetPath();
+        }
+    }
+
     /*private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Bullet"))
@@ -123,15 +133,14 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator slowEnemyCoroutine(float slowPercentage, float slowDuration, GameObject slowEffect)
     {
-        Color beforeColor = GetComponent<MeshRenderer>().material.color;
-        GetComponent<MeshRenderer>().material.color = new Color(beforeColor.r, beforeColor.g + 1f, beforeColor.b);
+        
         if (slowEffect != null)
         {
             Instantiate(slowEffect, transform.position, Quaternion.identity);
         }        curSpeed *= slowPercentage;
         yield return new WaitForSeconds(slowDuration);
         curSpeed = maxSpeed;
-        GetComponent<MeshRenderer>().material.color = beforeColor;
+       
     }
 
 }
