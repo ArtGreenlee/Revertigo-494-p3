@@ -123,10 +123,15 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator slowEnemyCoroutine(float slowPercentage, float slowDuration, GameObject slowEffect)
     {
-        Instantiate(slowEffect, transform.position, Quaternion.identity);
-        curSpeed *= slowPercentage;
+        Color beforeColor = GetComponent<MeshRenderer>().material.color;
+        GetComponent<MeshRenderer>().material.color = new Color(beforeColor.r, beforeColor.g + 1f, beforeColor.b);
+        if (slowEffect != null)
+        {
+            Instantiate(slowEffect, transform.position, Quaternion.identity);
+        }        curSpeed *= slowPercentage;
         yield return new WaitForSeconds(slowDuration);
         curSpeed = maxSpeed;
+        GetComponent<MeshRenderer>().material.color = beforeColor;
     }
 
 }

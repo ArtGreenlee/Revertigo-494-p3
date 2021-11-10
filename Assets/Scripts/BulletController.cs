@@ -98,6 +98,10 @@ public class BulletController : MonoBehaviour
             {
                 towerStats.increaseKills();
             }
+            if (towerStats.poisons)
+            {
+                tempHealth.takeDoT(towerStats.poisonDPS, towerStats.poisonDuration);
+            }
             tempHealth.takeDamage(damage, true);
         }
 

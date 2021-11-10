@@ -18,6 +18,9 @@ public class EnemyHealth : MonoBehaviour
     private GameObject gold;
     public int goldValue;
     private Transform cameraTransform;
+    public GameObject DoTEffect;
+    public GameObject poisonEffect;
+    private float currentDPS;
     // Start is called before the first frame update
 
     public void setMaxHealth(float maxHealthIn)
@@ -45,6 +48,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
+        currentDPS = 0;
         objectPooler = ObjectPooler.Instance;
         currentHealth = maxHealth;
     }
@@ -89,5 +93,29 @@ public class EnemyHealth : MonoBehaviour
             Debug.Log("enemy destroyed");
             Destroy(gameObject);
         }
+    }
+
+    public void takeDoT(float DPS, float duration)
+    {
+        if (DPS > currentDPS)
+        {
+            currentDPS = DPS;
+            StartCoroutine(DoTroutine(DPS, duration));
+        }
+    }
+
+    private IEnumerator DoTroutine(float DPS, float duration)
+    {
+        Color beforeColor = GetComponent<MeshRenderer>().material.color;
+        GetComponent<MeshRenderer>().material.color = new Color(beforeColor.r, beforeColor.g + 1f, beforeColor.b);
+        Instantiate(poisonEffect, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
+        for (float i = 0; i < duration; i += .5f)
+        {
+            Instantiate(DoTEffect, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
+            takeDamage(DPS / 2, true);
+            yield return new WaitForSeconds(.5f);
+        }
+        currentDPS = 0;
+        GetComponent<MeshRenderer>().material.color = beforeColor;
     }
 }

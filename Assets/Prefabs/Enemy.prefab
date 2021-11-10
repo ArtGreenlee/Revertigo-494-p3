@@ -113,7 +113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 1
-  slowEffect: {fileID: 100000, guid: 77ec3c4e07a36814fb3169ecef41b50a, type: 3}
   pathResetThreshold: 4
   onPathFinishEffect: {fileID: 1280141305896002, guid: e473029e4c70ad543a6879b82a732f4f,
     type: 3}
@@ -137,6 +136,8 @@ MonoBehaviour:
     type: 3}
   floatingDamageTextThreshold: 1
   goldValue: 5
+  DoTEffect: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
+  poisonEffect: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
 --- !u!114 &1109769621377822002
 MonoBehaviour:
   m_ObjectHideFlags: 0

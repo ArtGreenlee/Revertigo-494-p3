@@ -67,6 +67,9 @@ public class TowerStats : MonoBehaviour
     public bool slowsEnemy;
     public bool canCriticallyHit;
     public bool aoe;
+    public bool poisons;
+    public float poisonDPS;
+    public float poisonDuration;
     public float range;
     public int numTargets;
     public float damageMin;

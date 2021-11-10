@@ -19,7 +19,7 @@ public class ShootsBullets : MonoBehaviour
     private void Awake()
     {
         objectPooler = ObjectPooler.Instance;
-        enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
+        enemyStorage = EnemyStorage.instance;
         towerStats = GetComponent<TowerStats>();
     }
     // Start is called before the first frame update
@@ -32,36 +32,37 @@ public class ShootsBullets : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (targets.Count < towerStats.numTargets) {
-            //look for a new target
-            float minDistance = float.MaxValue;
-            GameObject addEnemy = null;
-            foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.range))
-            {
-                if (!targets.ContainsKey(enemy))
-                {
-                    float curDistance = (transform.position - enemy.transform.position).sqrMagnitude;
-                    if (curDistance < minDistance * minDistance)
-                    {
-                        addEnemy = enemy;
-                        minDistance = curDistance;
-                    }
-                }
-            }
-            if (addEnemy != null)
-            {
-                targets.Add(addEnemy, Time.time);
-            }
-        }
-        List<GameObject> enemyRemovalBuffer = new List<GameObject>();
-        List<GameObject> tempTargets = targets.Keys.ToList();
         if (!towerStats.attachedToPlayer)
         {
+            if (targets.Count < towerStats.numTargets)
+            {
+                //look for a new target
+                float minDistance = float.MaxValue;
+                GameObject addEnemy = null;
+                foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.range))
+                {
+                    if (!targets.ContainsKey(enemy))
+                    {
+                        float curDistance = (transform.position - enemy.transform.position).sqrMagnitude;
+                        if (curDistance < minDistance * minDistance)
+                        {
+                            addEnemy = enemy;
+                            minDistance = curDistance;
+                        }
+                    }
+                }
+                if (addEnemy != null)
+                {
+                    targets.Add(addEnemy, 0);
+                }
+            }
+            List<GameObject> enemyRemovalBuffer = new List<GameObject>();
+            List<GameObject> tempTargets = targets.Keys.ToList();
+
             foreach (GameObject target in tempTargets)
             {
                 if (target != null &&
-                    enemyStorage.enemyIsAlive(target) &&
-                    (target.transform.position - transform.position).sqrMagnitude < towerStats.range * towerStats.range)
+                    enemyStorage.enemyIsAlive(target))
                 {
                     if (Time.time - targets[target] > towerStats.cooldown)
                     {
@@ -84,13 +85,12 @@ public class ShootsBullets : MonoBehaviour
 
     public void shootBullet(Vector3 direction)
     {
-        if (Time.time - playerShootCooldownUtility > towerStats.cooldown)
+        if (!towerStats.attachedToPlayer || (Time.time - playerShootCooldownUtility > towerStats.cooldown))
         {
             playerShootCooldownUtility = Time.time;
             GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.identity);
             tempBullet.GetComponent<Rigidbody>().velocity = direction.normalized * bulletSpeed;
             tempBullet.GetComponent<BulletController>().towerStats = towerStats;
         }
-       
     }
 }
