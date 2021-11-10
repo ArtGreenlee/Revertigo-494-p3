@@ -32,6 +32,17 @@ public class PlayerInputControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        RaycastHit hit;
+        Vector2 mousePosition = Input.mousePosition;
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        if (Physics.Raycast(ray, out hit))
+        {
+            currentLookPoint = hit.point;
+            rb.MoveRotation(Quaternion.Slerp(transform.rotation,
+                               Quaternion.LookRotation(currentLookPoint - transform.position),
+                               rotateSpeed * Time.deltaTime));
+        }
+
         //if the player is far enough from the camera, push them back
 
         /*if ((transform.position - cameraTransform.position).sqrMagnitude > 100)
@@ -42,20 +53,57 @@ public class PlayerInputControl : MonoBehaviour
         {
             rb.AddForce(transform.position);
         }
-        else if (transform.position.sqrMagnitude > 150)
+        else if (transform.position.sqrMagnitude > 80)
         {
-            rb.AddForce(-transform.position);
+            rb.AddForce(transform.position * -2);
         }
 
-        if (Input.GetKey(KeyCode.W))
+        /*if (Input.GetKey(KeyCode.W))
         {
             rb.AddRelativeForce(Vector3.forward * moveSpeed);
         }
         else if (Input.GetKey(KeyCode.S))
         {
             rb.AddRelativeForce(Vector3.forward * moveSpeed * -1);
+        }*/
+
+        if (!Input.GetKey(KeyCode.Space))
+        {
+            if (currentLookPoint.x > transform.position.x)
+            {
+                rb.AddForce(Vector3.right * moveSpeed);
+            }
+            else if (currentLookPoint.x < transform.position.x)
+            {
+                rb.AddForce(Vector3.left * moveSpeed);
+            }
+            if (currentLookPoint.y > transform.position.y)
+            {
+                rb.AddForce(Vector3.up * moveSpeed);
+            }
+            else if (currentLookPoint.y < transform.position.y)
+            {
+                rb.AddForce(Vector3.down * moveSpeed);
+            }
+            if (currentLookPoint.z > transform.position.z)
+            {
+                rb.AddForce(Vector3.forward * moveSpeed);
+            }
+            else if (currentLookPoint.z < transform.position.z)
+            {
+                rb.AddForce(Vector3.back * moveSpeed);
+            }
         }
-        if (Input.GetKey(KeyCode.A))
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
+
+        
+
+
+
+        /*if (Input.GetKey(KeyCode.A))
         {
             rb.AddRelativeForce(Vector3.left * moveSpeed );
         }
@@ -71,18 +119,9 @@ public class PlayerInputControl : MonoBehaviour
         else if (Input.GetKey(KeyCode.LeftShift))
         {
             rb.AddRelativeForce(Vector3.down * moveSpeed);
-        }
+        }*/
 
-        RaycastHit hit;
-        Vector2 mousePosition = Input.mousePosition;
-        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-        if (Physics.Raycast(ray, out hit))
-        {
-            currentLookPoint = hit.point;
-            rb.MoveRotation(Quaternion.Slerp(transform.rotation,
-                               Quaternion.LookRotation(currentLookPoint - transform.position),
-                               rotateSpeed * Time.deltaTime));
-        }
+        
 
             /*if (Input.GetKey(KeyCode.UpArrow))
             {

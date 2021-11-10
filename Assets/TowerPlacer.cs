@@ -7,10 +7,12 @@ public class TowerPlacer : MonoBehaviour
 
     private WallStorage wallStorage;
     public GameObject shadowTower;
-    private TowerInventory towerInventory; 
+    private TowerInventory towerInventory;
+    private TowerStorage towerStorage;
     // Start is called before the first frame update
     void Start()
     {
+        towerStorage = TowerStorage.instance;
         wallStorage = WallStorage.instance;
         towerInventory = TowerInventory.instance;
         shadowTower = Instantiate(shadowTower, transform.position, Quaternion.identity);
@@ -37,8 +39,10 @@ public class TowerPlacer : MonoBehaviour
                     shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(curPoint);
                     if (Input.GetKeyDown(KeyCode.F) )
                     {
-                        wallStorage.attachTowerToWall(towerInventory.playerInventory[0], tempWall);
-                        StartCoroutine(placeTowerOnBoard(towerInventory.playerInventory[0], towerInventory.playerInventory[0].transform.position, shadowTower.transform.position, tempWall));
+                        GameObject tempTower = towerInventory.playerInventory[0];
+                        wallStorage.attachTowerToWall(tempTower, tempWall);
+                        towerStorage.addTower(tempTower);
+                        StartCoroutine(placeTowerOnBoard(tempTower, tempTower.transform.position, shadowTower.transform.position, tempWall));
                         towerInventory.playerInventory.RemoveAt(0);
                         shadowTower.transform.position = new Vector3(25, 0, 0);
                     }

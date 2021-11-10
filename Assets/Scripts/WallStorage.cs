@@ -9,6 +9,7 @@ public class WallStorage : MonoBehaviour
     Dictionary<Vector3, int> duplicates = new Dictionary<Vector3, int>();
     public List<Pathfinder> pathfinders;
     private Stack<GameObject> wallStack;
+    private TowerStorage towerStorage;
 
     private TowerInventory towerInventory;
 
@@ -46,6 +47,7 @@ public class WallStorage : MonoBehaviour
 
     void Start()
     {
+        towerStorage = TowerStorage.instance;
         towerInventory = TowerInventory.instance;
         wallStack = new Stack<GameObject>();
     }
@@ -206,9 +208,11 @@ public class WallStorage : MonoBehaviour
 
     public void detatchTowerAndReturn(GameObject wallIn)
     {
-        towerInventory.playerInventory.Add(wallAndTowers[wallIn]);
-        wallAndTowers[wallIn].GetComponent<TowerStats>().attachedToPlayer = true;
+        GameObject tempTower = wallAndTowers[wallIn];
+        towerInventory.playerInventory.Add(tempTower);
+        tempTower.GetComponent<TowerStats>().attachedToPlayer = true;
         wallAndTowers.Remove(wallIn);
+        towerStorage.removeTower(tempTower);
     }
 
     public bool wallHasTower(GameObject wall)
