@@ -7,7 +7,6 @@ public class BuffsOtherTowers : MonoBehaviour
     private TowerStats towerStats;
     private TowerStorage towerStorage;
     private List<GameObject> buffTowers;
-
     private void Start()
     {
         buffTowers = new List<GameObject>();
@@ -43,7 +42,16 @@ public class BuffsOtherTowers : MonoBehaviour
     }
     private void updateBuffs()
     {
-        List<GameObject> towersInRange = towerStorage.getAllTowersWithinRangeAtPoint(transform.position, towerStats.range);
+        Vector3 searchPoint = transform.position;
+        ShootsBullets recoilCheck;
+        if (TryGetComponent<ShootsBullets>(out recoilCheck))
+        {
+            if (recoilCheck.snapPosition != Vector3.zero)
+            {
+                searchPoint = recoilCheck.snapPosition;
+            }
+        }
+        List<GameObject> towersInRange = towerStorage.getAllTowersWithinRangeAtPoint(searchPoint, towerStats.range);
         for (int i = 0; i < buffTowers.Count; i++)
         {
             if (!towersInRange.Contains(buffTowers[i]))

@@ -37,6 +37,10 @@ public class SpiritTower : MonoBehaviour
         if (!towerStats.attachedToPlayer && (target == null || (transform.position - target.transform.position).sqrMagnitude > towerStats.range * towerStats.range))
         {
             target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, towerStats.range);
+            if (Time.frameCount % 15 == 0 && target != null)
+            {
+                enableParticles();
+            }
         }
 
         if (towerStats.attachedToPlayer)
@@ -69,6 +73,10 @@ public class SpiritTower : MonoBehaviour
             // Apply the particle changes to the Particle System
             spiritSystem.SetParticles(m_Particles, numParticlesAlive);
         }
+        else
+        {
+            disableParticles();
+        }
     }
 
     private void getSpawnRate()
@@ -81,18 +89,12 @@ public class SpiritTower : MonoBehaviour
 
     public void enableParticles()
     {
-        if (!spiritSystem.emission.enabled)
-        {
-            spiritSystem.Play();
-        }
+        //spiritSystem.enableEmission = false;
     }
 
     public void disableParticles()
     {
-        if (spiritSystem.emission.enabled)
-        {
-            spiritSystem.Play();
-        }
+
     }
 
     private void OnParticleCollision(GameObject other)

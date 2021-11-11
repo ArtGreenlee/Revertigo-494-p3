@@ -81,7 +81,7 @@ public class ClusterFireballController : MonoBehaviour
             Vector3 initialForce = new Vector3(launchDirection.x * 16, launchDirection.y * 16, launchDirection.z * 16);
             initialForce = (transform.position - initialForce).normalized * 2;
             tempRocket.GetComponent<Rigidbody>().AddForce(initialForce, ForceMode.Impulse);
-            //yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.1f);
         }
         Destroy(gameObject);
     }

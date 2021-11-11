@@ -67,7 +67,7 @@ public class PlayerInputControl : MonoBehaviour
             rb.AddRelativeForce(Vector3.forward * moveSpeed * -1);
         }*/
 
-        if (!Input.GetKey(KeyCode.Space))
+        if (!Input.GetKey(KeyCode.Space) && !Input.GetMouseButton(1))
         {
             if (currentLookPoint.x > transform.position.x)
             {
