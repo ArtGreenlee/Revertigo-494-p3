@@ -24,7 +24,7 @@ public class ShootsFireBalls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!towerStats.attachedToPlayer && Time.time - cooldownTimer > towerStats.cooldown)
+        if (!towerStats.attachedToPlayer && Time.time - cooldownTimer > towerStats.getCooldown())
         {
             if (enemyStorage.getClosestEnemyToPointWithinRange(transform.position, towerStats.range) != null)
             {
@@ -53,7 +53,7 @@ public class ShootsFireBalls : MonoBehaviour
      
     public void ShootFireball(Vector3 direction)
     {
-        if (Time.time - cooldownTimer > towerStats.cooldown)
+        if (Time.time - cooldownTimer > towerStats.getCooldown())
         {
             GameObject fireBallTemp = Instantiate(fireBall, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
             fireBallTemp.GetComponent<Rigidbody>().AddForce(direction.normalized * 4, ForceMode.Impulse);

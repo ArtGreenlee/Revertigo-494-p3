@@ -34,7 +34,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            if (Time.time - cooldownUtility > towerStats.cooldown)
+            if (Time.time - cooldownUtility > towerStats.getCooldown())
             {
                 GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.identity);
                 tempBullet.GetComponent<Rigidbody>().velocity = transform.forward * towerStats.bulletSpeed;

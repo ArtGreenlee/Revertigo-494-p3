@@ -64,7 +64,7 @@ public class ShootsBullets : MonoBehaviour
                 if (target != null &&
                     enemyStorage.enemyIsAlive(target))
                 {
-                    if (Time.time - targets[target] > towerStats.cooldown)
+                    if (Time.time - targets[target] > towerStats.getCooldown())
                     {
                         shootBullet(target.transform.position - transform.position);
                         targets[target] = Time.time;
@@ -85,7 +85,7 @@ public class ShootsBullets : MonoBehaviour
 
     public void shootBullet(Vector3 direction)
     {
-        if (!towerStats.attachedToPlayer || (Time.time - playerShootCooldownUtility > towerStats.cooldown))
+        if (!towerStats.attachedToPlayer || (Time.time - playerShootCooldownUtility > towerStats.getCooldown()))
         {
             playerShootCooldownUtility = Time.time;
             GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.identity);

@@ -41,7 +41,7 @@ public class TowerPlacer : MonoBehaviour
                     {
                         GameObject tempTower = towerInventory.playerInventory[0];
                         wallStorage.attachTowerToWall(tempTower, tempWall);
-                        towerStorage.addTower(tempTower);
+                        
                         StartCoroutine(placeTowerOnBoard(tempTower, tempTower.transform.position, shadowTower.transform.position, tempWall));
                         towerInventory.playerInventory.RemoveAt(0);
                         shadowTower.transform.position = new Vector3(25, 0, 0);
@@ -50,7 +50,6 @@ public class TowerPlacer : MonoBehaviour
                 }
                 else if (wallStorage.wallHasTower(tempWall) && Input.GetKeyDown(KeyCode.T))
                 {
-                    Debug.Log("return tower");
 
                     wallStorage.detatchTowerAndReturn(tempWall);
                 }
@@ -115,7 +114,7 @@ public class TowerPlacer : MonoBehaviour
         }
         else
         {
-
+            towerStorage.addTower(tower);
             tower.transform.position = end;
             tower.GetComponent<TowerStats>().attachedToPlayer = false;
         }

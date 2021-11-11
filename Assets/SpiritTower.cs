@@ -27,7 +27,7 @@ public class SpiritTower : MonoBehaviour
         playerControl = PlayerInputControl.instance;
         towerStats = GetComponent<TowerStats>();
         enemyStorage = EnemyStorage.instance;
-        setSpawnRate(towerStats.cooldown);
+        setSpawnRate(towerStats.getCooldown());
     }
 
     // Update is called once per frame

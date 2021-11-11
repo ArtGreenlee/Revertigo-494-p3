@@ -49,6 +49,15 @@ public class TowerStats : MonoBehaviour
         .5f
     };
 
+    public static List<float> cooldownBuffDecreasePerLevel = new List<float>
+    {
+        .5f,
+        .8f,
+        .75f,
+        .7f,
+        .65f
+    };
+
     public enum towerNames
     {
         Blue,
@@ -67,8 +76,36 @@ public class TowerStats : MonoBehaviour
         cooldownBuff
     };
 
+    private float currentDamageBuff = float.MinValue;
+    private float currentCooldownBuff = float.MaxValue;
+    public GameObject cooldownBuffEffect;
+    private GameObject cooldownBuffEffectInstance = null;
+    public void buffTower(buffTypes buffType, float value)
+    {
+        if (buffType == buffTypes.cooldownBuff && value < currentCooldownBuff)
+        {
+            if (currentCooldownBuff == float.MaxValue && cooldownBuffEffectInstance == null)
+            {
+                Debug.Log("start effect");
+                cooldownBuffEffectInstance = Instantiate(cooldownBuffEffect, transform.position + UtilityFunctions.getClosestSide(transform.position) / 1.5f, UtilityFunctions.getRotationawayFromSide(transform.position));
+            }
+            currentCooldownBuff = value;
+        }
+    }
+
+    public void removeBuff(buffTypes buffType, float value)
+    {
+        if (value < currentCooldownBuff)
+        {
+            Destroy(cooldownBuffEffectInstance);
+            currentCooldownBuff = float.MaxValue;
+        }
+        
+    }
+
     private int kills = 0;
-    private int level = 0;
+    public int level = 0;
+    public float damageBuffIncrease;
     public bool attachedToPlayer = true;
 
     public bool buffsTowers;
@@ -89,7 +126,19 @@ public class TowerStats : MonoBehaviour
     public float slowPercent;
     public float slowDuration;
     public float aoe_range;
-    public float cooldown;
+
+    [SerializeField]
+    private float baseCooldown;
+    
+    public float getCooldown()
+    {
+        if (currentCooldownBuff != float.MaxValue)
+        {
+            return baseCooldown * currentCooldownBuff;
+        }
+        return baseCooldown;
+    }
+
     public float bulletSpeed;
     public Color trailRendererColor;
     public GameObject upgradeEffect;
@@ -130,7 +179,7 @@ public class TowerStats : MonoBehaviour
                 {
                     damageMin *= damageIncreaseAtLevel[level];
                     damageMax *= damageIncreaseAtLevel[level];
-                    cooldown *= .9f;
+                    baseCooldown *= .9f;
                     if (slowsEnemy)
                     {
                         if (slowPercent > 0)
@@ -149,6 +198,5 @@ public class TowerStats : MonoBehaviour
                 //upgrade the tower;
             }
         }
-        
     } 
 }

@@ -3626,6 +3626,7 @@ GameObject:
   - component: {fileID: 1411751686}
   - component: {fileID: 1411751691}
   - component: {fileID: 1411751688}
+  - component: {fileID: 1411751692}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -3719,6 +3720,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numLives: 20
   livesCounter: {fileID: 1238165678}
+--- !u!114 &1411751692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411751685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f667f223c38549a2b2baa5784131768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1426071739
 GameObject:
   m_ObjectHideFlags: 0
@@ -5113,6 +5126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachedToPlayer: 0
+  buffsTowers: 0
+  buffs: 
   slowsEnemy: 0
   canCriticallyHit: 0
   aoe: 1
@@ -5135,7 +5150,6 @@ MonoBehaviour:
   specialTower: 0
   slowEffect: {fileID: 0}
   towerLevelMeshList: []
-  numberOfBulletsPerShot: 0
 --- !u!114 &1880758165
 MonoBehaviour:
   m_ObjectHideFlags: 0

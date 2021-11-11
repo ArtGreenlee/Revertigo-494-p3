@@ -127,6 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784ba9d6e741fd14b877cc68bbefeeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownBuffEffect: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
+  level: 0
+  damageBuffIncrease: 0
   attachedToPlayer: 1
   buffsTowers: 0
   buffs: 
@@ -145,7 +148,7 @@ MonoBehaviour:
   slowPercent: 0
   slowDuration: 0
   aoe_range: 0
-  cooldown: 1
+  baseCooldown: 1
   bulletSpeed: 15
   trailRendererColor: {r: 1, g: 1, b: 1, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
