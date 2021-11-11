@@ -117,6 +117,11 @@ public class TowerPlacer : MonoBehaviour
             towerStorage.addTower(tower);
             tower.transform.position = end;
             tower.GetComponent<TowerStats>().attachedToPlayer = false;
+            ShootsBullets recoilSnapPositionTemp;
+            if (tower.TryGetComponent<ShootsBullets>(out recoilSnapPositionTemp))
+            {
+                recoilSnapPositionTemp.snapPosition = end;
+            }
         }
     }
 }

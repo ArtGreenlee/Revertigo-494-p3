@@ -213,6 +213,11 @@ public class WallStorage : MonoBehaviour
         tempTower.GetComponent<TowerStats>().attachedToPlayer = true;
         wallAndTowers.Remove(wallIn);
         towerStorage.removeTower(tempTower);
+        ShootsBullets recoilSnapPositionTemp;
+        if (tempTower.TryGetComponent<ShootsBullets>(out recoilSnapPositionTemp))
+        {
+            recoilSnapPositionTemp.snapPosition = Vector3.zero;
+        }
     }
 
     public bool wallHasTower(GameObject wall)

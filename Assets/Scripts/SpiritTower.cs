@@ -41,7 +41,6 @@ public class SpiritTower : MonoBehaviour
 
         if (towerStats.attachedToPlayer)
         {
-            transform.rotation.SetLookRotation(playerControl.currentLookPoint);
             if (Input.GetKeyDown(0))
             {
                 enableParticles();
@@ -54,7 +53,6 @@ public class SpiritTower : MonoBehaviour
         else
         {
             enableParticles();
-            transform.rotation = UtilityFunctions.getRotationawayFromSide(transform.position);
         }
 
         if (target != null)

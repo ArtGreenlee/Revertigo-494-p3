@@ -11,8 +11,11 @@ public class ShootsBullets : MonoBehaviour
     public GameObject bullet;
     public float bulletSpeed;
     private Dictionary<GameObject, float> targets;
-    EnemyStorage enemyStorage;
+    private EnemyStorage enemyStorage;
     private float playerShootCooldownUtility;
+    private Rigidbody rb;
+
+    public Vector3 snapPosition;
 
     private ObjectPooler objectPooler;
 
@@ -25,6 +28,7 @@ public class ShootsBullets : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         playerShootCooldownUtility = 0;
         targets = new Dictionary<GameObject, float>();
     }
@@ -79,8 +83,19 @@ public class ShootsBullets : MonoBehaviour
             {
                 targets.Remove(enemy);
             }
+            
         }
         
+    }
+
+    private void FixedUpdate()
+    {
+        if (transform.position != snapPosition && snapPosition != Vector3.zero)
+        {
+            rb.AddForce((snapPosition - transform.position) * 10);
+            //transform.position = Vector3.Lerp(transform.position, snapPosition, Time.deltaTime * 10);
+        }
+
     }
 
     public void shootBullet(Vector3 direction)
@@ -91,6 +106,11 @@ public class ShootsBullets : MonoBehaviour
             GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.identity);
             tempBullet.GetComponent<Rigidbody>().velocity = direction.normalized * bulletSpeed;
             tempBullet.GetComponent<BulletController>().towerStats = towerStats;
+
+            if (!towerStats.attachedToPlayer && snapPosition != Vector3.zero)
+            {
+                rb.AddForce(direction.normalized * bulletSpeed * -.1f, ForceMode.Impulse);
+            }
         }
     }
 }
