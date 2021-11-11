@@ -213,4 +213,13 @@ public class UtilityFunctions : MonoBehaviour
         transform.localScale = new Vector3(scale, scale, scale);
     }
 
+    public static IEnumerator changeRotationOverTime(Transform transform, Quaternion startRotation, Quaternion changeRotation, float speed)
+    {
+        transform.rotation = startRotation;
+        while (startRotation != changeRotation)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, changeRotation, Time.deltaTime * speed);
+            yield return new WaitForEndOfFrame();
+        }
+    }
 }

@@ -69,7 +69,7 @@ public class BulletController : MonoBehaviour
         if (towerStats.canCriticallyHit && Random.value < towerStats.critChance)
         {
             
-            if (collision.gameObject.CompareTag("Enemy"))
+            if (collision.gameObject.CompareTag("Enemy") && !towerStats.slowsEnemy)
             {
                 Instantiate(criticalEffect, collision.contacts[0].point, Quaternion.identity);
             }
