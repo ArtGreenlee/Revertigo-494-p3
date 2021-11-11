@@ -27,7 +27,7 @@ public class SpiritTower : MonoBehaviour
         playerControl = PlayerInputControl.instance;
         towerStats = GetComponent<TowerStats>();
         enemyStorage = EnemyStorage.instance;
-        setSpawnRate(towerStats.getCooldown());
+        InvokeRepeating("getSpawnRate", 1, 1);
     }
 
     // Update is called once per frame
@@ -73,12 +73,12 @@ public class SpiritTower : MonoBehaviour
         }
     }
 
-    public void setSpawnRate(float newCooldown)
+    private void getSpawnRate()
     {
         ParticleSystem.EmissionModule emission = spiritSystem.emission;
         //max = 20, min = 5, 
-        Debug.Log(Mathf.Lerp(20, 5, newCooldown));
-        emission.rateOverTime = Mathf.Lerp(20, 5, newCooldown);
+        Debug.Log(Mathf.Lerp(20, 5, towerStats.getCooldown()));
+        emission.rateOverTime = Mathf.Lerp(20, 5, towerStats.getCooldown());
     }
 
     public void enableParticles()

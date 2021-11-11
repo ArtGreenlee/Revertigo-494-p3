@@ -24,22 +24,22 @@ public class BuffsOtherTowers : MonoBehaviour
             }
             else
             {
-                for (int i = 0; i < buffTowers.Count; i++)
-                {
-                    foreach (TowerStats.buffTypes buff in towerStats.buffs)
-                    {
-                        buffTowers[i].GetComponent<TowerStats>().removeBuff(buff, TowerStats.cooldownBuffDecreasePerLevel[towerStats.level]);
-                    }
-                }
-                buffTowers = new List<GameObject>();
+                resetBuffs();
             }
         }
 
     }
 
-    private void resetBuffs()
+    public void resetBuffs()
     {
-
+        for (int i = 0; i < buffTowers.Count; i++)
+        {
+            foreach (TowerStats.buffTypes buff in towerStats.buffs)
+            {
+                buffTowers[i].GetComponent<TowerStats>().removeBuff(buff, TowerStats.cooldownBuffDecreasePerLevel[towerStats.level]);
+            }
+        }
+        buffTowers = new List<GameObject>();
     }
     private void updateBuffs()
     {
@@ -60,17 +60,21 @@ public class BuffsOtherTowers : MonoBehaviour
         foreach (GameObject tower in towersInRange)
         {
             TowerStats tempStats = tower.GetComponent<TowerStats>();
-            if (!buffTowers.Contains(tower) && tower != gameObject && !tempStats.buffsTowers) //add a new tower
+            if (!buffTowers.Contains(tower) && tower != gameObject && !tempStats.buffsTowers)
             {
-                if (towerStats.buffs.Contains(TowerStats.buffTypes.cooldownBuff))
-                {
-                    tempStats.buffTower(TowerStats.buffTypes.cooldownBuff, TowerStats.cooldownBuffDecreasePerLevel[towerStats.level]);
-                }
-                if (towerStats.buffs.Contains(TowerStats.buffTypes.damageBuff))
-                {
-                    tempStats.buffTower(TowerStats.buffTypes.damageBuff, towerStats.damageBuffIncrease);
-                }
                 buffTowers.Add(tower);
+            }
+        }
+        foreach (GameObject tower in buffTowers)
+        {
+            TowerStats tempStats = tower.GetComponent<TowerStats>();
+            if (towerStats.buffs.Contains(TowerStats.buffTypes.cooldownBuff))
+            {
+                tempStats.buffTower(TowerStats.buffTypes.cooldownBuff, TowerStats.cooldownBuffDecreasePerLevel[towerStats.level]);
+            }
+            if (towerStats.buffs.Contains(TowerStats.buffTypes.damageBuff))
+            {
+                tempStats.buffTower(TowerStats.buffTypes.damageBuff, towerStats.damageBuffIncrease);
             }
         }
     }

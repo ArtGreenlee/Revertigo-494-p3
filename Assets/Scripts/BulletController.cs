@@ -5,24 +5,21 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     public TowerStats towerStats;
-    private MeshRenderer meshRenderer;
-    private SphereCollider sphereCollider;
     public GameObject onHitEffect;
     public GameObject criticalEffect;
-    private Rigidbody rb;
     public GameObject onHitAoeEffect;
     private EnemyStorage enemyStorage;
     private TrailRenderer trailRenderer;
     private float lifeTime = 10;
     private float lifeTimeStart;
+    private ObjectPooler objectPooler;
+
+
     // Start is called before the first frame update
     private void Awake()
     {
+        objectPooler = ObjectPooler.Instance;
         trailRenderer = GetComponent<TrailRenderer>();
-        
-        sphereCollider = GetComponent<SphereCollider>();
-        rb = GetComponent<Rigidbody>();
-        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     void Start()
@@ -63,7 +60,8 @@ public class BulletController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            Instantiate(onHitEffect, collision.contacts[0].point, Quaternion.identity);
+            objectPooler.getObjectFromPool("BulletOnHitEffect", transform.position, Quaternion.identity);
+            //Instantiate(onHitEffect, collision.contacts[0].point, Quaternion.identity);
             hitEnemies.Add(collision.gameObject);
         }
 

@@ -67,7 +67,8 @@ public class TowerStats : MonoBehaviour
         Fireball,
         ClusterFireball,
         StunTower,
-        SpiritTower
+        SpiritTower,
+        Player
     };
 
     public enum buffTypes
@@ -76,31 +77,30 @@ public class TowerStats : MonoBehaviour
         cooldownBuff
     };
 
-    private float currentDamageBuff = float.MinValue;
-    private float currentCooldownBuff = float.MaxValue;
     public GameObject cooldownBuffEffect;
-    private GameObject cooldownBuffEffectInstance = null;
+    private GameObject cooldownBuffEffectInstance;
     public void buffTower(buffTypes buffType, float value)
     {
-        if (buffType == buffTypes.cooldownBuff && value < currentCooldownBuff)
+
+        if (buffType == buffTypes.cooldownBuff && !cooldownBuffs.Contains(value))
         {
-            if (currentCooldownBuff == float.MaxValue && cooldownBuffEffectInstance == null)
-            {
-                Debug.Log("start effect");
-                cooldownBuffEffectInstance = Instantiate(cooldownBuffEffect, transform.position + UtilityFunctions.getClosestSide(transform.position) / 1.5f, UtilityFunctions.getRotationawayFromSide(transform.position));
-            }
-            currentCooldownBuff = value;
+            cooldownBuffEffectInstance = Instantiate(cooldownBuffEffect,
+                transform.position + UtilityFunctions.getClosestSide(transform.position) / 1.5f,
+                UtilityFunctions.getRotationawayFromSide(transform.position));
+            cooldownBuffs.Add(value);
         }
     }
 
     public void removeBuff(buffTypes buffType, float value)
     {
-        if (value < currentCooldownBuff)
+        if (buffType == buffTypes.cooldownBuff && cooldownBuffs.Contains(value) && value != 1)
         {
-            Destroy(cooldownBuffEffectInstance);
-            currentCooldownBuff = float.MaxValue;
+            cooldownBuffs.Remove(value);
+            if (cooldownBuffs.Min == 1)
+            {
+                Destroy(cooldownBuffEffectInstance);
+            }
         }
-        
     }
 
     private int kills = 0;
@@ -132,11 +132,7 @@ public class TowerStats : MonoBehaviour
     
     public float getCooldown()
     {
-        if (currentCooldownBuff != float.MaxValue)
-        {
-            return baseCooldown * currentCooldownBuff;
-        }
-        return baseCooldown;
+        return baseCooldown * cooldownBuffs.Min;
     }
 
     public float bulletSpeed;
@@ -144,7 +140,7 @@ public class TowerStats : MonoBehaviour
     public GameObject upgradeEffect;
     public bool specialTower;
     public GameObject slowEffect;
-
+    private SortedSet<float> cooldownBuffs;
     public List<Mesh> towerLevelMeshList;
 
 
@@ -152,6 +148,8 @@ public class TowerStats : MonoBehaviour
 
     private void Start()
     {
+        cooldownBuffs = new SortedSet<float>();
+        cooldownBuffs.Add(1);
         if (gameObject.name != "Player")
         {
             GetComponent<TrailRenderer>().startColor = trailRendererColor;
@@ -174,6 +172,10 @@ public class TowerStats : MonoBehaviour
             //Debug.Log(tempLevel);
             if (tempLevel != level)
             {
+                if (buffsTowers)
+                {
+                    GetComponent<BuffsOtherTowers>().resetBuffs();
+                }
                 level = tempLevel;
                 if (!specialTower)
                 {
