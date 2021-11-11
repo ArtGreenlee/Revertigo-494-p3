@@ -3674,7 +3674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde1eed620d637341b436f6e69d0fcd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 20
+  gold: 1000
   goldText: {fileID: 1795517617}
 --- !u!114 &1411751689
 MonoBehaviour:
@@ -5183,7 +5183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxGemInventory: 6
-  debugMode: 1
+  debugMode: 0
   towerPlacementEnabled: 0
   inventoryDistanceFromPlayer: 1.5
   towerSnapSpeed: 5
@@ -5201,6 +5201,7 @@ MonoBehaviour:
   - {fileID: 9204140441405189623, guid: e7a82ac31456eea4db488781199a4298, type: 3}
   - {fileID: 7940872050863963642, guid: c1c1b12a278de74468bfd002d0afcc80, type: 3}
   - {fileID: 4782707245435355068, guid: 50382c94b3f4941f99d3020a78658ce2, type: 3}
+  - {fileID: 2000279016636778330, guid: e0598bc5bcb324c1ba3e2d895163c97f, type: 3}
   price: 10
   priceText: {fileID: 1113210396}
 --- !u!114 &1880758168
