@@ -163,7 +163,7 @@ MonoBehaviour:
   slowPercent: 0
   slowDuration: 0
   aoe_range: 2
-  baseCooldown: 1
+  baseCooldown: 5
   bulletSpeed: 0
   trailRendererColor: {r: 0.990566, g: 0.0046724924, b: 0.0046724924, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
