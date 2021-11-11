@@ -4357,7 +4357,7 @@ Camera:
   m_GameObject: {fileID: 1615446032}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -5125,6 +5125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784ba9d6e741fd14b877cc68bbefeeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownBuffEffect: {fileID: 0}
+  level: 0
+  damageBuffIncrease: 0
   attachedToPlayer: 0
   buffsTowers: 0
   buffs: 
@@ -5143,7 +5146,7 @@ MonoBehaviour:
   slowPercent: 0.8
   slowDuration: 5
   aoe_range: 2.5
-  cooldown: 0.5
+  baseCooldown: 0
   bulletSpeed: 30
   trailRendererColor: {r: 0, g: 0, b: 0, a: 1}
   upgradeEffect: {fileID: 0}
