@@ -52,6 +52,16 @@ public class TowerStorage : MonoBehaviour
         List<GameObject> tempList = new List<GameObject>();
         foreach (GameObject tower in towers)
         {
+            Vector3 towerPosition = tower.transform.position;
+            ShootsBullets recoilCheck;
+            if (TryGetComponent<ShootsBullets>(out recoilCheck))
+            {
+                if (recoilCheck.snapPosition != Vector3.zero)
+                {
+                    towerPosition = recoilCheck.snapPosition;
+                }
+            }
+
             if ((tower.transform.position - point).sqrMagnitude <= range * range)
             {
                 tempList.Add(tower);
