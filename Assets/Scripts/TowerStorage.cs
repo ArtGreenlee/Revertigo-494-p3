@@ -62,7 +62,7 @@ public class TowerStorage : MonoBehaviour
                 }
             }
 
-            if ((tower.transform.position - point).sqrMagnitude <= range * range)
+            if ((towerPosition - point).sqrMagnitude <= range * range)
             {
                 tempList.Add(tower);
             }

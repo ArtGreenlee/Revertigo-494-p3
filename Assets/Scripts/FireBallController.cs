@@ -17,6 +17,7 @@ public class FireBallController : MonoBehaviour
     private SphereCollider sphereCollider;
     public float disableDuration;
     public PlayerInputControl playerInputControl;
+    Vector3 lastSeenTargetLocation;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class FireBallController : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        lastSeenTargetLocation = Vector3.zero;
         enemyStorage = EnemyStorage.instance;
         playerInputControl = PlayerInputControl.instance;
         thrusting = false;
@@ -67,15 +69,7 @@ public class FireBallController : MonoBehaviour
         if (!enemyStorage.enemyIsAlive(target) && !towerStats.attachedToPlayer)
         {
             GameObject newTarget = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 100);
-            if (newTarget == null)
-            {
-                Instantiate(collisionEffect, transform.position, Quaternion.identity);
-                Destroy(gameObject);
-            }
-            else
-            {
-                target = newTarget;
-            }
+            target = newTarget;
         }
 
         if (towerStats.attachedToPlayer)
@@ -84,8 +78,15 @@ public class FireBallController : MonoBehaviour
         }
         else if (target != null)
         {
+            lastSeenTargetLocation = target.transform.position;
             rb.MoveRotation(Quaternion.Slerp(transform.rotation,
                            Quaternion.LookRotation(target.transform.position - transform.position),
+                           rotationSpeed * Time.deltaTime));
+        }
+        else if (lastSeenTargetLocation != Vector3.zero)
+        {
+            rb.MoveRotation(Quaternion.Slerp(transform.rotation,
+                           Quaternion.LookRotation(lastSeenTargetLocation - transform.position),
                            rotationSpeed * Time.deltaTime));
         }
         else
