@@ -1942,6 +1942,9 @@ MonoBehaviour:
     prefab: {fileID: 2318181038164239046, guid: 686e00cc8fd859247888fe3c5a7221cd,
       type: 3}
     size: 1000
+  - tag: BulletOnHitEffect
+    prefab: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
+    size: 1000
 --- !u!4 &853922187
 Transform:
   m_ObjectHideFlags: 0
@@ -5146,7 +5149,7 @@ MonoBehaviour:
   slowPercent: 0.8
   slowDuration: 5
   aoe_range: 2.5
-  baseCooldown: 0
+  baseCooldown: 1
   bulletSpeed: 30
   trailRendererColor: {r: 0, g: 0, b: 0, a: 1}
   upgradeEffect: {fileID: 0}
@@ -5186,8 +5189,7 @@ MonoBehaviour:
   towerSnapSpeed: 5
   playerInventory: []
   debugRoster:
-  - {fileID: 6149832772361309595, guid: 4fdd6956424680b47862f6197a832ff3, type: 3}
-  - {fileID: 2000279016636778330, guid: e0598bc5bcb324c1ba3e2d895163c97f, type: 3}
+  - {fileID: 7940872050863963642, guid: c1c1b12a278de74468bfd002d0afcc80, type: 3}
   towerRoster:
   - {fileID: 6295010870351937091, guid: 82b7e8fad8308ed4cb407bbaa7e9f6d4, type: 3}
   - {fileID: 1295874507230250574, guid: 1c7b4cc7605f978438b633cd91773085, type: 3}
@@ -5198,6 +5200,7 @@ MonoBehaviour:
   - {fileID: 6149832772361309595, guid: 4fdd6956424680b47862f6197a832ff3, type: 3}
   - {fileID: 9204140441405189623, guid: e7a82ac31456eea4db488781199a4298, type: 3}
   - {fileID: 7940872050863963642, guid: c1c1b12a278de74468bfd002d0afcc80, type: 3}
+  - {fileID: 4782707245435355068, guid: 50382c94b3f4941f99d3020a78658ce2, type: 3}
   price: 10
   priceText: {fileID: 1113210396}
 --- !u!114 &1880758168
