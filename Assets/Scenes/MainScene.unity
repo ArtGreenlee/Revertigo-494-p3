@@ -5125,6 +5125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784ba9d6e741fd14b877cc68bbefeeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownBuffEffect: {fileID: 0}
+  level: 0
+  damageBuffIncrease: 0
   attachedToPlayer: 0
   buffsTowers: 0
   buffs: 
@@ -5143,7 +5146,7 @@ MonoBehaviour:
   slowPercent: 0.8
   slowDuration: 5
   aoe_range: 2.5
-  cooldown: 0.5
+  baseCooldown: 0
   bulletSpeed: 30
   trailRendererColor: {r: 0, g: 0, b: 0, a: 1}
   upgradeEffect: {fileID: 0}
@@ -5177,13 +5180,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxGemInventory: 6
-  debugMode: 0
+  debugMode: 1
   towerPlacementEnabled: 0
   inventoryDistanceFromPlayer: 1.5
   towerSnapSpeed: 5
   playerInventory: []
   debugRoster:
   - {fileID: 6149832772361309595, guid: 4fdd6956424680b47862f6197a832ff3, type: 3}
+  - {fileID: 2000279016636778330, guid: e0598bc5bcb324c1ba3e2d895163c97f, type: 3}
   towerRoster:
   - {fileID: 6295010870351937091, guid: 82b7e8fad8308ed4cb407bbaa7e9f6d4, type: 3}
   - {fileID: 1295874507230250574, guid: 1c7b4cc7605f978438b633cd91773085, type: 3}
