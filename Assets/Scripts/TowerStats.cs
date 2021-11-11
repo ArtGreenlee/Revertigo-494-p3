@@ -68,7 +68,8 @@ public class TowerStats : MonoBehaviour
         ClusterFireball,
         StunTower,
         SpiritTower,
-        Player
+        Player,
+        LaserTower,
     };
 
     public enum buffTypes
@@ -134,8 +135,7 @@ public class TowerStats : MonoBehaviour
     {
         return baseCooldown * cooldownBuffs.Min;
     }
-
-    public float bulletSpeed;
+        
     public Color trailRendererColor;
     public GameObject upgradeEffect;
     public bool specialTower;

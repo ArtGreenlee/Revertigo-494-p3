@@ -34,15 +34,11 @@ public class TowerInventory : MonoBehaviour
         priceText.text = "Tower Cost " + price.ToString();
         goldStorage = GoldStorage.instance;
         playerInventory = new List<GameObject>();
-        if (debugMode)
-        {
-            price = -10;
-        }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && playerInventory.Count < maxGemInventory && goldStorage.gold >= price)
+        if (Input.GetKeyDown(KeyCode.G) && (playerInventory.Count < maxGemInventory && goldStorage.gold >= price) || debugMode)
         {
             goldStorage.changeGoldAmount(-price);
             price++;
@@ -76,10 +72,11 @@ public class TowerInventory : MonoBehaviour
             Vector3 vecRotation = transform.rotation.eulerAngles;
             Vector3 position = transform.position;
 
-            float xDiff = inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
-            float yDiff = inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
-            float zDiffHorizontal = inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad) * -1;
-            float zDiffVertical = inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
+            float xDiff = inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
+            float yDiff = inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
+            float zDiffHorizontal = inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad) * -1;
+            float zDiffVertical = inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
+
 
             //i dont know why, I shouldnt HAVE to know why, but for whatever god awful reason this is the closest i can get to the desired behaviour.
 
