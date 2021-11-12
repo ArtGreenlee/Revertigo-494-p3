@@ -325,10 +325,10 @@ public class Pathfinder : MonoBehaviour
         speedThreshold = 1000;
         while (activePath.Count > 0)
         {
-            while (Input.GetMouseButton(1))
+            /*while (Input.GetMouseButton(1))
             {
                 yield return new WaitForEndOfFrame();
-            }
+            }*/
             currentCount++;
             speedSwitch++;
             if (currentCount > speedThresholdTrigger)
