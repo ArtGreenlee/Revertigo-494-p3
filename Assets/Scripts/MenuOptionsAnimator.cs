@@ -11,8 +11,9 @@ public class MenuOptionsAnimator : MonoBehaviour
     public List<string> Options;
     public Text display;
     private bool animating = false;
-    public string game_scene;
-    private int cur_option = 0;
+    public GameObject loadingPanel;
+    public Slider loadingBar;
+    public Text loadingText;
     void Start()
     {
         if (Options.Count < 1)
@@ -32,13 +33,20 @@ public class MenuOptionsAnimator : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            StartCoroutine(LoadSceneAsync());
         }
     }
-    IEnumerator animate(string option)
+    IEnumerator LoadSceneAsync()
     {
-        animating = true;
-        yield return new WaitForSeconds(.1f);
-        animating = false;
+        AsyncOperation op = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+        loadingPanel.SetActive(true);
+        while (!op.isDone)
+        {
+            float progress = Mathf.Clamp01(op.progress / .9f);
+            loadingBar.value = progress;
+            loadingText.text = progress * 100f + "%";
+
+            yield return 1;
+        }
     }
 }
