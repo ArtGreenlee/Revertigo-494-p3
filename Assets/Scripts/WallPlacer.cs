@@ -31,11 +31,11 @@ public class WallPlacer : MonoBehaviour
         foreach (GameObject checkPoint in GameObject.FindGameObjectsWithTag("Checkpoint"))
         {
             Vector3 curVec = UtilityFunctions.snapVector(checkPoint.transform.position);
-            for (float i = -1; i < 1.5f; i += .5f)
+            for (float i = -.5f; i < 1f; i += .5f)
             {
-                for (float j = -1; j < 1.5f; j += .5f)
+                for (float j = -.5f; j < 1f; j += .5f)
                 {
-                    for (float k = -1; k < 1.5f; k += .5f)
+                    for (float k = -.5f; k < 1f; k += .5f)
                     {
                         checkPointVectors.Add(new Vector3(curVec.x + i, curVec.y + j, curVec.z + k));
                     }
@@ -53,10 +53,13 @@ public class WallPlacer : MonoBehaviour
     {
         RaycastHit hit;
         Vector2 mousePosition = Input.mousePosition;
+        mousePosition.x += .25f;
+        mousePosition.y += .25f;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
         Vector3 curPoint;
-        if (Physics.Raycast(ray, out hit) && goldStorage.gold >= 1)
+        if (Physics.Raycast(ray, out hit) && 
+            goldStorage.gold >= 1)
         {
             curPoint = hit.point;
             curPoint = UtilityFunctions.snapVector(curPoint);
@@ -65,7 +68,7 @@ public class WallPlacer : MonoBehaviour
                 enemyStorage.validWallPosition(curPoint) &&
                 hit.collider.gameObject.CompareTag("Playfield"))
             {
-                shadowWall.transform.rotation = UtilityFunctions.getRotationTowardSide(curPoint);
+                shadowWall.transform.rotation = UtilityFunctions.getRotationTowardSide(curPoint);   
                 shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
                 
                 /*if (validTowerPlacement(curPoint) && towerPlacementEnabled)

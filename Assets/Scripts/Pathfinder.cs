@@ -36,6 +36,7 @@ public class Pathfinder : MonoBehaviour
     private int speedThreshold;
     private const int speedThresholdTrigger = 1000;
     private int currentCount;
+    public List<HashSet<Vector3>> forbiddenVectors;
 
     private ObjectPooler objectPooler;
 
@@ -51,6 +52,11 @@ public class Pathfinder : MonoBehaviour
     private void Start()
     {
         objectPooler = ObjectPooler.Instance;
+        forbiddenVectors = new List<HashSet<Vector3>>();
+        for (int i = 0; i < checkPointVectors.Count - 1; i++)
+        {
+            forbiddenVectors.Add(new HashSet<Vector3>());
+        }
     }
 
     private void Awake()
@@ -319,6 +325,10 @@ public class Pathfinder : MonoBehaviour
         speedThreshold = 1000;
         while (activePath.Count > 0)
         {
+            while (Input.GetMouseButton(1))
+            {
+                yield return new WaitForEndOfFrame();
+            }
             currentCount++;
             speedSwitch++;
             if (currentCount > speedThresholdTrigger)
@@ -349,6 +359,8 @@ public class Pathfinder : MonoBehaviour
 
             foreach (Vector3 newVec in walkableTiles(curPos.v))
             {
+                //Instantiate(pathFindingVisualizerSphere, newVec, Quaternion.identity).GetComponent<PathVisualizerEffects>().fadeIn();
+                //yield return new WaitForSeconds(.1f);
                 if (newVec == end.v)
                 {
                     end.parent = curPos;
@@ -359,6 +371,17 @@ public class Pathfinder : MonoBehaviour
                         end = end.parent;
                         temp.Add(end.v);
                         pathVectors[pathIndex].Add(end.v);
+                        List<Vector3> forbiddenCheck = walkableTiles(end.v);
+                        if (forbiddenCheck.Count == 2) // if theres only one way in and out then you cant place a wall here.
+                        {
+                            foreach (Vector3 forbiddenVec in forbiddenCheck)
+                            {
+                                if (!forbiddenVectors[pathIndex].Contains(forbiddenVec)) {
+                                    forbiddenVectors[pathIndex].Add(forbiddenVec);
+                                }
+                            }
+                           
+                        }
                         //only show visualizer if this is a main path
                         if (enemyMovement == null)
                         {
@@ -572,8 +595,10 @@ public class Pathfinder : MonoBehaviour
         }
         visualizers = new List<HashSet<GameObject>>();
         pathVectors = new List<HashSet<Vector3>>();
+        forbiddenVectors = new List<HashSet<Vector3>>();
         for (int i = 0; i < checkPointVectors.Count - 1; i++)
         {
+            forbiddenVectors.Add(new HashSet<Vector3>());
             visualizers.Add(new HashSet<GameObject>());
             pathVectors.Add(new HashSet<Vector3>());
         }
@@ -604,6 +629,7 @@ public class Pathfinder : MonoBehaviour
                     {
                         removeSegmentFromDictionary(i);
                         removeVisualizerSegment(i);
+                        forbiddenVectors[i].Clear();
                         finishedPaths[i] = false;
                         numCoroutinesRunning++;
                         if (this != null)
@@ -664,9 +690,28 @@ public class Pathfinder : MonoBehaviour
         return false;
     }
 
+
     private List<Vector3> walkableTiles(Vector3 vec)
     {
         List<Vector3> walkable = new List<Vector3>();
+        /*foreach (Vector3 sideVec in UtilityFunctions.sideVectors)
+        {
+            Vector3 checkVec = vec + (sideVec / 2);
+            if (!wallStorage.isWall(checkVec))
+            {
+                for (float i = -.5f; i < 1; i += .5f)
+                {
+                    Vector3 addVec = checkVec + sideVec * i;
+                    if (UtilityFunctions.validEnemyVector(addVec) && !wallStorage.isWall(checkVec))
+                    {
+                        walkable.Add(addVec);
+                    }
+                }
+            }
+        }
+
+        for (float
+
         for (float i = -.5f; i < 1; i += .5f)
         {
             for (float j = -.5f; j < 1; j += .5f)
@@ -681,6 +726,114 @@ public class Pathfinder : MonoBehaviour
                 }
             }
         }
+
+        for (float x = -.5f; x < 1; x += .5f)
+        {
+            for (float y = -.5f; y < 1; y += .5f)
+            {
+                for (float z = -.5f; z < 1; z += .5f)
+                {
+                    Vector3 checkVec = new Vector3(vec.x + x, vec.y + y, vec.z + z);
+                    if (UtilityFunctions.validEnemyVector(checkVec) && !wallStorage.isWall(checkVec))
+                    {
+                        walkable.Add(checkVec);
+                    }
+                    if (y == 0)
+
+                }
+            }
+        }*/
+
+        foreach (Vector3 sideVec in UtilityFunctions.sideVectors)
+        {
+            Vector3 checkVec = vec + (sideVec / 2);
+            if (!wallStorage.isWall(checkVec) && UtilityFunctions.validEnemyVector(checkVec))
+            {
+                walkable.Add(checkVec);
+            }
+        }
+
+        
+
+
+        /*Vector3 checkVec = vec + Vector3.up / 2;
+        if (!wallStorage.isWall(checkVec))
+        {
+
+            for (float i = -.5f; i < 1; i += .5f)
+            {
+                Vector3 addVec = new Vector3(checkVec.x + i, checkVec.y, checkVec.z);
+                if (UtilityFunctions.validEnemyVector(addVec) && !wallStorage.isWall(addVec))
+                {
+                    walkable.Add(addVec);
+                }
+            }
+        }
+        checkVec = vec + Vector3.down / 2;
+        if (!wallStorage.isWall(checkVec))
+        {
+
+            for (float i = -.5f; i < 1; i += .5f)
+            {
+                Vector3 addVec = new Vector3(checkVec.x + i, checkVec.y, checkVec.z);
+                if (UtilityFunctions.validEnemyVector(addVec) && !wallStorage.isWall(addVec))
+                {
+                    walkable.Add(addVec);
+                }
+            }
+        }
+        checkVec = vec + Vector3.left / 2;
+        if (!wallStorage.isWall(checkVec))
+        {
+
+            for (float i = -.5f; i < 1; i += .5f)
+            {
+                Vector3 addVec = new Vector3(checkVec.x, checkVec.y, checkVec.z + i);
+                if (UtilityFunctions.validEnemyVector(addVec) && !wallStorage.isWall(addVec))
+                {
+                    walkable.Add(addVec);
+                }
+            }
+        }
+        checkVec = vec + Vector3.right / 2;
+        if (!wallStorage.isWall(checkVec))
+        {
+
+            for (float i = -.5f; i < 1; i += .5f)
+            {
+                Vector3 addVec = new Vector3(checkVec.x, checkVec.y, checkVec.z + i);
+                if (UtilityFunctions.validEnemyVector(addVec) && !wallStorage.isWall(addVec))
+                {
+                    walkable.Add(addVec);
+                }
+            }
+        }
+        checkVec = vec + Vector3.forward / 2;
+        if (!wallStorage.isWall(checkVec))
+        {
+
+            for (float i = -.5f; i < 1; i += .5f)
+            {
+                Vector3 addVec = new Vector3(checkVec.x, checkVec.y + i, checkVec.z);
+                if (UtilityFunctions.validEnemyVector(addVec) && !wallStorage.isWall(addVec))
+                {
+                    walkable.Add(addVec);
+                }
+            }
+        }
+        checkVec = vec + Vector3.back / 2;
+        if (!wallStorage.isWall(checkVec))
+        {
+
+            for (float i = -.5f; i < 1; i += .5f)
+            {
+                Vector3 addVec = new Vector3(checkVec.x, checkVec.y + i, checkVec.z);
+                if (UtilityFunctions.validEnemyVector(addVec) && !wallStorage.isWall(addVec))
+                {
+                    walkable.Add(addVec);
+                }
+            }
+        }*/
         return walkable;
     }
 

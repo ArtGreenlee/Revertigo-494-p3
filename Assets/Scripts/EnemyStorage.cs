@@ -33,7 +33,7 @@ public class EnemyStorage : MonoBehaviour
 
     public bool validWallPosition(Vector3 checkVec)
     {
-        foreach (Collider tempCollider in Physics.OverlapBox(checkVec, new Vector3(1f, 1f, 1f))) {
+        foreach (Collider tempCollider in Physics.OverlapBox(checkVec, new Vector3(.5f, .5f, .5f))) {
             if (enemies.Contains(tempCollider.gameObject))
             {
                 return false;

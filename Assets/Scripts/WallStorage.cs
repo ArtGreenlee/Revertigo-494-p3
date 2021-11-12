@@ -10,6 +10,7 @@ public class WallStorage : MonoBehaviour
     public List<Pathfinder> pathfinders;
     private Stack<GameObject> wallStack;
     private TowerStorage towerStorage;
+    private Dictionary<GameObject, Vector3> placementLocations;
 
     private TowerInventory towerInventory;
 
@@ -34,7 +35,10 @@ public class WallStorage : MonoBehaviour
     {
         if (wallStack.Count > 0)
         {
-            removeWall(wallStack.Pop());
+            GameObject tempWall = wallStack.Pop();
+            placementLocations.Remove(tempWall);
+            removeWall(tempWall);
+
             foreach (Pathfinder pathFinder in pathfinders)
             {
                 if (pathFinder != null)
@@ -47,6 +51,7 @@ public class WallStorage : MonoBehaviour
 
     void Start()
     {
+        placementLocations = new Dictionary<GameObject, Vector3>();
         towerStorage = TowerStorage.instance;
         towerInventory = TowerInventory.instance;
         wallStack = new Stack<GameObject>();
@@ -106,25 +111,36 @@ public class WallStorage : MonoBehaviour
                     Vector3 curVec = new Vector3(checkVec.x + i, checkVec.y + j, checkVec.z + k);
                     if (side == Vector3.forward || side == Vector3.back)
                     {
-                        if (Mathf.Abs(curVec.y) > 16 || Mathf.Abs(curVec.x) > 16)
+                        if (Mathf.Abs(curVec.y) > 17 || Mathf.Abs(curVec.x) > 17)
                         {
                             return false;
                         }
                     } 
                     else if (side == Vector3.left || side == Vector3.right)
                     {
-                        if (Mathf.Abs(curVec.z) > 16 || Mathf.Abs(curVec.y) > 16)
+                        if (Mathf.Abs(curVec.z) > 17 || Mathf.Abs(curVec.y) > 17)
                         {
                             return false;
                         }
                     }
                     else if (side == Vector3.up || side == Vector3.down)
                     {
-                        if (Mathf.Abs(curVec.x) > 16 || Mathf.Abs(curVec.z) > 16)
+                        if (Mathf.Abs(curVec.x) > 17 || Mathf.Abs(curVec.z) > 17)
                         {
                             return false;
                         }
                     }
+                }
+            }
+        }
+
+        foreach (Pathfinder pathfinder in pathfinders)
+        {
+            foreach (HashSet<Vector3> forbiddenVectorsSet in pathfinder.forbiddenVectors)
+            {
+                if (forbiddenVectorsSet.Contains(checkVec))
+                {
+                    return false;
                 }
             }
         }
@@ -134,13 +150,14 @@ public class WallStorage : MonoBehaviour
     //add vec is the center of the wall
     public void addWall(Vector3 addVec, GameObject wallIn)
     {
+        placementLocations.Add(wallIn, addVec);
         wallStack.Push(wallIn);
         Vector3 addSide = UtilityFunctions.getClosestSide(addVec);
-        for (float i = -1; i < 1.5f; i += .5f)
+        for (float i = -.5f; i < 1f; i += .5f)
         {
-            for (float j = -1; j < 1.5f; j += .5f)
+            for (float j = -.5f; j < 1f; j += .5f)
             {
-                for (float k = -1; k < 1.5f; k += .5f)
+                for (float k = -.5f; k < 1f; k += .5f)
                 {
                     Vector3 curVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
                     if (!storage.ContainsKey(curVec) &&
@@ -163,17 +180,45 @@ public class WallStorage : MonoBehaviour
                 }
             }
         }
-        detectPathCollision();
+                    /*
+                    for (float i = -1; i < 1.5f; i += .5f)
+                    {
+                        for (float j = -1; j < 1.5f; j += .5f)
+                        {
+                            for (float k = -1; k < 1.5f; k += .5f)
+                            {
+                                Vector3 curVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
+                                if (!storage.ContainsKey(curVec) &&
+                                    UtilityFunctions.validEnemyVector(curVec) &&
+                                    addSide == UtilityFunctions.getClosestSide(curVec))
+                                {
+                                    storage.Add(curVec, wallIn);
+                                }
+                                else if (storage.ContainsKey(curVec))
+                                {
+                                    if (duplicates.ContainsKey(curVec))
+                                    {
+                                        duplicates[curVec]++;
+                                    }
+                                    else
+                                    {
+                                        duplicates.Add(curVec, 2);
+                                    }
+                                }
+                            }
+                        }
+                    }*/
+                    detectPathCollision();
     }
 
     public void removeWall(GameObject wallIn)
     {
         Vector3 removeVec = wallIn.transform.position;
-        for (float i = -1; i < 1.5f; i += .5f)
+        for (float i = -.5f; i < 1f; i += .5f)
         {
-            for (float j = -1; j < 1.5f; j += .5f)
+            for (float j = -.5f; j < 1f; j += .5f)
             {
-                for (float k = -1; k < 1.5f; k += .5f)
+                for (float k = -.5f; k < 1f; k += .5f)
                 {
                     Vector3 curVec = new Vector3(removeVec.x + i, removeVec.y + j, removeVec.z + k);
                     if (duplicates.ContainsKey(curVec))

@@ -82,8 +82,6 @@ public class SpiritTower : MonoBehaviour
     private void getSpawnRate()
     {
         ParticleSystem.EmissionModule emission = spiritSystem.emission;
-        //max = 20, min = 5, 
-        Debug.Log(Mathf.Lerp(20, 5, towerStats.getCooldown()));
         emission.rateOverTime = Mathf.Lerp(20, 5, towerStats.getCooldown());
     }
 
