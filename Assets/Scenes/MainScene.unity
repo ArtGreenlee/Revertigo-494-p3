@@ -5217,7 +5217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowWall: {fileID: 8003085649397535219, guid: c3aeed2409bafc24aa4eae540f04dccd,
     type: 3}
-  wall: {fileID: 1985564498679554583, guid: de47b48e6d89ad24bb6f6c83bbcae1fc, type: 3}
+  wall: {fileID: 7742995577632602489, guid: 755a91e6c553d8243986d341a8070f62, type: 3}
   onPlacementEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
 --- !u!1 &1923379762
 GameObject:
