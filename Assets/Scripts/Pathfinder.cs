@@ -374,6 +374,10 @@ public class Pathfinder : MonoBehaviour
                         List<Vector3> forbiddenCheck = walkableTiles(end.v);
                         if (forbiddenCheck.Count == 2) // if theres only one way in and out then you cant place a wall here.
                         {
+                            if (!forbiddenVectors[pathIndex].Contains(end.v))
+                            {
+                                forbiddenVectors[pathIndex].Add(end.v);
+                            }
                             foreach (Vector3 forbiddenVec in forbiddenCheck)
                             {
                                 if (!forbiddenVectors[pathIndex].Contains(forbiddenVec)) {

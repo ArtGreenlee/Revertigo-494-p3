@@ -86,7 +86,7 @@ public class TowerStats : MonoBehaviour
         if (buffType == buffTypes.cooldownBuff && !cooldownBuffs.Contains(value))
         {
             cooldownBuffEffectInstance = Instantiate(cooldownBuffEffect,
-                transform.position + UtilityFunctions.getClosestSide(transform.position) / 1.5f,
+                transform.position + UtilityFunctions.getClosestSide(transform.position) / 1.25f,
                 UtilityFunctions.getRotationawayFromSide(transform.position));
             cooldownBuffs.Add(value);
         }

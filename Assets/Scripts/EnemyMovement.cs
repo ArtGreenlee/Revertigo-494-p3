@@ -15,26 +15,21 @@ public class EnemyMovement : MonoBehaviour
     public GameObject onPathFinishEffect;
     bool lookingForPath;
     private PlayerLivesTemp playerLifes;
+
+    private WallStorage wallStorage;
+
     private void Awake()
     {
         pathFinder = GetComponent<Pathfinder>();
     }
     void Start()
     {
+        wallStorage = WallStorage.instance;
         playerLifes = PlayerLivesTemp.instance;
         curSpeed = maxSpeed;
         currentPointIndex = 0;
         pathIndex = 0;
         lookingForPath = false;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            Debug.Log("enemy wall collision");
-            resetPath();
-        }
     }
 
     /*private void OnTriggerEnter(Collider other)
@@ -99,6 +94,11 @@ public class EnemyMovement : MonoBehaviour
         if (path != null && path.Count != 0 && path[pathIndex].Count != 0)
         {
             nextPoint = path[pathIndex][currentPointIndex];
+            if (wallStorage.isWall(nextPoint))
+            {
+                resetPath();
+                return;
+            }
             transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * curSpeed;
             if (Vector3.Distance(transform.position, nextPoint) < .1f)
             {
