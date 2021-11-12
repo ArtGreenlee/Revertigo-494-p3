@@ -93,7 +93,7 @@ public class TowerPlacer : MonoBehaviour
 
 
         //StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(tower.transform, 1, 1));
-        while (Vector3.Distance(tower.transform.position, end) > .05f )
+        while (Vector3.Distance(tower.transform.position, end) > .05f)
         {
             tower.transform.position = Vector3.Lerp(tower.transform.position, end, 3 * Time.deltaTime);
             if (attachWall == null || !wallStorage.wallHasTower(attachWall))
