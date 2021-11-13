@@ -36,7 +36,6 @@ public class Pathfinder : MonoBehaviour
     private int speedThreshold;
     private const int speedThresholdTrigger = 1000;
     private int currentCount;
-    public List<HashSet<Vector3>> forbiddenVectors;
 
     private ObjectPooler objectPooler;
 
@@ -52,11 +51,6 @@ public class Pathfinder : MonoBehaviour
     private void Start()
     {
         objectPooler = ObjectPooler.Instance;
-        forbiddenVectors = new List<HashSet<Vector3>>();
-        for (int i = 0; i < checkPointVectors.Count - 1; i++)
-        {
-            forbiddenVectors.Add(new HashSet<Vector3>());
-        }
     }
 
     private void Awake()
@@ -371,21 +365,6 @@ public class Pathfinder : MonoBehaviour
                         end = end.parent;
                         temp.Add(end.v);
                         pathVectors[pathIndex].Add(end.v);
-                        List<Vector3> forbiddenCheck = walkableTiles(end.v);
-                        if (forbiddenCheck.Count == 2) // if theres only one way in and out then you cant place a wall here.
-                        {
-                            if (!forbiddenVectors[pathIndex].Contains(end.v))
-                            {
-                                forbiddenVectors[pathIndex].Add(end.v);
-                            }
-                            foreach (Vector3 forbiddenVec in forbiddenCheck)
-                            {
-                                if (!forbiddenVectors[pathIndex].Contains(forbiddenVec)) {
-                                    forbiddenVectors[pathIndex].Add(forbiddenVec);
-                                }
-                            }
-                           
-                        }
                         //only show visualizer if this is a main path
                         if (enemyMovement == null)
                         {
@@ -599,10 +578,8 @@ public class Pathfinder : MonoBehaviour
         }
         visualizers = new List<HashSet<GameObject>>();
         pathVectors = new List<HashSet<Vector3>>();
-        forbiddenVectors = new List<HashSet<Vector3>>();
         for (int i = 0; i < checkPointVectors.Count - 1; i++)
         {
-            forbiddenVectors.Add(new HashSet<Vector3>());
             visualizers.Add(new HashSet<GameObject>());
             pathVectors.Add(new HashSet<Vector3>());
         }
@@ -633,7 +610,6 @@ public class Pathfinder : MonoBehaviour
                     {
                         removeSegmentFromDictionary(i);
                         removeVisualizerSegment(i);
-                        forbiddenVectors[i].Clear();
                         finishedPaths[i] = false;
                         numCoroutinesRunning++;
                         if (this != null)
@@ -714,8 +690,7 @@ public class Pathfinder : MonoBehaviour
             }
         }
 
-        for (float
-
+        */
         for (float i = -.5f; i < 1; i += .5f)
         {
             for (float j = -.5f; j < 1; j += .5f)
@@ -730,7 +705,7 @@ public class Pathfinder : MonoBehaviour
                 }
             }
         }
-
+        /*
         for (float x = -.5f; x < 1; x += .5f)
         {
             for (float y = -.5f; y < 1; y += .5f)
@@ -748,14 +723,14 @@ public class Pathfinder : MonoBehaviour
             }
         }*/
 
-        foreach (Vector3 sideVec in UtilityFunctions.sideVectors)
+        /*foreach (Vector3 sideVec in UtilityFunctions.sideVectors)
         {
             Vector3 checkVec = vec + (sideVec / 2);
             if (!wallStorage.isWall(checkVec) && UtilityFunctions.validEnemyVector(checkVec))
             {
                 walkable.Add(checkVec);
             }
-        }
+        }*/
 
         
 

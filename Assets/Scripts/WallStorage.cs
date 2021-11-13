@@ -27,7 +27,7 @@ public class WallStorage : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) {
-            removeMostRecentWall();
+            //removeMostRecentWall();
         }
     }
 
@@ -94,6 +94,11 @@ public class WallStorage : MonoBehaviour
         }
     }
 
+    private void checkAndCreateTowerPodiums(Vector3 checkVec)
+    {
+
+    }
+
     public bool validWallPosition(Vector3 checkVec)
     {
         if (isWall(checkVec))
@@ -130,17 +135,6 @@ public class WallStorage : MonoBehaviour
                             return false;
                         }
                     }
-                }
-            }
-        }
-
-        foreach (Pathfinder pathfinder in pathfinders)
-        {
-            foreach (HashSet<Vector3> forbiddenVectorsSet in pathfinder.forbiddenVectors)
-            {
-                if (forbiddenVectorsSet.Contains(checkVec))
-                {
-                    return false;
                 }
             }
         }
