@@ -9,7 +9,6 @@ public class MenuOptionsAnimator : MonoBehaviour
 {
     // Start is called before the first frame update
     public List<string> Options;
-    public Text display;
     private bool animating = false;
     public GameObject loadingPanel;
     public Slider loadingBar;
@@ -27,7 +26,7 @@ public class MenuOptionsAnimator : MonoBehaviour
         {
             //animate(Options[cur_option % Options.Count]);
         }
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
