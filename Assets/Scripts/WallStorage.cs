@@ -12,6 +12,9 @@ public class WallStorage : MonoBehaviour
     private TowerStorage towerStorage;
     private Dictionary<GameObject, Vector3> placementLocations;
 
+    public HashSet<Vector3> forbiddenVectors;
+    public HashSet<Vector3> testingVectors;
+
     private TowerInventory towerInventory;
 
     public static WallStorage instance;
@@ -35,7 +38,9 @@ public class WallStorage : MonoBehaviour
     {
         if (wallStack.Count > 0)
         {
+            
             GameObject tempWall = wallStack.Pop();
+            forbiddenVectors.Add(placementLocations[tempWall]);
             placementLocations.Remove(tempWall);
             removeWall(tempWall);
 
@@ -51,6 +56,8 @@ public class WallStorage : MonoBehaviour
 
     void Start()
     {
+        forbiddenVectors = new HashSet<Vector3>();
+        testingVectors = new HashSet<Vector3>();
         placementLocations = new Dictionary<GameObject, Vector3>();
         towerStorage = TowerStorage.instance;
         towerInventory = TowerInventory.instance;
@@ -138,7 +145,8 @@ public class WallStorage : MonoBehaviour
                 }
             }
         }
-        return true;
+
+        return !forbiddenVectors.Contains(checkVec);
     }
 
     //add vec is the center of the wall

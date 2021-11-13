@@ -14,12 +14,16 @@ public class WallPlacer : MonoBehaviour
     MeshRenderer shadowRenderer;
     MeshRenderer wallRenderer;
     private GoldStorage goldStorage;
-    
+
+    public static WallPlacer instance;
     // Start is called before the first frame update
 
     private void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
 
     void Start()

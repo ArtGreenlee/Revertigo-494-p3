@@ -9,6 +9,16 @@ public class TowerPlacer : MonoBehaviour
     public GameObject shadowTower;
     private TowerInventory towerInventory;
     private TowerStorage towerStorage;
+
+    public static TowerPlacer instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {

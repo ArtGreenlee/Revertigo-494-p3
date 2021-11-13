@@ -83,6 +83,7 @@ public class EnemyMovement : MonoBehaviour
             yield return new WaitForSeconds(.5f); //totally arbitrary
         }
         path = pathFinder.getPath();
+        
         currentPointIndex = 0;
         pathIndex = 0;
         lookingForPath = false;
@@ -116,7 +117,7 @@ public class EnemyMovement : MonoBehaviour
                     }
                 }
             }
-            if (Vector3.Distance(transform.position, nextPoint) > pathResetThreshold)
+            if ((transform.position - nextPoint).sqrMagnitude > pathResetThreshold * pathResetThreshold)
             {
                 resetPath();
             }
