@@ -61,7 +61,6 @@ public class BulletController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             objectPooler.getObjectFromPool("BulletOnHitEffect", transform.position, Quaternion.identity);
-            //Instantiate(onHitEffect, collision.contacts[0].point, Quaternion.identity);
             hitEnemies.Add(collision.gameObject);
         }
 

@@ -513,12 +513,11 @@ public class Pathfinder : MonoBehaviour
                 }
                 if (!closedPath.Contains(addVec) && !activePathVectors.Contains(addVec))
                 {
-                    //yield return new WaitForEndOfFrame();
+                    yield return new WaitForEndOfFrame();
                     activePath.Push(addVec);
                 }
             }
         }
-        Debug.Log("forbidden Vector added");
         if (!wallStorage.forbiddenVectors.Contains(parentVec))
         {
             wallStorage.forbiddenVectors.Add(parentVec);
