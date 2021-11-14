@@ -106,6 +106,10 @@ public class WallPlacer : MonoBehaviour
                 shadowWall.transform.position = new Vector3(25, 0, 0);
             }
         }
+        else
+        {
+            shadowWall.transform.position = new Vector3(25, 0, 0);
+        }
 
         /*if (Input.GetKeyDown(KeyCode.R))
         {            wallStorage.popRecentWall();

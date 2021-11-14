@@ -51,7 +51,7 @@ public class TowerStats : MonoBehaviour
 
     public static List<float> cooldownBuffDecreasePerLevel = new List<float>
     {
-        .5f,
+        .9f,
         .8f,
         .75f,
         .7f,

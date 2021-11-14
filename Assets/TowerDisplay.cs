@@ -24,6 +24,7 @@ public class TowerDisplay : MonoBehaviour
     {
         active = false;
         startScale = transform.localScale;
+        transform.localScale = Vector3.zero;
         startPosition = Vector3.zero;
         player = PlayerInputControl.instance;
         gameObject.SetActive(true);
@@ -58,8 +59,18 @@ public class TowerDisplay : MonoBehaviour
                     StopAllCoroutines();
                     StartCoroutine(enableDisplay());
                     towerNameText.text = getTowerName(tempStats);
-                    towerNameText.color = tempStats.trailRendererColor;
+                    //towerNameText.color = tempStats.trailRendererColor;
                     startPosition = player.transform.position;
+                    damageMinText.text = "Damage min " + tempStats.damageMin.ToString();
+                    damageMaxText.text = "Damage max " + tempStats.damageMax.ToString();
+                    rateOfFireText.text = "Cooldown " + tempStats.getCooldown().ToString();
+                    descriptionText.text = getDescription(tempStats);
+                }
+                else if (active)
+                {
+                    active = false;
+                    StopAllCoroutines();
+                    StartCoroutine(disableDisplay());
                 }
             }
         }
@@ -98,6 +109,56 @@ public class TowerDisplay : MonoBehaviour
         }
     }
 
+    private string getDescription(TowerStats towerStats)
+    {
+        string temp = "";
+        if (towerStats.towerName == TowerStats.TowerName.Blue)
+        {
+            temp = "Slows enemy by " + towerStats.slowPercent.ToString() + " for " + towerStats.slowDuration.ToString() + " seconds";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.Red)
+        {
+            temp = "Deals AoE damage within " + towerStats.aoe_range.ToString() + " range";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.Yellow)
+        {
+            temp = "Attacks " + towerStats.numTargets.ToString() + " targets";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.White)
+        {
+            temp = "Has a " + towerStats.critChance.ToString() + " chance to deal " + towerStats.critMult.ToString() + " times damage";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.Purple)
+        {
+            temp = "Buffs towers within range reducing cooldown by " + TowerStats.cooldownBuffDecreasePerLevel[towerStats.level].ToString();
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.Green)
+        {
+            temp = "Poisons towers hit dealing " + towerStats.poisonDPS.ToString() + " DPS for " + towerStats.poisonDuration.ToString() + " seconds";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.Fireball)
+        {
+            temp = "Shoots a fireball at the nearest enemy but does not turn fast";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.ClusterFireball)
+        {
+            temp = "Shoots a fireball cluster";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.Spirit)
+        {
+            temp = "Emenates spirits that search for enemies, slowing them drastically";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.Tourmaline)
+        {
+            temp = "Attacks all towers in range and has a " + towerStats.critChance.ToString() + " chance to slow them for " + towerStats.slowPercent.ToString() + " for " + towerStats.slowDuration.ToString() + " seconds";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.Stun)
+        {
+            temp = "Has a " + towerStats.critChance.ToString() + " chance to stun for " + towerStats.slowDuration.ToString() + " second(s)";
+        }
+        return temp;
+    }
+
     private string getTowerName(TowerStats towerStats)
     {
         string temp = "";
@@ -113,9 +174,17 @@ public class TowerDisplay : MonoBehaviour
         {
             temp = "Yellow ";
         }
-        else if (towerStats.towerName == TowerStats.TowerName.Blue)
+        else if (towerStats.towerName == TowerStats.TowerName.White)
         {
-            temp = "Blue ";
+            temp = "White ";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.Purple)
+        {
+            temp = "Purple ";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.Green)
+        {
+            temp = "Green ";
         }
         else if (towerStats.towerName == TowerStats.TowerName.Spirit)
         {
@@ -123,23 +192,44 @@ public class TowerDisplay : MonoBehaviour
         }
         else if (towerStats.towerName == TowerStats.TowerName.Laser)
         {
-            temp = "Laser";
+            temp = "Laser Tower";
         }
         else if (towerStats.towerName == TowerStats.TowerName.Fireball)
         {
-            temp = "Fireball";
+            temp = "Fireball Tower";
         }
         else if (towerStats.towerName == TowerStats.TowerName.ClusterFireball)
         {
-            temp = "ClusterFireball";
+            temp = "Cluster Fireball Tower";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.Stun)
+        {
+            temp = "Stun Tower";
         }
 
         if (!towerStats.specialTower)
         {
             if (towerStats.level == 0)
             {
-                temp += "Chipped";
+                temp += "Chip";
             }
+            else if (towerStats.level == 1)
+            {
+                temp += "Shard";
+            }
+            else if (towerStats.level == 2)
+            {
+                temp += "Gem";
+            }
+            else if (towerStats.level == 3)
+            {
+                temp += "Big Gem";
+            }
+            else if (towerStats.level == 4)
+            {
+                temp += "Perfect Gem";
+            }
+
         }
         return temp;
     }
