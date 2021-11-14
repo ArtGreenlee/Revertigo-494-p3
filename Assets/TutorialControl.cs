@@ -8,14 +8,19 @@ public class TutorialControl : MonoBehaviour
     public TextMeshPro tutorialText;
     float lastUpdate;
     int currInstruction;
-    KeyCode[] keycodes = new KeyCode[]{ KeyCode.Space, KeyCode.Mouse1, KeyCode.Mouse0, KeyCode.G, KeyCode.P};
+    KeyCode[] keycodes = new KeyCode[]{ KeyCode.Space, KeyCode.Mouse1, KeyCode.Mouse0, KeyCode.G, KeyCode.F, KeyCode.P};
+    public bool firstPlayThrough;
 
     // Start is called before the first frame update
     void Start()
     {
-        currInstruction = 0;
-        lastUpdate = Time.time;
-        StartCoroutine(DisplayText(currInstruction));
+        if (firstPlayThrough)
+        {
+            currInstruction = 0;
+            lastUpdate = Time.time;
+            StartCoroutine(DisplayText(currInstruction));
+        }
+        
         
         
     }
@@ -23,7 +28,7 @@ public class TutorialControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currInstruction > 4) {
+        if (currInstruction > 5) {
             return;
         }
         if ((Time.time - lastUpdate > 10.0) || Input.GetKey(keycodes[currInstruction])) {
@@ -42,7 +47,7 @@ public class TutorialControl : MonoBehaviour
         else if (instruction == 1) {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Right click to place towers";
+            tutorialText.text = "Right click to place walls to block the enemy path";
 
         }
         else if (instruction == 2) {
@@ -54,18 +59,23 @@ public class TutorialControl : MonoBehaviour
         else if (instruction == 3) {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Press G to buy extra guns";
-
+            tutorialText.text = "Press G to buy towers to shoot alongside you";
         }
-        else if (instruction == 4) {
+        else if (instruction == 4)
+        {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Press P to pause and view instructions";
+            tutorialText.text = "Press F while over a wall to place a tower on the wall, right click on towers to view information about it";
+        }
+        else if (instruction == 5) {
+            tutorialText.text = "";
+            yield return new WaitForSeconds(1);
+            tutorialText.text = "Press P to pause and view instructions again";
         }
         else {
             tutorialText.text = "";
         }
-        yield return null;
+        yield break;
         
     }
 }
