@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.3587269, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3346,7 +3346,7 @@ GameObject:
   - component: {fileID: 1301884156}
   - component: {fileID: 1301884155}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: TutorialCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5021,6 +5021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialText: {fileID: 1388724364}
+  firstPlayThrough: 1
 --- !u!4 &1989009463
 Transform:
   m_ObjectHideFlags: 0
@@ -5705,6 +5706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerName: 0
   cooldownBuffEffect: {fileID: 0}
+  kills: 0
   level: 0
   damageBuffIncrease: 0
   attachedToPlayer: 0
