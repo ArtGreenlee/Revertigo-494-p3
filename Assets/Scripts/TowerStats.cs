@@ -58,19 +58,24 @@ public class TowerStats : MonoBehaviour
         .65f
     };
 
-    public enum towerNames
+    public enum TowerName
     {
         Blue,
         Green,
         Red,
         White,
+        Purple,
         Fireball,
         ClusterFireball,
-        StunTower,
-        SpiritTower,
+        Stun,
+        Spirit,
         Player,
-        LaserTower,
+        Yellow,
+        Laser,
+        Tourmaline
     };
+
+    public TowerName towerName;
 
     public enum buffTypes
     {
