@@ -194,14 +194,13 @@ public class WallStorage : MonoBehaviour
                     Vector3 testVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
                     foreach (Pathfinder pathfinder in pathfinders)
                     {
-                        if (pathfinder.pathContainsVector(testVec))
+                        if (pathfinder.pathContainsVector(testVec) && pathfinder.enemyMovement == null)
                         {
                             for (int x = 0; x < pathfinder.path.Count; x++)
                             {
                                 int vecIndex = pathfinder.path[x].IndexOf(testVec);
                                 if (vecIndex != -1)
                                 {
-                                    Debug.Log("manual forbidden search");
                                     StartCoroutine(pathfinder.testForInvalidPath(
                                         pathfinder.checkPointVectors[x],
                                         pathfinder.path[x][vecIndex + 1],
