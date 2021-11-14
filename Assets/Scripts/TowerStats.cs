@@ -109,7 +109,7 @@ public class TowerStats : MonoBehaviour
         }
     }
 
-    private int kills = 0;
+    public int kills = 0;
     public int level = 0;
     public float damageBuffIncrease;
     public bool attachedToPlayer = true;

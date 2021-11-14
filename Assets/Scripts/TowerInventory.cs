@@ -41,7 +41,8 @@ public class TowerInventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G) && (playerInventory.Count < maxGemInventory && goldStorage.gold >= price) || debugMode)
         {
             goldStorage.changeGoldAmount(-price);
-            price++;
+            Debug.Log(goldStorage.gold);
+            price += 5;
             priceText.text = "Tower Cost " + price.ToString();
             GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
             newTower.GetComponent<TowerStats>().attachedToPlayer = true;
@@ -114,6 +115,15 @@ public class TowerInventory : MonoBehaviour
         {
             return debugRoster[Random.Range(0, debugRoster.Count)];
         }
-        return towerRoster[Random.Range(0, towerRoster.Count)];
+        GameObject tower = towerRoster[Random.Range(0, towerRoster.Count)];
+        if (tower.GetComponent<TowerStats>().specialTower)
+        {
+            tower = towerRoster[Random.Range(0, towerRoster.Count)];
+        }
+        if (tower.GetComponent<TowerStats>().specialTower)
+        {
+            tower = towerRoster[Random.Range(0, towerRoster.Count)];
+        }
+        return tower;
     }
 }

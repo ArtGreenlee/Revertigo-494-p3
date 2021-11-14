@@ -17,6 +17,9 @@ public class TowerDisplay : MonoBehaviour
     public TextMeshProUGUI towerNameText;
     public TextMeshProUGUI rateOfFireText;
     public TextMeshProUGUI descriptionText;
+    public TextMeshProUGUI killsText;
+    public TextMeshProUGUI levelText;
+    public TextMeshProUGUI killsToUpgradeText;
     Vector3 startScale;
     private bool active;
     // Start is called before the first frame update
@@ -64,6 +67,17 @@ public class TowerDisplay : MonoBehaviour
                     damageMinText.text = "Damage min " + tempStats.damageMin.ToString();
                     damageMaxText.text = "Damage max " + tempStats.damageMax.ToString();
                     rateOfFireText.text = "Cooldown " + tempStats.getCooldown().ToString();
+                    killsText.text = "Kills " + tempStats.kills;
+                    if (!tempStats.specialTower)
+                    {
+                        levelText.text = "Level " + tempStats.level;
+                    }
+                    else
+                    {
+                        levelText.text = "";
+                    }
+                    
+
                     descriptionText.text = getDescription(tempStats);
                 }
                 else if (active)
@@ -138,7 +152,7 @@ public class TowerDisplay : MonoBehaviour
         }
         else if (towerStats.towerName == TowerStats.TowerName.Fireball)
         {
-            temp = "Shoots a fireball at the nearest enemy but does not turn fast";
+            temp = "Shoots a fireball at the nearest enemy but can miss if placed incorrectly (try placing it on a different face then the enemy its targeting";
         }
         else if (towerStats.towerName == TowerStats.TowerName.ClusterFireball)
         {
