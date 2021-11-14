@@ -14,7 +14,6 @@ public class AutoDeactivate : MonoBehaviour
     private IEnumerator disableAfterTime(float time)
     {
         yield return new WaitForSeconds(deactivateTimer);
-        Debug.Log("deactivate on hit");
         gameObject.SetActive(false);
     }
 
@@ -22,7 +21,6 @@ public class AutoDeactivate : MonoBehaviour
     private IEnumerator Start()
     {
         yield return new WaitForSeconds(deactivateTimer);
-        Debug.Log("deactivate on hit");
         gameObject.SetActive(false);
     }
 }

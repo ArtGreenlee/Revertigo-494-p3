@@ -6,9 +6,14 @@ public class Pathfinder : MonoBehaviour
 {
     public class pos
     {
+
+        public pos instance;
+
+
         public pos(Vector3 vectorIn)
         {
             v = vectorIn;
+            instance = this;
         }
         /*public pos(Vector3 vectorIn, float HCostIn, float GCostIn, float FCostIn) {
             v = vectorIn;
@@ -32,10 +37,8 @@ public class Pathfinder : MonoBehaviour
     private List<HashSet<Vector3>> pathVectors;
     private List<bool> finishedPaths;
     private WallStorage wallStorage;
+    private GameObject collisionWall;
     private WallPlacer wallPlacer;
-    private int speedThreshold;
-    private const int speedThresholdTrigger = 1000;
-    private int currentCount;
 
     private ObjectPooler objectPooler;
 
@@ -53,8 +56,6 @@ public class Pathfinder : MonoBehaviour
         wallPlacer = WallPlacer.instance;
         wallStorage = WallStorage.instance;
         wallStorage.pathfinders.Add(this);
-        speedThreshold = 5;
-        currentCount = 0;
         
         checkPointVectors = new List<Vector3>();
         checkPointList.Insert(0, gameObject);
@@ -303,45 +304,18 @@ public class Pathfinder : MonoBehaviour
         start.GCost = 0;
 
         SortedList<float, pos> activePath = new SortedList<float, pos>();
-        HashSet<Vector3> activePathVectors = new HashSet<Vector3>();
+        Dictionary<Vector3, pos> activePathVectors = new Dictionary<Vector3, pos>();
         activePath.Add(start.FCost, start);
-        activePathVectors.Add(start.v);
+        activePathVectors.Add(start.v, start);
         HashSet<Vector3> closedPath = new HashSet<Vector3>();
-        Dictionary<float, List<pos>> FCostDuplicates = new Dictionary<float, List<pos>>();
 
-        int speedSwitch = 5;
-        currentCount = 0;
-        speedThreshold = 1000;
         while (activePath.Count > 0)
         {
             /*while (Input.GetMouseButton(1))
             {
                 yield return new WaitForEndOfFrame();
             }*/
-            currentCount++;
-            speedSwitch++;
-            if (currentCount > speedThresholdTrigger)
-            {
-                currentCount = 0;
-                speedThreshold++;
-            }
-            if (speedSwitch > speedThreshold)
-            {
-                yield return new WaitForEndOfFrame();
-                speedSwitch = 0;
-            }
             pos curPos = activePath.Values[0];
-            /*if (FCostDuplicates.ContainsKey(curPos.FCost))
-            {
-                float minHCost = 1000;
-                //int minHCostIndex = -1;
-                foreach (pos checkPos in FCostDuplicates[curPos.FCost])
-                {
-                    if (checkPos.HCost < minHCost) {
-                        
-                    }
-                }
-            }*/
             activePath.RemoveAt(0);
             activePathVectors.Remove(curPos.v);
             closedPath.Add(curPos.v);
@@ -350,8 +324,6 @@ public class Pathfinder : MonoBehaviour
             {
                 //Instantiate(pathFindingVisualizerSphere, newVec, Quaternion.identity).GetComponent<PathVisualizerEffects>().fadeIn();
                 //yield return new WaitForSeconds(.1f);
-
-
                 
                 if (newVec == endVec)
                 {
@@ -395,6 +367,8 @@ public class Pathfinder : MonoBehaviour
                         {
                             //rerun this coroutine
                             removeSegmentFromDictionary(pathIndex);
+                            removeVisualizerSegment(pathIndex);
+
                             StartCoroutine(findPathBetweenPointsLyft(startVec, endVec, pathIndex));
                             yield break;
                         }
@@ -410,36 +384,49 @@ public class Pathfinder : MonoBehaviour
 
                 if (!closedPath.Contains(newVec))
                 {
+                    
                     pos newPos = new pos(newVec);
                     newPos.parent = curPos;
                     //this distance calculation could be optimized
                     float GCost = curPos.GCost + (newVec - curPos.v).sqrMagnitude;
-                    float HCost = (end.v - newVec).sqrMagnitude;
+                    float HCost = (newVec - end.v).sqrMagnitude;
                     float Fcost = GCost + HCost;
                     newPos.HCost = HCost;
                     newPos.GCost = GCost;
                     newPos.FCost = Fcost;
                     newPos.parent = curPos;
 
-                    if (!activePathVectors.Contains(newVec))
+                    if (!activePathVectors.ContainsKey(newVec))
                     {
+                        activePathVectors.Add(newPos.v, newPos);
                         while (activePath.ContainsKey(newPos.FCost))
                         {
-                            if (FCostDuplicates.ContainsKey(newPos.FCost))
-                            {
-                                FCostDuplicates[newPos.FCost].Add(newPos);
-                            }
-                            else
-                            {
-                                List<pos> tempNewList = new List<pos>();
-                                tempNewList.Add(newPos);
-                                FCostDuplicates.Add(newPos.FCost, tempNewList);
-                            }
-                            //holy moly this is bad my god this needs to be fixed TODO TODO TODO
-                            newPos.FCost += .01f;
+                            newPos.FCost -= .01f;
                         }
-                        activePathVectors.Add(newPos.v);
                         activePath.Add(newPos.FCost, newPos);
+                        yield return new WaitForEndOfFrame();
+                    }
+                    else if (activePathVectors[newVec].FCost > newPos.FCost)
+                    {
+                        activePathVectors[newVec].FCost = newPos.FCost;
+                        activePathVectors[newVec].parent = curPos;
+                        foreach (pos tempPos in activePath.Values)
+                        {
+                            if (tempPos.v == newVec)
+                            {
+                                Debug.Log("test");
+                                pos replacePos = new pos(newVec);
+                                replacePos.FCost = newPos.FCost;
+                                replacePos.GCost = newPos.GCost;
+                                replacePos.parent = curPos;
+                                activePath[Fcost] = replacePos;
+                                /*activePath.Remove(tempPos.FCost);
+                                activePath.Add(newPos.FCost, replacePos);
+                                //activePath[tempPos.FCost].FCost = newPos.FCost;
+                                //activePath[tempPos.FCost].parent = curPos;*/
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -447,6 +434,7 @@ public class Pathfinder : MonoBehaviour
         if (enemyMovement == null)
         {
             wallStorage.removeMostRecentWall();
+            collisionWall = null;
         }
         else
         {

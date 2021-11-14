@@ -9,6 +9,8 @@ public class PlayerInputControl : MonoBehaviour
     public float rotateSpeed;
     public Transform cameraTransform;
     public Vector3 currentLookPoint;
+    public float movementBuffer;
+    private TowerDisplay towerDisplay;
 
     public static PlayerInputControl instance;
     // public bool enabled;
@@ -41,8 +43,8 @@ public class PlayerInputControl : MonoBehaviour
             rb.MoveRotation(Quaternion.Slerp(transform.rotation,
                                Quaternion.LookRotation(currentLookPoint - transform.position),
                                rotateSpeed * Time.deltaTime));
+            
         }
-
         //if the player is far enough from the camera, push them back
 
         /*if ((transform.position - cameraTransform.position).sqrMagnitude > 100)
@@ -69,27 +71,27 @@ public class PlayerInputControl : MonoBehaviour
 
         if (!Input.GetKey(KeyCode.Space) && !Input.GetMouseButton(1))
         {
-            if (currentLookPoint.x > transform.position.x)
+            if (currentLookPoint.x > transform.position.x + movementBuffer)
             {
                 rb.AddForce(Vector3.right * moveSpeed);
             }
-            else if (currentLookPoint.x < transform.position.x)
+            else if (currentLookPoint.x < transform.position.x - movementBuffer)
             {
                 rb.AddForce(Vector3.left * moveSpeed);
             }
-            if (currentLookPoint.y > transform.position.y)
+            if (currentLookPoint.y > transform.position.y + movementBuffer)
             {
                 rb.AddForce(Vector3.up * moveSpeed);
             }
-            else if (currentLookPoint.y < transform.position.y)
+            else if (currentLookPoint.y < transform.position.y - movementBuffer)
             {
                 rb.AddForce(Vector3.down * moveSpeed);
             }
-            if (currentLookPoint.z > transform.position.z)
+            if (currentLookPoint.z > transform.position.z + movementBuffer)
             {
                 rb.AddForce(Vector3.forward * moveSpeed);
             }
-            else if (currentLookPoint.z < transform.position.z)
+            else if (currentLookPoint.z < transform.position.z - movementBuffer)
             {
                 rb.AddForce(Vector3.back * moveSpeed);
             }

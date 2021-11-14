@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4779685831468671320}
   - component: {fileID: 4765629807814107320}
   - component: {fileID: 4759088226601145584}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BetterCrystal01 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4779503594547063888}
   - component: {fileID: 4838439349162429404}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Point light (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 4777173098246624550}
   - component: {fileID: 4768612151312500944}
   - component: {fileID: 4758168534277423246}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BetterCrystal01 (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 4776740983506172758}
   - component: {fileID: 4765632221597616750}
   - component: {fileID: 4759927164483518980}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BetterCrystal01 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 4776733011464779234}
   - component: {fileID: 4768607434110988418}
   - component: {fileID: 4758511214047962034}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BetterCrystal01 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +431,8 @@ GameObject:
   - component: {fileID: 1736119515013134760}
   - component: {fileID: -1203021122825681654}
   - component: {fileID: -5358231957722351681}
-  m_Layer: 8
+  - component: {fileID: -6162093089415727139}
+  m_Layer: 0
   m_Name: Tourmaline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +488,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1736119515013134760
 MonoBehaviour:
@@ -657,6 +658,20 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &-6162093089415727139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4782707245435355068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecf6c09eb3c7d43cb90ec0dfc5f96e11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeIndicator: {fileID: 4373264351769506584, guid: e0c0da19961e1aa428c7afa7a3225e73,
+    type: 3}
 --- !u!1 &4782717986069531922
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,7 +683,7 @@ GameObject:
   - component: {fileID: 4779599636807773656}
   - component: {fileID: 4768261795190131040}
   - component: {fileID: 4758116438834309892}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BetterCrystal01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -749,7 +764,7 @@ GameObject:
   - component: {fileID: 4779548002906660696}
   - component: {fileID: 4765443170318435860}
   - component: {fileID: 4758257152096059410}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BetterCrystal01 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -830,7 +845,7 @@ GameObject:
   - component: {fileID: 4779972124237834030}
   - component: {fileID: 4768645509514879728}
   - component: {fileID: 4758411449749836700}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BetterCrystal01 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 1159759750949814342}
   - component: {fileID: 6128606681395467051}
   - component: {fileID: -2611237508825631119}
-  - component: {fileID: 4394915495937454941}
   - component: {fileID: -1015115182130153035}
   - component: {fileID: -807957558645994415}
-  m_Layer: 2
+  - component: {fileID: 4525076142520120922}
+  m_Layer: 0
   m_Name: BlueTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-2611237508825631119
 MonoBehaviour:
@@ -150,7 +150,6 @@ MonoBehaviour:
   slowDuration: 2
   aoe_range: 0
   baseCooldown: 1
-  bulletSpeed: 0
   trailRendererColor: {r: 0, g: 0.07363939, b: 1, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   specialTower: 0
@@ -162,20 +161,6 @@ MonoBehaviour:
   - {fileID: 4300000, guid: 79b2a5cdd70824e3d9b3acf2ddc79f4d, type: 3}
   - {fileID: 4300000, guid: 04a69148d0283440c96e0a776ed3bf53, type: 3}
   - {fileID: 4300000, guid: e53910dd9ff52433db8fc7f84a2318bb, type: 3}
---- !u!114 &4394915495937454941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3352053421576041292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecf6c09eb3c7d43cb90ec0dfc5f96e11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rangeIndicator: {fileID: 4373264351769506584, guid: e0c0da19961e1aa428c7afa7a3225e73,
-    type: 3}
 --- !u!54 &-1015115182130153035
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -299,3 +284,17 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &4525076142520120922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3352053421576041292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecf6c09eb3c7d43cb90ec0dfc5f96e11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeIndicator: {fileID: 4373264351769506584, guid: e0c0da19961e1aa428c7afa7a3225e73,
+    type: 3}

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5096817390689431554}
   - component: {fileID: -256711237363951748}
   - component: {fileID: 6031241073637083651}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: FireBallTower 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-4078376587568008267
 MonoBehaviour:
@@ -164,7 +164,6 @@ MonoBehaviour:
   slowDuration: 0
   aoe_range: 2
   baseCooldown: 5
-  bulletSpeed: 0
   trailRendererColor: {r: 1, g: 0, b: 0, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   specialTower: 1

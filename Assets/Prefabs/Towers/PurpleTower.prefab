@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5658799467015404861}
   - component: {fileID: 6141893377541644302}
   - component: {fileID: 3964428070034287038}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: PurpleTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4383821591852437259
 MonoBehaviour:
@@ -151,7 +151,6 @@ MonoBehaviour:
   slowDuration: 0
   aoe_range: 0
   baseCooldown: 1
-  bulletSpeed: 15
   trailRendererColor: {r: 1, g: 1, b: 1, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   specialTower: 0

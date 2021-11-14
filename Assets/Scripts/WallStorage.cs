@@ -11,6 +11,7 @@ public class WallStorage : MonoBehaviour
     private Stack<GameObject> wallStack;
     private TowerStorage towerStorage;
     private Dictionary<GameObject, Vector3> placementLocations;
+    
 
     public HashSet<Vector3> forbiddenVectors;
     public HashSet<Vector3> testingVectors;
@@ -41,7 +42,7 @@ public class WallStorage : MonoBehaviour
             
             GameObject tempWall = wallStack.Pop();
             forbiddenVectors.Add(placementLocations[tempWall]);
-            placementLocations.Remove(tempWall);
+            
             removeWall(tempWall);
 
             foreach (Pathfinder pathFinder in pathfinders)
@@ -216,6 +217,7 @@ public class WallStorage : MonoBehaviour
     public void removeWall(GameObject wallIn)
     {
         Vector3 removeVec = wallIn.transform.position;
+        placementLocations.Remove(wallIn);
         for (float i = -.5f; i < 1f; i += .5f)
         {
             for (float j = -.5f; j < 1f; j += .5f)

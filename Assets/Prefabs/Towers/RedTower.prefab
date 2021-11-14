@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7505740483760464357}
   - component: {fileID: -4273443293886186455}
   - component: {fileID: 6847114830530060570}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: RedTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-5264774658398269921
 MonoBehaviour:
@@ -150,7 +150,6 @@ MonoBehaviour:
   slowDuration: 0
   aoe_range: 1
   baseCooldown: 1
-  bulletSpeed: 15
   trailRendererColor: {r: 1, g: 0.0897288, b: 0, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   specialTower: 0
