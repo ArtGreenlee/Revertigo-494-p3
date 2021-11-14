@@ -243,6 +243,7 @@ public class Pathfinder : MonoBehaviour
                 if (!closedPathTwo.Contains(newVec) && !activePathVectorsTwo.Contains(newVec))
                 {
                     pos newPos = new pos(newVec);
+                    pos newPos = new pos(newVec);
                     newPos.parent = curPosTwo;
                     float HCostTemp = Vector3.Distance(startVec, newVec);
                     float GCostTemp = curPosTwo.GCost + Vector3.Distance(newVec, curPosTwo.v);
@@ -286,6 +287,7 @@ public class Pathfinder : MonoBehaviour
             yield return new WaitForSeconds(.5f);
         }
         wallPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
+        numCoroutinesRunning++;
         numCoroutinesRunning++;
         StartCoroutine(findPathBetweenPointsUber(startVec, endVec, pathIndex));
         numCoroutinesRunning--;
@@ -341,17 +343,11 @@ public class Pathfinder : MonoBehaviour
                         traverseVec = curPos.parent.v;
                         curPos = curPos.parent;
 
-                        if (showPath && walkableTiles(traverseVec).Count == 2 && 
-                            !wallStorage.forbiddenVectors.Contains(traverseVec) &&
-                            !wallStorage.forbiddenVectors.Contains(previousVec) &&
-                            !wallStorage.forbiddenVectors.Contains(curPos.parent.v) &&
-                            !wallStorage.testingVectors.Contains(previousVec) &&
-                            !wallStorage.testingVectors.Contains(traverseVec) &&
-                            !wallStorage.testingVectors.Contains(curPos.parent.v))
+                        if (showPath && walkableTiles(traverseVec).Count == 2 && (
+                            !wallStorage.forbiddenVectors.Contains(traverseVec) ||
+                            !wallStorage.forbiddenVectors.Contains(previousVec) ||
+                            !wallStorage.forbiddenVectors.Contains(curPos.parent.v)))
                         {
-                            wallStorage.testingVectors.Add(previousVec);
-                            wallStorage.testingVectors.Add(traverseVec);
-                            wallStorage.testingVectors.Add(curPos.parent.v);
                             StartCoroutine(testForInvalidPath(startVec, previousVec, traverseVec, curPos.parent.v, pathIndex));
                         }
 
@@ -365,16 +361,23 @@ public class Pathfinder : MonoBehaviour
 
                         if (wallStorage.isWall(traverseVec))
                         {
+                            //wallStorage.removeWall(wallStorage.getWall(traverseVec));
                             //rerun this coroutine
+                            
                             removeSegmentFromDictionary(pathIndex);
                             removeVisualizerSegment(pathIndex);
-
+                            while (Input.GetMouseButton(1))
+                            {
+                                yield return new WaitForEndOfFrame();
+                            }
                             StartCoroutine(findPathBetweenPointsLyft(startVec, endVec, pathIndex));
                             yield break;
                         }
+
+                        //
                     }
                     tempPath.Add(traverseVec);
-                    tempPath.Reverse();
+                    tempPath.Reverse(); // O(n) bad bad
                     path[pathIndex] = tempPath;
                     finishedPaths[pathIndex] = true;
                     numCoroutinesRunning--;
@@ -414,7 +417,6 @@ public class Pathfinder : MonoBehaviour
                         {
                             if (tempPos.v == newVec)
                             {
-                                Debug.Log("test");
                                 pos replacePos = new pos(newVec);
                                 replacePos.FCost = newPos.FCost;
                                 replacePos.GCost = newPos.GCost;
@@ -431,6 +433,7 @@ public class Pathfinder : MonoBehaviour
                 }
             }
         }
+        //path is not found
         if (enemyMovement == null)
         {
             wallStorage.removeMostRecentWall();
@@ -494,9 +497,6 @@ public class Pathfinder : MonoBehaviour
             {
                 if (addVec == end)
                 {
-                    wallStorage.testingVectors.Remove(parentVec);
-                    wallStorage.testingVectors.Remove(end);
-                    wallStorage.testingVectors.Remove(psuedoWall);
                     yield break;
                 }
                 if (!closedPath.Contains(addVec) && !activePathVectors.Contains(addVec))
@@ -557,7 +557,7 @@ public class Pathfinder : MonoBehaviour
         {
             foreach (GameObject visualizer in visualizers[index])
             {
-                Instantiate(pathFindingVisualizerSphere, transform.position, Quaternion.identity).GetComponent<PathVisualizerEffects>().fadeOut();
+                Instantiate(pathFindingVisualizerSphere, visualizer.transform.position, Quaternion.identity).GetComponent<PathVisualizerEffects>().fadeOut();
                 Destroy(visualizer);
             }
             visualizers[index].Clear();

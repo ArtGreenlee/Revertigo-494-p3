@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class WallStorage : MonoBehaviour
 {
     private Dictionary<Vector3, GameObject> storage = new Dictionary<Vector3, GameObject>();
@@ -10,11 +10,10 @@ public class WallStorage : MonoBehaviour
     public List<Pathfinder> pathfinders;
     private Stack<GameObject> wallStack;
     private TowerStorage towerStorage;
-    private Dictionary<GameObject, Vector3> placementLocations;
+    private Dictionary<GameObject, List<Vector3> > placementLocations;
     
 
     public HashSet<Vector3> forbiddenVectors;
-    public HashSet<Vector3> testingVectors;
 
     private TowerInventory towerInventory;
 
@@ -39,9 +38,8 @@ public class WallStorage : MonoBehaviour
     {
         if (wallStack.Count > 0)
         {
-            
+            forbiddenVectors = new HashSet<Vector3>();   
             GameObject tempWall = wallStack.Pop();
-            forbiddenVectors.Add(placementLocations[tempWall]);
             
             removeWall(tempWall);
 
@@ -58,8 +56,7 @@ public class WallStorage : MonoBehaviour
     void Start()
     {
         forbiddenVectors = new HashSet<Vector3>();
-        testingVectors = new HashSet<Vector3>();
-        placementLocations = new Dictionary<GameObject, Vector3>();
+        placementLocations = new Dictionary<GameObject, List<Vector3>>();
         towerStorage = TowerStorage.instance;
         towerInventory = TowerInventory.instance;
         wallStack = new Stack<GameObject>();
@@ -153,7 +150,6 @@ public class WallStorage : MonoBehaviour
     //add vec is the center of the wall
     public void addWall(Vector3 addVec, GameObject wallIn)
     {
-        placementLocations.Add(wallIn, addVec);
         wallStack.Push(wallIn);
         Vector3 addSide = UtilityFunctions.getClosestSide(addVec);
         for (float i = -.5f; i < 1f; i += .5f)
@@ -167,6 +163,11 @@ public class WallStorage : MonoBehaviour
                         UtilityFunctions.validEnemyVector(curVec) &&
                         addSide == UtilityFunctions.getClosestSide(curVec))
                     {
+                        if (!placementLocations.ContainsKey(wallIn))
+                        {
+                            placementLocations[wallIn] = new List<Vector3>();
+                        }
+                        placementLocations[wallIn].Add(curVec);
                         storage.Add(curVec, wallIn);
                     }
                     else if (storage.ContainsKey(curVec))
@@ -216,7 +217,38 @@ public class WallStorage : MonoBehaviour
 
     public void removeWall(GameObject wallIn)
     {
-        Vector3 removeVec = wallIn.transform.position;
+
+        foreach (Vector3 removeVec in placementLocations[wallIn])
+        {
+            GameObject removeWall = storage[removeVec];
+            if (duplicates.ContainsKey(removeVec))
+            {
+                duplicates[removeVec]--;
+                if (duplicates[removeVec] == 0)
+                {
+                    duplicates.Remove(removeVec);
+                    storage.Remove(removeVec);
+                }
+            }
+            else
+            {
+                storage.Remove(removeVec);
+            }
+        }
+        placementLocations.Remove(wallIn);
+
+        if (storage.ContainsValue(wallIn))
+        {
+            foreach (var item in storage.Where(kvp => kvp.Value == wallIn).ToList())
+            {
+                storage.Remove(item.Key);
+            }
+        }
+        Destroy(wallIn);
+
+
+
+        /*Vector3 removeVec = wallIn.transform.position;
         placementLocations.Remove(wallIn);
         for (float i = -.5f; i < 1f; i += .5f)
         {
@@ -252,7 +284,7 @@ public class WallStorage : MonoBehaviour
         else
         {
             Debug.Log("ERROR: STORAGE STILL CONTAINS WALL AFTER REMOVAL");
-        }
+        }*/
     }
 
     public void detatchTowerAndReturn(GameObject wallIn)
