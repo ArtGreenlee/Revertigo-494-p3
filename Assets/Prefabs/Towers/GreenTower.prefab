@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 462126090924411484}
   - component: {fileID: 3094500707841185680}
   - component: {fileID: 3550424896779537059}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GreenTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

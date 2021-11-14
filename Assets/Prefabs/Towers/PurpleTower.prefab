@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5658799467015404861}
   - component: {fileID: 6141893377541644302}
   - component: {fileID: 3964428070034287038}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PurpleTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

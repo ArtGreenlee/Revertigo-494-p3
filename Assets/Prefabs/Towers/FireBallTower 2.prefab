@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5096817390689431554}
   - component: {fileID: -256711237363951748}
   - component: {fileID: 6031241073637083651}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FireBallTower 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -294,6 +294,7 @@ public class Pathfinder : MonoBehaviour
         yield break;    
     }*/
 
+
     public IEnumerator findPathBetweenPointsLyft(Vector3 startVec, Vector3 endVec, int pathIndex)
     {
         finishedPaths[pathIndex] = false;
@@ -366,10 +367,11 @@ public class Pathfinder : MonoBehaviour
                             
                             removeSegmentFromDictionary(pathIndex);
                             removeVisualizerSegment(pathIndex);
-                            while (Input.GetMouseButton(1))
+                            /*while (Input.GetMouseButton(1))
                             {
                                 yield return new WaitForEndOfFrame();
-                            }
+                            }*/
+                            collisionWall = wallStorage.getWall(traverseVec);
                             StartCoroutine(findPathBetweenPointsLyft(startVec, endVec, pathIndex));
                             yield break;
                         }
@@ -436,7 +438,15 @@ public class Pathfinder : MonoBehaviour
         //path is not found
         if (enemyMovement == null)
         {
-            wallStorage.removeMostRecentWall();
+            if (collisionWall != null)
+            {
+                wallStorage.removeWall(collisionWall);
+            }
+            else
+            {
+                wallStorage.removeMostRecentWall();
+            }
+            //wallStorage.removeMostRecentWall();
             collisionWall = null;
         }
         else
@@ -481,7 +491,7 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-    private IEnumerator testForInvalidPath(Vector3 start, Vector3 end, Vector3 psuedoWall, Vector3 parentVec, int pathIndex)
+    public IEnumerator testForInvalidPath(Vector3 start, Vector3 end, Vector3 psuedoWall, Vector3 parentVec, int pathIndex)
     {
         // if there is no path between start and end, return true 
         Stack<Vector3> activePath = new Stack<Vector3>();

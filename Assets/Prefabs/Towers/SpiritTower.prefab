@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 110078967280339102}
   - component: {fileID: 5784374940973590993}
   - component: {fileID: 572331812974162380}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpiritTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 12131918764796338}
   - component: {fileID: 3220930454429873278}
   - component: {fileID: 3965261626225551693}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WhiteTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

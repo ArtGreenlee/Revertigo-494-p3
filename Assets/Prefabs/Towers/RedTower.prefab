@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7505740483760464357}
   - component: {fileID: -4273443293886186455}
   - component: {fileID: 6847114830530060570}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RedTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -10,7 +10,7 @@ public class WallStorage : MonoBehaviour
     public List<Pathfinder> pathfinders;
     private Stack<GameObject> wallStack;
     private TowerStorage towerStorage;
-    private Dictionary<GameObject, List<Vector3> > placementLocations;
+    //private Dictionary<GameObject, List<Vector3> > placementLocations;
     
 
     public HashSet<Vector3> forbiddenVectors;
@@ -38,7 +38,7 @@ public class WallStorage : MonoBehaviour
     {
         if (wallStack.Count > 0)
         {
-            forbiddenVectors = new HashSet<Vector3>();   
+             
             GameObject tempWall = wallStack.Pop();
             
             removeWall(tempWall);
@@ -56,7 +56,7 @@ public class WallStorage : MonoBehaviour
     void Start()
     {
         forbiddenVectors = new HashSet<Vector3>();
-        placementLocations = new Dictionary<GameObject, List<Vector3>>();
+        //placementLocations = new Dictionary<GameObject, List<Vector3>>();
         towerStorage = TowerStorage.instance;
         towerInventory = TowerInventory.instance;
         wallStack = new Stack<GameObject>();
@@ -163,11 +163,11 @@ public class WallStorage : MonoBehaviour
                         UtilityFunctions.validEnemyVector(curVec) &&
                         addSide == UtilityFunctions.getClosestSide(curVec))
                     {
-                        if (!placementLocations.ContainsKey(wallIn))
+                        /*if (!placementLocations.ContainsKey(wallIn))
                         {
                             placementLocations[wallIn] = new List<Vector3>();
                         }
-                        placementLocations[wallIn].Add(curVec);
+                        placementLocations[wallIn].Add(curVec);*/
                         storage.Add(curVec, wallIn);
                     }
                     else if (storage.ContainsKey(curVec))
@@ -178,47 +178,54 @@ public class WallStorage : MonoBehaviour
                         }
                         else
                         {
-                            duplicates.Add(curVec, 2);
+                            duplicates.Add(curVec, 1);
                         }
                     }
                 }
             }
         }
-                    /*
-                    for (float i = -1; i < 1.5f; i += .5f)
+
+        for (float i = -1.5f; i < 2f; i += .5f)
+        {
+            for (float j = -1.5f; j < 2f; j += .5f)
+            {
+                for (float k = -1.5f; k < 2f; k += .5f)
+                {
+                    Vector3 testVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
+                    foreach (Pathfinder pathfinder in pathfinders)
                     {
-                        for (float j = -1; j < 1.5f; j += .5f)
+                        if (pathfinder.pathContainsVector(testVec))
                         {
-                            for (float k = -1; k < 1.5f; k += .5f)
+                            for (int x = 0; x < pathfinder.path.Count; x++)
                             {
-                                Vector3 curVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
-                                if (!storage.ContainsKey(curVec) &&
-                                    UtilityFunctions.validEnemyVector(curVec) &&
-                                    addSide == UtilityFunctions.getClosestSide(curVec))
+                                int vecIndex = pathfinder.path[x].IndexOf(testVec);
+                                if (vecIndex != -1)
                                 {
-                                    storage.Add(curVec, wallIn);
-                                }
-                                else if (storage.ContainsKey(curVec))
-                                {
-                                    if (duplicates.ContainsKey(curVec))
-                                    {
-                                        duplicates[curVec]++;
-                                    }
-                                    else
-                                    {
-                                        duplicates.Add(curVec, 2);
-                                    }
+                                    Debug.Log("manual forbidden search");
+                                    StartCoroutine(pathfinder.testForInvalidPath(
+                                        pathfinder.checkPointVectors[x],
+                                        pathfinder.path[x][vecIndex + 1],
+                                        pathfinder.path[x][vecIndex],
+                                        pathfinder.path[x][vecIndex + 1],
+                                        x));
+                                    //why do people let me do this
                                 }
                             }
+                            
                         }
-                    }*/
-                    detectPathCollision();
+                    }
+
+                }
+            }
+        }
+
+        detectPathCollision();
     }
 
     public void removeWall(GameObject wallIn)
     {
 
-        foreach (Vector3 removeVec in placementLocations[wallIn])
+        /*foreach (Vector3 removeVec in placementLocations[wallIn])
         {
             GameObject removeWall = storage[removeVec];
             if (duplicates.ContainsKey(removeVec))
@@ -236,12 +243,26 @@ public class WallStorage : MonoBehaviour
             }
         }
         placementLocations.Remove(wallIn);
-
+        */
+        forbiddenVectors = new HashSet<Vector3>();
         if (storage.ContainsValue(wallIn))
         {
-            foreach (var item in storage.Where(kvp => kvp.Value == wallIn).ToList())
+            foreach (KeyValuePair<Vector3, GameObject> wallVecPair in storage.Where(kvp => kvp.Value == wallIn).ToList())
             {
-                storage.Remove(item.Key);
+                if (duplicates.ContainsKey(wallVecPair.Key))
+                {
+                    duplicates[wallVecPair.Key]--;
+                    if (duplicates[wallVecPair.Key] == 0)
+                    {
+                        duplicates.Remove(wallVecPair.Key);
+                        storage.Remove(wallVecPair.Key);
+                    }
+                }
+                else
+                {
+                    storage.Remove(wallVecPair.Key);
+                }
+                
             }
         }
         Destroy(wallIn);

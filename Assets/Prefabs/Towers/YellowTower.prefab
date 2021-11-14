@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3209652144451414576}
   - component: {fileID: 5325321770645500}
   - component: {fileID: 1992438233997961935}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: YellowTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

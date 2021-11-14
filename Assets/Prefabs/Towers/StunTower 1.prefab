@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5240440133200724803}
   - component: {fileID: -6210998620473863012}
   - component: {fileID: -9132219886829194016}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: StunTower 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
