@@ -8,11 +8,10 @@ public class GoldStorage : MonoBehaviour
     public static GoldStorage instance;
     public float gold;
     public TextMeshProUGUI goldText;
-    
     // Start is called before the first frame update
     void Start()
     {
-        goldText.text = "Gold " + gold.ToString();
+        
     }
 
     private void Awake()
@@ -31,7 +30,6 @@ public class GoldStorage : MonoBehaviour
 
     public void changeGoldAmount(float amount)
     {
-        
         gold += amount;
         goldText.text = "Gold " + gold.ToString();
     }

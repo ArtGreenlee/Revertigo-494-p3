@@ -178,7 +178,7 @@ public class WallStorage : MonoBehaviour
                         }
                         else
                         {
-                            duplicates.Add(curVec, 2);
+                            duplicates.Add(curVec, 1);
                         }
                     }
                 }

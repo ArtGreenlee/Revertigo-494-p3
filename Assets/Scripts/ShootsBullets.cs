@@ -15,7 +15,6 @@ public class ShootsBullets : MonoBehaviour
     private EnemyStorage enemyStorage;
     private float playerShootCooldownUtility;
     private Rigidbody rb;
-    private float rangeSquared;
 
     public Vector3 snapPosition;
 
@@ -33,7 +32,6 @@ public class ShootsBullets : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerShootCooldownUtility = 0;
         targets = new Dictionary<GameObject, float>();
-        rangeSquared = towerStats.range * towerStats.range;
     }
 
     // Update is called once per frame
@@ -60,17 +58,16 @@ public class ShootsBullets : MonoBehaviour
                 }
                 if (addEnemy != null)
                 {
-                    targets.Add(addEnemy, Time.time);
+                    targets.Add(addEnemy, 0);
                 }
             }
             List<GameObject> enemyRemovalBuffer = new List<GameObject>();
             List<GameObject> tempTargets = targets.Keys.ToList();
-            
+
             foreach (GameObject target in tempTargets)
             {
                 if (target != null &&
-                    enemyStorage.enemyIsAlive(target) &&
-                    (transform.position - target.transform.position).sqrMagnitude <= rangeSquared)
+                    enemyStorage.enemyIsAlive(target))
                 {
                     if (Time.time - targets[target] > towerStats.getCooldown())
                     {
@@ -113,7 +110,7 @@ public class ShootsBullets : MonoBehaviour
 
             if (!towerStats.attachedToPlayer && snapPosition != Vector3.zero)
             {
-                AudioSource.PlayClipAtPoint(towerShootSFX, transform.position, 8);
+                AudioSource.PlayClipAtPoint(towerShootSFX, Camera.main.transform.position);
                 rb.AddForce(direction.normalized * bulletSpeed * -.1f, ForceMode.Impulse);
             }
         }

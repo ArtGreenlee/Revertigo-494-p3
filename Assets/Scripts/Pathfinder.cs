@@ -312,9 +312,6 @@ public class Pathfinder : MonoBehaviour
         activePathVectors.Add(start.v, start);
         HashSet<Vector3> closedPath = new HashSet<Vector3>();
 
-        int speedSwitch = 0;
-        int speedSwitchCounter = 0;
-
         while (activePath.Count > 0)
         {
             /*while (Input.GetMouseButton(1))
@@ -412,17 +409,7 @@ public class Pathfinder : MonoBehaviour
                             newPos.FCost -= .01f;
                         }
                         activePath.Add(newPos.FCost, newPos);
-                        if (speedSwitch == speedSwitchCounter)
-                        {
-                            speedSwitchCounter++;
-                            speedSwitch = 0;
-                            yield return new WaitForEndOfFrame();
-                        }
-                        else
-                        {
-                            speedSwitch++;
-                        }
-                        
+                        yield return new WaitForEndOfFrame();
                     }
                     else if (activePathVectors[newVec].FCost > newPos.FCost)
                     {
@@ -451,7 +438,6 @@ public class Pathfinder : MonoBehaviour
         //path is not found
         if (enemyMovement == null)
         {
-            Debug.Log("path not found");
             /*if (collisionWall != null)
             {
                 wallStorage.removeWall(collisionWall);

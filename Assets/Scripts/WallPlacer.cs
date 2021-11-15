@@ -17,10 +17,6 @@ public class WallPlacer : MonoBehaviour
     private GoldStorage goldStorage;
 
     public static WallPlacer instance;
-    private Vector3 storageVector;
-
-    private HashSet<Vector3> currentMouseDragWallPositions;
-
     // Start is called before the first frame update
 
     private void Awake()
@@ -33,8 +29,6 @@ public class WallPlacer : MonoBehaviour
 
     void Start()
     {
-        storageVector = new Vector3(25, 0, 0);
-        currentMouseDragWallPositions = new HashSet<Vector3>();
         goldStorage = GoldStorage.instance;
         wallStorage = WallStorage.instance;
         enemyStorage = EnemyStorage.instance;
@@ -68,8 +62,6 @@ public class WallPlacer : MonoBehaviour
         mousePosition.y += .25f;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
-       
-
         Vector3 curPoint;
         if (Physics.Raycast(ray, out hit) && 
             goldStorage.gold >= 1)
@@ -81,62 +73,45 @@ public class WallPlacer : MonoBehaviour
                 enemyStorage.validWallPosition(curPoint) &&
                 hit.collider.gameObject.CompareTag("Playfield"))
             {
-                if (Input.GetMouseButton(1) && shadowWall.transform.position != storageVector)
+                shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(curPoint);
+                //shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
+                shadowWall.transform.position = shadowWall.transform.rotation * Vector3.back * .5f + curPoint;
+                Vector3 adjustment = shadowWall.transform.rotation.eulerAngles;
+                adjustment.z += 22.5f;
+                shadowWall.transform.rotation = Quaternion.Euler(adjustment);
+                
+                /*if (validTowerPlacement(curPoint) && towerPlacementEnabled)
                 {
-                    for (float i = -.5f; i < 1f; i += .5f)
-                    {
-                        for (float j = -.5f; j < 1f; j += .5f)
-                        {
-                            for (float k = -.5f; k < 1f; k += .5f)
-                            {
-                                Vector3 curVec = new Vector3(curPoint.x + i, curPoint.y + j, curPoint.z + k);
-                                if (!currentMouseDragWallPositions.Contains(curVec) && UtilityFunctions.validEnemyVector(curVec))
-                                {
-                                    currentMouseDragWallPositions.Add(curVec);
-                                }
-
-                            }
-                        }
-                    }
-                    goldStorage.changeGoldAmount(-1);
-                    GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
-                    shadowWall.transform.position = storageVector;
-                    wallStorage.addWall(curPoint, newWall);
-                    AudioSource.PlayClipAtPoint(wallPlaceSFX, Camera.main.transform.position);
-                }
-
-                if (!Input.GetMouseButton(1) || !wallNearby(curPoint))
-                {
-                    shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(curPoint);
-                    //shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
-                    shadowWall.transform.position = shadowWall.transform.rotation * Vector3.back * .5f + curPoint;
-                    Vector3 adjustment = shadowWall.transform.rotation.eulerAngles;
-                    adjustment.z += 22.5f;
-                    shadowWall.transform.rotation = Quaternion.Euler(adjustment);
+                    //shadowTower.transform.position = shadowWall.transform.rotation * Vector3.forward * -1.5f + shadowWall.transform.position;
+                    //shadowTower.transform.rotation = UtilityFunctions.getRotationawayFromSide(UtilityFunctions.getClosestSide(curPoint));
                 }
                 else
                 {
-                    shadowWall.transform.position = storageVector;
+                    //shadowTower.transform.position = new Vector3(25, 0, 0);
+                }*/
+                if (Input.GetMouseButton(1))
+                {
+                    goldStorage.changeGoldAmount(-1);
+                    GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
+                    //GameObject newTower = Instantiate(getRandomTower(), shadowTower.transform.position, shadowTower.transform.rotation);
+                    //Instantiate(onPlacementEffect, shadowTower.transform.position, shadowTower.transform.rotation);
+                    //wallStorage.attachTowerToWall(newTower, newWall);
+                    //shadowTower.transform.position = new Vector3(25, 0, 0);
+                    shadowWall.transform.position = new Vector3(25, 0, 0);
+                    wallStorage.addWall(curPoint, newWall);
+                    AudioSource.PlayClipAtPoint(wallPlaceSFX, Camera.main.transform.position);
                 }
-
-                
             }
             else
             {
                 //shadowTower.transform.position = new Vector3(25, 0, 0);
-                shadowWall.transform.position = storageVector;
+                shadowWall.transform.position = new Vector3(25, 0, 0);
             }
         }
         else
         {
-            shadowWall.transform.position = storageVector;
+            shadowWall.transform.position = new Vector3(25, 0, 0);
         }
-
-        if (Input.GetMouseButtonUp(1))
-        {
-            currentMouseDragWallPositions.Clear();
-        }
-
 
         /*if (Input.GetKeyDown(KeyCode.R))
         {            wallStorage.popRecentWall();
@@ -144,24 +119,6 @@ public class WallPlacer : MonoBehaviour
         }*/
     }
 
-    private bool wallNearby(Vector3 checkVec)
-    {
-        for (float x = -1; x < 1.5f; x += .5f)
-        {
-            for (float y = -1; y < 1.5f; y += .5f)
-            {
-                for (float z = -1; z < 1.5f; z += .5f)
-                {
-                    Vector3 tempVec = new Vector3(checkVec.x + x, checkVec.y + y, checkVec.z + z);
-                    if (wallStorage.isWall(tempVec) && !currentMouseDragWallPositions.Contains(tempVec))
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
     
 
     private bool isCheckpoint(Vector3 checkVec)

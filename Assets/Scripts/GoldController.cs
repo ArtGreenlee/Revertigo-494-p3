@@ -8,7 +8,6 @@ public class GoldController : MonoBehaviour
     private GoldStorage goldStorage;
     private Rigidbody rb;
     public float atttraction;
-    public AudioClip goldCollectSFX;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +33,6 @@ public class GoldController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        AudioSource.PlayClipAtPoint(goldCollectSFX, Camera.main.transform.position, 1);
         goldStorage.changeGoldAmount(1);
         gameObject.SetActive(false);
     }

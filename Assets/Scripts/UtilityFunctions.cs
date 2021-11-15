@@ -15,7 +15,7 @@ public class UtilityFunctions : MonoBehaviour
         Vector3.back
     };
 
-    
+    public List<Mesh> towerLevelMeshList;
 
     public static Quaternion getRotationTowardSide(Vector3 vecIn)
     {

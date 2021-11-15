@@ -97,7 +97,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   atttraction: 20
-  goldCollectSFX: {fileID: 8300000, guid: df01b6af6379f4c4fae61fddf372e630, type: 3}
 --- !u!54 &4981611155386590555
 Rigidbody:
   m_ObjectHideFlags: 0
