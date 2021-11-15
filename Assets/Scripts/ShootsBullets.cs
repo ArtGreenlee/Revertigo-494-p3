@@ -8,6 +8,7 @@ public class ShootsBullets : MonoBehaviour
     public enum TargetSelectionType { closest, weakest, farthest, strongest }
     private TowerStats towerStats;
     public TargetSelectionType targetSelection;
+    public AudioClip towerShootSFX;
     public GameObject bullet;
     public float bulletSpeed;
     private Dictionary<GameObject, float> targets;
@@ -109,6 +110,7 @@ public class ShootsBullets : MonoBehaviour
 
             if (!towerStats.attachedToPlayer && snapPosition != Vector3.zero)
             {
+                AudioSource.PlayClipAtPoint(towerShootSFX, Camera.main.transform.position);
                 rb.AddForce(direction.normalized * bulletSpeed * -.1f, ForceMode.Impulse);
             }
         }
