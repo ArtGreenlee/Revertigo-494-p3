@@ -32,45 +32,33 @@ public class MenuOptionsAnimator : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            loadingPanel.SetActive(true);
             StartCoroutine(LoadSceneAsync());
         }
     }
     IEnumerator LoadSceneAsync()
     {
-        //Begin to load the Scene you specify
-        loadingBar.value = 1;
+        yield return null;
 
+        //Begin to load the Scene you specify
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
-        //
+        loadingPanel.SetActive(true);
         //Don't let the Scene activate until you allow it to
         asyncOperation.allowSceneActivation = false;
-
+        Debug.Log("Pro :" + asyncOperation.progress);
         //When the load is still in progress, output the Text and progress bar
-        while (asyncOperation.progress < 0.9f)
+        while (!asyncOperation.isDone)
         {
             //Output the current progress
-            float progress = Mathf.Clamp01(asyncOperation.progress / .9f);
-            loadingText.text = "Loading progress: " + progress * 100 + "%";
-            Debug.Log("Loading Progress :" + asyncOperation.progress);
-            loadingBar.value = progress;
+            loadingText.text = "Loading progress: " + (asyncOperation.progress * 100) + "%";
+            loadingBar.value = asyncOperation.progress;
 
             // Check if the load has finished
             if (asyncOperation.progress >= 0.9f)
             {
-                loadingText.text = "Loading progress: " + progress * 100 + "%";
-                Debug.Log("Progress :" + asyncOperation.progress);
-                loadingBar.value = progress;
+                //Change the Text to show the Scene is ready
                 asyncOperation.allowSceneActivation = true;
             }
-            yield return null;
-        }
-        if (asyncOperation.progress >= 0.9f)
-        {
-            loadingText.text = "Loading progress: " + Mathf.Clamp01(asyncOperation.progress / .9f) * 100 + "%";
-            Debug.Log("Progress :" + asyncOperation.progress);
-            loadingBar.value = Mathf.Clamp01(asyncOperation.progress / .9f);
-            asyncOperation.allowSceneActivation = true;
+
             yield return null;
         }
     }
