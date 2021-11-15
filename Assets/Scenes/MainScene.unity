@@ -3790,14 +3790,14 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Gameplay: Enemies will spawn and move across the cube to the goal on the
-    other side.'
+  m_Text: "Gameplay: Enemies will spawn and move across the cube \nto the goal on
+    the other side."
 --- !u!222 &1225354847
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5863,13 +5863,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'buy towers and use them to shoot them down. But watch out! '
+  m_Text: "buy towers and use them to shoot them down. \nBut watch out! "
 --- !u!222 &1756390426
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6077,14 +6077,14 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'They will start to spawn from all directions. Place walls to block them
-    and redirect their path. '
+  m_Text: "They will start to spawn from all directions. \nPlace walls to block them
+    and redirect their path. "
 --- !u!222 &1812011829
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6157,13 +6157,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Purchase and place more towers to hold them off. You only have 20 lives!
+  m_Text: "Purchase and place more towers to hold them off. \nYou only have 20 lives!"
 --- !u!222 &1843653350
 CanvasRenderer:
   m_ObjectHideFlags: 0
