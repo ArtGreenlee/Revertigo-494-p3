@@ -57,7 +57,7 @@ public class TutorialControl : MonoBehaviour
         else if (instruction == 2) {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Left click to shoot enemies";
+            tutorialText.text = "Left click and hold to shoot enemies";
 
         }
         else if (instruction == 3) {

@@ -220,6 +220,10 @@ public class TowerDisplay : MonoBehaviour
         {
             temp = "Stun Tower";
         }
+        else if (towerStats.towerName == TowerStats.TowerName.Tourmaline)
+        {
+            temp = "Tourmaline";
+        }
 
         if (!towerStats.specialTower)
         {
