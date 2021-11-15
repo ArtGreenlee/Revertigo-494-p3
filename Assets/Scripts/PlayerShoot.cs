@@ -41,8 +41,7 @@ public class PlayerShoot : MonoBehaviour
                 tempBullet.GetComponent<Rigidbody>().velocity = transform.forward * 30;
                 tempBullet.GetComponent<BulletController>().towerStats = towerStats;
                 rb.AddForce(transform.forward * -1 * knockBackForce, ForceMode.Impulse);
-                Debug.Log("shoot");
-                AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
+                AudioSource.PlayClipAtPoint(shootSFX, transform.position, 2);
                 cooldownUtility = Time.time;
             }
 
