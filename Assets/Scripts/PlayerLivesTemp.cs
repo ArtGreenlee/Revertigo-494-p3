@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
+
 public class PlayerLivesTemp : MonoBehaviour
 {
-    public int numLives;
-    public TextMeshProUGUI livesCounter;
+    public int max_lives;
+    //public TextMeshProUGUI livesCounter;
     public static PlayerLivesTemp instance;
     private TowerInventory towerInventory;
-
+    private int numLives; 
+    public Slider healthBar;
 
 
     private void Awake()
@@ -22,13 +25,15 @@ public class PlayerLivesTemp : MonoBehaviour
     private void Start()
     {
         towerInventory = TowerInventory.instance;
+        numLives = max_lives;
+        healthBar.value = Mathf.Clamp01((float)numLives / max_lives);
     }
 
     private void Update()
     {
         if (numLives <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -43,7 +48,9 @@ public class PlayerLivesTemp : MonoBehaviour
             numLives--;
         }
 
-        
-        livesCounter.text = "Lives " + numLives.ToString();
+
+        //livesCounter.text = "Lives " + numLives.ToString();
+        Debug.Log(Mathf.Clamp01((float)numLives / max_lives));
+        healthBar.value = Mathf.Clamp01((float)numLives / max_lives);
     }
 }
