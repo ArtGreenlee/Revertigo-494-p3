@@ -7,6 +7,8 @@ public class TowerPlacer : MonoBehaviour
 
     private WallStorage wallStorage;
     public GameObject shadowTower;
+    public AudioClip placeTowerSFX;
+    public AudioClip returnTowerSFX;
     private TowerInventory towerInventory;
     private TowerStorage towerStorage;
 
@@ -51,6 +53,7 @@ public class TowerPlacer : MonoBehaviour
                     {
                         GameObject tempTower = towerInventory.playerInventory[0];
                         wallStorage.attachTowerToWall(tempTower, tempWall);
+                        AudioSource.PlayClipAtPoint(placeTowerSFX, Camera.main.transform.position);
                         
                         StartCoroutine(placeTowerOnBoard(tempTower, tempTower.transform.position, shadowTower.transform.position, tempWall));
                         towerInventory.playerInventory.RemoveAt(0);
@@ -62,6 +65,7 @@ public class TowerPlacer : MonoBehaviour
                 {
 
                     wallStorage.detatchTowerAndReturn(tempWall);
+                    AudioSource.PlayClipAtPoint(returnTowerSFX, Camera.main.transform.position);
                 }
             }
             else

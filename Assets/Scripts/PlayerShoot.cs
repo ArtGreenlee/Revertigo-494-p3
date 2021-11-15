@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     public GameObject bullet;
+    public AudioClip shootSFX;
     private TowerStats towerStats;
     private float cooldownUtility;
     private ObjectPooler objectPooler;
@@ -40,6 +41,8 @@ public class PlayerShoot : MonoBehaviour
                 tempBullet.GetComponent<Rigidbody>().velocity = transform.forward * 30;
                 tempBullet.GetComponent<BulletController>().towerStats = towerStats;
                 rb.AddForce(transform.forward * -1 * knockBackForce, ForceMode.Impulse);
+                Debug.Log("shoot");
+                AudioSource.PlayClipAtPoint(shootSFX, Camera.main.transform.position);
                 cooldownUtility = Time.time;
             }
 

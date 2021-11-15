@@ -5,6 +5,7 @@ using TMPro;
 public class TowerInventory : MonoBehaviour
 {
     public int maxGemInventory;
+    public AudioClip getTowerSFX;
 
     public static TowerInventory instance;
 
@@ -47,6 +48,7 @@ public class TowerInventory : MonoBehaviour
             GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
             newTower.GetComponent<TowerStats>().attachedToPlayer = true;
             playerInventory.Add(newTower);
+            AudioSource.PlayClipAtPoint(getTowerSFX, Camera.main.transform.position);
             newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;
         }
 

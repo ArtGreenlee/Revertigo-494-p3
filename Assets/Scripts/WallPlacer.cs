@@ -6,6 +6,7 @@ public class WallPlacer : MonoBehaviour
 {
     public GameObject shadowWall;
     public GameObject wall;
+    public AudioClip wallPlaceSFX;
     private WallStorage wallStorage;
     private EnemyStorage enemyStorage;
     
@@ -98,6 +99,7 @@ public class WallPlacer : MonoBehaviour
                     //shadowTower.transform.position = new Vector3(25, 0, 0);
                     shadowWall.transform.position = new Vector3(25, 0, 0);
                     wallStorage.addWall(curPoint, newWall);
+                    AudioSource.PlayClipAtPoint(wallPlaceSFX, Camera.main.transform.position);
                 }
             }
             else
