@@ -10,10 +10,12 @@ public class TutorialControl : MonoBehaviour
     int currInstruction;
     KeyCode[] keycodes = new KeyCode[]{ KeyCode.Space, KeyCode.Mouse1, KeyCode.Mouse0, KeyCode.G, KeyCode.F, KeyCode.P};
     public bool firstPlayThrough;
+    private Transform cameraTransform;
 
     // Start is called before the first frame update
     void Start()
     {
+        cameraTransform = Camera.main.transform;
         if (firstPlayThrough)
         {
             currInstruction = 0;
@@ -32,10 +34,12 @@ public class TutorialControl : MonoBehaviour
             return;
         }
         if ((Time.time - lastUpdate > 10.0) || Input.GetKey(keycodes[currInstruction])) {
+            
             currInstruction += 1;
             lastUpdate = Time.time;
             StartCoroutine(DisplayText(currInstruction));
         }
+        tutorialText.transform.rotation = Quaternion.LookRotation(tutorialText.transform.position - cameraTransform.position);
     }
 
     IEnumerator DisplayText(int instruction){

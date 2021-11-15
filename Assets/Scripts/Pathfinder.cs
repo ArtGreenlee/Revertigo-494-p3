@@ -438,15 +438,15 @@ public class Pathfinder : MonoBehaviour
         //path is not found
         if (enemyMovement == null)
         {
-            if (collisionWall != null)
+            /*if (collisionWall != null)
             {
                 wallStorage.removeWall(collisionWall);
             }
             else
             {
                 wallStorage.removeMostRecentWall();
-            }
-            //wallStorage.removeMostRecentWall();
+            }*/
+            wallStorage.removeMostRecentWall();
             collisionWall = null;
         }
         else
@@ -511,9 +511,9 @@ public class Pathfinder : MonoBehaviour
                 }
                 if (!closedPath.Contains(addVec) && !activePathVectors.Contains(addVec))
                 {
-                    yield return new WaitForEndOfFrame();
                     activePath.Push(addVec);
                 }
+                yield return new WaitForEndOfFrame();
             }
         }
         if (!wallStorage.forbiddenVectors.Contains(parentVec))

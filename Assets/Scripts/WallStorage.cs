@@ -192,27 +192,34 @@ public class WallStorage : MonoBehaviour
                 for (float k = -1.5f; k < 2f; k += .5f)
                 {
                     Vector3 testVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
-                    foreach (Pathfinder pathfinder in pathfinders)
+                    if (UtilityFunctions.validEnemyVector(testVec))
                     {
-                        if (pathfinder.pathContainsVector(testVec) && pathfinder.enemyMovement == null)
+                        foreach (Pathfinder pathfinder in pathfinders)
                         {
-                            for (int x = 0; x < pathfinder.path.Count; x++)
+                            if (pathfinder.pathContainsVector(testVec) && pathfinder.enemyMovement == null)
                             {
-                                int vecIndex = pathfinder.path[x].IndexOf(testVec);
-                                if (vecIndex != -1)
+                                for (int x = 0; x < pathfinder.path.Count; x++)
                                 {
-                                    StartCoroutine(pathfinder.testForInvalidPath(
-                                        pathfinder.checkPointVectors[x],
-                                        pathfinder.path[x][vecIndex + 1],
-                                        pathfinder.path[x][vecIndex],
-                                        pathfinder.path[x][vecIndex + 1],
-                                        x));
-                                    //why do people let me do this
+                                    int vecIndex = pathfinder.path[x].IndexOf(testVec);
+                                    if (vecIndex != -1)
+                                    {
+                                        if (!forbiddenVectors.Contains(pathfinder.path[x][vecIndex + 1]) ||
+                                            !forbiddenVectors.Contains(pathfinder.path[x][vecIndex]) ||
+                                            !forbiddenVectors.Contains(pathfinder.path[x][vecIndex - 1]))
+                                            StartCoroutine(pathfinder.testForInvalidPath(
+                                                pathfinder.checkPointVectors[x],
+                                                pathfinder.path[x][vecIndex - 1],
+                                                pathfinder.path[x][vecIndex],
+                                                pathfinder.path[x][vecIndex + 1],
+                                                x));
+                                        //why do people let me do this
+                                    }
                                 }
+
                             }
-                            
                         }
                     }
+                    
 
                 }
             }

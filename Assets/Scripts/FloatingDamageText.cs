@@ -36,6 +36,7 @@ public class FloatingDamageText : MonoBehaviour
     {
         textMesh.color = color;
         StartCoroutine(growShrinkFade());
+        
     }
 
     // Update is called once per frame

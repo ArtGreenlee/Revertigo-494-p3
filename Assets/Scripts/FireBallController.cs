@@ -36,7 +36,7 @@ public class FireBallController : MonoBehaviour
         thrusting = false;
         trailRenderer.enabled = false;
         sphereCollider.enabled = false;
-        if (target == null)
+        if (target == null && !towerStats.attachedToPlayer)
         {
             target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 10);
         }
@@ -88,11 +88,6 @@ public class FireBallController : MonoBehaviour
             rb.MoveRotation(Quaternion.Slerp(transform.rotation,
                            Quaternion.LookRotation(lastSeenTargetLocation - transform.position),
                            rotationSpeed * Time.deltaTime));
-        }
-        else
-        {
-            Instantiate(collisionEffect, transform.position, Quaternion.identity);
-            Destroy(gameObject);
         }
 
         if (thrusting)

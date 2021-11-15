@@ -1408,16 +1408,16 @@ RectTransform:
   m_GameObject: {fileID: 408048317}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 1281799039}
   - {fileID: 173165361}
   m_Father: {fileID: 1081148708}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 469, y: 266}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -168.29999, y: -39.399994}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &408048319
@@ -2049,7 +2049,7 @@ MonoBehaviour:
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
   enemyStartingHealth: 10
-  startDelay: 120
+  startDelay: 240
   startInterval: 5
   countdownText: {fileID: 742159}
 --- !u!114 &763991227
@@ -2617,7 +2617,7 @@ MonoBehaviour:
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
   enemyStartingHealth: 10
-  startDelay: 240
+  startDelay: 120
   startInterval: 5
   countdownText: {fileID: 1227290434}
 --- !u!114 &913350419
@@ -4284,7 +4284,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -2.24}
   m_SizeDelta: {x: 82.3, y: 12.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1281799038
@@ -6485,7 +6485,7 @@ MonoBehaviour:
   attachedToPlayer: 0
   buffsTowers: 0
   buffs: 
-  slowsEnemy: 0
+  slowsEnemy: 1
   canCriticallyHit: 0
   aoe: 1
   poisons: 0
@@ -6493,8 +6493,8 @@ MonoBehaviour:
   poisonDuration: 0
   range: 0
   numTargets: 0
-  damageMin: 5
-  damageMax: 10
+  damageMin: 15
+  damageMax: 25
   critChance: 0
   critMult: 0
   slowPercent: 0.8
