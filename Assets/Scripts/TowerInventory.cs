@@ -79,7 +79,7 @@ public class TowerInventory : MonoBehaviour
             float zDiffVertical = inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
 
 
-            //i dont know why, I shouldnt HAVE to know why, but for whatever god awful reason this is the closest i can get to the desired behaviour.
+            //i dont know why, I shouldnt HAVE to know why, but for whatever god awful reason this is the closest i can get to the desired behaviour. 
 
             //float zDiffHorizontal = xDiff;
             //float zDiffVertical = yDiff;
