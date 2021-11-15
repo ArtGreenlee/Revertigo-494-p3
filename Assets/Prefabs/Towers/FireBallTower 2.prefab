@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireBall: {fileID: 7922299580369839075, guid: 59860587ca7ad459782ba35d16d20719,
     type: 3}
+  towerShootSFX: {fileID: 8300000, guid: 8adcbc8428e004e7c91e520f2637c373, type: 3}
   controlledByPlayer: 0
 --- !u!114 &6972592042273126234
 MonoBehaviour:
@@ -144,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerName: 5
   cooldownBuffEffect: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
+  kills: 0
   level: 0
   damageBuffIncrease: 0
   attachedToPlayer: 1

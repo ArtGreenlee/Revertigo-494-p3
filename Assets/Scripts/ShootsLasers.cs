@@ -8,6 +8,7 @@ public class ShootsLasers : MonoBehaviour
     public enum TargetSelectionType { closest, weakest, farthest, strongest }
     private TowerStats towerStats;
     public TargetSelectionType targetSelection;
+    public AudioClip towerShootSFX;
     public GameObject laser;
     private Dictionary<GameObject, float> targets;
     private EnemyStorage enemyStorage;
@@ -95,6 +96,8 @@ public class ShootsLasers : MonoBehaviour
             GameObject tempLaser = Instantiate(laser, transform.position, new Quaternion());
             tempLaser.GetComponent<LaserController>().towerStats = towerStats;
             tempLaser.GetComponent<LaserController>().target = target;
+            AudioSource.PlayClipAtPoint(towerShootSFX, Camera.main.transform.position);
+
         }
     }
 }

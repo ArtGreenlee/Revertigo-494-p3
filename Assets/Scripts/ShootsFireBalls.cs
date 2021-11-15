@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShootsFireBalls : MonoBehaviour
 {
     public GameObject fireBall;
+    public AudioClip towerShootSFX;
     private EnemyStorage enemyStorage;
     private float cooldownTimer;
     private TowerStats towerStats;
@@ -68,6 +69,7 @@ public class ShootsFireBalls : MonoBehaviour
                 else
                 {
                     fireBallControllerTemp.disableDuration = .5f;
+                    AudioSource.PlayClipAtPoint(towerShootSFX, Camera.main.transform.position);
                 }
             }
             else if (fireBallTemp.TryGetComponent<ClusterFireballController>(out clusterFireballControllerTemp))
@@ -80,10 +82,12 @@ public class ShootsFireBalls : MonoBehaviour
                 else
                 {
                     clusterFireballControllerTemp.disableDuration = 1f;
+                    AudioSource.PlayClipAtPoint(towerShootSFX, Camera.main.transform.position);
                 }
                 clusterFireballControllerTemp.controlledByPlayer = towerStats.attachedToPlayer;
             }
             cooldownTimer = Time.time;
+            
         }
         
     }

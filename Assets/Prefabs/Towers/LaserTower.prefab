@@ -114,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerName: 10
   cooldownBuffEffect: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
+  kills: 0
   level: 0
   damageBuffIncrease: 0
   attachedToPlayer: 1
@@ -296,5 +297,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSelection: 0
+  towerShootSFX: {fileID: 8300000, guid: f445b5040a4b34ba1ab8a804092c59bb, type: 3}
   laser: {fileID: 4048367259335115833, guid: ba0c00a47a1de492b8b4e042388ae262, type: 3}
   snapPosition: {x: 0, y: 0, z: 0}
