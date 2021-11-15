@@ -116,6 +116,7 @@ MonoBehaviour:
   pathResetThreshold: 4
   onPathFinishEffect: {fileID: 1280141305896002, guid: e473029e4c70ad543a6879b82a732f4f,
     type: 3}
+  loseLifeSFX: {fileID: 8300000, guid: 536ecf00edb054bbfb17d67c548f1b7a, type: 3}
 --- !u!114 &1701556777800460827
 MonoBehaviour:
   m_ObjectHideFlags: 0

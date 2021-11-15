@@ -13,6 +13,7 @@ public class EnemyMovement : MonoBehaviour
     private Pathfinder pathFinder;
     public float pathResetThreshold;
     public GameObject onPathFinishEffect;
+    public AudioClip loseLifeSFX;
     bool lookingForPath;
     private PlayerLivesTemp playerLifes;
 
@@ -113,6 +114,7 @@ public class EnemyMovement : MonoBehaviour
                         Instantiate(onPathFinishEffect, transform.position, Quaternion.identity);
                         pathFinder.StopAllCoroutines();
                         Destroy(gameObject);
+                        AudioSource.PlayClipAtPoint(loseLifeSFX, Camera.main.transform.position);
                         playerLifes.loseLife();
                     }
                 }
