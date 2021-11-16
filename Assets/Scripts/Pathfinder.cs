@@ -350,13 +350,13 @@ public class Pathfinder : MonoBehaviour
                     traverseVec = curPos.parent.v;
                     curPos = curPos.parent;
 
-                    /*if (showPath && walkableTiles(traverseVec).Count == 2 && (
+                    if (showPath && walkableTiles(traverseVec).Count == 2 && (
                         !wallStorage.forbiddenVectors.Contains(traverseVec) ||
                         !wallStorage.forbiddenVectors.Contains(previousVec) ||
                         !wallStorage.forbiddenVectors.Contains(curPos.parent.v)))
                     {
                         StartCoroutine(testForInvalidPath(startVec, previousVec, traverseVec, curPos.parent.v, pathIndex));
-                    }*/
+                    }
 
                     //only show visualizer if this is a main path
                     if (showPath)
@@ -415,6 +415,17 @@ public class Pathfinder : MonoBehaviour
                         {
                             activePathVectors.Add(newPos.v, newPos);
                         }
+                        else
+                        {
+                            foreach (pos tempPos in activePath.Values)
+                            {
+                                if (tempPos.v == newVec)
+                                {
+                                    activePath.RemoveAt(activePath.IndexOfValue(tempPos));
+                                    break;
+                                }
+                            }
+                        }
                         while (activePath.ContainsKey(newPos.FCost))
                         {
                             newPos.FCost += .01f;
@@ -469,7 +480,6 @@ public class Pathfinder : MonoBehaviour
             //path is not found
             if (enemyMovement == null)
             {
-                Debug.Log("path not found");
                 /*if (collisionWall != null)
                 {
                     wallStorage.removeWall(collisionWall);

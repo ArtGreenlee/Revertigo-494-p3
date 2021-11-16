@@ -42,7 +42,6 @@ public class TowerInventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G) && (playerInventory.Count < maxGemInventory && goldStorage.gold >= price) || debugMode)
         {
             goldStorage.changeGoldAmount(-price);
-            Debug.Log(goldStorage.gold);
             price += 5;
             priceText.text = "Tower Cost " + price.ToString();
             GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);

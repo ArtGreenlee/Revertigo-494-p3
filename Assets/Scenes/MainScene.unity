@@ -5464,7 +5464,7 @@ MonoBehaviour:
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
   enemyStartingHealth: 10
-  startDelay: 100
+  startDelay: 1
   startInterval: 5
   countdownText: {fileID: 365179705}
 --- !u!114 &1580393135

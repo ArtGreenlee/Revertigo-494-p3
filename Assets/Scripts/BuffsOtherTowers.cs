@@ -42,7 +42,7 @@ public class BuffsOtherTowers : MonoBehaviour
     }
     private void updateBuffs()
     {
-        Vector3 searchPoint = transform.position;
+        Vector3 searchPoint = GetComponent<ShootsBullets>().snapPosition;
         ShootsBullets recoilCheck;
         if (TryGetComponent<ShootsBullets>(out recoilCheck))
         {

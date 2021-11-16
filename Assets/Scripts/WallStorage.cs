@@ -183,7 +183,7 @@ public class WallStorage : MonoBehaviour
                         }
                         else
                         {
-                            duplicates.Add(curVec, 1);
+                            duplicates.Add(curVec, 0);
                         }
                     }
                 }
@@ -260,20 +260,23 @@ public class WallStorage : MonoBehaviour
         {
             foreach (KeyValuePair<Vector3, GameObject> wallVecPair in storage.Where(kvp => kvp.Value == wallIn).ToList())
             {
-                if (duplicates.ContainsKey(wallVecPair.Key))
+                /*if (duplicates.ContainsKey(wallVecPair.Key))
                 {
                     duplicates[wallVecPair.Key]--;
-                    if (duplicates[wallVecPair.Key] == 0)
+                    if (duplicates[wallVecPair.Key] < 0)
                     {
                         duplicates.Remove(wallVecPair.Key);
                         storage.Remove(wallVecPair.Key);
+                        Instantiate(debugSphere, wallVecPair.Key, Quaternion.identity);
                     }
                 }
                 else
                 {
+                    Instantiate(debugSphere, wallVecPair.Key, Quaternion.identity);
                     storage.Remove(wallVecPair.Key);
-                }
-                
+                }*/
+                Instantiate(debugSphere, wallVecPair.Key, Quaternion.identity);
+                storage.Remove(wallVecPair.Key);
             }
         }
         Destroy(wallIn);

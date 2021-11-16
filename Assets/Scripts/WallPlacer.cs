@@ -82,7 +82,7 @@ public class WallPlacer : MonoBehaviour
                 enemyStorage.validWallPosition(curPoint) &&
                 hit.collider.gameObject.CompareTag("Playfield"))
             {
-                /*shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(curPoint);
+                shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(curPoint);
                 //shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
                 shadowWall.transform.position = shadowWall.transform.rotation * Vector3.back * .5f + curPoint;
                 Vector3 adjustment = shadowWall.transform.rotation.eulerAngles;
@@ -96,9 +96,9 @@ public class WallPlacer : MonoBehaviour
                     shadowWall.transform.position = storageVector;
                     wallStorage.addWall(curPoint, newWall);
                     AudioSource.PlayClipAtPoint(wallPlaceSFX, Camera.main.transform.position);
-                }*/
+                }
 
-                if (Input.GetMouseButton(1) && shadowWall.transform.position != storageVector)
+                /*if (Input.GetMouseButton(1) && shadowWall.transform.position != storageVector)
                 {
                     for (float i = -.5f; i < 1f; i += .5f)
                     {
@@ -134,7 +134,7 @@ public class WallPlacer : MonoBehaviour
                 else
                 {
                     shadowWall.transform.position = storageVector;
-                }
+                }*/
                 
 
             }
