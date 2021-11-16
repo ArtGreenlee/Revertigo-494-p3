@@ -107,10 +107,10 @@ public class ShootsBullets : MonoBehaviour
         if (!towerStats.attachedToPlayer || (Time.time - playerShootCooldownUtility > towerStats.getCooldown()))
         {
             playerShootCooldownUtility = Time.time;
-            GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.identity);
+            GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.LookRotation(direction));
             tempBullet.GetComponent<Rigidbody>().velocity = direction.normalized * bulletSpeed;
             tempBullet.GetComponent<BulletController>().towerStats = towerStats;
-
+            tempBullet.GetComponent<MeshRenderer>().material.color = towerStats.trailRendererColor;
             if (!towerStats.attachedToPlayer && snapPosition != Vector3.zero)
             {
                 AudioSource.PlayClipAtPoint(towerShootSFX, transform.position, 8);

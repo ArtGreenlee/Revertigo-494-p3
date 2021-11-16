@@ -60,11 +60,6 @@ public class TowerInventory : MonoBehaviour
             selectionEnabled = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && selectionEnabled)
-        {
-            Destroy(selectionDisplayEffectInstance);
-        } 
-
         if (Input.GetKeyDown(KeyCode.Q) && selectionEnabled)
         {
             GameObject rotateTemp = playerInventory[playerInventory.Count - 1];
@@ -135,6 +130,10 @@ public class TowerInventory : MonoBehaviour
         {
             selectionDisplayEffectInstance.transform.position = playerInventory[0].transform.position;
             selectionDisplayEffectInstance.transform.rotation = Quaternion.LookRotation(playerInventory[0].transform.position - cameraTransform.position);
+        }
+        else if (selectionDisplayEffectInstance != null)
+        {
+            Destroy(selectionDisplayEffectInstance);
         }
     }
 

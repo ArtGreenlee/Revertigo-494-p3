@@ -275,7 +275,7 @@ public class WallStorage : MonoBehaviour
                     Instantiate(debugSphere, wallVecPair.Key, Quaternion.identity);
                     storage.Remove(wallVecPair.Key);
                 }*/
-                Instantiate(debugSphere, wallVecPair.Key, Quaternion.identity);
+                //Instantiate(debugSphere, wallVecPair.Key, Quaternion.identity);
                 storage.Remove(wallVecPair.Key);
             }
         }

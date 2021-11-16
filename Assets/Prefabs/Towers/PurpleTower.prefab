@@ -154,7 +154,7 @@ MonoBehaviour:
   slowDuration: 0
   aoe_range: 0
   baseCooldown: 1
-  trailRendererColor: {r: 1, g: 1, b: 1, a: 0}
+  trailRendererColor: {r: 0.46590996, g: 0, b: 1, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   specialTower: 0
   slowEffect: {fileID: 0}

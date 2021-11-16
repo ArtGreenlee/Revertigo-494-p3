@@ -37,7 +37,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if (Time.time - cooldownUtility > towerStats.getCooldown())
             {
-                GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.identity);
+                GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.LookRotation(transform.forward));
                 tempBullet.GetComponent<Rigidbody>().velocity = transform.forward * 30;
                 tempBullet.GetComponent<BulletController>().towerStats = towerStats;
                 rb.AddForce(transform.forward * -1 * knockBackForce, ForceMode.Impulse);
@@ -51,7 +51,7 @@ public class PlayerShoot : MonoBehaviour
                 ShootsFireBalls shootsFireballs;
                 if (tower.TryGetComponent<ShootsBullets>(out shootsBullets))
                 {
-                    shootsBullets.shootBullet(playerInputControl.currentLookPoint - tower.transform.position);
+                    shootsBullets.shootBullet(playerInputControl.currentLookPoint - tower.transform.position + Random.insideUnitSphere / 2);
                 }
                 else if (tower.TryGetComponent<ShootsFireBalls>(out shootsFireballs))
                 {
