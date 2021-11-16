@@ -2525,7 +2525,7 @@ MonoBehaviour:
   - tag: Bullet
     prefab: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332,
       type: 3}
-    size: 1000
+    size: 50
   - tag: FloatingDamageText
     prefab: {fileID: 6088574729931538350, guid: b96b5b4e223c0403784e8aba3914e6cb,
       type: 3}
@@ -6613,7 +6613,7 @@ MonoBehaviour:
   slowDuration: 5
   aoe_range: 2.5
   baseCooldown: 0.5
-  trailRendererColor: {r: 0, g: 0, b: 0, a: 1}
+  trailRendererColor: {r: 1, g: 1, b: 1, a: 1}
   upgradeEffect: {fileID: 0}
   specialTower: 0
   slowEffect: {fileID: 100000, guid: 77ec3c4e07a36814fb3169ecef41b50a, type: 3}
@@ -6668,6 +6668,9 @@ MonoBehaviour:
   - {fileID: 2000279016636778330, guid: e0598bc5bcb324c1ba3e2d895163c97f, type: 3}
   price: 0
   priceText: {fileID: 1113210396}
+  selectionDisplayEffect: {fileID: 100000, guid: 7b56cd9b663f23f429e131a54ec87db0,
+    type: 3}
+  selectionEnabled: 0
 --- !u!114 &1880758168
 MonoBehaviour:
   m_ObjectHideFlags: 0
