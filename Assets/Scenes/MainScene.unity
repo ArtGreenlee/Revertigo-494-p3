@@ -679,7 +679,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1674321092}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &130595841
 GameObject:
@@ -1653,8 +1653,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 913350422}
-  - {fileID: 839646221}
   - {fileID: 2003470300}
+  - {fileID: 839646221}
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1737,7 +1737,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1674321092}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &699973498
 GameObject:
@@ -2070,6 +2070,8 @@ MonoBehaviour:
   - {fileID: 928524172}
   - {fileID: 1023332817}
   checkPointVectors: []
+  debugSphere: {fileID: 3440220758374676105, guid: e8a1b5d91db662a47a20d7c159a5c48a,
+    type: 3}
   enemyMovement: {fileID: 0}
 --- !u!23 &763991228
 MeshRenderer:
@@ -2488,7 +2490,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 634957474}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &853922185
 GameObject:
@@ -2577,8 +2579,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 763991230}
-  - {fileID: 1023332820}
   - {fileID: 928524175}
+  - {fileID: 1023332820}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2638,6 +2640,8 @@ MonoBehaviour:
   - {fileID: 2003470297}
   - {fileID: 839646218}
   checkPointVectors: []
+  debugSphere: {fileID: 3440220758374676105, guid: e8a1b5d91db662a47a20d7c159a5c48a,
+    type: 3}
   enemyMovement: {fileID: 0}
 --- !u!23 &913350420
 MeshRenderer:
@@ -2781,7 +2785,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 881995681}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &937717175
 GameObject:
@@ -3233,7 +3237,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 881995681}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1065307803
 GameObject:
@@ -4513,6 +4517,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathfinders: []
+  debugSphere: {fileID: 3440220758374676105, guid: e8a1b5d91db662a47a20d7c159a5c48a,
+    type: 3}
 --- !u!114 &1411751688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5357,6 +5363,8 @@ MonoBehaviour:
   - {fileID: 87235697}
   - {fileID: 657322567}
   checkPointVectors: []
+  debugSphere: {fileID: 3440220758374676105, guid: e8a1b5d91db662a47a20d7c159a5c48a,
+    type: 3}
   enemyMovement: {fileID: 0}
 --- !u!23 &1539592336
 MeshRenderer:
@@ -5456,7 +5464,7 @@ MonoBehaviour:
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   numEnemiesPerRound: 1000
   enemyStartingHealth: 10
-  startDelay: 30
+  startDelay: 100
   startInterval: 5
   countdownText: {fileID: 365179705}
 --- !u!114 &1580393135
@@ -5477,6 +5485,8 @@ MonoBehaviour:
   - {fileID: 281059161}
   - {fileID: 1085238380}
   checkPointVectors: []
+  debugSphere: {fileID: 3440220758374676105, guid: e8a1b5d91db662a47a20d7c159a5c48a,
+    type: 3}
   enemyMovement: {fileID: 0}
 --- !u!23 &1580393136
 MeshRenderer:
@@ -5856,8 +5866,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1539592338}
-  - {fileID: 657322570}
   - {fileID: 87235700}
+  - {fileID: 657322570}
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7135,7 +7145,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 634957474}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2003670894
 GameObject:

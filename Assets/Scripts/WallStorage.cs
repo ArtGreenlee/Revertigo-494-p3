@@ -4,13 +4,14 @@ using UnityEngine;
 using System.Linq;
 public class WallStorage : MonoBehaviour
 {
-    private Dictionary<Vector3, GameObject> storage = new Dictionary<Vector3, GameObject>();
-    public Dictionary<GameObject, GameObject> wallAndTowers = new Dictionary<GameObject, GameObject>();
+    private Dictionary<Vector3, GameObject> storage;
+    public Dictionary<GameObject, GameObject> wallAndTowers;
     Dictionary<Vector3, int> duplicates = new Dictionary<Vector3, int>();
     public List<Pathfinder> pathfinders;
     private Stack<GameObject> wallStack;
     private TowerStorage towerStorage;
     //private Dictionary<GameObject, List<Vector3> > placementLocations;
+    public GameObject debugSphere;
     
 
     public HashSet<Vector3> forbiddenVectors;
@@ -25,6 +26,8 @@ public class WallStorage : MonoBehaviour
         {
             instance = this;
         }
+        storage = new Dictionary<Vector3, GameObject>();
+        wallAndTowers = new Dictionary<GameObject, GameObject>();
     }
 
     private void Update()
@@ -55,6 +58,7 @@ public class WallStorage : MonoBehaviour
 
     void Start()
     {
+        
         forbiddenVectors = new HashSet<Vector3>();
         //placementLocations = new Dictionary<GameObject, List<Vector3>>();
         towerStorage = TowerStorage.instance;
@@ -168,6 +172,7 @@ public class WallStorage : MonoBehaviour
                             placementLocations[wallIn] = new List<Vector3>();
                         }
                         placementLocations[wallIn].Add(curVec);*/
+                        //Instantiate(debugSphere, curVec, Quaternion.identity);
                         storage.Add(curVec, wallIn);
                     }
                     else if (storage.ContainsKey(curVec))
@@ -178,14 +183,14 @@ public class WallStorage : MonoBehaviour
                         }
                         else
                         {
-                            duplicates.Add(curVec, 2);
+                            duplicates.Add(curVec, 1);
                         }
                     }
                 }
             }
         }
 
-        for (float i = -1.5f; i < 2f; i += .5f)
+        /*for (float i = -1.5f; i < 2f; i += .5f)
         {
             for (float j = -1.5f; j < 2f; j += .5f)
             {
@@ -223,7 +228,7 @@ public class WallStorage : MonoBehaviour
 
                 }
             }
-        }
+        }*/
 
         detectPathCollision();
     }

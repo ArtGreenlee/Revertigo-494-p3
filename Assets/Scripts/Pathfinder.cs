@@ -39,6 +39,7 @@ public class Pathfinder : MonoBehaviour
     private WallStorage wallStorage;
     private GameObject collisionWall;
     private WallPlacer wallPlacer;
+    public GameObject debugSphere;
 
     private ObjectPooler objectPooler;
 
@@ -326,73 +327,77 @@ public class Pathfinder : MonoBehaviour
             activePathVectors.Remove(curPos.v);
             closedPath.Add(curPos.v);
 
+            if (curPos.v == endVec)
+            {
+
+                Vector3 traverseVec = curPos.v;
+                bool showPath = enemyMovement == null;
+                List<Vector3> tempPath = new List<Vector3>();
+                tempPath.Add(endVec);
+                if (showPath)
+                {
+                    GameObject visualizer = Instantiate(pathFindingVisualizerSphere, traverseVec, Quaternion.identity);
+                    visualizer.GetComponent<PathVisualizerEffects>().fadeIn();
+                    visualizers[pathIndex].Add(visualizer);
+                }
+                Vector3 previousVec = endVec;
+
+                while (traverseVec != startVec)
+                {
+                    pathVectors[pathIndex].Add(traverseVec);
+                    tempPath.Add(traverseVec);
+                    previousVec = traverseVec;
+                    traverseVec = curPos.parent.v;
+                    curPos = curPos.parent;
+
+                    /*if (showPath && walkableTiles(traverseVec).Count == 2 && (
+                        !wallStorage.forbiddenVectors.Contains(traverseVec) ||
+                        !wallStorage.forbiddenVectors.Contains(previousVec) ||
+                        !wallStorage.forbiddenVectors.Contains(curPos.parent.v)))
+                    {
+                        StartCoroutine(testForInvalidPath(startVec, previousVec, traverseVec, curPos.parent.v, pathIndex));
+                    }*/
+
+                    //only show visualizer if this is a main path
+                    if (showPath)
+                    {
+                        GameObject visualizer = Instantiate(pathFindingVisualizerSphere, traverseVec, Quaternion.identity);
+                        visualizer.GetComponent<PathVisualizerEffects>().fadeIn();
+                        visualizers[pathIndex].Add(visualizer);
+                    }
+
+                    if (wallStorage.isWall(traverseVec))
+                    {
+                        //wallStorage.removeWall(wallStorage.getWall(traverseVec));
+                        //rerun this coroutine
+
+                        removeSegmentFromDictionary(pathIndex);
+                        removeVisualizerSegment(pathIndex);
+                        /*while (Input.GetMouseButton(1))
+                        {
+                            yield return new WaitForEndOfFrame();
+                        }*/
+                        collisionWall = wallStorage.getWall(traverseVec);
+                        yield return StartCoroutine(findPathBetweenPointsLyft(startVec, endVec, pathIndex));
+                        yield break;
+                    }
+
+                    //
+                }
+                tempPath.Add(traverseVec);
+                tempPath.Reverse(); // O(n) bad bad
+                path[pathIndex] = tempPath;
+                finishedPaths[pathIndex] = true;
+                numCoroutinesRunning--;
+                yield break;
+            }
+
             foreach (Vector3 newVec in walkableTiles(curPos.v))
             {
-                //Instantiate(pathFindingVisualizerSphere, newVec, Quaternion.identity).GetComponent<PathVisualizerEffects>().fadeIn();
-                //yield return new WaitForSeconds(.1f);
-                
-                if (newVec == endVec)
-                {
-                    Vector3 traverseVec = endVec;
-                    bool showPath = enemyMovement == null;
-                    List<Vector3> tempPath = new List<Vector3>();
-                    tempPath.Add(traverseVec);
-                    Vector3 previousVec;
-
-                    while (traverseVec != startVec)
-                    {
-                        pathVectors[pathIndex].Add(traverseVec);
-                        tempPath.Add(traverseVec);
-                        previousVec = traverseVec;
-                        traverseVec = curPos.parent.v;
-                        curPos = curPos.parent;
-
-                        if (showPath && walkableTiles(traverseVec).Count == 2 && (
-                            !wallStorage.forbiddenVectors.Contains(traverseVec) ||
-                            !wallStorage.forbiddenVectors.Contains(previousVec) ||
-                            !wallStorage.forbiddenVectors.Contains(curPos.parent.v)))
-                        {
-                            StartCoroutine(testForInvalidPath(startVec, previousVec, traverseVec, curPos.parent.v, pathIndex));
-                        }
-
-                        //only show visualizer if this is a main path
-                        if (showPath)
-                        {
-                            GameObject visualizer = Instantiate(pathFindingVisualizerSphere, traverseVec, Quaternion.identity);
-                            visualizer.GetComponent<PathVisualizerEffects>().fadeIn();
-                            visualizers[pathIndex].Add(visualizer);
-                        }
-
-                        if (wallStorage.isWall(traverseVec))
-                        {
-                            //wallStorage.removeWall(wallStorage.getWall(traverseVec));
-                            //rerun this coroutine
-                            
-                            removeSegmentFromDictionary(pathIndex);
-                            removeVisualizerSegment(pathIndex);
-                            /*while (Input.GetMouseButton(1))
-                            {
-                                yield return new WaitForEndOfFrame();
-                            }*/
-                            collisionWall = wallStorage.getWall(traverseVec);
-                            StartCoroutine(findPathBetweenPointsLyft(startVec, endVec, pathIndex));
-                            yield break;
-                        }
-
-                        //
-                    }
-                    tempPath.Add(traverseVec);
-                    tempPath.Reverse(); // O(n) bad bad
-                    path[pathIndex] = tempPath;
-                    finishedPaths[pathIndex] = true;
-                    numCoroutinesRunning--;
-                    yield break;
-                }
-
 
                 if (!closedPath.Contains(newVec))
                 {
-                    
+
                     pos newPos = new pos(newVec);
                     newPos.parent = curPos;
                     //this distance calculation could be optimized
@@ -404,14 +409,18 @@ public class Pathfinder : MonoBehaviour
                     newPos.FCost = Fcost;
                     newPos.parent = curPos;
 
-                    if (!activePathVectors.ContainsKey(newVec))
+                    if (!activePathVectors.ContainsKey(newVec) || activePathVectors[newVec].FCost > newPos.FCost)
                     {
-                        activePathVectors.Add(newPos.v, newPos);
+                        if (!activePathVectors.ContainsKey(newVec))
+                        {
+                            activePathVectors.Add(newPos.v, newPos);
+                        }
                         while (activePath.ContainsKey(newPos.FCost))
                         {
-                            newPos.FCost -= .01f;
+                            newPos.FCost += .01f;
                         }
                         activePath.Add(newPos.FCost, newPos);
+
                         if (speedSwitch == speedSwitchCounter)
                         {
                             speedSwitchCounter++;
@@ -422,16 +431,23 @@ public class Pathfinder : MonoBehaviour
                         {
                             speedSwitch++;
                         }
-                        
+
                     }
-                    else if (activePathVectors[newVec].FCost > newPos.FCost)
+                    /*else if ()
                     {
-                        activePathVectors[newVec].FCost = newPos.FCost;
+                        pos replacePos = new pos(newVec);
+                        replacePos.FCost = newPos.FCost;
+                        replacePos.GCost = newPos.GCost;
+                        replacePos.parent = curPos;
+
+
+                        /*activePathVectors[newVec].FCost = newPos.FCost;
                         activePathVectors[newVec].parent = curPos;
                         foreach (pos tempPos in activePath.Values)
                         {
                             if (tempPos.v == newVec)
                             {
+                                Debug.Log("special case");
                                 pos replacePos = new pos(newVec);
                                 replacePos.FCost = newPos.FCost;
                                 replacePos.GCost = newPos.GCost;
@@ -440,36 +456,38 @@ public class Pathfinder : MonoBehaviour
                                 /*activePath.Remove(tempPos.FCost);
                                 activePath.Add(newPos.FCost, replacePos);
                                 //activePath[tempPos.FCost].FCost = newPos.FCost;
-                                //activePath[tempPos.FCost].parent = curPos;*/
-                                break;
+                                //activePath[tempPos.FCost].parent = curPos;
+                        break;
                             }
                         }
-                    }
+                    }*/
                 }
             }
         }
-        //path is not found
-        if (enemyMovement == null)
+        if (activePath.Count == 0)
         {
-            Debug.Log("path not found");
-            /*if (collisionWall != null)
+            //path is not found
+            if (enemyMovement == null)
             {
-                wallStorage.removeWall(collisionWall);
+                Debug.Log("path not found");
+                /*if (collisionWall != null)
+                {
+                    wallStorage.removeWall(collisionWall);
+                }
+                else
+                {
+                    wallStorage.removeMostRecentWall();
+                }*/
+                wallStorage.removeMostRecentWall();
+                collisionWall = null;
             }
             else
             {
-                wallStorage.removeMostRecentWall();
-            }*/
-            wallStorage.removeMostRecentWall();
-            collisionWall = null;
+                yield return new WaitForSeconds(.5f);
+            }
+            //wallPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
+            yield return StartCoroutine(findPathBetweenPointsLyft(startVec, endVec, pathIndex));
         }
-        else
-        {
-            yield return new WaitForSeconds(.5f);
-        }
-
-        //wallPlacer.shadowTower.transform.position = new Vector3(25, 0, 0);
-        StartCoroutine(findPathBetweenPointsLyft(startVec, endVec, pathIndex));
         yield break;
     }
 
@@ -572,7 +590,7 @@ public class Pathfinder : MonoBehaviour
 
     private void removeSegmentFromDictionary(int index)
     {
-        pathVectors[index].Clear();
+        pathVectors[index] = new HashSet<Vector3>();
     }
 
     private void removeVisualizerSegment(int index)
@@ -584,7 +602,7 @@ public class Pathfinder : MonoBehaviour
                 Instantiate(pathFindingVisualizerSphere, visualizer.transform.position, Quaternion.identity).GetComponent<PathVisualizerEffects>().fadeOut();
                 Destroy(visualizer);
             }
-            visualizers[index].Clear();
+            visualizers[index] = new HashSet<GameObject>();
         }
     }
 
@@ -651,7 +669,7 @@ public class Pathfinder : MonoBehaviour
                 }
             }
         }
-        /*
+        
         for (float x = -.5f; x < 1; x += .5f)
         {
             for (float y = -.5f; y < 1; y += .5f)
@@ -659,21 +677,24 @@ public class Pathfinder : MonoBehaviour
                 for (float z = -.5f; z < 1; z += .5f)
                 {
                     Vector3 checkVec = new Vector3(vec.x + x, vec.y + y, vec.z + z);
+
                     if (UtilityFunctions.validEnemyVector(checkVec) && !wallStorage.isWall(checkVec))
                     {
+                        Instantiate(debugSphere, checkVec, Quaternion.identity);
                         walkable.Add(checkVec);
                     }
-                    if (y == 0)
 
                 }
             }
-        }*/
+        }
+        */
 
         foreach (Vector3 sideVec in UtilityFunctions.sideVectors)
         {
             Vector3 checkVec = vec + (sideVec / 2);
-            if (!wallStorage.isWall(checkVec) && UtilityFunctions.validEnemyVector(checkVec))
+            if (UtilityFunctions.validEnemyVector(checkVec) && !wallStorage.isWall(checkVec))
             {
+                
                 walkable.Add(checkVec);
             }
         }

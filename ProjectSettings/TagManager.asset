@@ -13,6 +13,7 @@ TagManager:
   - FxTemporaire
   - Missile
   - Playfield
+  - DebugSphere
   layers:
   - Default
   - TransparentFX

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3440220758374676111}
   m_Layer: 0
   m_Name: debugSphere
-  m_TagString: Visualizer
+  m_TagString: DebugSphere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3440220758374676105}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.6113605, y: 2.9457538, z: 15.999999}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0

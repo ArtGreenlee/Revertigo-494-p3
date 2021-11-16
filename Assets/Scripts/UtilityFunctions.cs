@@ -15,6 +15,16 @@ public class UtilityFunctions : MonoBehaviour
         Vector3.back
     };
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            foreach (GameObject temp in GameObject.FindGameObjectsWithTag("DebugSphere"))
+            {
+                Destroy(temp);
+            }
+        }
+    }
     
 
     public static Quaternion getRotationTowardSide(Vector3 vecIn)
@@ -106,6 +116,7 @@ public class UtilityFunctions : MonoBehaviour
                 returnSide = sideVec;
             }
         }
+        
         return returnSide;
     }
     public static Vector3 snapVector(Vector3 vecInTemp)
@@ -188,10 +199,6 @@ public class UtilityFunctions : MonoBehaviour
             {
                 return false;
             }
-        }
-        else
-        {
-            return false;
         }
         return true;
     }
