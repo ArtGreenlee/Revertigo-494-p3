@@ -11,6 +11,7 @@ public class PlayerInputControl : MonoBehaviour
     public Vector3 currentLookPoint;
     public float movementBuffer;
     private TowerDisplay towerDisplay;
+    private int layerMask;
 
     public static PlayerInputControl instance;
     // public bool enabled;
@@ -21,6 +22,7 @@ public class PlayerInputControl : MonoBehaviour
     {
         cameraTransform = Camera.main.transform;
         rb = GetComponent<Rigidbody>();
+        layerMask = ~LayerMask.GetMask("Tower");
     }
 
     private void Awake()
@@ -37,7 +39,7 @@ public class PlayerInputControl : MonoBehaviour
         RaycastHit hit;
         Vector2 mousePosition = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 1000, layerMask))
         {
             currentLookPoint = hit.point;
             rb.MoveRotation(Quaternion.Slerp(transform.rotation,

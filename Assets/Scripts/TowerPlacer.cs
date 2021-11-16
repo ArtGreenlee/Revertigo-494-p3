@@ -39,7 +39,7 @@ public class TowerPlacer : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
         Vector3 curPoint;
-        if (Physics.Raycast(ray, out hit))
+        if (towerInventory.selectionEnabled && Physics.Raycast(ray, out hit))
         {
             curPoint = UtilityFunctions.snapVector(hit.point);
             if (wallStorage.isWall(curPoint))
@@ -51,6 +51,7 @@ public class TowerPlacer : MonoBehaviour
                     shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(curPoint);
                     if (Input.GetKeyDown(KeyCode.F))
                     {
+                        towerInventory.selectionEnabled = false;
                         GameObject tempTower = towerInventory.playerInventory[0];
                         wallStorage.attachTowerToWall(tempTower, tempWall);
                         AudioSource.PlayClipAtPoint(placeTowerSFX, Camera.main.transform.position);
@@ -109,7 +110,7 @@ public class TowerPlacer : MonoBehaviour
         //StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(tower.transform, 1, 1));
         while (Vector3.Distance(tower.transform.position, end) > .05f)
         {
-            tower.transform.position = Vector3.Lerp(tower.transform.position, end, 3 * Time.deltaTime);
+            tower.transform.position = Vector3.Slerp(tower.transform.position, end, 3 * Time.deltaTime);
             if (attachWall == null || !wallStorage.wallHasTower(attachWall))
             {
                 //UtilityFunctions.changeScaleOfTransform(tower.transform, .5f);

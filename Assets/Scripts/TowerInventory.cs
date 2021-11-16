@@ -22,6 +22,14 @@ public class TowerInventory : MonoBehaviour
     public float price;
     public TextMeshProUGUI priceText;
 
+    public GameObject selectionDisplayEffect;
+    private GameObject selectionDisplayEffectInstance;
+    private TowerDisplay towerDisplay;
+    private Transform cameraTransform;
+    private TowerPlacer towerPlacer;
+
+    public bool selectionEnabled;
+
     private void Awake()
     {
         if (instance == null)
@@ -32,32 +40,38 @@ public class TowerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        towerPlacer = TowerPlacer.instance;
+        cameraTransform = Camera.main.transform;
+        towerDisplay = TowerDisplay.instance;
         priceText.text = "Tower Cost " + price.ToString();
         goldStorage = GoldStorage.instance;
         playerInventory = new List<GameObject>();
+        selectionEnabled = false;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && (playerInventory.Count < maxGemInventory && goldStorage.gold >= price) || debugMode)
+        if (Input.GetKeyDown(KeyCode.G) && (playerInventory.Count == 0 && goldStorage.gold >= price) || debugMode)
         {
             goldStorage.changeGoldAmount(-price);
             price += 5;
             priceText.text = "Tower Cost " + price.ToString();
-            GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
-            newTower.GetComponent<TowerStats>().attachedToPlayer = true;
-            playerInventory.Add(newTower);
-            AudioSource.PlayClipAtPoint(getTowerSFX, Camera.main.transform.position);
-            newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;
+            StartCoroutine(buyRoundOfGems());
+            selectionEnabled = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.F) && selectionEnabled)
+        {
+            Destroy(selectionDisplayEffectInstance);
+        } 
+
+        if (Input.GetKeyDown(KeyCode.Q) && selectionEnabled)
         {
             GameObject rotateTemp = playerInventory[playerInventory.Count - 1];
             playerInventory.RemoveAt(playerInventory.Count - 1);
             playerInventory.Insert(0, rotateTemp);
         }
-        else if (Input.GetKeyDown(KeyCode.E))
+        else if (Input.GetKeyDown(KeyCode.E) && selectionEnabled)
         {
             GameObject rotateTemp = playerInventory[0];
             playerInventory.RemoveAt(0);
@@ -90,8 +104,8 @@ public class TowerInventory : MonoBehaviour
             position.z += zDiffHorizontal + zDiffVertical;
             position.x += xDiff;
             position.y += yDiff;
-            
-            
+
+
             //position.z += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
 
             /*position.x += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad);
@@ -105,9 +119,38 @@ public class TowerInventory : MonoBehaviour
             */
 
             //position.z += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
-            playerInventory[i].transform.position = Vector3.Slerp(playerInventory[i].transform.position, position, towerSnapSpeed * Time.deltaTime);
+            if (Input.GetKey(KeyCode.Space))
+            {
+                playerInventory[i].transform.position = Vector3.Slerp(playerInventory[i].transform.position, position, towerSnapSpeed * Time.deltaTime * .1f);
+            }
+            else
+            {
+                playerInventory[i].transform.position = Vector3.Lerp(playerInventory[i].transform.position, position, towerSnapSpeed * Time.deltaTime);
+            }
+            
             //PlayerInventory[i].transform.position = position;
         }
+
+        if (playerInventory.Count > 0 && selectionDisplayEffectInstance != null && selectionEnabled)
+        {
+            selectionDisplayEffectInstance.transform.position = playerInventory[0].transform.position;
+            selectionDisplayEffectInstance.transform.rotation = Quaternion.LookRotation(playerInventory[0].transform.position - cameraTransform.position);
+        }
+    }
+
+    private IEnumerator buyRoundOfGems()
+    {
+
+        for (int i = 0; i < 6; i++)
+        {
+            GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
+            newTower.GetComponent<TowerStats>().attachedToPlayer = true;
+            playerInventory.Add(newTower);
+            newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;
+            AudioSource.PlayClipAtPoint(getTowerSFX, Camera.main.transform.position);
+            yield return new WaitForSeconds(.3f);
+        }
+        selectionDisplayEffectInstance = Instantiate(selectionDisplayEffect, playerInventory[0].transform.position, Quaternion.identity);
     }
 
     private GameObject getRandomTower()

@@ -26,7 +26,7 @@ public class RangeIndicator : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             if (Physics.Raycast(ray, out hit) &&
-            hit.collider.gameObject == gameObject && !rangeDisplayed && towerStats.range != 0)
+            hit.collider.gameObject == gameObject && !rangeDisplayed && towerStats.range != 0 && !towerStats.attachedToPlayer)
             {
                // Debug.Log("range indicator");
                 rangeDisplayed = true;

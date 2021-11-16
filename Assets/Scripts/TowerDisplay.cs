@@ -56,35 +56,19 @@ public class TowerDisplay : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 TowerStats tempStats;
-                if (hit.collider.gameObject.TryGetComponent<TowerStats>(out tempStats) && !active) 
+                if (hit.collider.gameObject.TryGetComponent<TowerStats>(out tempStats)) 
                 {
-                    active = true;
-                    StopAllCoroutines();
-                    StartCoroutine(enableDisplay());
-                    towerNameText.text = getTowerName(tempStats);
+                    setValues(tempStats);
+                    if (!active)
+                    {
+                        enableDisplay();
+                    }
                     //towerNameText.color = tempStats.trailRendererColor;
-                    startPosition = player.transform.position;
-                    damageMinText.text = "Damage min " + tempStats.damageMin.ToString();
-                    damageMaxText.text = "Damage max " + tempStats.damageMax.ToString();
-                    rateOfFireText.text = "Cooldown " + tempStats.getCooldown().ToString();
-                    killsText.text = "Kills " + tempStats.kills;
-                    if (!tempStats.specialTower)
-                    {
-                        levelText.text = "Level " + tempStats.level;
-                    }
-                    else
-                    {
-                        levelText.text = "";
-                    }
                     
-
-                    descriptionText.text = getDescription(tempStats);
                 }
-                else if (active)
+                else if (active && !hit.collider.gameObject.CompareTag("Tower"))
                 {
-                    active = false;
-                    StopAllCoroutines();
-                    StartCoroutine(disableDisplay());
+                    disableDisplay();
                 }
             }
         }
@@ -92,17 +76,46 @@ public class TowerDisplay : MonoBehaviour
         if (startPosition != Vector3.zero && 
             Vector3.Distance(startPosition, player.transform.position) > 4 && active)
         {
-            active = false;
-            StopAllCoroutines();
-            StartCoroutine(disableDisplay());
+            
         }
         
     }
 
-    public IEnumerator disableDisplay()
+    public void setValues(TowerStats towerStats)
+    {
+        towerNameText.text = getTowerName(towerStats);
+        damageMinText.text = "Damage min " + towerStats.damageMin.ToString();
+        damageMaxText.text = "Damage max " + towerStats.damageMax.ToString();
+        rateOfFireText.text = "Cooldown " + towerStats.getCooldown().ToString();
+        killsText.text = "Kills " + towerStats.kills;
+        if (!towerStats.specialTower)
+        {
+            levelText.text = "Level " + towerStats.level;
+        }
+        else
+        {
+            levelText.text = "";
+        }
+        descriptionText.text = getDescription(towerStats);
+    }
+
+    public void enableDisplay()
+    {
+        active = true;
+        StopAllCoroutines();
+        StartCoroutine(enableDisplayRoutine());
+    }
+    
+    public void disableDisplay()
+    {
+        active = false;
+        StopAllCoroutines();
+        StartCoroutine(disableDisplayRoutine());
+    }
+
+    private IEnumerator disableDisplayRoutine()
     {
         
-        Debug.Log("shrink display");
         transform.localScale = startScale;
         while (transform.localScale.x > 0.0001f)
         {
@@ -111,16 +124,18 @@ public class TowerDisplay : MonoBehaviour
         }
     }
 
-    public IEnumerator enableDisplay()
+
+
+    private IEnumerator enableDisplayRoutine()
     {
         
-        Debug.Log("enlarge display");
         transform.localScale = Vector3.zero;
         while (transform.localScale.x < startScale.x)
         {
             transform.localScale = Vector3.Slerp(transform.localScale, startScale, Time.deltaTime * 10);
             yield return new WaitForEndOfFrame();
         }
+        
     }
 
     private string getDescription(TowerStats towerStats)
