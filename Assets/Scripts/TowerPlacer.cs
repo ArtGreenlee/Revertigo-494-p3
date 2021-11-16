@@ -14,6 +14,7 @@ public class TowerPlacer : MonoBehaviour
 
     public static TowerPlacer instance;
 
+    int podiumLayerMask;
     private void Awake()
     {
         if (instance == null)
@@ -29,6 +30,7 @@ public class TowerPlacer : MonoBehaviour
         towerInventory = TowerInventory.instance;
         shadowTower = Instantiate(shadowTower, transform.position, Quaternion.identity);
         shadowTower.transform.position = new Vector3(25, 0, 0);
+        podiumLayerMask = ~LayerMask.GetMask("Podium");
     }
 
     // Update is called once per frame
@@ -38,41 +40,37 @@ public class TowerPlacer : MonoBehaviour
         Vector2 mousePosition = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
-        Vector3 curPoint;
         if (towerInventory.selectionEnabled && Physics.Raycast(ray, out hit))
         {
-            curPoint = UtilityFunctions.snapVector(hit.point);
-            if (wallStorage.isWall(curPoint))
+            if (hit.collider.gameObject.CompareTag("Podium"))
             {
-                GameObject tempWall = wallStorage.getWall(curPoint);
-                if (!wallStorage.wallHasTower(tempWall) && validTowerPlacement(curPoint) && towerInventory.playerInventory.Count > 0)
+                GameObject podium = hit.collider.gameObject;
+                if (!wallStorage.podiumHasTower(podium))
                 {
-                    shadowTower.transform.position = tempWall.transform.rotation * Vector3.forward * 1.5f + tempWall.transform.position;
-                    shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(curPoint);
+                    shadowTower.transform.position = podium.transform.rotation * Vector3.forward * 1.5f + podium.transform.position;
+                    shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(podium.transform.position);
                     if (Input.GetKeyDown(KeyCode.F))
                     {
                         towerInventory.selectionEnabled = false;
                         GameObject tempTower = towerInventory.playerInventory[0];
-                        wallStorage.attachTowerToWall(tempTower, tempWall);
+                        wallStorage.attachTowerToPodium(tempTower, podium);
                         AudioSource.PlayClipAtPoint(placeTowerSFX, Camera.main.transform.position);
-                        
-                        StartCoroutine(placeTowerOnBoard(tempTower, tempTower.transform.position, shadowTower.transform.position, tempWall));
+
+                        StartCoroutine(placeTowerOnPodium(tempTower, tempTower.transform.position, shadowTower.transform.position, podium));
                         towerInventory.playerInventory.RemoveAt(0);
                         shadowTower.transform.position = new Vector3(25, 0, 0);
                     }
-
                 }
-                else if (wallStorage.wallHasTower(tempWall) && Input.GetKeyDown(KeyCode.T))
+                else
                 {
-
-                    wallStorage.detatchTowerAndReturn(tempWall);
-                    AudioSource.PlayClipAtPoint(returnTowerSFX, Camera.main.transform.position);
+                    shadowTower.transform.position = new Vector3(25, 0, 0);
                 }
             }
             else
             {
                 shadowTower.transform.position = new Vector3(25, 0, 0);
             }
+            
         }
         else
         {
@@ -103,7 +101,7 @@ public class TowerPlacer : MonoBehaviour
         return true;
     }
 
-    private IEnumerator placeTowerOnBoard(GameObject tower, Vector3 start, Vector3 end, GameObject attachWall)
+    private IEnumerator placeTowerOnPodium(GameObject tower, Vector3 start, Vector3 end, GameObject attachPodium)
     {
 
 
@@ -111,7 +109,7 @@ public class TowerPlacer : MonoBehaviour
         while (Vector3.Distance(tower.transform.position, end) > .05f)
         {
             tower.transform.position = Vector3.Slerp(tower.transform.position, end, 3 * Time.deltaTime);
-            if (attachWall == null || !wallStorage.wallHasTower(attachWall))
+            if (attachPodium == null)
             {
                 //UtilityFunctions.changeScaleOfTransform(tower.transform, .5f);
                 //StopAllCoroutines();
@@ -120,7 +118,7 @@ public class TowerPlacer : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
         }
-        if (attachWall == null)
+        if (attachPodium == null)
         {
             //UtilityFunctions.changeScaleOfTransform(tower.transform, .5f);
             StopAllCoroutines();

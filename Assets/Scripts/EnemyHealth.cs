@@ -63,7 +63,7 @@ public class EnemyHealth : MonoBehaviour
         }*/
     }
 
-    public void takeDamage(float damage, bool flashingDamage)
+    public void takeDamage(float damage, bool flashingDamage, bool isDoT)
     {
         if (flashingDamage)
         {
@@ -76,8 +76,16 @@ public class EnemyHealth : MonoBehaviour
             Vector3 textPos = Vector3.Lerp(transform.position, cameraTransform.position, .05f) + Random.insideUnitSphere;
             FloatingDamageText damageText = objectPooler.getObjectFromPool("FloatingDamageText", textPos, Quaternion.identity).GetComponent<FloatingDamageText>();
             damageText.setDamage(damage);
-            float redColorRatio = (maxHealth - damage) / (maxHealth * 1.5f);
-            damageText.color = new Color(1, redColorRatio, redColorRatio);
+            if (isDoT)
+            {
+                damageText.color = Color.green;
+            }
+            else
+            {
+                float redColorRatio = (maxHealth - damage) / (maxHealth * 1.5f);
+                damageText.color = new Color(1, redColorRatio, redColorRatio);
+                damageText.color = new Color(1, redColorRatio, redColorRatio);
+            }
         }
         if (currentHealth <= 0)
         {
@@ -111,7 +119,7 @@ public class EnemyHealth : MonoBehaviour
         for (float i = 0; i < duration; i += .5f)
         {
             Instantiate(DoTEffect, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
-            takeDamage(DPS / 2, true);
+            takeDamage(DPS / 2, true, true);
             yield return new WaitForSeconds(.5f);
         }
         currentDPS = 0;

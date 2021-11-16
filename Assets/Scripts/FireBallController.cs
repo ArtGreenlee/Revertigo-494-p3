@@ -58,7 +58,7 @@ public class FireBallController : MonoBehaviour
                 Debug.Log("fireball kill count");   
                 towerStats.increaseKills();
             }
-            enemy.GetComponent<EnemyHealth>().takeDamage(damage, true);
+            enemy.GetComponent<EnemyHealth>().takeDamage(damage, true, false);
         }
         Destroy(gameObject);
     }

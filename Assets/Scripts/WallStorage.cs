@@ -5,14 +5,15 @@ using System.Linq;
 public class WallStorage : MonoBehaviour
 {
     private Dictionary<Vector3, GameObject> storage;
-    public Dictionary<GameObject, GameObject> wallAndTowers;
     Dictionary<Vector3, int> duplicates = new Dictionary<Vector3, int>();
     public List<Pathfinder> pathfinders;
     private Stack<GameObject> wallStack;
     private TowerStorage towerStorage;
-    //private Dictionary<GameObject, List<Vector3> > placementLocations;
     public GameObject debugSphere;
-    
+    private Dictionary<Vector3, GameObject> placements;
+    private Dictionary<GameObject, GameObject> podiumAndTower; //PODIUM AND THEN TOWER
+
+    public GameObject podium;
 
     public HashSet<Vector3> forbiddenVectors;
 
@@ -20,6 +21,17 @@ public class WallStorage : MonoBehaviour
 
     public static WallStorage instance;
 
+
+    void Start()
+    {
+        podiumAndTower = new Dictionary<GameObject, GameObject>();
+        placements = new Dictionary<Vector3, GameObject>();
+        forbiddenVectors = new HashSet<Vector3>();
+        //placementLocations = new Dictionary<GameObject, List<Vector3>>();
+        towerStorage = TowerStorage.instance;
+        towerInventory = TowerInventory.instance;
+        wallStack = new Stack<GameObject>();
+    }
     private void Awake()
     {
         if (instance == null)
@@ -27,7 +39,7 @@ public class WallStorage : MonoBehaviour
             instance = this;
         }
         storage = new Dictionary<Vector3, GameObject>();
-        wallAndTowers = new Dictionary<GameObject, GameObject>();
+        //wallAndTowers = new Dictionary<GameObject, GameObject>();
     }
 
     private void Update()
@@ -56,15 +68,6 @@ public class WallStorage : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        
-        forbiddenVectors = new HashSet<Vector3>();
-        //placementLocations = new Dictionary<GameObject, List<Vector3>>();
-        towerStorage = TowerStorage.instance;
-        towerInventory = TowerInventory.instance;
-        wallStack = new Stack<GameObject>();
-    }
 
     public bool isWall(Vector3 checkVec)
     {
@@ -76,9 +79,9 @@ public class WallStorage : MonoBehaviour
         return storage[wallVec];
     }
 
-    public void attachTowerToWall(GameObject towerIn, GameObject wallIn)
+    public void attachTowerToPodium(GameObject towerIn, GameObject podium)
     {
-        wallAndTowers.Add(wallIn, towerIn);
+        podiumAndTower.Add(podium, towerIn);
     }
 
     public void detectPathCollision()
@@ -103,11 +106,6 @@ public class WallStorage : MonoBehaviour
         }
     }
 
-    private void checkAndCreateTowerPodiums(Vector3 checkVec)
-    {
-
-    }
-
     public bool validWallPosition(Vector3 checkVec)
     {
         if (isWall(checkVec))
@@ -129,7 +127,7 @@ public class WallStorage : MonoBehaviour
                         {
                             return false;
                         }
-                    } 
+                    }
                     else if (side == Vector3.left || side == Vector3.right)
                     {
                         if (Mathf.Abs(curVec.z) > 17 || Mathf.Abs(curVec.y) > 17)
@@ -151,9 +149,106 @@ public class WallStorage : MonoBehaviour
         return !forbiddenVectors.Contains(checkVec);
     }
 
+    public bool allPathsCompleted()
+    {
+        foreach (Pathfinder pathfinder in pathfinders)
+        {
+            if (pathfinder.finishedPaths.Contains(false))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private IEnumerator checkAndPlacePodium(Vector3 addVec)
+    {
+        while (!allPathsCompleted())
+        {
+            yield return new WaitForSeconds(2);
+        }
+        Vector3 placePosition = Vector3.zero;
+        for (float i = -1; i < 1f; i++)
+        {
+            for (float j = -1; j < 1f; j++)
+            {
+                for (float k = -1; k < 1f; k++)
+                {
+                    bool leftRightPlane = true;
+                    List<Vector3> leftRightList = new List<Vector3>();
+                    bool forwardBackPlane = true;
+                    List<Vector3> forwardBackList = new List<Vector3>();
+                    bool upDownPlane = true;
+                    List<Vector3> upDownList = new List<Vector3>();
+                    for (int y = 0; y < 2; y++)
+                    {
+                        for (int x = 0; x < 2; x++)
+                        {
+                            Vector3 leftRight = new Vector3(addVec.x + i + x, addVec.y + j + y, addVec.z + k);
+                            leftRightList.Add(leftRight);
+                            Vector3 forwardBack = new Vector3(addVec.x + i, addVec.y + j + y, addVec.z + k + x);
+                            forwardBackList.Add(forwardBack);
+                            Vector3 upDown = new Vector3(addVec.x + i + y, addVec.y + j, addVec.z + k + x);
+                            upDownList.Add(upDown);
+                            if (!placements.ContainsKey(leftRight) || !UtilityFunctions.validEnemyVector(leftRight))
+                            {
+                                leftRightPlane = false;
+                            }
+                            if (!placements.ContainsKey(forwardBack) || !UtilityFunctions.validEnemyVector(forwardBack))
+                            {
+                                forwardBackPlane = false;
+                            }
+                            if (!placements.ContainsKey(upDown) || !UtilityFunctions.validEnemyVector(upDown))
+                            {
+                                upDownPlane = false;
+                            }
+                        }
+                    }
+                    if (leftRightPlane)
+                    {
+                        placePosition = new Vector3(addVec.x + i + .5f, addVec.y + j + .5f, addVec.z);
+                        foreach (Vector3 removeVec in leftRightList)
+                        {
+                            placements.Remove(removeVec);
+                        }
+                    }
+                    if (forwardBackPlane)
+                    {
+                        placePosition = new Vector3(addVec.x + i, addVec.y + j + .5f, addVec.z + .5f);
+                        foreach (Vector3 removeVec in forwardBackList)
+                        {
+                            placements.Remove(removeVec);
+                        }
+                    }
+                    if (upDownPlane)
+                    {
+                        placePosition = new Vector3(addVec.x + i + .5f, addVec.y + j, addVec.z + .5f);
+                        foreach (Vector3 removeVec in upDownList)
+                        {
+                            placements.Remove(removeVec);
+                        }
+                    }
+                }
+            }
+        }
+        if (placePosition != Vector3.zero)
+        {
+            GameObject tempPodium = Instantiate(podium, placePosition, UtilityFunctions.getRotationawayFromSide(placePosition));
+            float changeTransformScale = tempPodium.transform.localScale.x;
+            tempPodium.transform.localScale = Vector3.zero;
+            yield return StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(tempPodium.transform, changeTransformScale, 5));
+        }
+        
+    }
+
     //add vec is the center of the wall
     public void addWall(Vector3 addVec, GameObject wallIn)
     {
+        if (!placements.ContainsKey(addVec))
+        {
+            placements.Add(addVec, wallIn);
+        }
+       
         wallStack.Push(wallIn);
         Vector3 addSide = UtilityFunctions.getClosestSide(addVec);
         for (float i = -.5f; i < 1f; i += .5f)
@@ -190,7 +285,11 @@ public class WallStorage : MonoBehaviour
             }
         }
 
-        /*for (float i = -1.5f; i < 2f; i += .5f)
+        StartCoroutine(checkAndPlacePodium(addVec));
+
+        
+
+        for (float i = -1.5f; i < 2f; i += .5f)
         {
             for (float j = -1.5f; j < 2f; j += .5f)
             {
@@ -206,7 +305,7 @@ public class WallStorage : MonoBehaviour
                                 for (int x = 0; x < pathfinder.path.Count; x++)
                                 {
                                     int vecIndex = pathfinder.path[x].IndexOf(testVec);
-                                    if (vecIndex != -1)
+                                    if (vecIndex != -1 && vecIndex != pathfinder.path[x].Count - 1 && vecIndex != 0)
                                     {
                                         if (!forbiddenVectors.Contains(pathfinder.path[x][vecIndex + 1]) ||
                                             !forbiddenVectors.Contains(pathfinder.path[x][vecIndex]) ||
@@ -228,14 +327,14 @@ public class WallStorage : MonoBehaviour
 
                 }
             }
-        }*/
+        }
 
         detectPathCollision();
     }
 
     public void removeWall(GameObject wallIn)
     {
-
+        placements.Remove(wallIn.transform.position);
         /*foreach (Vector3 removeVec in placementLocations[wallIn])
         {
             GameObject removeWall = storage[removeVec];
@@ -260,6 +359,7 @@ public class WallStorage : MonoBehaviour
         {
             foreach (KeyValuePair<Vector3, GameObject> wallVecPair in storage.Where(kvp => kvp.Value == wallIn).ToList())
             {
+                
                 /*if (duplicates.ContainsKey(wallVecPair.Key))
                 {
                     duplicates[wallVecPair.Key]--;
@@ -324,7 +424,7 @@ public class WallStorage : MonoBehaviour
 
     public void detatchTowerAndReturn(GameObject wallIn)
     {
-        GameObject tempTower = wallAndTowers[wallIn];
+        /*GameObject tempTower = wallAndTowers[wallIn];
         towerInventory.playerInventory.Add(tempTower);
         tempTower.GetComponent<TowerStats>().attachedToPlayer = true;
         wallAndTowers.Remove(wallIn);
@@ -333,11 +433,16 @@ public class WallStorage : MonoBehaviour
         if (tempTower.TryGetComponent<ShootsBullets>(out recoilSnapPositionTemp))
         {
             recoilSnapPositionTemp.snapPosition = Vector3.zero;
-        }
+        }*/
     }
 
-    public bool wallHasTower(GameObject wall)
+    public bool podiumHasTower(GameObject podium)
+    {
+        return podiumAndTower.ContainsKey(podium);
+    }
+
+    /*public bool wallHasTower(GameObject wall)
     {
         return wallAndTowers.ContainsKey(wall);
-    }
+    }*/
 }

@@ -51,8 +51,17 @@ public class TowerInventory : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && (playerInventory.Count == 0 && goldStorage.gold >= price) || debugMode)
+        if ((Input.GetKeyDown(KeyCode.G) && (goldStorage.gold >= price && !selectionEnabled)) || debugMode)
         {
+            foreach (GameObject tower in playerInventory)
+            {
+                Destroy(tower);
+            }
+            if (selectionDisplayEffectInstance != null)
+            {
+                Destroy(selectionDisplayEffectInstance);
+            }
+            playerInventory.Clear();
             goldStorage.changeGoldAmount(-price);
             price += 5;
             priceText.text = "Tower Cost " + price.ToString();
@@ -147,7 +156,7 @@ public class TowerInventory : MonoBehaviour
             playerInventory.Add(newTower);
             newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;
             AudioSource.PlayClipAtPoint(getTowerSFX, Camera.main.transform.position);
-            yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(.1f);
         }
         selectionDisplayEffectInstance = Instantiate(selectionDisplayEffect, playerInventory[0].transform.position, Quaternion.identity);
     }

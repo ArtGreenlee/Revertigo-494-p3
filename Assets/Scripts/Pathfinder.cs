@@ -35,7 +35,7 @@ public class Pathfinder : MonoBehaviour
     public List<List<Vector3>> path;
     private List<HashSet<GameObject>> visualizers;
     private List<HashSet<Vector3>> pathVectors;
-    private List<bool> finishedPaths;
+    public List<bool> finishedPaths;
     private WallStorage wallStorage;
     private GameObject collisionWall;
     private WallPlacer wallPlacer;

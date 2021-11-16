@@ -132,7 +132,7 @@ public class BulletController : MonoBehaviour
             {
                 tempHealth.takeDoT(towerStats.poisonDPS, towerStats.poisonDuration);
             }
-            tempHealth.takeDamage(damage, true);
+            tempHealth.takeDamage(damage, true, false);
         }
         meshRenderer.enabled = false;
         sphereCollider.enabled = false;

@@ -92,8 +92,14 @@ public class TowerStats : MonoBehaviour
 
         if (buffType == buffTypes.cooldownBuff && !cooldownBuffs.Contains(value))
         {
+            Vector3 buffLocation = transform.position + UtilityFunctions.getClosestSide(transform.position) / 1.25f;
+            ShootsBullets bulletTryComponent;
+            if (TryGetComponent<ShootsBullets>(out bulletTryComponent))
+            {
+                buffLocation = bulletTryComponent.snapPosition;
+            }
             cooldownBuffEffectInstance = Instantiate(cooldownBuffEffect,
-                transform.position + UtilityFunctions.getClosestSide(transform.position) / 1.25f,
+                buffLocation,
                 UtilityFunctions.getRotationawayFromSide(transform.position));
             cooldownBuffs.Add(value);
         }

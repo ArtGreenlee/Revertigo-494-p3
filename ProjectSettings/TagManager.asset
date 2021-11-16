@@ -15,6 +15,7 @@ TagManager:
   - Playfield
   - DebugSphere
   - Tower
+  - Podium
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - Gold
   - Wall
   - Tower
-  - 
+  - Podium
   - 
   - 
   - 

@@ -102,7 +102,8 @@ MonoBehaviour:
   targetSelection: 0
   towerShootSFX: {fileID: 8300000, guid: 8385f470855904f35ab844442462f71b, type: 3}
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
-  bulletSpeed: 15
+  bulletSpeed: 10
+  shootEffect: {fileID: 100004, guid: fb7b0526ade434043b350a180d741cf3, type: 3}
   snapPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &9102850300795807425
 BoxCollider:
@@ -141,7 +142,7 @@ MonoBehaviour:
   canCriticallyHit: 0
   aoe: 0
   poisons: 1
-  poisonDPS: 1
+  poisonDPS: 2
   poisonDuration: 5
   range: 10
   numTargets: 1

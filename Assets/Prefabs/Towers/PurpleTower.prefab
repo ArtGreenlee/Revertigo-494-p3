@@ -104,6 +104,7 @@ MonoBehaviour:
   towerShootSFX: {fileID: 8300000, guid: 8385f470855904f35ab844442462f71b, type: 3}
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
   bulletSpeed: 15
+  shootEffect: {fileID: 100004, guid: fb7b0526ade434043b350a180d741cf3, type: 3}
   snapPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &1885343322092014700
 BoxCollider:
