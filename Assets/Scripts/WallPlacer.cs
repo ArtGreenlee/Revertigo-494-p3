@@ -121,8 +121,7 @@ public class WallPlacer : MonoBehaviour
                     wallStorage.addWall(curPoint, newWall);
                     AudioSource.PlayClipAtPoint(wallPlaceSFX, Camera.main.transform.position);
                 }
-
-                if (!Input.GetMouseButton(1) || !wallNearby(curPoint))
+                else if (!Input.GetMouseButton(1) || !wallNearby(curPoint))
                 {
                     shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(curPoint);
                     //shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;

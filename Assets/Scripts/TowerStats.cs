@@ -213,5 +213,10 @@ public class TowerStats : MonoBehaviour
                 //upgrade the tower;
             }
         }
-    } 
+    }
+
+    public void changeLevel(int level)
+    {
+        
+    }
 }

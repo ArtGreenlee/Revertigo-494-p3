@@ -11,6 +11,7 @@ public class TowerPlacer : MonoBehaviour
     public AudioClip returnTowerSFX;
     private TowerInventory towerInventory;
     private TowerStorage towerStorage;
+    public GameObject combineEffect;
 
     public static TowerPlacer instance;
 
@@ -33,6 +34,21 @@ public class TowerPlacer : MonoBehaviour
         podiumLayerMask = ~LayerMask.GetMask("Podium");
     }
 
+    private bool canCombine(GameObject towerA, GameObject towerB)
+    {
+        TowerStats towerStatsA = towerA.GetComponent<TowerStats>();
+        TowerStats towerStatsB = towerB.GetComponent<TowerStats>();
+        if (!towerStatsA.specialTower && 
+            !towerStatsB.specialTower && 
+            towerStatsA.level == towerStatsB.level &&
+            towerStatsA.towerName == towerStatsB.towerName &&
+            towerStatsA.level != TowerStats.damageIncreaseAtLevel.Count - 1)
+        {
+            return true;
+        }
+        return false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -40,25 +56,38 @@ public class TowerPlacer : MonoBehaviour
         Vector2 mousePosition = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
-        if (towerInventory.selectionEnabled && Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit))
         {
             if (hit.collider.gameObject.CompareTag("Podium"))
             {
                 GameObject podium = hit.collider.gameObject;
-                if (!wallStorage.podiumHasTower(podium))
+                if (towerInventory.selectionEnabled)
                 {
-                    shadowTower.transform.position = podium.transform.rotation * Vector3.forward * 1.5f + podium.transform.position;
-                    shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(podium.transform.position);
-                    if (Input.GetKeyDown(KeyCode.F))
+                    if (!wallStorage.podiumHasTower(podium))
                     {
-                        towerInventory.selectionEnabled = false;
-                        GameObject tempTower = towerInventory.playerInventory[0];
-                        wallStorage.attachTowerToPodium(tempTower, podium);
-                        AudioSource.PlayClipAtPoint(placeTowerSFX, Camera.main.transform.position);
+                        shadowTower.transform.position = podium.transform.rotation * Vector3.forward * 1.5f + podium.transform.position;
+                        shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(podium.transform.position);
+                        if (Input.GetKeyDown(KeyCode.F))
+                        {
+                            towerInventory.selectionEnabled = false;
+                            GameObject tempTower = towerInventory.playerInventory[0];
+                            wallStorage.attachTowerToPodium(tempTower, podium);
+                            AudioSource.PlayClipAtPoint(placeTowerSFX, Camera.main.transform.position);
 
-                        StartCoroutine(placeTowerOnPodium(tempTower, tempTower.transform.position, shadowTower.transform.position, podium));
-                        towerInventory.playerInventory.RemoveAt(0);
-                        shadowTower.transform.position = new Vector3(25, 0, 0);
+                            StartCoroutine(placeTowerOnPodium(tempTower, tempTower.transform.position, shadowTower.transform.position, podium));
+                            towerInventory.playerInventory.RemoveAt(0);
+                            shadowTower.transform.position = new Vector3(25, 0, 0);
+                        }
+                    }
+                    else if (wallStorage.podiumHasTower(podium) && Input.GetKeyDown(KeyCode.F))
+                    {
+                        GameObject tower = wallStorage.getTowerAttachedToPodium(podium);
+                        if (canCombine(tower, towerInventory.playerInventory[0]))
+                        {
+                            towerInventory.selectionEnabled = false;
+                            StartCoroutine(combineTowers(tower, towerInventory.playerInventory[0]));
+                            towerInventory.playerInventory.RemoveAt(0);
+                        }
                     }
                 }
                 else
@@ -70,7 +99,6 @@ public class TowerPlacer : MonoBehaviour
             {
                 shadowTower.transform.position = new Vector3(25, 0, 0);
             }
-            
         }
         else
         {
@@ -121,7 +149,7 @@ public class TowerPlacer : MonoBehaviour
         if (attachPodium == null)
         {
             //UtilityFunctions.changeScaleOfTransform(tower.transform, .5f);
-            StopAllCoroutines();
+            //StopAllCoroutines();
             
             yield break;
         }
@@ -136,5 +164,19 @@ public class TowerPlacer : MonoBehaviour
                 recoilSnapPositionTemp.snapPosition = end;
             }
         }
+    }
+
+    private IEnumerator combineTowers(GameObject podiumTower, GameObject towerB)
+    {
+        while (Vector3.Distance(podiumTower.transform.position, towerB.transform.position) > .05f)
+        {
+            towerB.transform.position = Vector3.Slerp(towerB.transform.position, podiumTower.transform.position, 3 * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        TowerStats podiumTowerStats = podiumTower.GetComponent<TowerStats>();
+        TowerStats towerBStats = towerB.GetComponent<TowerStats>();
+        podiumTowerStats.kills += towerBStats.kills;
+        podiumTowerStats.level++;
+        Destroy(towerB);
     }
 }

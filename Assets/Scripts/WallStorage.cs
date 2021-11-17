@@ -79,6 +79,11 @@ public class WallStorage : MonoBehaviour
         return storage[wallVec];
     }
 
+    public GameObject getTowerAttachedToPodium(GameObject podium)
+    {
+        return podiumAndTower[podium];
+    }
+
     public void attachTowerToPodium(GameObject towerIn, GameObject podium)
     {
         podiumAndTower.Add(podium, towerIn);
@@ -174,71 +179,75 @@ public class WallStorage : MonoBehaviour
             {
                 for (float k = -1; k < 1f; k++)
                 {
-                    bool leftRightPlane = true;
-                    List<Vector3> leftRightList = new List<Vector3>();
-                    bool forwardBackPlane = true;
-                    List<Vector3> forwardBackList = new List<Vector3>();
-                    bool upDownPlane = true;
-                    List<Vector3> upDownList = new List<Vector3>();
-                    for (int y = 0; y < 2; y++)
+                    Vector3 curVec = new Vector3(addVec.x + i, addVec.y + j, addVec.z + k);
+                    if (UtilityFunctions.getClosestSide(curVec) == UtilityFunctions.getClosestSide(addVec))
                     {
-                        for (int x = 0; x < 2; x++)
+                        bool leftRightPlane = true;
+                        List<Vector3> leftRightList = new List<Vector3>();
+                        bool forwardBackPlane = true;
+                        List<Vector3> forwardBackList = new List<Vector3>();
+                        bool upDownPlane = true;
+                        List<Vector3> upDownList = new List<Vector3>();
+                        for (int y = 0; y < 2; y++)
                         {
-                            Vector3 leftRight = new Vector3(addVec.x + i + x, addVec.y + j + y, addVec.z + k);
-                            leftRightList.Add(leftRight);
-                            Vector3 forwardBack = new Vector3(addVec.x + i, addVec.y + j + y, addVec.z + k + x);
-                            forwardBackList.Add(forwardBack);
-                            Vector3 upDown = new Vector3(addVec.x + i + y, addVec.y + j, addVec.z + k + x);
-                            upDownList.Add(upDown);
-                            if (!placements.ContainsKey(leftRight) || !UtilityFunctions.validEnemyVector(leftRight))
+                            for (int x = 0; x < 2; x++)
                             {
-                                leftRightPlane = false;
-                            }
-                            if (!placements.ContainsKey(forwardBack) || !UtilityFunctions.validEnemyVector(forwardBack))
-                            {
-                                forwardBackPlane = false;
-                            }
-                            if (!placements.ContainsKey(upDown) || !UtilityFunctions.validEnemyVector(upDown))
-                            {
-                                upDownPlane = false;
+                                Vector3 leftRight = new Vector3(curVec.x + x, curVec.y + y, curVec.z);
+                                leftRightList.Add(leftRight);
+                                Vector3 forwardBack = new Vector3(curVec.x, curVec.y + x, curVec.z + y);
+                                forwardBackList.Add(forwardBack);
+                                Vector3 upDown = new Vector3(curVec.x + x, curVec.y, curVec.z + y);
+                                upDownList.Add(upDown);
+                                if (!placements.ContainsKey(leftRight) || !UtilityFunctions.validEnemyVector(leftRight))
+                                {
+                                    leftRightPlane = false;
+                                }
+                                if (!placements.ContainsKey(forwardBack) || !UtilityFunctions.validEnemyVector(forwardBack))
+                                {
+                                    forwardBackPlane = false;
+                                }
+                                if (!placements.ContainsKey(upDown) || !UtilityFunctions.validEnemyVector(upDown))
+                                {
+                                    upDownPlane = false;
+                                }
                             }
                         }
-                    }
-                    if (leftRightPlane)
-                    {
-                        placePosition = new Vector3(addVec.x + i + .5f, addVec.y + j + .5f, addVec.z);
-                        foreach (Vector3 removeVec in leftRightList)
+                        if (leftRightPlane)
                         {
-                            placements.Remove(removeVec);
+                            placePosition = new Vector3(curVec.x + .5f, curVec.y + .5f, curVec.z);
+                            foreach (Vector3 removeVec in leftRightList)
+                            {
+                                placements.Remove(removeVec);
+                            }
                         }
-                    }
-                    if (forwardBackPlane)
-                    {
-                        placePosition = new Vector3(addVec.x + i, addVec.y + j + .5f, addVec.z + .5f);
-                        foreach (Vector3 removeVec in forwardBackList)
+                        else if (forwardBackPlane)
                         {
-                            placements.Remove(removeVec);
+                            placePosition = new Vector3(curVec.x, curVec.y + .5f, curVec.z + .5f);
+                            foreach (Vector3 removeVec in forwardBackList)
+                            {
+                                placements.Remove(removeVec);
+                            }
                         }
-                    }
-                    if (upDownPlane)
-                    {
-                        placePosition = new Vector3(addVec.x + i + .5f, addVec.y + j, addVec.z + .5f);
-                        foreach (Vector3 removeVec in upDownList)
+                        else if (upDownPlane)
                         {
-                            placements.Remove(removeVec);
+                            placePosition = new Vector3(curVec.x + .5f, curVec.y, curVec.z + .5f);
+                            foreach (Vector3 removeVec in upDownList)
+                            {
+                                placements.Remove(removeVec);
+                            }
+                        }
+                        if (placePosition != Vector3.zero)
+                        {
+                            GameObject tempPodium = Instantiate(podium, placePosition, UtilityFunctions.getRotationawayFromSide(placePosition));
+                            float changeTransformScale = tempPodium.transform.localScale.x;
+                            tempPodium.transform.localScale = Vector3.zero;
+                            StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(tempPodium.transform, changeTransformScale, 5));
+                            yield break;
                         }
                     }
                 }
             }
         }
-        if (placePosition != Vector3.zero)
-        {
-            GameObject tempPodium = Instantiate(podium, placePosition, UtilityFunctions.getRotationawayFromSide(placePosition));
-            float changeTransformScale = tempPodium.transform.localScale.x;
-            tempPodium.transform.localScale = Vector3.zero;
-            yield return StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(tempPodium.transform, changeTransformScale, 5));
-        }
-        
     }
 
     //add vec is the center of the wall
