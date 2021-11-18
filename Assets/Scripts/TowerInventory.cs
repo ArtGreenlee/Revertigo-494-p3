@@ -68,7 +68,7 @@ public class TowerInventory : MonoBehaviour
             }
             playerInventory.Clear();
             goldStorage.changeGoldAmount(-price);
-            price += 5;
+            price += 7;
             priceText.text = "Tower Cost " + price.ToString();
             StartCoroutine(buyRoundOfGems());
             

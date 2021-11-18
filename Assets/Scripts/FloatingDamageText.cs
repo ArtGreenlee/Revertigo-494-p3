@@ -61,8 +61,9 @@ public class FloatingDamageText : MonoBehaviour
         while (rectTransform.localScale.magnitude > startMagnitute - .3f)
         {
             Color curColor = textMesh.color;
-            curColor.a -= 2 * Time.deltaTime;
+            curColor.a -= 1 * Time.deltaTime;
             float decrease = -.1f * Time.deltaTime;
+            textMesh.color = curColor;
             Vector3 newScale = new Vector3(rectTransform.localScale.x + decrease, rectTransform.localScale.y + decrease, rectTransform.localScale.z + decrease);
             rectTransform.localScale = newScale;
             yield return new WaitForEndOfFrame();

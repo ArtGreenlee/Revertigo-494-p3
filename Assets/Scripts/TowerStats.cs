@@ -24,7 +24,6 @@ public class TowerStats : MonoBehaviour
 
     public List<Mesh> towerLevelMeshList;
     
-
     public enum TowerName
     {
         Blue,

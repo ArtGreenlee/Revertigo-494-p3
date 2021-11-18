@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TowerStorage : MonoBehaviour
 {
-    public static TowerStorage instance;
+    
 
+    public static TowerStorage instance;
     private void Awake()
     {
         if (instance == null)
@@ -21,12 +22,6 @@ public class TowerStorage : MonoBehaviour
     void Start()
     {
         towers = new List<GameObject>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void addTower(GameObject tower)
