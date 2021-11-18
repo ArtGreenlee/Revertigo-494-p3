@@ -11,7 +11,8 @@ public class TowerPlacer : MonoBehaviour
     public AudioClip returnTowerSFX;
     private TowerInventory towerInventory;
     private TowerStorage towerStorage;
-    public GameObject combineEffect;
+    
+    private int layerMask;
 
     public static TowerPlacer instance;
 
@@ -26,6 +27,7 @@ public class TowerPlacer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        layerMask = ~LayerMask.GetMask("Player", "Tower");
         towerStorage = TowerStorage.instance;
         wallStorage = WallStorage.instance;
         towerInventory = TowerInventory.instance;
@@ -34,20 +36,7 @@ public class TowerPlacer : MonoBehaviour
         podiumLayerMask = ~LayerMask.GetMask("Podium");
     }
 
-    private bool canCombine(GameObject towerA, GameObject towerB)
-    {
-        TowerStats towerStatsA = towerA.GetComponent<TowerStats>();
-        TowerStats towerStatsB = towerB.GetComponent<TowerStats>();
-        if (!towerStatsA.specialTower && 
-            !towerStatsB.specialTower && 
-            towerStatsA.level == towerStatsB.level &&
-            towerStatsA.towerName == towerStatsB.towerName &&
-            towerStatsA.level != TowerStats.damageIncreaseAtLevel.Count - 1)
-        {
-            return true;
-        }
-        return false;
-    }
+    
 
     // Update is called once per frame
     void Update()
@@ -56,7 +45,7 @@ public class TowerPlacer : MonoBehaviour
         Vector2 mousePosition = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
             if (hit.collider.gameObject.CompareTag("Podium"))
             {
@@ -79,7 +68,7 @@ public class TowerPlacer : MonoBehaviour
                             shadowTower.transform.position = new Vector3(25, 0, 0);
                         }
                     }
-                    else if (wallStorage.podiumHasTower(podium) && Input.GetKeyDown(KeyCode.F))
+                    /*else if (wallStorage.podiumHasTower(podium) && Input.GetKeyDown(KeyCode.F))
                     {
                         GameObject tower = wallStorage.getTowerAttachedToPodium(podium);
                         if (canCombine(tower, towerInventory.playerInventory[0]))
@@ -88,7 +77,7 @@ public class TowerPlacer : MonoBehaviour
                             StartCoroutine(combineTowers(tower, towerInventory.playerInventory[0]));
                             towerInventory.playerInventory.RemoveAt(0);
                         }
-                    }
+                    }*/
                 }
                 else
                 {
@@ -131,8 +120,6 @@ public class TowerPlacer : MonoBehaviour
 
     private IEnumerator placeTowerOnPodium(GameObject tower, Vector3 start, Vector3 end, GameObject attachPodium)
     {
-
-
         //StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(tower.transform, 1, 1));
         while (Vector3.Distance(tower.transform.position, end) > .05f)
         {
@@ -166,17 +153,5 @@ public class TowerPlacer : MonoBehaviour
         }
     }
 
-    private IEnumerator combineTowers(GameObject podiumTower, GameObject towerB)
-    {
-        while (Vector3.Distance(podiumTower.transform.position, towerB.transform.position) > .05f)
-        {
-            towerB.transform.position = Vector3.Slerp(towerB.transform.position, podiumTower.transform.position, 3 * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
-        }
-        TowerStats podiumTowerStats = podiumTower.GetComponent<TowerStats>();
-        TowerStats towerBStats = towerB.GetComponent<TowerStats>();
-        podiumTowerStats.kills += towerBStats.kills;
-        podiumTowerStats.level++;
-        Destroy(towerB);
-    }
+    
 }

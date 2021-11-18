@@ -130,11 +130,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784ba9d6e741fd14b877cc68bbefeeb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killsToUpgrade:
+  - 5
+  - 10
+  - 20
+  - 30
+  - 40
+  - 40
+  slowPercentageAtLevel:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  slowDurationAtLevel: []
+  poisonDotAtLevel: []
+  poisonDurationAtLevel: []
+  damageIncreaseOnLevelUp:
+  - 1.5
+  - 1.5
+  - 2
+  - 1.5
+  - 2
+  cooldownDecreaseOnLevelUp:
+  - 0.9
+  - 1
+  - 0.9
+  - 1
+  - 0.9
+  aoeRangeIncreaseOnLevelUp:
+  - 0.5
+  - 0.5
+  - 0.5
+  - 0.5
+  - 0.5
+  cooldownBuffDecreaseAtLevel: []
+  towerLevelMeshList:
+  - {fileID: 4300000, guid: 6bd1688c4b7d0499586a92ae1b8d925a, type: 3}
+  - {fileID: 4300000, guid: 4ee4ee93a9a684deca32b2f27ff174b0, type: 3}
+  - {fileID: 4300000, guid: 12749e99d620c4aa0923fe97ba0de20c, type: 3}
+  - {fileID: 4300000, guid: 79b2a5cdd70824e3d9b3acf2ddc79f4d, type: 3}
+  - {fileID: 4300000, guid: e53910dd9ff52433db8fc7f84a2318bb, type: 3}
+  - {fileID: 4300000, guid: 04a69148d0283440c96e0a776ed3bf53, type: 3}
   towerName: 2
   cooldownBuffEffect: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
   kills: 0
   level: 0
-  damageBuffIncrease: 0
+  damageBuff: 0
   attachedToPlayer: 1
   buffsTowers: 0
   buffs: 
@@ -146,8 +188,8 @@ MonoBehaviour:
   poisonDuration: 0
   range: 10
   numTargets: 1
-  damageMin: 5
-  damageMax: 10
+  baseDamageMin: 5
+  baseDamageMax: 8
   critChance: 0
   critMult: 0
   slowPercent: 0
@@ -158,13 +200,6 @@ MonoBehaviour:
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   specialTower: 0
   slowEffect: {fileID: 0}
-  towerLevelMeshList:
-  - {fileID: 4300000, guid: 6bd1688c4b7d0499586a92ae1b8d925a, type: 3}
-  - {fileID: 4300000, guid: 4ee4ee93a9a684deca32b2f27ff174b0, type: 3}
-  - {fileID: 4300000, guid: 12749e99d620c4aa0923fe97ba0de20c, type: 3}
-  - {fileID: 4300000, guid: 79b2a5cdd70824e3d9b3acf2ddc79f4d, type: 3}
-  - {fileID: 4300000, guid: 04a69148d0283440c96e0a776ed3bf53, type: 3}
-  - {fileID: 4300000, guid: e53910dd9ff52433db8fc7f84a2318bb, type: 3}
 --- !u!114 &7505740483760464357
 MonoBehaviour:
   m_ObjectHideFlags: 0

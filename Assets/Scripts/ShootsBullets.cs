@@ -78,6 +78,16 @@ public class ShootsBullets : MonoBehaviour
                         shootBullet(target.transform.position - transform.position);
                         targets[target] = Time.time;
                     }
+                    /*else if (!towerStats.specialTower && targets.Count == 1 && Time.time - playerShootCooldownUtility > towerStats.getCooldown() / 1.5f)
+                    {
+                        rb.MoveRotation(Quaternion.Slerp(transform.rotation,
+                                       Quaternion.LookRotation(target.transform.position - transform.position),
+                                       10 * Time.deltaTime));
+                    }
+                    else if (rb.angularVelocity == Vector3.zero)
+                    {
+                        rb.angularVelocity = Random.onUnitSphere * .5f;
+                    }*/
                 }
                 else
                 {
@@ -88,8 +98,10 @@ public class ShootsBullets : MonoBehaviour
             {
                 targets.Remove(enemy);
             }
+
             
         }
+        
         
     }
 

@@ -52,7 +52,7 @@ public class FireBallController : MonoBehaviour
         foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(transform.position, towerStats.aoe_range))
         {
             EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-            float damage = Random.Range(towerStats.damageMin, towerStats.damageMax);
+            float damage = towerStats.getDamage();
             if (enemyHealth.currentHealth - damage < 0)
             {
                 Debug.Log("fireball kill count");   

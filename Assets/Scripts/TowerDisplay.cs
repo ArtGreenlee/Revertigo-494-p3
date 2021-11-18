@@ -48,7 +48,7 @@ public class TowerDisplay : MonoBehaviour
     {
         transform.rotation = Quaternion.LookRotation(transform.position - cameraTransform.position);
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.LeftShift))
         {
             RaycastHit hit; 
             Vector2 mousePosition = Input.mousePosition;
@@ -63,6 +63,7 @@ public class TowerDisplay : MonoBehaviour
                     {
                         enableDisplay();
                     }
+                    hit.collider.gameObject.GetComponent<RangeIndicator>().enableRangeDisplay();
                     //towerNameText.color = tempStats.trailRendererColor;
                     
                 }
@@ -72,20 +73,14 @@ public class TowerDisplay : MonoBehaviour
                 }
             }
         }
-
-        if (startPosition != Vector3.zero && 
-            Vector3.Distance(startPosition, player.transform.position) > 4 && active)
-        {
-            
-        }
         
     }
 
     public void setValues(TowerStats towerStats)
     {
         towerNameText.text = getTowerName(towerStats);
-        damageMinText.text = "Damage min " + towerStats.damageMin.ToString();
-        damageMaxText.text = "Damage max " + towerStats.damageMax.ToString();
+        damageMinText.text = "Damage min " + towerStats.getDamageMin().ToString();
+        damageMaxText.text = "Damage max " + towerStats.getDamageMax().ToString();
         rateOfFireText.text = "Cooldown " + towerStats.getCooldown().ToString();
         killsText.text = "Kills " + towerStats.kills;
         if (!towerStats.specialTower)
@@ -159,7 +154,7 @@ public class TowerDisplay : MonoBehaviour
         }
         else if (towerStats.towerName == TowerStats.TowerName.Purple)
         {
-            temp = "Buffs towers within range reducing cooldown by " + TowerStats.cooldownBuffDecreasePerLevel[towerStats.level].ToString();
+            temp = "Buffs towers within range reducing cooldown by " + towerStats.cooldownBuffDecreaseAtLevel[towerStats.level].ToString();
         }
         else if (towerStats.towerName == TowerStats.TowerName.Green)
         {

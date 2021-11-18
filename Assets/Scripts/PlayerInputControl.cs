@@ -14,15 +14,17 @@ public class PlayerInputControl : MonoBehaviour
     private int layerMask;
 
     public static PlayerInputControl instance;
+    public bool movementEnabled;
     // public bool enabled;
     
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
+        movementEnabled = true;
         cameraTransform = Camera.main.transform;
         rb = GetComponent<Rigidbody>();
-        layerMask = ~LayerMask.GetMask("Tower");
+        layerMask = ~LayerMask.GetMask("Tower", "Player");
     }
 
     private void Awake()
@@ -30,6 +32,14 @@ public class PlayerInputControl : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            movementEnabled = !movementEnabled;
         }
     }
 
@@ -71,7 +81,9 @@ public class PlayerInputControl : MonoBehaviour
             rb.AddRelativeForce(Vector3.forward * moveSpeed * -1);
         }*/
 
-        if (!Input.GetKey(KeyCode.Space) && !Input.GetMouseButton(1))
+        
+
+        if (movementEnabled && !Input.GetMouseButton(1))
         {
             if (currentLookPoint.x > transform.position.x + movementBuffer)
             {

@@ -21,6 +21,8 @@ public class WallPlacer : MonoBehaviour
 
     private HashSet<Vector3> currentMouseDragWallPositions;
 
+    private int layerMask;
+
     // Start is called before the first frame update
 
     private void Awake()
@@ -33,6 +35,7 @@ public class WallPlacer : MonoBehaviour
 
     void Start()
     {
+        layerMask = ~LayerMask.GetMask("Tower", "Player");
         storageVector = new Vector3(25, 0, 0);
         currentMouseDragWallPositions = new HashSet<Vector3>();
         goldStorage = GoldStorage.instance;
@@ -71,7 +74,7 @@ public class WallPlacer : MonoBehaviour
        
 
         Vector3 curPoint;
-        if (Physics.Raycast(ray, out hit) && 
+        if (Physics.Raycast(ray, out hit, 100, layerMask) && 
             goldStorage.gold >= 1)
         {
 
@@ -98,7 +101,7 @@ public class WallPlacer : MonoBehaviour
                     AudioSource.PlayClipAtPoint(wallPlaceSFX, Camera.main.transform.position);
                 }*/
 
-                if (Input.GetMouseButton(1) && shadowWall.transform.position != storageVector)
+                if (Input.GetMouseButton(1) && shadowWall.transform.position != storageVector && !wallStorage.placements.ContainsKey(shadowWall.transform.position))
                 {
                     for (float i = -.5f; i < 1f; i += .5f)
                     {
@@ -117,9 +120,9 @@ public class WallPlacer : MonoBehaviour
                     }
                     goldStorage.changeGoldAmount(-1);
                     GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
-                    shadowWall.transform.position = storageVector;
                     wallStorage.addWall(curPoint, newWall);
                     AudioSource.PlayClipAtPoint(wallPlaceSFX, Camera.main.transform.position);
+                    shadowWall.transform.position = storageVector;
                 }
                 else if (!Input.GetMouseButton(1) || !wallNearby(curPoint))
                 {

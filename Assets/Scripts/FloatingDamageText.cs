@@ -34,9 +34,7 @@ public class FloatingDamageText : MonoBehaviour
 
     private void OnEnable()
     {
-        textMesh.color = color;
         StartCoroutine(growShrinkFade());
-        
     }
 
     // Update is called once per frame
@@ -48,7 +46,7 @@ public class FloatingDamageText : MonoBehaviour
 
     private IEnumerator growShrinkFade()
     {
-        
+        textMesh.color = color;
         StartCoroutine(destroyaftertime(2));
         float startMagnitute = rectTransform.localScale.magnitude;
         while (rectTransform.localScale.magnitude < startMagnitute + .2f)
@@ -64,21 +62,19 @@ public class FloatingDamageText : MonoBehaviour
         {
             Color curColor = textMesh.color;
             curColor.a -= 2 * Time.deltaTime;
-            textMesh.color = curColor;
             float decrease = -.1f * Time.deltaTime;
             Vector3 newScale = new Vector3(rectTransform.localScale.x + decrease, rectTransform.localScale.y + decrease, rectTransform.localScale.z + decrease);
             rectTransform.localScale = newScale;
             yield return new WaitForEndOfFrame();
         }
+        gameObject.SetActive(false);
     }
 
     private IEnumerator destroyaftertime(float timer)
     {
         yield return new WaitForSeconds(timer);
         transform.localScale = startScale;
-        textMesh.color = new Color(1, 1, 1);
         gameObject.SetActive(false);
         StopAllCoroutines();
-        
     }
 }

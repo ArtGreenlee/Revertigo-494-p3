@@ -27,6 +27,10 @@ public class TowerInventory : MonoBehaviour
     private TowerDisplay towerDisplay;
     private Transform cameraTransform;
     private TowerPlacer towerPlacer;
+    public GameObject combineEffect;
+    public int gemsPerRound;
+
+    private PlayerInputControl playerInputControl;
 
     public bool selectionEnabled;
 
@@ -40,6 +44,7 @@ public class TowerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerInputControl = PlayerInputControl.instance;
         towerPlacer = TowerPlacer.instance;
         cameraTransform = Camera.main.transform;
         towerDisplay = TowerDisplay.instance;
@@ -66,7 +71,7 @@ public class TowerInventory : MonoBehaviour
             price += 5;
             priceText.text = "Tower Cost " + price.ToString();
             StartCoroutine(buyRoundOfGems());
-            selectionEnabled = true;
+            
         }
 
         if (Input.GetKeyDown(KeyCode.Q) && selectionEnabled)
@@ -87,15 +92,16 @@ public class TowerInventory : MonoBehaviour
     void FixedUpdate()
     {
         float degreesBetween = (2 * Mathf.PI) / playerInventory.Count;
+        float distanceFromPlayer = inventoryDistanceFromPlayer * playerInventory.Count / 3 + .5f;
         for (int i = 0; i < playerInventory.Count; i++)
         {
             Vector3 vecRotation = transform.rotation.eulerAngles;
             Vector3 position = transform.position;
 
-            float xDiff = inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
-            float yDiff = inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
-            float zDiffHorizontal = inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad) * -1;
-            float zDiffVertical = inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
+            float xDiff = distanceFromPlayer * Mathf.Cos(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
+            float yDiff = distanceFromPlayer * Mathf.Sin(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
+            float zDiffHorizontal = distanceFromPlayer * Mathf.Cos(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad) * -1;
+            float zDiffVertical = distanceFromPlayer * Mathf.Sin(i * degreesBetween + vecRotation.z * Mathf.Deg2Rad) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
 
 
             //i dont know why, I shouldnt HAVE to know why, but for whatever god awful reason this is the closest i can get to the desired behaviour. 
@@ -123,15 +129,8 @@ public class TowerInventory : MonoBehaviour
             */
 
             //position.z += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
-            if (Input.GetKey(KeyCode.Space))
-            {
-                playerInventory[i].transform.position = Vector3.Slerp(playerInventory[i].transform.position, position, towerSnapSpeed * Time.deltaTime * .1f);
-            }
-            else
-            {
-                playerInventory[i].transform.position = Vector3.Lerp(playerInventory[i].transform.position, position, towerSnapSpeed * Time.deltaTime);
-            }
-            
+
+            playerInventory[i].transform.position = Vector3.Lerp(playerInventory[i].transform.position, position, towerSnapSpeed * Time.deltaTime);
             //PlayerInventory[i].transform.position = position;
         }
 
@@ -148,17 +147,90 @@ public class TowerInventory : MonoBehaviour
 
     private IEnumerator buyRoundOfGems()
     {
-
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < gemsPerRound; i++)
         {
             GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
             newTower.GetComponent<TowerStats>().attachedToPlayer = true;
             playerInventory.Add(newTower);
-            newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .5f;
+            newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .8f;
             AudioSource.PlayClipAtPoint(getTowerSFX, Camera.main.transform.position);
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(.2f);
         }
+
+        yield return new WaitForSeconds(.5f);
+
+        while (checkRosterAndCombineTowers())
+        {
+            yield return new WaitForSeconds(1f);
+        }
+        
+
+        selectionEnabled = true;
         selectionDisplayEffectInstance = Instantiate(selectionDisplayEffect, playerInventory[0].transform.position, Quaternion.identity);
+    }
+
+    private bool checkRosterAndCombineTowers()
+    {
+        for (int a = 0; a < playerInventory.Count; a++)
+        {
+            for (int b = a; b < playerInventory.Count; b++)
+            {
+                if (a != b)
+                {
+                    GameObject towerA = playerInventory[a];
+                    GameObject towerB = playerInventory[b];
+                    if (canCombine(towerA, towerB))
+                    {
+                        Debug.Log("Combine Towers:");
+                        playerInventory.Remove(towerA);
+                        playerInventory.Remove(towerB);
+                        StartCoroutine(combineTowers(towerA, towerB));
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public IEnumerator combineTowers(GameObject towerA, GameObject towerB)
+    {
+        
+        while (Vector3.Distance(towerA.transform.position, towerB.transform.position) > .5f)
+        {
+            towerB.transform.position = Vector3.Lerp(towerB.transform.position, towerA.transform.position, 3 * Time.deltaTime);
+            towerA.transform.position = Vector3.Lerp(towerA.transform.position, towerB.transform.position, 3 * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        TowerStats towerAStats = towerA.GetComponent<TowerStats>();
+        TowerStats towerBStats = towerB.GetComponent<TowerStats>();
+        towerAStats.kills += towerBStats.kills;
+        towerAStats.level++;
+        Vector3 inbetween = Vector3.Lerp(towerA.transform.position, towerB.transform.position, .5f);
+        Instantiate(combineEffect, inbetween, Quaternion.identity);
+        yield return new WaitForSeconds(.5f);
+        Destroy(towerB);
+        towerAStats.levelUp();
+        towerA.transform.position = inbetween;
+        yield return new WaitForSeconds(.5f);
+        playerInventory.Add(towerA);
+        yield return new WaitForSeconds(.5f);
+
+    }
+
+    public bool canCombine(GameObject towerA, GameObject towerB)
+    {
+        TowerStats towerStatsA = towerA.GetComponent<TowerStats>();
+        TowerStats towerStatsB = towerB.GetComponent<TowerStats>();
+        if (!towerStatsA.specialTower &&
+            !towerStatsB.specialTower &&
+            towerStatsA.level == towerStatsB.level &&
+            towerStatsA.towerName == towerStatsB.towerName &&
+            towerStatsA.level != towerStatsA.killsToUpgrade.Count - 1)
+        {
+            return true;
+        }
+        return false;
     }
 
     private GameObject getRandomTower()
@@ -175,6 +247,13 @@ public class TowerInventory : MonoBehaviour
         if (tower.GetComponent<TowerStats>().specialTower)
         {
             tower = towerRoster[Random.Range(0, towerRoster.Count)];
+        }
+        if (playerInventory.Count > 0)
+        {
+            while (tower.GetComponent<TowerStats>().towerName == playerInventory[playerInventory.Count - 1].GetComponent<TowerStats>().towerName)
+            {
+                tower = towerRoster[Random.Range(0, towerRoster.Count)];
+            }
         }
         return tower;
     }

@@ -10,7 +10,7 @@ public class WallStorage : MonoBehaviour
     private Stack<GameObject> wallStack;
     private TowerStorage towerStorage;
     public GameObject debugSphere;
-    private Dictionary<Vector3, GameObject> placements;
+    public Dictionary<Vector3, GameObject> placements;
     private Dictionary<GameObject, GameObject> podiumAndTower; //PODIUM AND THEN TOWER
 
     public GameObject podium;

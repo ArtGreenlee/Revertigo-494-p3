@@ -75,16 +75,13 @@ public class EnemyHealth : MonoBehaviour
         {
             Vector3 textPos = Vector3.Lerp(transform.position, cameraTransform.position, .05f) + Random.insideUnitSphere;
             FloatingDamageText damageText = objectPooler.getObjectFromPool("FloatingDamageText", textPos, Quaternion.identity).GetComponent<FloatingDamageText>();
+
+            float redColorRatio = (maxHealth - damage) / (maxHealth * 1.5f);
+            damageText.color = new Color(1, redColorRatio, redColorRatio);
             damageText.setDamage(damage);
             if (isDoT)
             {
                 damageText.color = Color.green;
-            }
-            else
-            {
-                float redColorRatio = (maxHealth - damage) / (maxHealth * 1.5f);
-                damageText.color = new Color(1, redColorRatio, redColorRatio);
-                damageText.color = new Color(1, redColorRatio, redColorRatio);
             }
         }
         if (currentHealth <= 0)
@@ -102,16 +99,16 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void takeDoT(float DPS, float duration)
+    public void takeDoT(float DPS, float duration, TowerStats towerStats)
     {
         if (DPS > currentDPS)
         {
             currentDPS = DPS;
-            StartCoroutine(DoTroutine(DPS, duration));
+            StartCoroutine(DoTroutine(DPS, duration, towerStats));
         }
     }
 
-    private IEnumerator DoTroutine(float DPS, float duration)
+    private IEnumerator DoTroutine(float DPS, float duration, TowerStats towerStats)
     {
         Color beforeColor = GetComponent<MeshRenderer>().material.color;
         GetComponent<MeshRenderer>().material.color = new Color(beforeColor.r, beforeColor.g + 1f, beforeColor.b);
@@ -119,6 +116,10 @@ public class EnemyHealth : MonoBehaviour
         for (float i = 0; i < duration; i += .5f)
         {
             Instantiate(DoTEffect, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
+            if (currentHealth - DPS / 2 < 0)
+            {
+                towerStats.increaseKills();
+            }
             takeDamage(DPS / 2, true, true);
             yield return new WaitForSeconds(.5f);
         }

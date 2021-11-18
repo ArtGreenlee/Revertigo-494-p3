@@ -4,61 +4,26 @@ using UnityEngine;
 
 public class TowerStats : MonoBehaviour
 {
-    public static List<float> killsToUpgrade = new List<float>
-    {
-        5,
-        10,
-        15,
-        20,
-        30
-    };
+    public List<float> killsToUpgrade;
 
-    public static List<float> slowPercentageAtLevel = new List<float>
-    {
-        .9f,
-        .85f,
-        .8f,
-        .7f,
-        .6f
-    };
+    public List<float> slowPercentageAtLevel;
 
-    public static List<float> damageIncreaseAtLevel = new List<float>
-    {
-        1.1f,
-        1.1f,
-        1.1f,
-        1.1f,
-        1.1f
-    };
+    public List<float> slowDurationAtLevel;
 
-    public static List<float> cooldownDecreaseAtLevel = new List<float>
-    {
-        .9f,
-        .9f,
-        .9f,
-        .9f,
-        .9f
-    };
+    public List<float> poisonDotAtLevel;
 
-    public static List<float> aoeRangeIncreasePerLevel = new List<float>
-    {
-        .5f,
-        .5f,
-        .5f,
-        .5f,
-        .5f
-    };
+    public List<float> poisonDurationAtLevel;
 
-    public static List<float> cooldownBuffDecreasePerLevel = new List<float>
-    {
-        .9f,
-        .8f,
-        .75f,
-        .7f,
-        .65f
-    };
+    public List<float> damageIncreaseOnLevelUp;
 
+    public List<float> cooldownDecreaseOnLevelUp;
 
+    public List<float> aoeRangeIncreaseOnLevelUp;
+
+    public List<float> cooldownBuffDecreaseAtLevel;
+
+    public List<Mesh> towerLevelMeshList;
+    
 
     public enum TowerName
     {
@@ -92,7 +57,7 @@ public class TowerStats : MonoBehaviour
 
         if (buffType == buffTypes.cooldownBuff && !cooldownBuffs.Contains(value))
         {
-            Vector3 buffLocation = transform.position + UtilityFunctions.getClosestSide(transform.position) / 1.25f;
+            Vector3 buffLocation = transform.position;
             ShootsBullets bulletTryComponent;
             if (TryGetComponent<ShootsBullets>(out bulletTryComponent))
             {
@@ -119,7 +84,8 @@ public class TowerStats : MonoBehaviour
 
     public int kills = 0;
     public int level = 0;
-    public float damageBuffIncrease;
+    public SortedSet<float> damageBuffs;
+    public float damageBuff;
     public bool attachedToPlayer = true;
 
     public bool buffsTowers;
@@ -133,8 +99,29 @@ public class TowerStats : MonoBehaviour
     public float poisonDuration;
     public float range;
     public int numTargets;
-    public float damageMin;
-    public float damageMax;
+
+    public float baseDamageMin;
+    public float baseDamageMax;
+
+    public float getDamageMin()
+    {
+        return baseDamageMin * damageBuffs.Max;
+    }
+
+    public float getDamageMax()
+    {
+        return baseDamageMax * damageBuffs.Max;
+    }
+
+    public float getDamage()
+    {
+        if (attachedToPlayer)
+        {
+            return Random.Range(getDamageMin(), getDamageMax()) / 2;
+        }
+        return Random.Range(getDamageMin(), getDamageMax());
+    }
+
     public float critChance;
     public float critMult;
     public float slowPercent;
@@ -154,14 +141,12 @@ public class TowerStats : MonoBehaviour
     public bool specialTower;
     public GameObject slowEffect;
     private SortedSet<float> cooldownBuffs;
-    public List<Mesh> towerLevelMeshList;
-
-
-    //public enum shotSpread { Standard, Cone, SideBySide }
 
     private void Start()
     {
         cooldownBuffs = new SortedSet<float>();
+        damageBuffs = new SortedSet<float>();
+        damageBuffs.Add(1);
         cooldownBuffs.Add(1);
         if (gameObject.name != "Player")
         {
@@ -171,7 +156,7 @@ public class TowerStats : MonoBehaviour
 
     public void increaseKills()
     {
-        if (gameObject.name != "Player")
+        if (gameObject != null && gameObject.name != "Player")
         {
             kills++;
             int tempLevel = level;
@@ -185,38 +170,40 @@ public class TowerStats : MonoBehaviour
             //Debug.Log(tempLevel);
             if (tempLevel != level)
             {
-                if (buffsTowers)
-                {
-                    GetComponent<BuffsOtherTowers>().resetBuffs();
-                }
                 level = tempLevel;
-                if (!specialTower)
-                {
-                    damageMin *= damageIncreaseAtLevel[level];
-                    damageMax *= damageIncreaseAtLevel[level];
-                    baseCooldown *= .9f;
-                    if (slowsEnemy)
-                    {
-                        if (slowPercent > 0)
-                        {
-                            slowPercent = slowPercentageAtLevel[level];
-                        }
-                    }
-                    if (aoe)
-                    {
-                        aoe_range += aoeRangeIncreasePerLevel[level];
-                    }
-                    UtilityFunctions.changeScaleOfTransform(transform, transform.localScale.x + .1f);
-                    Instantiate(upgradeEffect, transform.position, Quaternion.identity);
-                    GetComponent<MeshFilter>().mesh = towerLevelMeshList[level];
-                }
-                //upgrade the tower;
+                levelUp();
             }
         }
     }
 
-    public void changeLevel(int level)
+    public void levelUp()
     {
-        
+        if (buffsTowers)
+        {
+            GetComponent<BuffsOtherTowers>().resetBuffs();
+        }
+        if (!specialTower)
+        {
+            baseDamageMin *= damageIncreaseOnLevelUp[level];
+            baseDamageMax *= damageIncreaseOnLevelUp[level];
+            baseCooldown *= cooldownDecreaseOnLevelUp[level];
+            if (slowsEnemy)
+            {
+                slowPercent = slowPercentageAtLevel[level];
+                slowDuration = slowDurationAtLevel[level];
+            }
+            if (aoe)
+            {
+                aoe_range += aoeRangeIncreaseOnLevelUp[level];
+            }
+            if (poisons)
+            {
+                poisonDuration = poisonDurationAtLevel[level];
+                poisonDPS = poisonDotAtLevel[level];
+            }
+            UtilityFunctions.changeScaleOfTransform(transform, transform.localScale.x + .1f);
+            Instantiate(upgradeEffect, transform.position, Quaternion.identity);
+            GetComponent<MeshFilter>().mesh = towerLevelMeshList[level];
+        }
     }
 }

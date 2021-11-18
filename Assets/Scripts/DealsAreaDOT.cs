@@ -29,7 +29,7 @@ public class DealsAreaDOT : MonoBehaviour
             if (Vector3.Distance(enemy.transform.position, transform.position) <= towerStats.range)
             {
                 //bad bad bad TODO: fix this, not optimized
-                enemy.GetComponent<EnemyHealth>().takeDamage(towerStats.damageMax * Time.deltaTime, false, false);
+                enemy.GetComponent<EnemyHealth>().takeDamage(towerStats.getDamage() * Time.deltaTime, false, false);
             }
         }
     }

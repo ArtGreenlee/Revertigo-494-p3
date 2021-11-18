@@ -95,9 +95,9 @@ public class BulletController : MonoBehaviour
                 hitEnemies.Add(collision.gameObject);
             }
         }
-        
 
-        float damage = Random.Range(towerStats.damageMin, towerStats.damageMax);
+
+        float damage = towerStats.getDamage();
         if (towerStats.canCriticallyHit && Random.value < towerStats.critChance)
         {
 
@@ -130,7 +130,7 @@ public class BulletController : MonoBehaviour
             }
             if (towerStats.poisons)
             {
-                tempHealth.takeDoT(towerStats.poisonDPS, towerStats.poisonDuration);
+                tempHealth.takeDoT(towerStats.poisonDPS, towerStats.poisonDuration, towerStats);
             }
             tempHealth.takeDamage(damage, true, false);
         }

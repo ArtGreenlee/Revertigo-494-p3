@@ -35,7 +35,7 @@ public class BuffsOtherTowers : MonoBehaviour
         {
             foreach (TowerStats.buffTypes buff in towerStats.buffs)
             {
-                buffTowers[i].GetComponent<TowerStats>().removeBuff(buff, TowerStats.cooldownBuffDecreasePerLevel[towerStats.level]);
+                buffTowers[i].GetComponent<TowerStats>().removeBuff(buff, towerStats.cooldownBuffDecreaseAtLevel[towerStats.level]);
             }
         }
         buffTowers = new List<GameObject>();
@@ -59,7 +59,7 @@ public class BuffsOtherTowers : MonoBehaviour
                 //remove tower;
                 foreach (TowerStats.buffTypes buff in towerStats.buffs)
                 {
-                    buffTowers[i].GetComponent<TowerStats>().removeBuff(buff, TowerStats.cooldownBuffDecreasePerLevel[towerStats.level]);
+                    buffTowers[i].GetComponent<TowerStats>().removeBuff(buff, towerStats.cooldownBuffDecreaseAtLevel[towerStats.level]);
                 }
                 buffTowers.RemoveAt(i);
                 i--;
@@ -78,11 +78,11 @@ public class BuffsOtherTowers : MonoBehaviour
             TowerStats tempStats = tower.GetComponent<TowerStats>();
             if (towerStats.buffs.Contains(TowerStats.buffTypes.cooldownBuff))
             {
-                tempStats.buffTower(TowerStats.buffTypes.cooldownBuff, TowerStats.cooldownBuffDecreasePerLevel[towerStats.level]);
+                tempStats.buffTower(TowerStats.buffTypes.cooldownBuff, towerStats.cooldownBuffDecreaseAtLevel[towerStats.level]);
             }
             if (towerStats.buffs.Contains(TowerStats.buffTypes.damageBuff))
             {
-                tempStats.buffTower(TowerStats.buffTypes.damageBuff, towerStats.damageBuffIncrease);
+                tempStats.buffTower(TowerStats.buffTypes.damageBuff, towerStats.damageBuff);
             }
         }
     }
