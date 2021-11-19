@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 public class TowerInventory : MonoBehaviour
 {
     public int maxGemInventory;
@@ -28,6 +29,8 @@ public class TowerInventory : MonoBehaviour
     public int gemsPerRound;
     public GameObject towerDestroyEffect;
 
+    public Dictionary<TowerStats.TowerName, GameObject> specialTowerDictionary;
+
     private PlayerInputControl playerInputControl;
 
     public bool selectionEnabled;
@@ -44,6 +47,7 @@ public class TowerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         playerInputControl = PlayerInputControl.instance;
         towerPlacer = TowerPlacer.instance;
         cameraTransform = Camera.main.transform;
@@ -52,6 +56,16 @@ public class TowerInventory : MonoBehaviour
         goldStorage = GoldStorage.instance;
         playerInventory = new List<GameObject>();
         selectionEnabled = false;
+        specialTowerDictionary = new Dictionary<TowerStats.TowerName, GameObject>();
+        foreach (GameObject tower in towerRoster)
+        {
+            TowerStats tempStats = tower.GetComponent<TowerStats>();
+            if (tempStats.specialTower)
+            {
+                specialTowerDictionary.Add(tempStats.towerName, tower);
+            }
+        }
+
         combinations = new List<KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>>();
 
         List<KeyValuePair<int, TowerStats.TowerName>> temp = new List<KeyValuePair<int, TowerStats.TowerName>>();
@@ -223,8 +237,20 @@ public class TowerInventory : MonoBehaviour
         }
     }
 
-    private bool checkRosterAndCombineTowers()
+
+    /*private List<List<GameObject>> GetAllListCombinations(List<GameObject> data, int start, int end, int index, int r)
     {
+        
+    }
+
+    private bool checkRosterforSpecialCombinations()
+    {
+        List<List<GameObject>> temp = GetAllListCombinations(new List<GameObject>(),);
+        return true;
+    }*/
+
+    private bool checkRosterAndCombineTowers()
+    {             
         for (int a = 0; a < playerInventory.Count; a++)
         {
             for (int b = a; b < playerInventory.Count; b++)
@@ -290,6 +316,21 @@ public class TowerInventory : MonoBehaviour
 
     public GameObject specialCanCombine(GameObject towerA, GameObject towerB, GameObject towerC)
     {
+        TowerStats towerAstats = towerA.GetComponent<TowerStats>();
+        TowerStats towerBstats = towerB.GetComponent<TowerStats>();
+        TowerStats towerCstats = towerC.GetComponent<TowerStats>();
+        foreach (KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>> combination in combinations)
+        {
+            KeyValuePair<int, TowerStats.TowerName> towerALevelName = new KeyValuePair<int, TowerStats.TowerName>(towerAstats.level, towerAstats.towerName);
+            KeyValuePair<int, TowerStats.TowerName> towerBLevelName = new KeyValuePair<int, TowerStats.TowerName>(towerBstats.level, towerBstats.towerName);
+            KeyValuePair<int, TowerStats.TowerName> towerCLevelName = new KeyValuePair<int, TowerStats.TowerName>(towerCstats.level, towerCstats.towerName);
+
+            if (combination.Value.Contains(towerALevelName) && combination.Value.Contains(towerBLevelName) && combination.Value.Contains(towerCLevelName))
+            {
+                Debug.Log("special tower combination");
+                return specialTowerDictionary[combination.Key];
+            }
+        }
         return null;
     }
 
