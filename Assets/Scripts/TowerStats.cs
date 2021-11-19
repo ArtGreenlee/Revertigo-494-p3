@@ -62,6 +62,10 @@ public class TowerStats : MonoBehaviour
             {
                 buffLocation = bulletTryComponent.snapPosition;
             }
+            if (cooldownBuffEffectInstance != null)
+            {
+                Destroy(cooldownBuffEffectInstance);
+            }
             cooldownBuffEffectInstance = Instantiate(cooldownBuffEffect,
                 buffLocation,
                 UtilityFunctions.getRotationawayFromSide(transform.position));

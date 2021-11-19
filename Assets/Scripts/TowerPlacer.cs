@@ -66,6 +66,7 @@ public class TowerPlacer : MonoBehaviour
                             StartCoroutine(placeTowerOnPodium(tempTower, tempTower.transform.position, shadowTower.transform.position, podium));
                             towerInventory.playerInventory.RemoveAt(0);
                             shadowTower.transform.position = new Vector3(25, 0, 0);
+                            StartCoroutine(towerInventory.destroyPlayerInventory());
                         }
                     }
                     /*else if (wallStorage.podiumHasTower(podium) && Input.GetKeyDown(KeyCode.F))

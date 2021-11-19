@@ -125,7 +125,6 @@ public class ShootsBullets : MonoBehaviour
             {
                 Instantiate(shootEffect, transform.position, Quaternion.identity);
             }
-            
             tempBullet.GetComponent<Rigidbody>().velocity = direction.normalized * bulletSpeed * Random.Range(.9f, 1.1f);
             tempBullet.GetComponent<BulletController>().towerStats = towerStats;
             tempBullet.GetComponent<MeshRenderer>().material.color = towerStats.trailRendererColor;

@@ -29,6 +29,7 @@ public class TowerInventory : MonoBehaviour
     private TowerPlacer towerPlacer;
     public GameObject combineEffect;
     public int gemsPerRound;
+    public GameObject towerDestroyEffect;
 
     private PlayerInputControl playerInputControl;
 
@@ -154,19 +155,39 @@ public class TowerInventory : MonoBehaviour
             playerInventory.Add(newTower);
             newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .8f;
             AudioSource.PlayClipAtPoint(getTowerSFX, Camera.main.transform.position);
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.4f);
+            checkRosterAndCombineTowers();
         }
 
         yield return new WaitForSeconds(.5f);
 
         while (checkRosterAndCombineTowers())
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
         }
-        
 
         selectionEnabled = true;
         selectionDisplayEffectInstance = Instantiate(selectionDisplayEffect, playerInventory[0].transform.position, Quaternion.identity);
+    }
+
+    public IEnumerator destroyPlayerInventory()
+    {
+        Debug.Log("destroy invent");
+        while (playerInventory.Count > 0)
+        {
+            for (int i = 0; i < playerInventory.Count; i++)
+            {
+                playerInventory[i].GetComponent<Rigidbody>().AddForce((transform.position - playerInventory[i].transform.position).normalized * 10);
+                if (Vector3.Distance(playerInventory[i].transform.position, transform.position) < .4f)
+                {
+                    Instantiate(towerDestroyEffect, Vector3.Lerp(playerInventory[i].transform.position, transform.position, .5f), Quaternion.identity);
+                    Destroy(playerInventory[i]);
+                    playerInventory.RemoveAt(i);
+                    i--;
+                }
+                yield return new WaitForEndOfFrame();
+            }
+        }
     }
 
     private bool checkRosterAndCombineTowers()
@@ -181,7 +202,6 @@ public class TowerInventory : MonoBehaviour
                     GameObject towerB = playerInventory[b];
                     if (canCombine(towerA, towerB))
                     {
-                        Debug.Log("Combine Towers:");
                         playerInventory.Remove(towerA);
                         playerInventory.Remove(towerB);
                         StartCoroutine(combineTowers(towerA, towerB));
@@ -195,11 +215,12 @@ public class TowerInventory : MonoBehaviour
 
     public IEnumerator combineTowers(GameObject towerA, GameObject towerB)
     {
-        
         while (Vector3.Distance(towerA.transform.position, towerB.transform.position) > .5f)
         {
             towerB.transform.position = Vector3.Lerp(towerB.transform.position, towerA.transform.position, 3 * Time.deltaTime);
+            towerB.transform.position = Vector3.Lerp(towerB.transform.position, cameraTransform.transform.position, .5f * Time.deltaTime);
             towerA.transform.position = Vector3.Lerp(towerA.transform.position, towerB.transform.position, 3 * Time.deltaTime);
+            towerA.transform.position = Vector3.Lerp(towerA.transform.position, cameraTransform.transform.position, .5f * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
         TowerStats towerAStats = towerA.GetComponent<TowerStats>();
