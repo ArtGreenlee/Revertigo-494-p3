@@ -6871,7 +6871,7 @@ Transform:
   m_GameObject: {fileID: 1880758157}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 6}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
@@ -6971,31 +6971,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxGemInventory: 6
   getTowerSFX: {fileID: 8300000, guid: bc98711390c4f4695a1c791d92ac034d, type: 3}
-  debugMode: 0
   towerPlacementEnabled: 0
-  inventoryDistanceFromPlayer: 1.5
+  inventoryDistanceFromPlayer: 1
   towerSnapSpeed: 4
   playerInventory: []
-  debugRoster:
-  - {fileID: 6295010870351937091, guid: 82b7e8fad8308ed4cb407bbaa7e9f6d4, type: 3}
-  - {fileID: 7940872050863963642, guid: c1c1b12a278de74468bfd002d0afcc80, type: 3}
-  - {fileID: 4782707245435355068, guid: 50382c94b3f4941f99d3020a78658ce2, type: 3}
-  - {fileID: 5996220971690792234, guid: 1f7e3583f07ac2a4787c3fd2e5c57412, type: 3}
-  - {fileID: 2316449276373684764, guid: fa9ee0c353bf14a48bed9e232a048f2a, type: 3}
   towerRoster:
-  - {fileID: 7940872050863963642, guid: c1c1b12a278de74468bfd002d0afcc80, type: 3}
-  - {fileID: 2316449276373684764, guid: fa9ee0c353bf14a48bed9e232a048f2a, type: 3}
-  - {fileID: 5996220971690792234, guid: 1f7e3583f07ac2a4787c3fd2e5c57412, type: 3}
-  - {fileID: 6295010870351937091, guid: 82b7e8fad8308ed4cb407bbaa7e9f6d4, type: 3}
-  - {fileID: 9204140441405189623, guid: e7a82ac31456eea4db488781199a4298, type: 3}
+  - {fileID: 6149832772361309595, guid: 4fdd6956424680b47862f6197a832ff3, type: 3}
+  - {fileID: 8789188252500577817, guid: bf41b97af53cddd4491351d8a5b810fb, type: 3}
+  - {fileID: 1295874507230250574, guid: 1c7b4cc7605f978438b633cd91773085, type: 3}
   - {fileID: 2000279016636778330, guid: e0598bc5bcb324c1ba3e2d895163c97f, type: 3}
+  - {fileID: 9204140441405189623, guid: e7a82ac31456eea4db488781199a4298, type: 3}
+  - {fileID: 3352053421576041292, guid: a36e7de485185644884e4d6a03918aaa, type: 3}
   price: 1
   priceText: {fileID: 1113210396}
   selectionDisplayEffect: {fileID: 100000, guid: 7b56cd9b663f23f429e131a54ec87db0,
     type: 3}
   combineEffect: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0,
     type: 3}
-  gemsPerRound: 3
+  gemsPerRound: 50
   towerDestroyEffect: {fileID: 100000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
   selectionEnabled: 0
 --- !u!114 &1880758168

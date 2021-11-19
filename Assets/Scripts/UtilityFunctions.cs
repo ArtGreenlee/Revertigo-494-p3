@@ -208,7 +208,7 @@ public class UtilityFunctions : MonoBehaviour
         Vector3 startScale = transform.localScale;
         Vector3 endScale = new Vector3(scale, scale, scale);
         
-        while (startScale != endScale)
+        while (startScale != endScale && transform != null)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, endScale, changeSpeed * Time.deltaTime);
             yield return new WaitForEndOfFrame();

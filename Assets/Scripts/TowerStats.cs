@@ -159,7 +159,7 @@ public class TowerStats : MonoBehaviour
 
     public void increaseKills()
     {
-        if (gameObject != null && gameObject.name != "Player")
+        if (this != null && gameObject != null && gameObject.name != "Player")
         {
             kills++;
             int tempLevel = level;

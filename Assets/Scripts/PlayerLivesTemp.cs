@@ -43,11 +43,7 @@ public class PlayerLivesTemp : MonoBehaviour
 
     public void loseLife()
     {
-        if (!towerInventory.debugMode)
-        {
-            numLives--;
-        }
-
+        numLives--;
 
         //livesCounter.text = "Lives " + numLives.ToString();
         //Debug.Log(Mathf.Clamp01((float)numLives / max_lives));
