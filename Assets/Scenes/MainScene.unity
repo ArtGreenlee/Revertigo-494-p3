@@ -6988,7 +6988,7 @@ MonoBehaviour:
     type: 3}
   combineEffect: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0,
     type: 3}
-  gemsPerRound: 50
+  gemsPerRound: 100
   towerDestroyEffect: {fileID: 100000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
   selectionEnabled: 0
 --- !u!114 &1880758168

@@ -171,7 +171,7 @@ public class TowerStats : MonoBehaviour
                 }
             }
             //Debug.Log(tempLevel);
-            if (tempLevel != level)
+            if (tempLevel > level)
             {
                 level = tempLevel;
                 levelUp();

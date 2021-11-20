@@ -166,7 +166,7 @@ public class TowerInventory : MonoBehaviour
             //position.z += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
             if (playerInventory[i].GetComponent<TowerStats>().attachedToPlayer)
             {
-                if (playerInputControl.movementEnabled)
+                if (playerInputControl.movementEnabled || Vector3.Distance(playerInventory[i].transform.position, transform.position) < inventoryDistanceFromPlayer - .5f)
                 {
                     playerInventory[i].transform.position = Vector3.Lerp(playerInventory[i].transform.position, position, towerSnapSpeed * Time.deltaTime);
                 }
@@ -251,6 +251,7 @@ public class TowerInventory : MonoBehaviour
 
     private bool checkRosterAndCombineTowers()
     {             
+
         for (int a = 0; a < playerInventory.Count; a++)
         {
             for (int b = a; b < playerInventory.Count; b++)
@@ -259,7 +260,9 @@ public class TowerInventory : MonoBehaviour
                 {
                     GameObject towerA = playerInventory[a];
                     GameObject towerB = playerInventory[b];
-                    if (canCombine(towerA, towerB))
+                    TowerStats towerStatsA = towerA.GetComponent<TowerStats>();
+                    TowerStats towerStatsB = towerB.GetComponent<TowerStats>();
+                    if (canCombine(towerStatsA, towerStatsB))
                     {
                         playerInventory.Remove(towerA);
                         playerInventory.Remove(towerB);
@@ -299,10 +302,8 @@ public class TowerInventory : MonoBehaviour
 
     }
 
-    public bool canCombine(GameObject towerA, GameObject towerB)
+    public bool canCombine(TowerStats towerStatsA, TowerStats towerStatsB)
     {
-        TowerStats towerStatsA = towerA.GetComponent<TowerStats>();
-        TowerStats towerStatsB = towerB.GetComponent<TowerStats>();
         if (!towerStatsA.specialTower &&
             !towerStatsB.specialTower &&
             towerStatsA.level == towerStatsB.level &&
