@@ -16,6 +16,7 @@ public class TowerInventory : MonoBehaviour
     public List<GameObject> playerInventory;
 
     public List<GameObject> towerRoster;
+    public List<GameObject> specialTowerRoster;
     private GoldStorage goldStorage;
     public float price;
     public TextMeshProUGUI priceText;
@@ -28,6 +29,7 @@ public class TowerInventory : MonoBehaviour
     public GameObject combineEffect;
     public int gemsPerRound;
     public GameObject towerDestroyEffect;
+
 
     public Dictionary<TowerStats.TowerName, GameObject> specialTowerDictionary;
 
@@ -57,7 +59,7 @@ public class TowerInventory : MonoBehaviour
         playerInventory = new List<GameObject>();
         selectionEnabled = false;
         specialTowerDictionary = new Dictionary<TowerStats.TowerName, GameObject>();
-        foreach (GameObject tower in towerRoster)
+        foreach (GameObject tower in specialTowerRoster)
         {
             TowerStats tempStats = tower.GetComponent<TowerStats>();
             if (tempStats.specialTower)
@@ -69,24 +71,19 @@ public class TowerInventory : MonoBehaviour
         combinations = new List<KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>>();
 
         List<KeyValuePair<int, TowerStats.TowerName>> temp = new List<KeyValuePair<int, TowerStats.TowerName>>();
-        KeyValuePair<int, TowerStats.TowerName> combineTower1 = new KeyValuePair<int, TowerStats.TowerName>(1, TowerStats.TowerName.Blue);
-        KeyValuePair<int, TowerStats.TowerName> combineTower2 = new KeyValuePair<int, TowerStats.TowerName>(1, TowerStats.TowerName.Red);
-        KeyValuePair<int, TowerStats.TowerName> combineTower3 = new KeyValuePair<int, TowerStats.TowerName>(2, TowerStats.TowerName.Red);
-        temp.Add(combineTower1);
-        temp.Add(combineTower2);
-        temp.Add(combineTower3);
-        KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>> newCombination = 
-            new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Fireball, temp);
-        combinations.Add(newCombination);
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Blue));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Red));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.White));
+        combinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Fireball,
+            new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
 
-        temp.Clear();
-        combineTower1 = new KeyValuePair<int, TowerStats.TowerName>(1, TowerStats.TowerName.Blue);
-        combineTower2 = new KeyValuePair<int, TowerStats.TowerName>(1, TowerStats.TowerName.Red);
-        combineTower3 = new KeyValuePair<int, TowerStats.TowerName>(2, TowerStats.TowerName.Red);
-        newCombination =
-            new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Fireball, temp);
-        combinations.Add(newCombination);
-
+        /*temp.Clear();
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Green));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Yellow));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Blue));
+        combinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Fireball,
+            new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
+        */
     }
 
     private void Update()
@@ -197,7 +194,7 @@ public class TowerInventory : MonoBehaviour
         {
             GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
             newTower.GetComponent<TowerStats>().attachedToPlayer = true;
-            playerInventory.Add(newTower);
+            playerInventory.Insert(Random.Range(0, playerInventory.Count), newTower);
             newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .8f;
             AudioSource.PlayClipAtPoint(getTowerSFX, Camera.main.transform.position);
             yield return new WaitForSeconds(.4f);
@@ -224,7 +221,7 @@ public class TowerInventory : MonoBehaviour
             for (int i = 0; i < playerInventory.Count; i++)
             {
                 playerInventory[i].GetComponent<TowerStats>().attachedToPlayer = false;
-                playerInventory[i].GetComponent<Rigidbody>().AddForce((transform.position - playerInventory[i].transform.position).normalized * 10);
+                playerInventory[i].GetComponent<Rigidbody>().AddForce((transform.position - playerInventory[i].transform.position).normalized * 100);
                 if (Vector3.Distance(playerInventory[i].transform.position, transform.position) < .4f)
                 {
                     Instantiate(towerDestroyEffect, Vector3.Lerp(playerInventory[i].transform.position, transform.position, .5f), Quaternion.identity);
@@ -232,29 +229,67 @@ public class TowerInventory : MonoBehaviour
                     playerInventory.RemoveAt(i);
                     i--;
                 }
-                yield return new WaitForEndOfFrame();
+                yield return new WaitForFixedUpdate();
             }
         }
     }
 
-
-    /*private List<List<GameObject>> GetAllListCombinations(List<GameObject> data, int start, int end, int index, int r)
+    private int pairListIndex(List<KeyValuePair<int, TowerStats.TowerName>> checkList, KeyValuePair<int, TowerStats.TowerName> value)
     {
-        
+        for (int i = 0; i < checkList.Count; i++)
+        {
+            KeyValuePair<int, TowerStats.TowerName> temp = checkList[i];
+            if (value.Key == temp.Key && value.Value == temp.Value)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
-    private bool checkRosterforSpecialCombinations()
-    {
-        List<List<GameObject>> temp = GetAllListCombinations(new List<GameObject>(),);
-        return true;
-    }*/
-
     private bool checkRosterAndCombineTowers()
-    {             
-
+    {           
         for (int a = 0; a < playerInventory.Count; a++)
         {
-            for (int b = a; b < playerInventory.Count; b++)
+            //check for special towers
+            TowerStats checkTowerStats = playerInventory[a].GetComponent<TowerStats>();
+            foreach (KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>> combination in combinations)
+            {
+                KeyValuePair<int, TowerStats.TowerName> checkTowerDesignation = new KeyValuePair<int, TowerStats.TowerName>(checkTowerStats.level, checkTowerStats.towerName);
+                List<KeyValuePair<int, TowerStats.TowerName>> checkList = new List<KeyValuePair<int, TowerStats.TowerName>>(combination.Value);
+                List<GameObject> foundTowers = new List<GameObject>();
+                //Debug.Log(checkTowerDesignation);
+                if (pairListIndex(checkList, checkTowerDesignation) != -1)
+                {
+                    foreach (GameObject tempTower in playerInventory)
+                    {
+                        if (tempTower != playerInventory[a])
+                        {
+                            TowerStats tempTowerStats = tempTower.GetComponent<TowerStats>();
+                            KeyValuePair<int, TowerStats.TowerName> tempTowerDesignation = new KeyValuePair<int, TowerStats.TowerName>(tempTowerStats.level, tempTowerStats.towerName);
+                            int checkListIndex = pairListIndex(checkList, tempTowerDesignation);
+                            if (checkListIndex != -1)
+                            {
+                                //Debug.Log(tempTowerDesignation);
+                                foundTowers.Add(tempTower);
+                                checkList.RemoveAt(checkListIndex);
+                            }
+                        }
+                    }
+
+                    if (checkList.Count == 0)
+                    {
+                        Debug.Log("Special tower combination found");
+                        //combine all the foundTowers into the combination.key
+                        StartCoroutine(combineSpecialTower(combination.Key, playerInventory[a], foundTowers[0], foundTowers[1]));
+                        return true;
+                    }
+                    //search the other towers for the two other towers in the combinations.
+                }
+            }
+
+
+            /*for (int b = a; b < playerInventory.Count; b++)
             {
                 if (a != b)
                 {
@@ -264,20 +299,20 @@ public class TowerInventory : MonoBehaviour
                     TowerStats towerStatsB = towerB.GetComponent<TowerStats>();
                     if (canCombine(towerStatsA, towerStatsB))
                     {
-                        playerInventory.Remove(towerA);
-                        playerInventory.Remove(towerB);
                         StartCoroutine(combineTowers(towerA, towerB));
                         return true;
                     }
                 }
-            }
+            }*/
         }
         return false;
     }
 
     public IEnumerator combineTowers(GameObject towerA, GameObject towerB)
     {
-        while (Vector3.Distance(towerA.transform.position, towerB.transform.position) > .5f)
+        playerInventory.Remove(towerA);
+        playerInventory.Remove(towerB);
+        while ((towerA.transform.position - towerB.transform.position).sqrMagnitude > .25f)
         {
             towerB.transform.position = Vector3.Lerp(towerB.transform.position, towerA.transform.position, 3 * Time.deltaTime);
             towerB.transform.position = Vector3.Lerp(towerB.transform.position, cameraTransform.transform.position, .5f * Time.deltaTime);
@@ -291,15 +326,47 @@ public class TowerInventory : MonoBehaviour
         towerAStats.level++;
         Vector3 inbetween = Vector3.Lerp(towerA.transform.position, towerB.transform.position, .5f);
         Instantiate(combineEffect, inbetween, Quaternion.identity);
-        Vector3 startScale = towerA.transform.localScale;
         yield return new WaitForSeconds(.5f);
         Destroy(towerB);
         towerAStats.levelUp();
         towerA.transform.position = inbetween;
         yield return new WaitForSeconds(.5f);
-        playerInventory.Add(towerA);
+        playerInventory.Insert(Random.Range(0, playerInventory.Count), towerA);
         yield return new WaitForSeconds(.5f);
+    }
 
+    public IEnumerator combineSpecialTower(TowerStats.TowerName towerName, GameObject towerA, GameObject towerB, GameObject towerC)
+    {
+        playerInventory.Remove(towerA);
+        playerInventory.Remove(towerB);
+        playerInventory.Remove(towerC);
+        List<Rigidbody> rbList = new List<Rigidbody>();
+        rbList.Add(towerA.GetComponent<Rigidbody>());
+        rbList.Add(towerB.GetComponent<Rigidbody>());
+        rbList.Add(towerC.GetComponent<Rigidbody>());
+       
+        while ((towerA.transform.position - towerB.transform.position).sqrMagnitude > .25f &&
+            (towerA.transform.position - towerC.transform.position).sqrMagnitude > .25f &&
+            (towerB.transform.position - towerC.transform.position).sqrMagnitude > .25f)
+        {
+            foreach (Rigidbody rb in rbList)
+            {
+                foreach (Rigidbody rb2 in rbList)
+                {
+                    if (rb != rb2)
+                    {
+                        rb.AddForce(rb2.transform.position - rb.transform.position);
+                    }
+                }
+            }
+            yield return new WaitForFixedUpdate();
+        }
+
+        Destroy(towerA);
+        Destroy(towerB);
+        Destroy(towerC);
+        playerInventory.Add(Instantiate(specialTowerDictionary[towerName], transform.position, Quaternion.identity));
+        yield break;
     }
 
     public bool canCombine(TowerStats towerStatsA, TowerStats towerStatsB)
@@ -315,7 +382,7 @@ public class TowerInventory : MonoBehaviour
         return false;
     }
 
-    public GameObject specialCanCombine(GameObject towerA, GameObject towerB, GameObject towerC)
+    /*public GameObject specialCanCombine(GameObject towerA, GameObject towerB, GameObject towerC)
     {
         TowerStats towerAstats = towerA.GetComponent<TowerStats>();
         TowerStats towerBstats = towerB.GetComponent<TowerStats>();
@@ -333,7 +400,7 @@ public class TowerInventory : MonoBehaviour
             }
         }
         return null;
-    }
+    }*/
 
     private GameObject getRandomTower()
     {
