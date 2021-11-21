@@ -6969,7 +6969,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f309d4b288b843e4baf492fc320a3e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxGemInventory: 6
   getTowerSFX: {fileID: 8300000, guid: bc98711390c4f4695a1c791d92ac034d, type: 3}
   towerPlacementEnabled: 0
   inventoryDistanceFromPlayer: 1
@@ -6983,18 +6982,19 @@ MonoBehaviour:
   - {fileID: 9204140441405189623, guid: e7a82ac31456eea4db488781199a4298, type: 3}
   - {fileID: 3352053421576041292, guid: a36e7de485185644884e4d6a03918aaa, type: 3}
   specialTowerRoster:
-  - {fileID: 5996220971690792234, guid: 1f7e3583f07ac2a4787c3fd2e5c57412, type: 3}
-  - {fileID: 7940872050863963642, guid: c1c1b12a278de74468bfd002d0afcc80, type: 3}
   - {fileID: 6295010870351937091, guid: 82b7e8fad8308ed4cb407bbaa7e9f6d4, type: 3}
   - {fileID: 4782707245435355068, guid: 50382c94b3f4941f99d3020a78658ce2, type: 3}
+  - {fileID: 7940872050863963642, guid: c1c1b12a278de74468bfd002d0afcc80, type: 3}
+  - {fileID: 5996220971690792234, guid: 1f7e3583f07ac2a4787c3fd2e5c57412, type: 3}
   price: 1
   priceText: {fileID: 1113210396}
   selectionDisplayEffect: {fileID: 100000, guid: 7b56cd9b663f23f429e131a54ec87db0,
     type: 3}
   combineEffect: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0,
     type: 3}
-  gemsPerRound: 20
+  maxTowerInventory: 4
   towerDestroyEffect: {fileID: 100000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+  combineCooldown: 0.5
   selectionEnabled: 0
 --- !u!114 &1880758168
 MonoBehaviour:
@@ -7012,6 +7012,7 @@ MonoBehaviour:
     type: 3}
   placeTowerSFX: {fileID: 8300000, guid: 89597383c82a54bf8af26a8a4adc0b11, type: 3}
   returnTowerSFX: {fileID: 8300000, guid: b8d0a81d727a243b48aa35189f2439e7, type: 3}
+  priceIncreasePerPlacement: 5
 --- !u!114 &1880758169
 MonoBehaviour:
   m_ObjectHideFlags: 0

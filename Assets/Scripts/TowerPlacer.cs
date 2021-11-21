@@ -11,7 +11,9 @@ public class TowerPlacer : MonoBehaviour
     public AudioClip returnTowerSFX;
     private TowerInventory towerInventory;
     private TowerStorage towerStorage;
-    
+
+    public int priceIncreasePerPlacement;
+
     private int layerMask;
 
     public static TowerPlacer instance;
@@ -66,6 +68,8 @@ public class TowerPlacer : MonoBehaviour
                             StartCoroutine(placeTowerOnPodium(tempTower, tempTower.transform.position, shadowTower.transform.position, podium));
                             towerInventory.playerInventory.RemoveAt(0);
                             shadowTower.transform.position = new Vector3(25, 0, 0);
+                            towerInventory.price += priceIncreasePerPlacement;
+                            towerInventory.priceText.text = "Tower Cost " + towerInventory.price.ToString();
                             StartCoroutine(towerInventory.destroyPlayerInventory());
                         }
                     }
