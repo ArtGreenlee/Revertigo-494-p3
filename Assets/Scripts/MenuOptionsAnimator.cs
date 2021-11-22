@@ -13,6 +13,14 @@ public class MenuOptionsAnimator : MonoBehaviour
     public GameObject loadingPanel;
     public Slider loadingBar;
     public Text loadingText;
+    private void Awake()
+    {
+        if (!loadingPanel)
+        {
+            loadingPanel = GetComponent<GameObject>().transform.GetChild(4).gameObject;
+        }
+        loadingPanel.SetActive(false);
+    }
     void Start()
     {
         if (Options.Count < 1)
