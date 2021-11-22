@@ -24,7 +24,7 @@ public class TutorialControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currInstruction > 5) {
+        if (currInstruction > 6) {
             return;
         }
         if (Time.time - lastUpdate > 7.0) {
@@ -40,32 +40,35 @@ public class TutorialControl : MonoBehaviour
         
         if (instruction == 0) {
             yield return new WaitForSeconds(2);
-            tutorialText.text = "Use the mouse to look around \nPress space to hold position";
+            tutorialText.text = "Use the mouse to look around \nPress space to hold and free position";
         }
         else if (instruction == 1) {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Right click to place walls to block the enemy path \nHold right click to place multiple walls";
-
+            tutorialText.text = "Left click and hold to shoot enemies";
         }
         else if (instruction == 2) {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Left click and hold to shoot enemies";
-
+            tutorialText.text = "Right click to place walls to block the enemy path \nHold right click to place multiple walls";
         }
         else if (instruction == 3) {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Press G to buy towers to shoot alongside you";
+            tutorialText.text = "Place four walls in a square to form a podium";
         }
-        else if (instruction == 4)
+        else if (instruction == 4) {
+            tutorialText.text = "";
+            yield return new WaitForSeconds(1);
+            tutorialText.text = "Press G to buy towers to shoot alongside you \nLeft shift over a tower to view its stats";
+        }
+        else if (instruction == 5)
         {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Press F while over a wall to place a tower on the wall \nRight click on tower to view information about it";
+            tutorialText.text = "Press F while over a podium to place a tower on there";
         }
-        else if (instruction == 5) {
+        else if (instruction == 6) {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
             tutorialText.text = "Press P to pause and view instructions again";
