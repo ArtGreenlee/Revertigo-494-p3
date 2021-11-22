@@ -1704,10 +1704,10 @@ MonoBehaviour:
   countdownText: {fileID: 742159}
   pathIndicator: {fileID: 7759244784443228053, guid: 1566776cd3d250e4996cd257a0528b5e,
     type: 3}
-  waveStartTimes: 780000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e000000
+  waveStartTimes: f00000003c0000003c0000003c0000003c0000003c0000003c0000003c0000003c0000003c000000
   enemyCountForWave: 080000000800000008000000080000000a0000000b0000000c0000000d0000000e0000000f000000
-  enemyHealthForWave: 1e000000280000003c00000064000000c80000002c01000090010000f4010000f4010000f4010000
-  enemyValueForWave: 05000000050000000500000005000000050000000500000005000000050000000500000005000000
+  enemyHealthForWave: 1e0000002300000032000000460000006400000082000000be0000002c01000090010000f4010000
+  enemyValueForWave: 0400000005000000060000000700000008000000090000000a0000000b0000000c0000001e000000
 --- !u!114 &448767793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2600,7 +2600,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &739980371
 GameObject:
@@ -3243,7 +3243,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &937717175
 GameObject:
@@ -4185,10 +4185,10 @@ MonoBehaviour:
   countdownText: {fileID: 1760329208}
   pathIndicator: {fileID: 7759244784443228053, guid: 1566776cd3d250e4996cd257a0528b5e,
     type: 3}
-  waveStartTimes: 400100001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e000000
+  waveStartTimes: 080200003c0000003c0000003c0000003c0000003c0000003c0000003c0000003c0000003c000000
   enemyCountForWave: 080000000800000008000000080000000a0000000b0000000c0000000d0000000e0000000f000000
-  enemyHealthForWave: 1e000000280000003c00000064000000c80000002c01000090010000f4010000f4010000f4010000
-  enemyValueForWave: 05000000050000000500000005000000050000000500000005000000050000000500000005000000
+  enemyHealthForWave: 1e0000002300000032000000460000006400000082000000be0000002c01000090010000f4010000
+  enemyValueForWave: 0400000005000000060000000700000008000000090000000a0000000b0000000c0000001e000000
 --- !u!114 &1092862879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4429,7 +4429,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1161756649
 GameObject:
@@ -5355,7 +5355,7 @@ Transform:
   - {fileID: 1230043265}
   - {fileID: 2065853498}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1283300002
 GameObject:
@@ -5985,7 +5985,7 @@ RectTransform:
   m_Children:
   - {fileID: 1065307804}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6504,10 +6504,10 @@ MonoBehaviour:
   countdownText: {fileID: 1227290434}
   pathIndicator: {fileID: 7759244784443228053, guid: 1566776cd3d250e4996cd257a0528b5e,
     type: 3}
-  waveStartTimes: 050000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e000000
-  enemyCountForWave: 080000000800000008000000080000000a0000000b0000000c0000000d0000000e0000000f000000
-  enemyHealthForWave: 1e000000280000003c00000064000000c80000002c01000090010000f4010000f4010000f4010000
-  enemyValueForWave: 05000000050000000500000005000000050000000500000005000000050000000500000005000000
+  waveStartTimes: 050000001e000000280000002800000028000000320000003c0000003c0000003c0000003c000000
+  enemyCountForWave: 05000000060000000700000008000000090000000900000009000000090000000900000009000000
+  enemyHealthForWave: 1e0000002300000032000000460000006400000082000000be0000002c01000090010000f4010000
+  enemyValueForWave: 0400000005000000060000000700000008000000090000000a0000000b0000000c0000001e000000
 --- !u!114 &1580393135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7268,36 +7268,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675310383}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1737284787
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1737284788}
-  m_Layer: 0
-  m_Name: CornerFillers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1737284788
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1737284787}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1743754000
 GameObject:
   m_ObjectHideFlags: 0
@@ -8100,7 +8070,7 @@ Transform:
   - {fileID: 1161756650}
   - {fileID: 1085238383}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1880758157
 GameObject:
@@ -8221,7 +8191,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1.5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1880758163
 Rigidbody:
@@ -8460,7 +8430,7 @@ MonoBehaviour:
   placeTowerSFX: {fileID: 8300000, guid: 89597383c82a54bf8af26a8a4adc0b11, type: 3}
   returnTowerSFX: {fileID: 8300000, guid: b8d0a81d727a243b48aa35189f2439e7, type: 3}
   placeTowerVol: 0.1
-  priceIncreasePerPlacement: 3
+  priceIncreasePerPlacement: 1
 --- !u!114 &1880758169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9278,7 +9248,7 @@ Transform:
   - {fileID: 101984369}
   - {fileID: 567736309}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2123029420
 GameObject:
