@@ -17,6 +17,9 @@ public class WallPlacer : MonoBehaviour
     MeshRenderer shadowRenderer;
     MeshRenderer wallRenderer;
     private GoldStorage goldStorage;
+    Vector3 dragDirection;
+    GameObject firstWall;
+    Vector3 previousPlacementPosition;
 
     public static WallPlacer instance;
     private Vector3 storageVector;
@@ -38,6 +41,8 @@ public class WallPlacer : MonoBehaviour
 
     void Start()
     {
+        dragDirection = Vector3.zero;
+        previousPlacementPosition = Vector3.zero;
         layerMask = ~LayerMask.GetMask("Tower", "Player");
         storageVector = new Vector3(25, 0, 0);
         currentMouseDragWallPositions = new HashSet<Vector3>();
@@ -74,7 +79,12 @@ public class WallPlacer : MonoBehaviour
         mousePosition.y += .25f;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
-       
+        if (Input.GetMouseButtonUp(1))
+        {
+            firstWall = null;
+            dragDirection = Vector3.zero;
+            previousPlacementPosition = Vector3.zero;
+        }
 
         Vector3 curPoint;
         if (Physics.Raycast(ray, out hit, 100, layerMask) && 
@@ -83,6 +93,11 @@ public class WallPlacer : MonoBehaviour
 
             curPoint = hit.point;
             curPoint = UtilityFunctions.snapVector(curPoint);
+            if (dragDirection != Vector3.zero)
+            {
+                
+                curPoint = previousPlacementPosition + dragDirection;
+            }
             if (wallStorage.validWallPosition(curPoint) && 
                 !isCheckpoint(curPoint) && 
                 enemyStorage.validWallPosition(curPoint) &&
@@ -123,11 +138,22 @@ public class WallPlacer : MonoBehaviour
                     }
                     goldStorage.changeGoldAmount(-1);
                     GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        firstWall = newWall;
+                    }
+                    else if (dragDirection == Vector3.zero && firstWall != null)
+                    {
+                        dragDirection = UtilityFunctions.getClosestSide(newWall.transform.position - firstWall.transform.position);
+                        Debug.Log(dragDirection);
+                    }
+                    previousPlacementPosition = curPoint;
                     wallStorage.addWall(curPoint, newWall);
                     source.PlayOneShot(wallPlaceSFX, wallPlaceVol);
                     shadowWall.transform.position = storageVector;
                 }
-                else if (!Input.GetMouseButton(1) || !wallNearby(curPoint))
+                else if ((!Input.GetMouseButton(1) || !wallNearby(curPoint)) &&
+                    (dragDirection == Vector3.zero || UtilityFunctions.getClosestSide(curPoint - previousPlacementPosition) == dragDirection))
                 {
                     shadowWall.transform.rotation = UtilityFunctions.getRotationawayFromSide(curPoint);
                     //shadowWall.transform.position = shadowWall.transform.rotation * Vector3.forward * .5f + curPoint;
