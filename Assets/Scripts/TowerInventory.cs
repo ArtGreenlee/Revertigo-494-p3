@@ -275,11 +275,11 @@ public class TowerInventory : MonoBehaviour
                         }
                     }
 
-                    if (checkList.Count == 0)
+                    if (checkList.Count == 0 && foundTowers.Count == 3)
                     {
                         Debug.Log("Special tower combination found");
                         //combine all the foundTowers into the combination.key
-                        StartCoroutine(combineSpecialTower(combination.Key, playerInventory[a], foundTowers[0], foundTowers[1]));
+                        StartCoroutine(combineSpecialTower(combination.Key, foundTowers[2], foundTowers[0], foundTowers[1]));
                         return true;
                     }
                     //search the other towers for the two other towers in the combinations.

@@ -83,7 +83,6 @@ public class EnemySpawner : MonoBehaviour
         if (enemyPath != null && enemyPath.Count > 0 && Time.time - pathIndicatorSpawnInvervalUtility > 6)
         {
             pathIndicatorSpawnInvervalUtility = Time.time;
-            Debug.Log("spawn indicator");
             Instantiate(pathIndicator, enemyPath[0][0], Quaternion.identity).GetComponent<PathIndicatorController>().path = enemyPath;
         }
     }

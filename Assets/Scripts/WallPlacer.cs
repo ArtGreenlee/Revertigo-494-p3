@@ -95,8 +95,11 @@ public class WallPlacer : MonoBehaviour
             curPoint = UtilityFunctions.snapVector(curPoint);
             if (dragDirection != Vector3.zero)
             {
+                if (Vector3.Distance(curPoint, firstWall.transform.position) > Vector3.Distance(previousPlacementPosition, firstWall.transform.position)) {
+                    curPoint = previousPlacementPosition + dragDirection;
+                }
+                //we need to know if curpoint is greater previous placements position in the direction of the wall
                 
-                curPoint = previousPlacementPosition + dragDirection;
             }
             if (wallStorage.validWallPosition(curPoint) && 
                 !isCheckpoint(curPoint) && 
