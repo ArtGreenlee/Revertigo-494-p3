@@ -6498,10 +6498,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   countdownText: {fileID: 1227290434}
-  waveStartTimes: 1e0000001e0000001e0000001e0000001e0000001e000000
-  enemyCountForWave: 05000000000000001e0000001e0000001e000000
-  enemyHealthForWave: 0a0000000a0000000a000000
-  enemyValueForWave: 
+  waveStartTimes: 1e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e000000
+  enemyCountForWave: 0500000005000000050000000a0000000a0000000a0000000a0000000a0000000a0000000a000000
+  enemyHealthForWave: 1e000000320000006400000096000000c80000002c010000f4010000f4010000f4010000f4010000
+  enemyValueForWave: 05000000050000000500000005000000050000000500000005000000050000000500000005000000
 --- !u!114 &1580393135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8256,7 +8256,7 @@ MonoBehaviour:
   cooldownBuffDecreaseAtLevel: []
   towerLevelMeshList: []
   rangeAtLevel: []
-  towerName: 0
+  towerName: 9
   cooldownBuffEffect: {fileID: 0}
   kills: 0
   level: 0
@@ -8272,14 +8272,14 @@ MonoBehaviour:
   poisonDuration: 0
   range: 0
   numTargets: 0
-  baseDamageMin: 10
-  baseDamageMax: 20
+  baseDamageMin: 5
+  baseDamageMax: 10
   critChance: 0
   critMult: 0
-  slowPercent: 0.8
-  slowDuration: 5
-  aoe_range: 2.5
-  baseCooldown: 0.5
+  slowPercent: 0
+  slowDuration: 0
+  aoe_range: 2
+  baseCooldown: 0.75
   trailRendererColor: {r: 1, g: 1, b: 1, a: 1}
   upgradeEffect: {fileID: 0}
   specialTower: 1
