@@ -1543,6 +1543,8 @@ GameObject:
   m_Component:
   - component: {fileID: 408048318}
   - component: {fileID: 408048319}
+  - component: {fileID: 408048320}
+  - component: {fileID: 408048321}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -1622,6 +1624,36 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &408048320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408048317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218b3ffffe67d45bda445c03024662db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  k: 0.2
+  amplitude: 0.001
+  dampening_factor: 0.75
+--- !u!114 &408048321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408048317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47cbef83e7a8b4bf48c7ed333ffe3004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 620318464}
+  flashValue: 0.25
+  flashThresh: 0.25
 --- !u!1 &448767790
 GameObject:
   m_ObjectHideFlags: 0
