@@ -13,3 +13,5 @@ Sound Effects:
 Light Switch On SFX Sound Effect, Nicole Marie T, https://opengameart.org/content/light-switch-on-sfx-sound-effect
 
 UI and Item Sounds Sample 1, ViRiX, https://opengameart.org/content/ui-and-item-sounds-sample-1
+
+Bad Sound #1, remaxim, https://opengameart.org/content/bad-sound-1
