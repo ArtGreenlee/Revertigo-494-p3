@@ -5585,7 +5585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_lives: 20
-  loseLifeSFX: {fileID: 0}
+  loseLifeSFX: {fileID: 8300000, guid: 536ecf00edb054bbfb17d67c548f1b7a, type: 3}
   loseLifeVol: 0.3
   healthBar: {fileID: 408048319}
 --- !u!114 &1411751692
