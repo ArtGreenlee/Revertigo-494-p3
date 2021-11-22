@@ -20,7 +20,7 @@ public class GoldStorage : MonoBehaviour
         towerInventory = TowerInventory.instance;
         gemsPerRoundUpgradeTier = 0;
         goldText.text = "Gold " + gold.ToString();
-        gemsPerRoundUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Increase Number of Gems Per Purchase.\n" +
+        gemsPerRoundUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Increase Inventory Size\n" +
            towerInventory.maxTowerInventory.ToString() + " -> " + (towerInventory.maxTowerInventory + 1).ToString() +
            " Cost: " + gemsPerRoundUpgradeCost[gemsPerRoundUpgradeTier];
     }
@@ -38,15 +38,22 @@ public class GoldStorage : MonoBehaviour
         changeGoldAmount(-gemsPerRoundUpgradeCost[gemsPerRoundUpgradeTier]);
         towerInventory.maxTowerInventory++;
         gemsPerRoundUpgradeTier++;
-        gemsPerRoundUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Increase Number of Gems Per Purchase.\n" +
+        if (gemsPerRoundUpgradeTier >= gemsPerRoundUpgradeCost.Count)
+        {
+            gemsPerRoundUpgradeButton.gameObject.SetActive(false);
+        }
+        else
+        {
+           gemsPerRoundUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Increase Inventory Size\n" +
            towerInventory.maxTowerInventory.ToString() + " -> " + (towerInventory.maxTowerInventory + 1).ToString() +
            " Cost: " + gemsPerRoundUpgradeCost[gemsPerRoundUpgradeTier];
+        }
     }
 
     public void changeGoldAmount(float amount)
     {
         gold += amount;
-        if (gold >= gemsPerRoundUpgradeCost[gemsPerRoundUpgradeTier])
+        if (gemsPerRoundUpgradeTier < gemsPerRoundUpgradeCost.Count && gold >= gemsPerRoundUpgradeCost[gemsPerRoundUpgradeTier])
         {
             gemsPerRoundUpgradeButton.interactable = true;
         }
