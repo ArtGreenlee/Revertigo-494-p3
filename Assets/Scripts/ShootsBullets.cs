@@ -9,6 +9,9 @@ public class ShootsBullets : MonoBehaviour
     private TowerStats towerStats;
     public TargetSelectionType targetSelection;
     public AudioClip towerShootSFX;
+    public float towerShootLow = 0.01f;
+    public float towerShootHigh = 0.05f;
+    private AudioSource source;
     public GameObject bullet;
     public float bulletSpeed;
     private Dictionary<GameObject, float> targets;
@@ -24,6 +27,7 @@ public class ShootsBullets : MonoBehaviour
 
     private void Awake()
     {
+        source = GetComponent<AudioSource>();
         objectPooler = ObjectPooler.Instance;
         enemyStorage = EnemyStorage.instance;
         towerStats = GetComponent<TowerStats>();
@@ -130,7 +134,7 @@ public class ShootsBullets : MonoBehaviour
             tempBullet.GetComponent<MeshRenderer>().material.color = towerStats.trailRendererColor;
             if (!towerStats.attachedToPlayer && snapPosition != Vector3.zero)
             {
-                AudioSource.PlayClipAtPoint(towerShootSFX, transform.position, 8);
+                source.PlayOneShot(towerShootSFX, Random.Range(towerShootLow, towerShootHigh));
                 rb.AddForce(direction.normalized * bulletSpeed * -.1f, ForceMode.Impulse);
             }
         }

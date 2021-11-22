@@ -131,6 +131,8 @@ MonoBehaviour:
   fireBall: {fileID: 7922299580369839075, guid: 59860587ca7ad459782ba35d16d20719,
     type: 3}
   towerStats: {fileID: 0}
+  disableDuration: 0
+  controlledByPlayer: 0
 --- !u!114 &940235435245953666
 MonoBehaviour:
   m_ObjectHideFlags: 0

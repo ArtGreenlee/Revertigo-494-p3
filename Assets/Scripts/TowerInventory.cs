@@ -6,6 +6,8 @@ using System.Linq;
 public class TowerInventory : MonoBehaviour
 {
     public AudioClip getTowerSFX;
+    public float getTowerVol = 0.2f;
+    private AudioSource source;
 
     public static TowerInventory instance;
 
@@ -45,6 +47,7 @@ public class TowerInventory : MonoBehaviour
         {
             instance = this;
         }
+        source = GetComponent<AudioSource>();
     }
     // Start is called before the first frame update
     void Start()
@@ -148,10 +151,8 @@ public class TowerInventory : MonoBehaviour
 
             /*position.x += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad);
             position.x -= inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.y * Mathf.Deg2Rad);
-
             position.z += inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
             position.z -= inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.y * Mathf.Deg2Rad);
-
             position.y += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Sin(vecRotation.x * Mathf.Deg2Rad);
             position.y -= inventoryDistanceFromPlayer * Mathf.Sin(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
             */
@@ -190,14 +191,11 @@ public class TowerInventory : MonoBehaviour
         newTower.GetComponent<TowerStats>().attachedToPlayer = true;
         playerInventory.Insert(Random.Range(0, playerInventory.Count), newTower);
         newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .8f;
-        AudioSource.PlayClipAtPoint(getTowerSFX, Camera.main.transform.position);
+        source.PlayOneShot(getTowerSFX, getTowerVol);
 
         /*yield return new WaitForSeconds(.4f);
-
         checkRosterAndCombineTowers();
-
         yield return new WaitForSeconds(.5f);
-
         while (checkRosterAndCombineTowers())
         {
             yield return new WaitForSeconds(1f);
@@ -421,7 +419,6 @@ public class TowerInventory : MonoBehaviour
             KeyValuePair<int, TowerStats.TowerName> towerALevelName = new KeyValuePair<int, TowerStats.TowerName>(towerAstats.level, towerAstats.towerName);
             KeyValuePair<int, TowerStats.TowerName> towerBLevelName = new KeyValuePair<int, TowerStats.TowerName>(towerBstats.level, towerBstats.towerName);
             KeyValuePair<int, TowerStats.TowerName> towerCLevelName = new KeyValuePair<int, TowerStats.TowerName>(towerCstats.level, towerCstats.towerName);
-
             if (combination.Value.Contains(towerALevelName) && combination.Value.Contains(towerBLevelName) && combination.Value.Contains(towerCLevelName))
             {
                 Debug.Log("special tower combination");

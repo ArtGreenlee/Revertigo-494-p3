@@ -7,6 +7,8 @@ public class WallPlacer : MonoBehaviour
     public GameObject shadowWall;
     public GameObject wall;
     public AudioClip wallPlaceSFX;
+    public float wallPlaceVol = 0.1f;
+    private AudioSource source;
     private WallStorage wallStorage;
     private EnemyStorage enemyStorage;
     
@@ -31,6 +33,7 @@ public class WallPlacer : MonoBehaviour
         {
             instance = this;
         }
+        source = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -98,7 +101,7 @@ public class WallPlacer : MonoBehaviour
                     GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
                     shadowWall.transform.position = storageVector;
                     wallStorage.addWall(curPoint, newWall);
-                    AudioSource.PlayClipAtPoint(wallPlaceSFX, Camera.main.transform.position);
+                    source.PlayOneShot(wallPlaceSFX, wallPlaceVol);
                 }*/
 
                 if (Input.GetMouseButton(1) && shadowWall.transform.position != storageVector && !wallStorage.placements.ContainsKey(shadowWall.transform.position))
@@ -121,7 +124,7 @@ public class WallPlacer : MonoBehaviour
                     goldStorage.changeGoldAmount(-1);
                     GameObject newWall = Instantiate(wall, shadowWall.transform.position, shadowWall.transform.rotation);
                     wallStorage.addWall(curPoint, newWall);
-                    AudioSource.PlayClipAtPoint(wallPlaceSFX, Camera.main.transform.position);
+                    source.PlayOneShot(wallPlaceSFX, wallPlaceVol);
                     shadowWall.transform.position = storageVector;
                 }
                 else if (!Input.GetMouseButton(1) || !wallNearby(curPoint))
