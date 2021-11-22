@@ -39,7 +39,7 @@ public class PlayerLivesTemp : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
@@ -54,5 +54,6 @@ public class PlayerLivesTemp : MonoBehaviour
         //livesCounter.text = "Lives " + numLives.ToString();
         //Debug.Log(Mathf.Clamp01((float)numLives / max_lives));
         healthBar.value = Mathf.Clamp01((float)numLives / max_lives);
+        EventBus.Publish<PlayerLifeEvent>(new PlayerLifeEvent(-1));
     }
 }
