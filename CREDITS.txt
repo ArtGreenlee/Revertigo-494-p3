@@ -1,3 +1,5 @@
+Visuals:
+
 https://assetstore.unity.com/packages/3d/props/sets-gems-19902
 
 https://assetstore.unity.com/packages/2d/textures-materials/gridbox-prototype-materials-129127
@@ -6,7 +8,9 @@ https://assetstore.unity.com/packages/vfx/particles/cartoon-fx-free-109565
 
 https://assetstore.unity.com/packages/3d/environments/fantasy/translucent-crystals-106274
 
-Sound Effects:
+Sound:
+
+Hold the Line (Orchestral Remix), Bart K. https://opengameart.org/content/hold-the-line-orchestral-remix 
 
 4 Project Launches, Michel Baradari, https://opengameart.org/content/4-projectile-launches
 
@@ -15,3 +19,7 @@ Light Switch On SFX Sound Effect, Nicole Marie T, https://opengameart.org/conten
 UI and Item Sounds Sample 1, ViRiX, https://opengameart.org/content/ui-and-item-sounds-sample-1
 
 Bad Sound #1, remaxim, https://opengameart.org/content/bad-sound-1
+
+Various Alerts, dklon, https://opengameart.org/content/various-alerts
+
+
