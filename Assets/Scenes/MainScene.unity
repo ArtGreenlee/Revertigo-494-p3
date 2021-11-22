@@ -4787,6 +4787,7 @@ GameObject:
   - component: {fileID: 1411751691}
   - component: {fileID: 1411751688}
   - component: {fileID: 1411751692}
+  - component: {fileID: 1411751693}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -4884,6 +4885,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_lives: 20
+  loseLifeSFX: {fileID: 0}
+  loseLifeVol: 0.3
   healthBar: {fileID: 408048319}
 --- !u!114 &1411751692
 MonoBehaviour:
@@ -4897,6 +4900,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f667f223c38549a2b2baa5784131768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &1411751693
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411751685}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1419153846
 GameObject:
   m_ObjectHideFlags: 0
@@ -6056,6 +6155,7 @@ MonoBehaviour:
   cv: {fileID: 1426071739}
   openMenuSFX: {fileID: 8300000, guid: 89597383c82a54bf8af26a8a4adc0b11, type: 3}
   closeMenuSFX: {fileID: 8300000, guid: df4840f249a4c4bb9ad8ddfa8a2d325a, type: 3}
+  pauseVol: 0.2
 --- !u!82 &1615446042
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6957,6 +7057,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
   shootSFX: {fileID: 8300000, guid: 8adcbc8428e004e7c91e520f2637c373, type: 3}
+  shootLow: 0.2
+  shootHigh: 0.4
   knockBackForce: 0
 --- !u!82 &1880758166
 AudioSource:
@@ -7067,6 +7169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   getTowerSFX: {fileID: 8300000, guid: bc98711390c4f4695a1c791d92ac034d, type: 3}
+  getTowerVol: 0.2
   towerPlacementEnabled: 0
   inventoryDistanceFromPlayer: 1
   towerSnapSpeed: 4
@@ -7109,6 +7212,7 @@ MonoBehaviour:
     type: 3}
   placeTowerSFX: {fileID: 8300000, guid: 89597383c82a54bf8af26a8a4adc0b11, type: 3}
   returnTowerSFX: {fileID: 8300000, guid: b8d0a81d727a243b48aa35189f2439e7, type: 3}
+  placeTowerVol: 0.1
   priceIncreasePerPlacement: 5
 --- !u!114 &1880758169
 MonoBehaviour:
@@ -7126,6 +7230,7 @@ MonoBehaviour:
     type: 3}
   wall: {fileID: 7742995577632602489, guid: 755a91e6c553d8243986d341a8070f62, type: 3}
   wallPlaceSFX: {fileID: 8300000, guid: 8e205a590e1ff4607a9a509b4960bd5e, type: 3}
+  wallPlaceVol: 0.1
   onPlacementEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
 --- !u!1 &1897962687
 GameObject:

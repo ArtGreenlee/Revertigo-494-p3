@@ -169,6 +169,8 @@ MonoBehaviour:
     type: 3}
   checkPointList: []
   checkPointVectors: []
+  finishedPaths: 
+  debugSphere: {fileID: 0}
   enemyMovement: {fileID: 0}
 --- !u!54 &8303443927132647237
 Rigidbody:

@@ -10,6 +10,9 @@ public class PlayerLivesTemp : MonoBehaviour
     public int max_lives;
     //public TextMeshProUGUI livesCounter;
     public static PlayerLivesTemp instance;
+    public AudioClip loseLifeSFX;
+    public float loseLifeVol = 0.3f;
+    private AudioSource source;
     private TowerInventory towerInventory;
     private int numLives; 
     public Slider healthBar;
@@ -21,6 +24,7 @@ public class PlayerLivesTemp : MonoBehaviour
         {
             instance = this;
         }
+        source = GetComponent<AudioSource>();
     }
     private void Start()
     {
@@ -43,7 +47,9 @@ public class PlayerLivesTemp : MonoBehaviour
 
     public void loseLife()
     {
+
         numLives--;
+        source.PlayOneShot(loseLifeSFX, loseLifeVol);
 
         //livesCounter.text = "Lives " + numLives.ToString();
         //Debug.Log(Mathf.Clamp01((float)numLives / max_lives));
