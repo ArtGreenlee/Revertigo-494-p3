@@ -7,9 +7,12 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemy;
     private Pathfinder pathFinder;
     private WallPlacer towerPlacer;
-    private List<List<Vector3> > enemyPath;
+    public List<List<Vector3> > enemyPath;
     private EnemyStorage enemyStorage;
     public TextMeshPro countdownText;
+    public GameObject pathIndicator;
+    private List<GameObject> pathIndicatorList;
+    private float pathIndicatorSpawnInvervalUtility;
     private int startDelay;
     private int numEnemies;
 
@@ -19,12 +22,25 @@ public class EnemySpawner : MonoBehaviour
     public List<int> enemyValueForWave;
     private void Awake()
     {
+        pathIndicatorSpawnInvervalUtility = 0;
+        pathIndicatorList = new List<GameObject>();
         pathFinder = GetComponent<Pathfinder>();
         towerPlacer = GameObject.Find("GameController").GetComponent<WallPlacer>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
     }
+
+    public void resetPathIndicators()
+    {
+        foreach (GameObject pathIndicator in pathIndicatorList)
+        {
+            Destroy(pathIndicator);
+        }
+        pathIndicatorList.Clear();
+    }
+
     private IEnumerator Start()
     {
+        enemyPath = pathFinder.getPath();
         for (int i = 0; i < enemyCountForWave.Count; i++)
         {
             startDelay = waveStartTimes[i];
@@ -43,7 +59,19 @@ public class EnemySpawner : MonoBehaviour
                 yield return new WaitForSeconds(1);
             }
             StartCoroutine(startWave(numEnemies, enemyHealthForWave[i]));
-        }   
+        }
+
+        
+    }
+
+    private void Update()
+    {
+        if (enemyPath != null && enemyPath.Count > 0 && Time.time - pathIndicatorSpawnInvervalUtility > 6)
+        {
+            pathIndicatorSpawnInvervalUtility = Time.time;
+            Debug.Log("spawn indicator");
+            Instantiate(pathIndicator, enemyPath[0][0], Quaternion.identity).GetComponent<PathIndicatorController>().path = enemyPath;
+        }
     }
 
     public IEnumerator startWave(int spawnCount, float enemyHealth)
@@ -54,7 +82,6 @@ public class EnemySpawner : MonoBehaviour
             {
                 yield return new WaitForSeconds(.5f);
             }
-            enemyPath = pathFinder.getPath();
             GameObject newEnemy = Instantiate(enemy, enemyPath[0][0], Quaternion.identity);
             enemyStorage.addEnemy(newEnemy);
             newEnemy.GetComponent<EnemyHealth>().setMaxHealth(enemyHealth);

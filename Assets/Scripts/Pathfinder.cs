@@ -300,6 +300,11 @@ public class Pathfinder : MonoBehaviour
     {
         finishedPaths[pathIndex] = false;
 
+        if (enemyMovement == null)
+        {
+            GetComponent<EnemySpawner>().resetPathIndicators();
+        }
+
         pos start = new pos(startVec);
         pos end = new pos(endVec);
         start.FCost = (start.v - end.v).sqrMagnitude;
@@ -388,6 +393,12 @@ public class Pathfinder : MonoBehaviour
                 tempPath.Reverse(); // O(n) bad bad
                 path[pathIndex] = tempPath;
                 finishedPaths[pathIndex] = true;
+
+                if (pathFinished() && enemyMovement == null)
+                {
+                    GetComponent<EnemySpawner>().enemyPath = path;
+                }
+
                 numCoroutinesRunning--;
                 yield break;
             }
