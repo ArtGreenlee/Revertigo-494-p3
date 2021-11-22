@@ -7,8 +7,12 @@ public class GoldController : MonoBehaviour
     private PlayerInputControl player;
     private GoldStorage goldStorage;
     private Rigidbody rb;
+    private MeshRenderer mesh;
     public float atttraction;
     public AudioClip goldCollectSFX;
+    public float goldCollectLow = 0.1f;
+    public float goldCollectHigh = 0.5f;
+    private AudioSource source;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +23,8 @@ public class GoldController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        mesh = GetComponent<MeshRenderer>();
+        source = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -34,8 +40,15 @@ public class GoldController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        AudioSource.PlayClipAtPoint(goldCollectSFX, Camera.main.transform.position, 1);
+        mesh.enabled = false;
         goldStorage.changeGoldAmount(1);
+        StartCoroutine(AudioDelay());
+    }
+
+    IEnumerator AudioDelay() {
+        source.PlayOneShot(goldCollectSFX, Random.Range(goldCollectLow, goldCollectHigh));
+        yield return new WaitForSeconds(0.5f);
         gameObject.SetActive(false);
+
     }
 }

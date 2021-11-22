@@ -2529,7 +2529,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialText: {fileID: 1276542865}
-  firstPlayThrough: 0
 --- !u!4 &703163878
 Transform:
   m_ObjectHideFlags: 0
@@ -8255,7 +8254,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 8adcbc8428e004e7c91e520f2637c373, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.41
   m_Pitch: 1

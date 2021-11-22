@@ -8,23 +8,17 @@ public class TutorialControl : MonoBehaviour
     public TextMeshPro tutorialText;
     float lastUpdate;
     int currInstruction;
-    KeyCode[] keycodes = new KeyCode[]{ KeyCode.Space, KeyCode.Mouse1, KeyCode.Mouse0, KeyCode.G, KeyCode.F, KeyCode.P};
-    public bool firstPlayThrough;
+    // KeyCode[] keycodes = new KeyCode[]{ KeyCode.Space, KeyCode.Mouse1, KeyCode.Mouse0, KeyCode.G, KeyCode.F, KeyCode.P};
+    // public bool firstPlayThrough;
     private Transform cameraTransform;
 
     // Start is called before the first frame update
     void Start()
     {
         cameraTransform = Camera.main.transform;
-        if (firstPlayThrough)
-        {
-            currInstruction = 0;
-            lastUpdate = Time.time;
-            StartCoroutine(DisplayText(currInstruction));
-        }
-        
-        
-        
+        currInstruction = 0;
+        lastUpdate = Time.time;
+        StartCoroutine(DisplayText(currInstruction));
     }
 
     // Update is called once per frame
@@ -33,7 +27,7 @@ public class TutorialControl : MonoBehaviour
         if (currInstruction > 5) {
             return;
         }
-        if ((Time.time - lastUpdate > 10.0) || Input.GetKey(keycodes[currInstruction])) {
+        if (Time.time - lastUpdate > 7.0) {
             
             currInstruction += 1;
             lastUpdate = Time.time;
@@ -51,7 +45,7 @@ public class TutorialControl : MonoBehaviour
         else if (instruction == 1) {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Right click to place walls to block the enemy path";
+            tutorialText.text = "Right click to place walls to block the enemy path \nHold right click to place multiple walls";
 
         }
         else if (instruction == 2) {
@@ -69,7 +63,7 @@ public class TutorialControl : MonoBehaviour
         {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Press F while over a wall to place a tower on the wall, right click on towers to view information about it";
+            tutorialText.text = "Press F while over a wall to place a tower on the wall \nRight click on tower to view information about it";
         }
         else if (instruction == 5) {
             tutorialText.text = "";
