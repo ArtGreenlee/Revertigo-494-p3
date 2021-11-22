@@ -15,6 +15,10 @@ public class EnemySpawner : MonoBehaviour
     private float pathIndicatorSpawnInvervalUtility;
     private int startDelay;
     private int numEnemies;
+    private AudioSource source;
+    public AudioClip upcomingWaveSFX;
+    // public AudioClip waveStartingSFX;
+    public float waveVol = 0.1f;
 
     public List<int> waveStartTimes;
     public List<int> enemyCountForWave;
@@ -27,6 +31,7 @@ public class EnemySpawner : MonoBehaviour
         pathFinder = GetComponent<Pathfinder>();
         towerPlacer = GameObject.Find("GameController").GetComponent<WallPlacer>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
+        source = GetComponent<AudioSource>();
     }
 
     public void resetPathIndicators()
@@ -45,11 +50,19 @@ public class EnemySpawner : MonoBehaviour
         {
             startDelay = waveStartTimes[i];
             numEnemies = enemyCountForWave[i];
+            bool SFXPlaying = false;
             for (int j = 0; j < startDelay; j++)
             {
                 int timeRemaining = startDelay - j;
                 if (timeRemaining <= 10)
                 {
+                    if (SFXPlaying) {
+                        SFXPlaying = false;
+                    }
+                    if (!SFXPlaying) {
+                        SFXPlaying = true;
+                        source.PlayOneShot(upcomingWaveSFX, waveVol);
+                    }
                     countdownText.text = (startDelay - j).ToString();
                 }
                 else
@@ -58,6 +71,7 @@ public class EnemySpawner : MonoBehaviour
                 }
                 yield return new WaitForSeconds(1);
             }
+            Debug.Log("happening");
             StartCoroutine(startWave(numEnemies, enemyHealthForWave[i]));
         }
 

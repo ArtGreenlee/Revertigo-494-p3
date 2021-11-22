@@ -6,7 +6,7 @@ public class PlayerShoot : MonoBehaviour
 {
     public GameObject bullet;
     public AudioClip shootSFX;
-    public float shootLow = 0.2f;
+    public float shootLow = 0.3f;
     public float shootHigh = 0.4f;
     private AudioSource source;
     private TowerStats towerStats;
@@ -46,7 +46,6 @@ public class PlayerShoot : MonoBehaviour
                 tempBullet.GetComponent<BulletController>().towerStats = towerStats;
                 rb.AddForce(transform.forward * -1 * knockBackForce, ForceMode.Impulse);
                 float vol = Random.Range(shootLow, shootHigh);
-                Debug.Log(vol);
                 source.PlayOneShot(shootSFX, vol);
                 cooldownUtility = Time.time;
             }

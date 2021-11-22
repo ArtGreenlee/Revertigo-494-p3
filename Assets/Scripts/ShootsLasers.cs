@@ -9,8 +9,8 @@ public class ShootsLasers : MonoBehaviour
     private TowerStats towerStats;
     public TargetSelectionType targetSelection;
     public AudioClip towerShootSFX;
-    public float towerShootLow = 0.05f;
-    public float towerShootHigh = 0.1f;
+    public float towerShootLow = 0.1f;
+    public float towerShootHigh = 0.2f;
     private AudioSource source;
     public GameObject laser;
     private Dictionary<GameObject, float> targets;
