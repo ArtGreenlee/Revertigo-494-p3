@@ -9,6 +9,9 @@ public class ShootsLasers : MonoBehaviour
     private TowerStats towerStats;
     public TargetSelectionType targetSelection;
     public AudioClip towerShootSFX;
+    public float towerShootLow = 0.01f;
+    public float towerShootHigh = 0.05f;
+    private AudioSource source;
     public GameObject laser;
     private Dictionary<GameObject, float> targets;
     private EnemyStorage enemyStorage;
@@ -20,6 +23,7 @@ public class ShootsLasers : MonoBehaviour
 
     private void Awake()
     {
+        source = GetComponent<AudioSource>();
         objectPooler = ObjectPooler.Instance;
         enemyStorage = EnemyStorage.instance;
         towerStats = GetComponent<TowerStats>();
@@ -96,7 +100,7 @@ public class ShootsLasers : MonoBehaviour
             GameObject tempLaser = Instantiate(laser, transform.position, new Quaternion());
             tempLaser.GetComponent<LaserController>().towerStats = towerStats;
             tempLaser.GetComponent<LaserController>().target = target;
-            AudioSource.PlayClipAtPoint(towerShootSFX, Camera.main.transform.position);
+            source.PlayOneShot(towerShootSFX, Random.Range(towerShootLow, towerShootHigh));
 
         }
     }

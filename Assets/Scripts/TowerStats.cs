@@ -23,6 +23,8 @@ public class TowerStats : MonoBehaviour
     public List<float> cooldownBuffDecreaseAtLevel;
 
     public List<Mesh> towerLevelMeshList;
+
+    public List<float> rangeAtLevel;
     
     public enum TowerName
     {
