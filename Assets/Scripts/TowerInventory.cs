@@ -5,8 +5,10 @@ using TMPro;
 using System.Linq;
 public class TowerInventory : MonoBehaviour
 {
+    public int maxGemInventory;
     public AudioClip getTowerSFX;
-
+    private AudioSource source;
+    public float playerTowerVol = 0.2f;
     public static TowerInventory instance;
 
     public bool towerPlacementEnabled;
@@ -26,10 +28,9 @@ public class TowerInventory : MonoBehaviour
     private Transform cameraTransform;
     private TowerPlacer towerPlacer;
     public GameObject combineEffect;
-    public int maxTowerInventory;
+    public int gemsPerRound;
     public GameObject towerDestroyEffect;
-    public float combineCooldown;
-    private float combineCooldownUtility;
+
 
     public Dictionary<TowerStats.TowerName, GameObject> specialTowerDictionary;
 
@@ -45,11 +46,12 @@ public class TowerInventory : MonoBehaviour
         {
             instance = this;
         }
+        source = GetComponent<AudioSource>();
     }
     // Start is called before the first frame update
     void Start()
     {
-        combineCooldownUtility = 0;
+
         playerInputControl = PlayerInputControl.instance;
         towerPlacer = TowerPlacer.instance;
         cameraTransform = Camera.main.transform;
@@ -88,12 +90,22 @@ public class TowerInventory : MonoBehaviour
 
     private void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.G) && (goldStorage.gold >= price && playerInventory.Count < maxTowerInventory)))
+        if ((Input.GetKeyDown(KeyCode.G) && (goldStorage.gold >= price && !selectionEnabled)))
         {
-            combineCooldownUtility = Time.time;
+            foreach (GameObject tower in playerInventory)
+            {
+                Destroy(tower);
+            }
+            if (selectionDisplayEffectInstance != null)
+            {
+                Destroy(selectionDisplayEffectInstance);
+            }
+            playerInventory.Clear();
             goldStorage.changeGoldAmount(-price);
-            //price += 7;
-            StartCoroutine(buyTower());
+            price += 7;
+            priceText.text = "Tower Cost " + price.ToString();
+            StartCoroutine(buyRoundOfGems());
+
         }
 
         if (Input.GetKeyDown(KeyCode.Q) && selectionEnabled)
@@ -108,19 +120,13 @@ public class TowerInventory : MonoBehaviour
             playerInventory.RemoveAt(0);
             playerInventory.Add(rotateTemp);
         }
-
-        if (Time.frameCount % 15 == 0 && Time.time - combineCooldownUtility > combineCooldown)
-        {
-            combineCooldownUtility = Time.time;
-            checkRosterAndCombineTowers();
-        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         float degreesBetween = (2 * Mathf.PI) / playerInventory.Count;
-        float distanceFromPlayer = inventoryDistanceFromPlayer * playerInventory.Count / 3 + 1.5f;
+        float distanceFromPlayer = inventoryDistanceFromPlayer * playerInventory.Count / 3 + 1;
         for (int i = 0; i < playerInventory.Count; i++)
         {
             Vector3 vecRotation = transform.rotation.eulerAngles;
@@ -184,17 +190,18 @@ public class TowerInventory : MonoBehaviour
         }
     }
 
-    private IEnumerator buyTower()
+    private IEnumerator buyRoundOfGems()
     {
-        GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
-        newTower.GetComponent<TowerStats>().attachedToPlayer = true;
-        playerInventory.Insert(Random.Range(0, playerInventory.Count), newTower);
-        newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .8f;
-        AudioSource.PlayClipAtPoint(getTowerSFX, Camera.main.transform.position);
-
-        /*yield return new WaitForSeconds(.4f);
-
-        checkRosterAndCombineTowers();
+        for (int i = 0; i < gemsPerRound; i++)
+        {
+            GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
+            newTower.GetComponent<TowerStats>().attachedToPlayer = true;
+            playerInventory.Insert(Random.Range(0, playerInventory.Count), newTower);
+            newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .8f;
+            source.PlayOneShot(getTowerSFX, playerTowerVol);
+            yield return new WaitForSeconds(.4f);
+            checkRosterAndCombineTowers();
+        }
 
         yield return new WaitForSeconds(.5f);
 
@@ -203,15 +210,10 @@ public class TowerInventory : MonoBehaviour
             yield return new WaitForSeconds(1f);
             checkRosterAndCombineTowers();
             yield return new WaitForSeconds(1f);
-        }*/
+        }
 
         selectionEnabled = true;
-        if (selectionDisplayEffectInstance == null)
-        {
-            selectionDisplayEffectInstance = Instantiate(selectionDisplayEffect, playerInventory[0].transform.position, Quaternion.identity);
-        }
-        
-        yield break;
+        selectionDisplayEffectInstance = Instantiate(selectionDisplayEffect, playerInventory[0].transform.position, Quaternion.identity);
     }
 
     public IEnumerator destroyPlayerInventory()
@@ -305,25 +307,6 @@ public class TowerInventory : MonoBehaviour
                 }
             }*/
         }
-
-        for (int a = 0; a < playerInventory.Count; a++)
-        {
-            for (int b = a; b < playerInventory.Count; b++)
-            {
-                if (a != b)
-                {
-                    GameObject towerA = playerInventory[a];
-                    GameObject towerB = playerInventory[b];
-                    TowerStats towerStatsA = towerA.GetComponent<TowerStats>();
-                    TowerStats towerStatsB = towerB.GetComponent<TowerStats>();
-                    if (canCombine(towerStatsA, towerStatsB))
-                    {
-                        StartCoroutine(combineTowers(towerA, towerB));
-                        return true;
-                    }
-                }
-            }
-        }
         return false;
     }
 
@@ -364,9 +347,9 @@ public class TowerInventory : MonoBehaviour
         rbList.Add(towerB.GetComponent<Rigidbody>());
         rbList.Add(towerC.GetComponent<Rigidbody>());
        
-        while ((towerA.transform.position - towerB.transform.position).sqrMagnitude > .1f &&
-            (towerA.transform.position - towerC.transform.position).sqrMagnitude > .1f &&
-            (towerB.transform.position - towerC.transform.position).sqrMagnitude > .1f)
+        while ((towerA.transform.position - towerB.transform.position).sqrMagnitude > .25f &&
+            (towerA.transform.position - towerC.transform.position).sqrMagnitude > .25f &&
+            (towerB.transform.position - towerC.transform.position).sqrMagnitude > .25f)
         {
             foreach (Rigidbody rb in rbList)
             {
@@ -380,21 +363,11 @@ public class TowerInventory : MonoBehaviour
             }
             yield return new WaitForFixedUpdate();
         }
-        foreach (Rigidbody rb in rbList)
-        {
-            rb.velocity = Vector3.zero;
-        }
 
-        Vector3 inbetween = Vector3.Lerp(towerA.transform.position, towerB.transform.position, .5f);
-        
-        Instantiate(combineEffect, inbetween, Quaternion.identity);
-        yield return new WaitForSeconds(.5f);
         Destroy(towerA);
         Destroy(towerB);
         Destroy(towerC);
-        GameObject specialTower = Instantiate(specialTowerDictionary[towerName], inbetween, Quaternion.identity);
-        playerInventory.Insert(Random.Range(0, playerInventory.Count), specialTower);
-
+        playerInventory.Add(Instantiate(specialTowerDictionary[towerName], transform.position, Quaternion.identity));
         yield break;
     }
 

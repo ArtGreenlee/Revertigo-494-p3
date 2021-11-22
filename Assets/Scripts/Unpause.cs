@@ -8,10 +8,12 @@ public class Unpause : MonoBehaviour
     public GameObject cv;
     public AudioClip openMenuSFX;
     public AudioClip closeMenuSFX;
+    public float pauseVol = 0.2f;
+    private AudioSource source;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-       
+       source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -22,12 +24,12 @@ public class Unpause : MonoBehaviour
             if (cv.activeSelf == false)
             {
                 cv.SetActive(true);
-                AudioSource.PlayClipAtPoint(openMenuSFX, Camera.main.transform.position);
+                source.PlayOneShot(openMenuSFX, pauseVol);
                 Time.timeScale = 0;
             }
             else
             {
-                AudioSource.PlayClipAtPoint(closeMenuSFX, Camera.main.transform.position);
+                source.PlayOneShot(closeMenuSFX, pauseVol);
                 cv.SetActive(false);
                 Time.timeScale = 1.0f;
             }

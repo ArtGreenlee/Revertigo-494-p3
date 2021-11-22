@@ -6,6 +6,9 @@ public class PlayerShoot : MonoBehaviour
 {
     public GameObject bullet;
     public AudioClip shootSFX;
+    public float shootLow = 0.2f;
+    public float shootHigh = 0.4f;
+    private AudioSource source;
     private TowerStats towerStats;
     private float cooldownUtility;
     private ObjectPooler objectPooler;
@@ -15,6 +18,7 @@ public class PlayerShoot : MonoBehaviour
     private PlayerInputControl playerInputControl;
     private void Awake()
     {
+        source = GetComponent<AudioSource>();
         playerInputControl = GetComponent<PlayerInputControl>();
         towerInventory = GetComponent<TowerInventory>();
         rb = GetComponent<Rigidbody>();
@@ -41,7 +45,9 @@ public class PlayerShoot : MonoBehaviour
                 tempBullet.GetComponent<Rigidbody>().velocity = transform.forward * 30;
                 tempBullet.GetComponent<BulletController>().towerStats = towerStats;
                 rb.AddForce(transform.forward * -1 * knockBackForce, ForceMode.Impulse);
-                AudioSource.PlayClipAtPoint(shootSFX, transform.position, 2);
+                float vol = Random.Range(shootLow, shootHigh);
+                Debug.Log(vol);
+                source.PlayOneShot(shootSFX, vol);
                 cooldownUtility = Time.time;
             }
 

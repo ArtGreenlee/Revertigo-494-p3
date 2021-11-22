@@ -9,6 +9,8 @@ public class TowerPlacer : MonoBehaviour
     public GameObject shadowTower;
     public AudioClip placeTowerSFX;
     public AudioClip returnTowerSFX;
+    private AudioSource source;
+    public float placeTowerVol = 0.1f;
     private TowerInventory towerInventory;
     private TowerStorage towerStorage;
 
@@ -25,6 +27,7 @@ public class TowerPlacer : MonoBehaviour
         {
             instance = this;
         }
+        source = GetComponent<AudioSource>();
     }
     // Start is called before the first frame update
     void Start()
@@ -63,7 +66,7 @@ public class TowerPlacer : MonoBehaviour
                             towerInventory.selectionEnabled = false;
                             GameObject tempTower = towerInventory.playerInventory[0];
                             wallStorage.attachTowerToPodium(tempTower, podium);
-                            AudioSource.PlayClipAtPoint(placeTowerSFX, Camera.main.transform.position);
+                            source.PlayOneShot(placeTowerSFX, placeTowerVol);
 
                             StartCoroutine(placeTowerOnPodium(tempTower, tempTower.transform.position, shadowTower.transform.position, podium));
                             towerInventory.playerInventory.RemoveAt(0);
