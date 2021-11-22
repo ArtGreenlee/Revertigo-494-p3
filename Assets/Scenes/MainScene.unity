@@ -1953,11 +1953,8 @@ MonoBehaviour:
     F: Place Tower on Podium
 
 
-    T: Pick up
-    tower
-
-
-    Right click tower: view stats
+    Left shift
+    over tower: view stats
 
 
     R: Reset
