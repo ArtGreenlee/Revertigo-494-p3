@@ -1913,20 +1913,20 @@ MonoBehaviour:
     Place Walls
 
 
-    R: Undo Wall
-
-
     G: Buy Tower
 
 
     F: Place Tower on Podium
 
 
-    T:
-    Pick up tower
+    T: Pick up
+    tower
 
 
-    ESC: Reset
+    Right click tower: view stats
+
+
+    R: Reset
 
 '
 --- !u!222 &568890283
