@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 
 public class MenuOptionsAnimator : MonoBehaviour
@@ -12,7 +13,7 @@ public class MenuOptionsAnimator : MonoBehaviour
     private bool animating = false;
     public GameObject loadingPanel;
     public Slider loadingBar;
-    public Text loadingText;
+    public TextMeshProUGUI loadingText;
     private void Awake()
     {
         if (!loadingPanel)
