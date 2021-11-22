@@ -66,7 +66,7 @@ public class TutorialControl : MonoBehaviour
         {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Press F while over a podium to place a tower on there";
+            tutorialText.text = "Press F while over a podium to place a tower there";
         }
         else if (instruction == 6) {
             tutorialText.text = "";

@@ -6,8 +6,8 @@ public class ShootsFireBalls : MonoBehaviour
 {
     public GameObject fireBall;
     public AudioClip towerShootSFX;
-    public float towerShootLow = 0.01f;
-    public float towerShootHigh = 0.05f;
+    public float towerShootLow = 0.05f;
+    public float towerShootHigh = 0.1f;
     private AudioSource source;
     private EnemyStorage enemyStorage;
     private float cooldownTimer;

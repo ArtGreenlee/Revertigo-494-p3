@@ -9,8 +9,8 @@ public class ShootsBullets : MonoBehaviour
     private TowerStats towerStats;
     public TargetSelectionType targetSelection;
     public AudioClip towerShootSFX;
-    public float towerShootLow = 0.01f;
-    public float towerShootHigh = 0.05f;
+    public float towerShootLow = 0.05f;
+    public float towerShootHigh = 0.1f;
     private AudioSource source;
     public GameObject bullet;
     public float bulletSpeed;
