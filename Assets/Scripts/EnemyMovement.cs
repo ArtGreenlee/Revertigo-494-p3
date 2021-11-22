@@ -102,7 +102,7 @@ public class EnemyMovement : MonoBehaviour
                 return;
             }
             transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * curSpeed;
-            if (Vector3.Distance(transform.position, nextPoint) < .1f)
+            if ((transform.position - nextPoint).sqrMagnitude < .01f)
             {
                 currentPointIndex++;
                 if (currentPointIndex == path[pathIndex].Count)
@@ -113,9 +113,9 @@ public class EnemyMovement : MonoBehaviour
                     {
                         Instantiate(onPathFinishEffect, transform.position, Quaternion.identity);
                         pathFinder.StopAllCoroutines();
-                        Destroy(gameObject);
                         AudioSource.PlayClipAtPoint(loseLifeSFX, Camera.main.transform.position);
                         playerLifes.loseLife();
+                        Destroy(gameObject);
                     }
                 }
             }
