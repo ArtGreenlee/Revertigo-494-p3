@@ -1941,7 +1941,8 @@ MonoBehaviour:
     Left Click: fire
 
 
-    Right Click/Drag: Place Walls
+    Right Click/Drag:
+    Place Walls
 
 
     G: Buy Tower
@@ -1950,7 +1951,8 @@ MonoBehaviour:
     F: Place Tower on Podium
 
 
-    T: Pick up tower
+    T: Pick up
+    tower
 
 
     Right click tower: view stats
@@ -6496,8 +6498,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   countdownText: {fileID: 1227290434}
-  waveStartTimes: 102700000a0000000a000000
-  enemyCountForWave: 0a0000000a0000000a000000
+  waveStartTimes: 1e0000001e0000001e0000001e0000001e0000001e000000
+  enemyCountForWave: 05000000000000001e0000001e0000001e000000
   enemyHealthForWave: 0a0000000a0000000a000000
   enemyValueForWave: 
 --- !u!114 &1580393135
