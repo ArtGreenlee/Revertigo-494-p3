@@ -7,6 +7,14 @@ public class BuffsOtherTowers : MonoBehaviour
     private TowerStats towerStats;
     private TowerStorage towerStorage;
     private List<GameObject> buffTowers;
+
+    public enum buffSelection
+    {
+        adjacent,
+        inRange
+    };
+
+    public buffSelection buffSelectionType;
     private void Start()
     {
         buffTowers = new List<GameObject>();
@@ -51,7 +59,15 @@ public class BuffsOtherTowers : MonoBehaviour
                 searchPoint = recoilCheck.snapPosition;
             }
         }
-        List<GameObject> towersInRange = towerStorage.getAllTowersWithinRangeAtPoint(searchPoint, towerStats.range);
+        List<GameObject> towersInRange;
+        if (buffSelectionType == buffSelection.adjacent)
+        {
+            towersInRange = towerStorage.getAllTowersAdjacentToPoint(searchPoint);
+        }
+        else
+        {
+            towersInRange = towerStorage.getAllTowersWithinRangeAtPoint(searchPoint, towerStats.range);
+        }
         for (int i = 0; i < buffTowers.Count; i++)
         {
             if (!towersInRange.Contains(buffTowers[i]))

@@ -103,6 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetSelection: 0
   towerShootSFX: {fileID: 8300000, guid: 8385f470855904f35ab844442462f71b, type: 3}
+  towerShootLow: 0.1
+  towerShootHigh: 0.2
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
   bulletSpeed: 15
   shootEffect: {fileID: 100004, guid: fb7b0526ade434043b350a180d741cf3, type: 3}
@@ -162,11 +164,11 @@ MonoBehaviour:
   - 0.9
   aoeRangeIncreaseOnLevelUp: []
   cooldownBuffDecreaseAtLevel:
-  - 0.9
-  - 0.85
-  - 0.8
-  - 0.75
   - 0.7
+  - 0.6
+  - 0.5
+  - 0.45
+  - 0.4
   towerLevelMeshList:
   - {fileID: 4300000, guid: 6bd1688c4b7d0499586a92ae1b8d925a, type: 3}
   - {fileID: 4300000, guid: 4ee4ee93a9a684deca32b2f27ff174b0, type: 3}
@@ -174,6 +176,7 @@ MonoBehaviour:
   - {fileID: 4300000, guid: 79b2a5cdd70824e3d9b3acf2ddc79f4d, type: 3}
   - {fileID: 4300000, guid: e53910dd9ff52433db8fc7f84a2318bb, type: 3}
   - {fileID: 4300000, guid: 04a69148d0283440c96e0a776ed3bf53, type: 3}
+  rangeAtLevel: []
   towerName: 4
   cooldownBuffEffect: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
   kills: 0
@@ -351,6 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a05bebeb680b484b9915be8c1e74007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buffSelectionType: 0
 --- !u!82 &-6571901904177223419
 AudioSource:
   m_ObjectHideFlags: 0

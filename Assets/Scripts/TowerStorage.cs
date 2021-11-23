@@ -15,54 +15,58 @@ public class TowerStorage : MonoBehaviour
         }
     }
 
-    private List<GameObject> towers; // ONLY APPLIES TO THE TOWERS ON THE FIELD
+    private Dictionary<Vector3, GameObject> towers; // ONLY APPLIES TO THE TOWERS ON THE FIELD
 
 
     // Start is called before the first frame update
     void Start()
     {
-        towers = new List<GameObject>();
+        towers = new Dictionary<Vector3, GameObject>();
     }
 
-    public void addTower(GameObject tower)
+    public void addTower(Vector3 placementPosition, GameObject tower)
     {
-        if (towers.Contains(tower))
+        if (towers.ContainsKey(placementPosition))
         {
             Debug.LogError("TOWER ALREADY IN INVENTORY");
         }
-        towers.Add(tower);
+        towers.Add(placementPosition, tower);
     }
 
-    public void removeTower(GameObject tower)
+    public void removeTower(Vector3 placementPosition, GameObject tower)
     {
-        if (!towers.Contains(tower))
+        if (!towers.ContainsValue(tower))
         {
             Debug.LogError("TOWER REMOVED NOT INVENTORY");
         }
-        towers.Remove(tower);
+        towers.Remove(placementPosition);
     }
 
     public List<GameObject> getAllTowersWithinRangeAtPoint(Vector3 point, float range)
     {
         List<GameObject> tempList = new List<GameObject>();
-        foreach (GameObject tower in towers)
+        float rangeSquared = range * range;
+        foreach (Vector3 towerPosition in towers.Keys)
         {
-            Vector3 towerPosition = tower.transform.position;
-            ShootsBullets recoilCheck;
-            if (TryGetComponent<ShootsBullets>(out recoilCheck))
+            if ((towerPosition - point).sqrMagnitude <= rangeSquared)
             {
-                if (recoilCheck.snapPosition != Vector3.zero)
-                {
-                    towerPosition = recoilCheck.snapPosition;
-                }
-            }
-
-            if ((towerPosition - point).sqrMagnitude <= range * range)
-            {
-                tempList.Add(tower);
+                tempList.Add(towers[towerPosition]);
             }
         }
         return tempList;
     }
 
+    public List<GameObject> getAllTowersAdjacentToPoint(Vector3 point)
+    {
+        List<GameObject> tempList = new List<GameObject>();
+        foreach (Vector3 direction in UtilityFunctions.sideVectors)
+        {
+            Vector3 checkPos = point + direction * 2;
+            if (towers.ContainsKey(checkPos))
+            {
+                tempList.Add(towers[checkPos]);
+            }
+        }
+        return tempList;
+    }
 }

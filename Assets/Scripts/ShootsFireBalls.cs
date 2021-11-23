@@ -13,6 +13,8 @@ public class ShootsFireBalls : MonoBehaviour
     private float cooldownTimer;
     private TowerStats towerStats;
     public bool controlledByPlayer;
+    public float launchForce;
+    public float disableDuration;
     private void Awake()
     {
         source = GetComponent<AudioSource>();
@@ -61,7 +63,7 @@ public class ShootsFireBalls : MonoBehaviour
         if (Time.time - cooldownTimer > towerStats.getCooldown())
         {
             GameObject fireBallTemp = Instantiate(fireBall, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
-            fireBallTemp.GetComponent<Rigidbody>().AddForce(direction.normalized * 4, ForceMode.Impulse);
+            fireBallTemp.GetComponent<Rigidbody>().AddForce(direction.normalized * launchForce, ForceMode.Impulse);
             FireBallController fireBallControllerTemp;
             ClusterFireballController clusterFireballControllerTemp;
             if (fireBallTemp.TryGetComponent<FireBallController>(out fireBallControllerTemp))
@@ -72,7 +74,7 @@ public class ShootsFireBalls : MonoBehaviour
                 }
                 else
                 {
-                    fireBallControllerTemp.disableDuration = .5f;
+                    fireBallControllerTemp.disableDuration = disableDuration;
                     source.PlayOneShot(towerShootSFX, Random.Range(towerShootLow, towerShootHigh));
                 }
             }
@@ -85,7 +87,7 @@ public class ShootsFireBalls : MonoBehaviour
                 }
                 else
                 {
-                    clusterFireballControllerTemp.disableDuration = 1f;
+                    clusterFireballControllerTemp.disableDuration = disableDuration;
                     source.PlayOneShot(towerShootSFX, Random.Range(towerShootLow, towerShootHigh));
                 }
                 clusterFireballControllerTemp.controlledByPlayer = towerStats.attachedToPlayer;

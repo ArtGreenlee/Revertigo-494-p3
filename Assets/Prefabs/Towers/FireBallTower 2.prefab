@@ -107,6 +107,8 @@ MonoBehaviour:
   towerShootLow: 0.01
   towerShootHigh: 0.05
   controlledByPlayer: 0
+  launchForce: 6
+  disableDuration: 2
 --- !u!114 &6972592042273126234
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -24,19 +24,28 @@ public class RangeIndicator : MonoBehaviour
         {
             rangeDisplayed = true;
             float range = towerStats.range;
+            if (rangeIndicatorInstance != null)
+            {
+                Destroy(rangeIndicatorInstance);
+            }
             rangeIndicatorInstance = Instantiate(rangeIndicator, transform.position, Quaternion.identity);
             Vector3 currentSize = rangeIndicatorInstance.GetComponent<MeshRenderer>().bounds.size;
             Vector3 newScale = new Vector3(2 * range / currentSize.x, 2 * range / currentSize.y, 2 * range / currentSize.z);
-            rangeIndicatorInstance.transform.localScale = newScale;
+            StopAllCoroutines();
+            StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(rangeIndicatorInstance.transform, newScale.z, 10));
+            //rangeIndicatorInstance.transform.localScale = newScale;
         }
        
     }
 
-    public void disableRangeDisplay()
+    public IEnumerator disableRangeDisplay()
     {
         if (rangeDisplayed && rangeIndicatorInstance != null)
         {
             rangeDisplayed = false;
+            StopAllCoroutines();
+            StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(rangeIndicatorInstance.transform, 0, 10));
+            yield return new WaitForSeconds(.5f);
             Destroy(rangeIndicatorInstance);
         }
     }
@@ -56,7 +65,7 @@ public class RangeIndicator : MonoBehaviour
                 }
                 else
                 {
-                    disableRangeDisplay();
+                    StartCoroutine(disableRangeDisplay());
                 }
             }
         }

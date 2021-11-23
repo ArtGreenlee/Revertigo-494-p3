@@ -80,13 +80,13 @@ public class TowerInventory : MonoBehaviour
         combinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Fireball,
             new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
 
-        /*temp.Clear();
+        temp.Clear();
         temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Green));
         temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Yellow));
         temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Blue));
-        combinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Fireball,
+        combinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Spirit,
             new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
-        */
+        
     }
 
     private void Update()
@@ -261,18 +261,15 @@ public class TowerInventory : MonoBehaviour
                 {
                     foreach (GameObject tempTower in playerInventory)
                     {
-                        if (tempTower != playerInventory[a])
+                        TowerStats tempTowerStats = tempTower.GetComponent<TowerStats>();
+                        KeyValuePair<int, TowerStats.TowerName> tempTowerDesignation = new KeyValuePair<int, TowerStats.TowerName>(tempTowerStats.level, tempTowerStats.towerName);
+                        int checkListIndex = pairListIndex(checkList, tempTowerDesignation);
+                        if (checkListIndex != -1)
                         {
-                            TowerStats tempTowerStats = tempTower.GetComponent<TowerStats>();
-                            KeyValuePair<int, TowerStats.TowerName> tempTowerDesignation = new KeyValuePair<int, TowerStats.TowerName>(tempTowerStats.level, tempTowerStats.towerName);
-                            int checkListIndex = pairListIndex(checkList, tempTowerDesignation);
-                            if (checkListIndex != -1)
-                            {
-                                //Debug.Log(tempTowerDesignation);
-                                foundTowers.Add(tempTower);
-                                checkList.RemoveAt(checkListIndex);
-                            }
-                        }
+                            //Debug.Log(tempTowerDesignation);
+                            foundTowers.Add(tempTower);
+                            checkList.RemoveAt(checkListIndex);
+                        }   
                     }
 
                     if (checkList.Count == 0 && foundTowers.Count == 3)

@@ -104,7 +104,11 @@ MonoBehaviour:
   fireBall: {fileID: 7095344946395577795, guid: 60b240ac263ee43e881e62e893b2f9e4,
     type: 3}
   towerShootSFX: {fileID: 8300000, guid: 8adcbc8428e004e7c91e520f2637c373, type: 3}
+  towerShootLow: 0.1
+  towerShootHigh: 0.2
   controlledByPlayer: 0
+  launchForce: 6
+  disableDuration: 1
 --- !u!114 &1427899370295128172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +158,7 @@ MonoBehaviour:
   aoeRangeIncreaseOnLevelUp: []
   cooldownBuffDecreaseAtLevel: []
   towerLevelMeshList: []
+  rangeAtLevel: []
   towerName: 6
   cooldownBuffEffect: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
   kills: 0
