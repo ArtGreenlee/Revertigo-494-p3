@@ -3315,18 +3315,18 @@ MonoBehaviour:
   - tag: Bullet
     prefab: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332,
       type: 3}
-    size: 1000
+    size: 2000
   - tag: FloatingDamageText
     prefab: {fileID: 6088574729931538350, guid: b96b5b4e223c0403784e8aba3914e6cb,
       type: 3}
-    size: 1000
+    size: 2000
   - tag: Gold
     prefab: {fileID: 4981611155386590553, guid: 2789caed006def44c8290da6fc8dfd85,
       type: 3}
     size: 1000
   - tag: BulletOnHitEffect
     prefab: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
-    size: 1000
+    size: 2000
 --- !u!4 &853922187
 Transform:
   m_ObjectHideFlags: 0

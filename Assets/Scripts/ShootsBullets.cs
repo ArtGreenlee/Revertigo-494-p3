@@ -132,6 +132,7 @@ public class ShootsBullets : MonoBehaviour
             tempBullet.GetComponent<Rigidbody>().velocity = direction.normalized * bulletSpeed * Random.Range(.9f, 1.1f);
             tempBullet.GetComponent<BulletController>().towerStats = towerStats;
             tempBullet.GetComponent<MeshRenderer>().material.color = towerStats.trailRendererColor;
+            tempBullet.GetComponent<TrailRenderer>().startColor = towerStats.trailRendererColor;
             if (!towerStats.attachedToPlayer && snapPosition != Vector3.zero)
             {
                 source.PlayOneShot(towerShootSFX, Random.Range(towerShootLow, towerShootHigh));
