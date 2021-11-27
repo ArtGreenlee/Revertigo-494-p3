@@ -148,7 +148,6 @@ public class WallPlacer : MonoBehaviour
                     else if (dragDirection == Vector3.zero && firstWall != null)
                     {
                         dragDirection = UtilityFunctions.getClosestSide(newWall.transform.position - firstWall.transform.position);
-                        Debug.Log(dragDirection);
                     }
                     previousPlacementPosition = curPoint;
                     wallStorage.addWall(curPoint, newWall);

@@ -86,7 +86,14 @@ public class TowerInventory : MonoBehaviour
         temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Blue));
         combinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Spirit,
             new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
-        
+
+        temp.Clear();
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Fireball));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Fireball));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Fireball));
+        combinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.ClusterFireball,
+            new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
+
     }
 
     private void Update()
@@ -189,7 +196,8 @@ public class TowerInventory : MonoBehaviour
     {
         GameObject newTower = Instantiate(getRandomTower(), transform.position, Quaternion.identity);
         newTower.GetComponent<TowerStats>().attachedToPlayer = true;
-        playerInventory.Insert(Random.Range(0, playerInventory.Count), newTower);
+        addTowerToInventory(newTower);
+        //playerInventory.Insert(Random.Range(0, playerInventory.Count), newTower);
         newTower.GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .8f;
         source.PlayOneShot(getTowerSFX, getTowerVol);
 
@@ -329,9 +337,9 @@ public class TowerInventory : MonoBehaviour
         while ((towerA.transform.position - towerB.transform.position).sqrMagnitude > .25f)
         {
             towerB.transform.position = Vector3.Lerp(towerB.transform.position, towerA.transform.position, 3 * Time.deltaTime);
-            towerB.transform.position = Vector3.Lerp(towerB.transform.position, cameraTransform.transform.position, .5f * Time.deltaTime);
+            towerB.transform.position = Vector3.Lerp(towerB.transform.position, cameraTransform.transform.position, 1.5f * Time.deltaTime);
             towerA.transform.position = Vector3.Lerp(towerA.transform.position, towerB.transform.position, 3 * Time.deltaTime);
-            towerA.transform.position = Vector3.Lerp(towerA.transform.position, cameraTransform.transform.position, .5f * Time.deltaTime);
+            towerA.transform.position = Vector3.Lerp(towerA.transform.position, cameraTransform.transform.position, 1.5f * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
         TowerStats towerAStats = towerA.GetComponent<TowerStats>();
@@ -345,8 +353,28 @@ public class TowerInventory : MonoBehaviour
         towerAStats.levelUp();
         towerA.transform.position = inbetween;
         yield return new WaitForSeconds(.5f);
-        playerInventory.Insert(Random.Range(0, playerInventory.Count), towerA);
+        addTowerToInventory(towerA);
+        //playerInventory.Insert(Random.Range(0, playerInventory.Count), towerA);
         yield return new WaitForSeconds(.5f);
+    }
+
+    public IEnumerator combineTowerOnPodium(GameObject podiumTower, GameObject inventoryTower)
+    {
+        playerInventory.Remove(inventoryTower);
+        while ((podiumTower.transform.position - inventoryTower.transform.position).sqrMagnitude > .25f)
+        {
+            inventoryTower.transform.position = Vector3.Lerp(inventoryTower.transform.position, podiumTower.transform.position,3 * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        TowerStats towerAStats = podiumTower.GetComponent<TowerStats>();
+        TowerStats towerBStats = inventoryTower.GetComponent<TowerStats>();
+        towerAStats.kills += towerBStats.kills;
+        towerAStats.level++;
+        Vector3 inbetween = Vector3.Lerp(podiumTower.transform.position, inventoryTower.transform.position, .5f);
+        Instantiate(combineEffect, inbetween, Quaternion.identity);
+        yield return new WaitForSeconds(.5f);
+        Destroy(inventoryTower);
+        towerAStats.levelUp();
     }
 
     public IEnumerator combineSpecialTower(TowerStats.TowerName towerName, GameObject towerA, GameObject towerB, GameObject towerC)
@@ -372,6 +400,7 @@ public class TowerInventory : MonoBehaviour
                         rb.AddForce(rb2.transform.position - rb.transform.position);
                     }
                 }
+                rb.AddForce(cameraTransform.position - rb.transform.position);
             }
             yield return new WaitForFixedUpdate();
         }
@@ -379,21 +408,19 @@ public class TowerInventory : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
         }
-
         Vector3 inbetween = Vector3.Lerp(towerA.transform.position, towerB.transform.position, .5f);
-        
         Instantiate(combineEffect, inbetween, Quaternion.identity);
         yield return new WaitForSeconds(.5f);
         Destroy(towerA);
         Destroy(towerB);
         Destroy(towerC);
         GameObject specialTower = Instantiate(specialTowerDictionary[towerName], inbetween, Quaternion.identity);
-        playerInventory.Insert(Random.Range(0, playerInventory.Count), specialTower);
-
-        yield break;
+        Debug.Log(towerName);
+        addTowerToInventory(specialTower);
+        //playerInventory.Insert(Random.Range(0, playerInventory.Count), specialTower);
     }
 
-    public bool canCombine(TowerStats towerStatsA, TowerStats towerStatsB)
+    public static bool canCombine(TowerStats towerStatsA, TowerStats towerStatsB)
     {
         if (!towerStatsA.specialTower &&
             !towerStatsB.specialTower &&
@@ -404,6 +431,20 @@ public class TowerInventory : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    private void addTowerToInventory(GameObject tower)
+    {
+        tower.GetComponent<TowerStats>().attachedToPlayer = true;
+        int addIndex = 0;
+        if (playerInventory.Count > 0)
+        {
+            do
+            {
+                addIndex = Random.Range(1, playerInventory.Count + 1);
+            } while (addIndex == 0);
+        }
+        playerInventory.Insert(addIndex, tower);
     }
 
     /*public GameObject specialCanCombine(GameObject towerA, GameObject towerB, GameObject towerC)

@@ -81,6 +81,10 @@ public class WallStorage : MonoBehaviour
 
     public GameObject getTowerAttachedToPodium(GameObject podium)
     {
+        if (!podiumHasTower(podium))
+        {
+            return null;
+        }
         return podiumAndTower[podium];
     }
 

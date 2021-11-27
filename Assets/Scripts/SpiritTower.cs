@@ -9,7 +9,6 @@ public class SpiritTower : MonoBehaviour
     private ParticleSystem spiritSystem;
     private GameObject target;
     private ParticleSystem.Particle[] m_Particles;
-    private PlayerInputControl playerControl;
 
     public float slowPercentageMin;
     public float slowPercentageMax;
@@ -23,8 +22,6 @@ public class SpiritTower : MonoBehaviour
     {
         spiritSystem = GetComponent<ParticleSystem>();
         m_Particles = new ParticleSystem.Particle[spiritSystem.main.maxParticles];
-
-        playerControl = PlayerInputControl.instance;
         towerStats = GetComponent<TowerStats>();
         enemyStorage = EnemyStorage.instance;
         InvokeRepeating("getSpawnRate", 1, 1);
