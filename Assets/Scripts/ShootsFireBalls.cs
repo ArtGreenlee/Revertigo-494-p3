@@ -19,7 +19,7 @@ public class ShootsFireBalls : MonoBehaviour
     {
         source = GetComponent<AudioSource>();
         towerStats = GetComponent<TowerStats>();
-        
+        GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .8f; //dpnt know why it wasnt working 
         cooldownTimer = 0;
     }
 

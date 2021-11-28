@@ -94,6 +94,13 @@ public class TowerInventory : MonoBehaviour
         combinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.ClusterFireball,
             new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
 
+        temp.Clear();
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(1, TowerStats.TowerName.Yellow));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(1, TowerStats.TowerName.Blue));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Blue));
+        combinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Tourmaline,
+            new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
+
     }
 
     private void Update()

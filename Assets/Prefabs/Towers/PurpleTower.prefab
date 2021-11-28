@@ -103,8 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetSelection: 0
   towerShootSFX: {fileID: 8300000, guid: 8385f470855904f35ab844442462f71b, type: 3}
-  towerShootLow: 0.1
-  towerShootHigh: 0.2
+  towerShootLow: 0.05
+  towerShootHigh: 0.1
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
   bulletSpeed: 15
   shootEffect: {fileID: 100004, guid: fb7b0526ade434043b350a180d741cf3, type: 3}

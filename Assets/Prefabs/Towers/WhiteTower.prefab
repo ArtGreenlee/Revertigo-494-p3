@@ -102,6 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetSelection: 0
   towerShootSFX: {fileID: 8300000, guid: 8385f470855904f35ab844442462f71b, type: 3}
+  towerShootLow: 0.05
+  towerShootHigh: 0.1
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
   bulletSpeed: 22
   shootEffect: {fileID: 100004, guid: fb7b0526ade434043b350a180d741cf3, type: 3}
@@ -163,6 +165,7 @@ MonoBehaviour:
   - {fileID: 4300000, guid: 79b2a5cdd70824e3d9b3acf2ddc79f4d, type: 3}
   - {fileID: 4300000, guid: e53910dd9ff52433db8fc7f84a2318bb, type: 3}
   - {fileID: 4300000, guid: 04a69148d0283440c96e0a776ed3bf53, type: 3}
+  rangeAtLevel: []
   towerName: 3
   cooldownBuffEffect: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
   kills: 0
