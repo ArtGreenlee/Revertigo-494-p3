@@ -17,6 +17,7 @@ public class PlayerShoot : MonoBehaviour
     private TowerInventory towerInventory;
     private PlayerInputControl playerInputControl;
     public GameObject playerShootEffect;
+
     private void Awake()
     {
         source = GetComponent<AudioSource>();
