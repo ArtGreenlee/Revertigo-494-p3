@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
     public List<int> enemyValueForWave;
     private void Awake()
     {
-        pathIndicatorSpawnInvervalUtility = 0;
+        pathIndicatorSpawnInvervalUtility = Time.time;
         pathIndicatorList = new List<GameObject>();
         pathFinder = GetComponent<Pathfinder>();
         towerPlacer = GameObject.Find("GameController").GetComponent<WallPlacer>();
@@ -80,7 +80,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (enemyPath != null && enemyPath.Count > 0 && Time.time - pathIndicatorSpawnInvervalUtility > 6)
+        if (enemyPath != null && enemyPath.Count > 0 && Time.time - pathIndicatorSpawnInvervalUtility > 12)
         {
             pathIndicatorSpawnInvervalUtility = Time.time;
             Instantiate(pathIndicator, enemyPath[0][0], Quaternion.identity).GetComponent<PathIndicatorController>().path = enemyPath;

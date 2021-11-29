@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b80272d437baf44888153ebe55fb480a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireBall: {fileID: 7922299580369839075, guid: 59860587ca7ad459782ba35d16d20719,
+  fireBall: {fileID: 7125933796030230093, guid: 2208b8fe3eba94951b2013b3df2d97b9,
     type: 3}
   towerShootSFX: {fileID: 8300000, guid: 8adcbc8428e004e7c91e520f2637c373, type: 3}
   towerShootLow: 0.01

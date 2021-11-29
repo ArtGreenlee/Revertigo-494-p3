@@ -9,7 +9,6 @@ public class FireBallController : MonoBehaviour
     public GameObject target;
     public GameObject collisionEffect;
     private EnemyStorage enemyStorage;
-    private TrailRenderer trailRenderer;
     public float speed;
     public TowerStats towerStats;
     public float rotationSpeed;
@@ -24,7 +23,6 @@ public class FireBallController : MonoBehaviour
         
         sphereCollider = GetComponent<SphereCollider>();
         rb = GetComponent<Rigidbody>();
-        trailRenderer = GetComponent<TrailRenderer>();
     }
 
     // Start is called before the first frame update
@@ -34,14 +32,12 @@ public class FireBallController : MonoBehaviour
         enemyStorage = EnemyStorage.instance;
         playerInputControl = PlayerInputControl.instance;
         thrusting = false;
-        trailRenderer.enabled = false;
         sphereCollider.enabled = false;
         if (target == null && !towerStats.attachedToPlayer)
         {
             target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, 10);
         }
         yield return new WaitForSeconds(disableDuration);
-        trailRenderer.enabled = true;
         thrusting = true;
         sphereCollider.enabled = true;
     }

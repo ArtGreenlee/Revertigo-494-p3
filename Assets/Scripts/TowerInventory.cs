@@ -24,12 +24,10 @@ public class TowerInventory : MonoBehaviour
 
     public GameObject selectionDisplayEffect;
     private GameObject selectionDisplayEffectInstance;
-    private TowerDisplay towerDisplay;
     private Transform cameraTransform;
-    private TowerPlacer towerPlacer;
     public GameObject combineEffect;
     public int maxTowerInventory;
-    public GameObject towerDestroyEffect;
+    //public GameObject towerDestroyEffect;
     public float combineCooldown;
     private float combineCooldownUtility;
     private LineRenderer lr;
@@ -60,9 +58,7 @@ public class TowerInventory : MonoBehaviour
         combinations = new List<List<GameObject>>();
         combineCooldownUtility = 0;
         playerInputControl = PlayerInputControl.instance;
-        towerPlacer = TowerPlacer.instance;
         cameraTransform = Camera.main.transform;
-        towerDisplay = TowerDisplay.instance;
         priceText.text = "Tower Cost " + price.ToString();
         goldStorage = GoldStorage.instance;
         playerInventory = new List<GameObject>();
@@ -318,7 +314,7 @@ public class TowerInventory : MonoBehaviour
                 playerInventory[i].GetComponent<Rigidbody>().AddForce((transform.position - playerInventory[i].transform.position).normalized * 100);
                 if (Vector3.Distance(playerInventory[i].transform.position, transform.position) < .4f)
                 {
-                    Instantiate(towerDestroyEffect, Vector3.Lerp(playerInventory[i].transform.position, transform.position, .5f), Quaternion.identity);
+                    //Instantiate(towerDestroyEffect, Vector3.Lerp(playerInventory[i].transform.position, transform.position, .5f), Quaternion.identity);
                     Destroy(playerInventory[i]);
                     playerInventory.RemoveAt(i);
                     i--;
@@ -448,7 +444,7 @@ public class TowerInventory : MonoBehaviour
             towerB.transform.position = Vector3.Lerp(towerB.transform.position, cameraTransform.transform.position, 1.5f * Time.deltaTime);
             towerA.transform.position = Vector3.Lerp(towerA.transform.position, towerB.transform.position, 3 * Time.deltaTime);
             towerA.transform.position = Vector3.Lerp(towerA.transform.position, cameraTransform.transform.position, 1.5f * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
         TowerStats towerAStats = towerA.GetComponent<TowerStats>();
         TowerStats towerBStats = towerB.GetComponent<TowerStats>();

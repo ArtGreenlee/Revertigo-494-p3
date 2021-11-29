@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   splitEffect: {fileID: 1965343156803978, guid: aa8d6482d70a23445b4b2a928ed1b845,
     type: 3}
-  fireBall: {fileID: 7922299580369839075, guid: 59860587ca7ad459782ba35d16d20719,
+  fireBall: {fileID: 7125933796030230093, guid: 2208b8fe3eba94951b2013b3df2d97b9,
     type: 3}
   towerStats: {fileID: 0}
   disableDuration: 0

@@ -48,7 +48,7 @@ public class TowerDisplay : MonoBehaviour
     {
         transform.rotation = Quaternion.LookRotation(transform.position - cameraTransform.position);
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit; 
             Vector2 mousePosition = Input.mousePosition;
@@ -154,7 +154,7 @@ public class TowerDisplay : MonoBehaviour
         }
         else if (towerStats.towerName == TowerStats.TowerName.Purple)
         {
-            temp = "Buffs towers within range reducing cooldown by " + towerStats.cooldownBuffDecreaseAtLevel[towerStats.level].ToString();
+            temp = "Buffs adjacent towers by reducing cooldown " + towerStats.cooldownBuffDecreaseAtLevel[towerStats.level].ToString();
         }
         else if (towerStats.towerName == TowerStats.TowerName.Green)
         {
