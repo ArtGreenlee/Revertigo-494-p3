@@ -16,8 +16,6 @@ public class SpiritTower : MonoBehaviour
     public float timeToGetToMaxSlow;
     private float slowStartTime;
 
-    private float emissionRate;
-
     private void Start()
     {
         spiritSystem = GetComponent<ParticleSystem>();
@@ -25,6 +23,7 @@ public class SpiritTower : MonoBehaviour
         towerStats = GetComponent<TowerStats>();
         enemyStorage = EnemyStorage.instance;
         InvokeRepeating("getSpawnRate", 1, 1);
+        GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .8f;
     }
 
     // Update is called once per frame
@@ -34,27 +33,8 @@ public class SpiritTower : MonoBehaviour
         if (!towerStats.attachedToPlayer && (target == null || (transform.position - target.transform.position).sqrMagnitude > towerStats.range * towerStats.range))
         {
             target = enemyStorage.getClosestEnemyToPointWithinRange(transform.position, towerStats.range);
-            if (Time.frameCount % 15 == 0 && target != null)
-            {
-                enableParticles();
-            }
         }
 
-        if (towerStats.attachedToPlayer)
-        {
-            if (Input.GetKeyDown(0))
-            {
-                enableParticles();
-            }
-            else
-            {
-                disableParticles();
-            }
-        }
-        else
-        {
-            enableParticles();
-        }
 
         if (target != null)
         {
@@ -70,26 +50,12 @@ public class SpiritTower : MonoBehaviour
             // Apply the particle changes to the Particle System
             spiritSystem.SetParticles(m_Particles, numParticlesAlive);
         }
-        else
-        {
-            disableParticles();
-        }
     }
 
     private void getSpawnRate()
     {
         ParticleSystem.EmissionModule emission = spiritSystem.emission;
         emission.rateOverTime = Mathf.Lerp(20, 5, towerStats.getCooldown());
-    }
-
-    public void enableParticles()
-    {
-        //spiritSystem.enableEmission = false;
-    }
-
-    public void disableParticles()
-    {
-
     }
 
     private void OnParticleCollision(GameObject other)

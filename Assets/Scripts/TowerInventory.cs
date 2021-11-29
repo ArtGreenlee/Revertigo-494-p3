@@ -125,7 +125,6 @@ public class TowerInventory : MonoBehaviour
             }
             else
             {
-                Debug.Log("zero positions");
                 lr.positionCount = 0;
             }
             
@@ -143,7 +142,6 @@ public class TowerInventory : MonoBehaviour
             }
             else
             {
-                Debug.Log("zero positions");
                 lr.positionCount = 0;
             }
         }
@@ -164,7 +162,7 @@ public class TowerInventory : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.A) && combinations.Count > 0)
+        if (Input.GetKeyDown(KeyCode.W) && combinations.Count > 0)
         {
             if (combinationLrIndex == 0)
             {
@@ -176,7 +174,7 @@ public class TowerInventory : MonoBehaviour
             }
             lr.positionCount = combinations[combinationLrIndex].Count;
         }
-        else if (Input.GetKey(KeyCode.D) && combinations.Count > 0)
+        /*else if (Input.GetKey(KeyCode.D) && combinations.Count > 0)
         {
             if (combinationLrIndex == combinations.Count - 1)
             {
@@ -187,7 +185,7 @@ public class TowerInventory : MonoBehaviour
                 combinationLrIndex++;
             }
             lr.positionCount = combinations[combinationLrIndex].Count;
-        }
+        }*/
 
         if (Time.frameCount % 15 == 0 && Time.time - combineCooldownUtility > combineCooldown)
         {
@@ -197,10 +195,34 @@ public class TowerInventory : MonoBehaviour
 
         if (combinations != null && combinations.Count > 0 && combinations[combinationLrIndex].Count > 1)
         {
-            for (int i = 0; i < combinations[combinationLrIndex].Count - 1; i++)
+            if (Input.GetKeyDown(KeyCode.S))
             {
-                lr.SetPosition(i, combinations[combinationLrIndex][i].transform.position);
-                lr.SetPosition(i + 1, combinations[combinationLrIndex][i + 1].transform.position);
+                if (combinations[combinationLrIndex].Count == 2)
+                {
+                    StartCoroutine(combineTowers(combinations[combinationLrIndex][0], combinations[combinationLrIndex][1]));
+                }
+                else if (combinations[combinationLrIndex].Count == 3)
+                {
+                    StartCoroutine(combineSpecialTower(combinations[combinationLrIndex][0], combinations[combinationLrIndex][1], combinations[combinationLrIndex][2]));
+                }
+                combinations = checkCurrentTowerForCombinations();
+                combinationLrIndex = 0;
+                if (combinations.Count > 0)
+                {
+                    lr.positionCount = combinations[combinationLrIndex].Count;
+                }
+                else
+                {
+                    lr.positionCount = 0;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < combinations[combinationLrIndex].Count - 1; i++)
+                {
+                    lr.SetPosition(i, combinations[combinationLrIndex][i].transform.position);
+                    lr.SetPosition(i + 1, combinations[combinationLrIndex][i + 1].transform.position);
+                }
             }
         }
     }
@@ -367,7 +389,7 @@ public class TowerInventory : MonoBehaviour
         for (int a = 0; a < playerInventory.Count; a++)
         {
             TowerStats checkTowerStats = playerInventory[a].GetComponent<TowerStats>();
-            foreach (KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>> combination in specialTowerCombinations  )
+            foreach (KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>> combination in specialTowerCombinations)
             {
                 KeyValuePair<int, TowerStats.TowerName> checkTowerDesignation = new KeyValuePair<int, TowerStats.TowerName>(checkTowerStats.level, checkTowerStats.towerName);
                 List<KeyValuePair<int, TowerStats.TowerName>> checkList = new List<KeyValuePair<int, TowerStats.TowerName>>(combination.Value);
@@ -388,7 +410,7 @@ public class TowerInventory : MonoBehaviour
 
                     if (checkList.Count == 0 && foundTowers.Count == 3)
                     {
-                        StartCoroutine(combineSpecialTower(combination.Key, foundTowers[2], foundTowers[0], foundTowers[1]));
+                        //StartCoroutine(combineSpecialTower(combination.Key, foundTowers[2], foundTowers[0], foundTowers[1]));
                         return true;
                     }
                 }
@@ -463,8 +485,34 @@ public class TowerInventory : MonoBehaviour
         towerAStats.levelUp();
     }
 
-    public IEnumerator combineSpecialTower(TowerStats.TowerName towerName, GameObject towerA, GameObject towerB, GameObject towerC)
+    public IEnumerator combineSpecialTower(GameObject towerA, GameObject towerB, GameObject towerC)
     {
+        List<TowerStats> towerList = new List<TowerStats> { towerA.GetComponent<TowerStats>() , towerB.GetComponent<TowerStats>(), towerC.GetComponent<TowerStats>() };
+        TowerStats.TowerName towerName = TowerStats.TowerName.Blue;
+        bool foundSpecialTower = false;
+        foreach (KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>> combination in specialTowerCombinations)
+        {
+            bool match = true;
+            for (int j = 0; j < towerList.Count; j++)
+            {
+                if (pairListIndex(combination.Value, new KeyValuePair<int, TowerStats.TowerName>(towerList[j].level, towerList[j].towerName)) == -1)
+                {
+                    match = false;
+                }
+            }
+            if (match)
+            {
+                Debug.Log("found");
+                foundSpecialTower = true;
+                towerName = combination.Key;
+                break;
+            }
+        }
+        if (!foundSpecialTower)
+        {
+            Debug.LogError("special combination not found");
+            yield break;
+        }
         playerInventory.Remove(towerA);
         playerInventory.Remove(towerB);
         playerInventory.Remove(towerC);
