@@ -4643,7 +4643,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -43.9}
+  m_AnchoredPosition: {x: 0, y: -43.90001}
   m_SizeDelta: {x: 323.4, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1161756649
@@ -8727,7 +8727,6 @@ MonoBehaviour:
   combineEffect: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0,
     type: 3}
   maxTowerInventory: 20
-  towerDestroyEffect: {fileID: 100000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
   combineCooldown: 0.5
   selectionEnabled: 0
 --- !u!114 &1880758168
