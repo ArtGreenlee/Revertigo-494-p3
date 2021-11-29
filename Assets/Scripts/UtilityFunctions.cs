@@ -25,7 +25,6 @@ public class UtilityFunctions : MonoBehaviour
             }
         }
     }
-    
 
     public static Quaternion getRotationTowardSide(Vector3 vecIn)
     {
