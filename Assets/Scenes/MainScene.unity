@@ -3374,8 +3374,12 @@ MonoBehaviour:
       type: 3}
     size: 1000
   - tag: BulletOnHitEffect
-    prefab: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
-    size: 2000
+    prefab: {fileID: 9127653965126434405, guid: 3c6022ac1a1cc7b438777188ae54da0e,
+      type: 3}
+    size: 1000
+  - tag: OnShootEffect
+    prefab: {fileID: 100004, guid: fb7b0526ade434043b350a180d741cf3, type: 3}
+    size: 1000
 --- !u!4 &853922187
 Transform:
   m_ObjectHideFlags: 0
@@ -8592,7 +8596,6 @@ MonoBehaviour:
   shootLow: 0.14
   shootHigh: 0.3
   knockBackForce: 0
-  playerShootEffect: {fileID: 100004, guid: fb7b0526ade434043b350a180d741cf3, type: 3}
 --- !u!82 &1880758166
 AudioSource:
   m_ObjectHideFlags: 0

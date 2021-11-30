@@ -302,7 +302,7 @@ public class WallStorage : MonoBehaviour
 
         
 
-        for (float i = -1.5f; i < 2f; i += .5f)
+        /*for (float i = -1.5f; i < 2f; i += .5f)
         {
             for (float j = -1.5f; j < 2f; j += .5f)
             {
@@ -341,7 +341,7 @@ public class WallStorage : MonoBehaviour
                 }
             }
         }
-
+        */
         detectPathCollision();
     }
 

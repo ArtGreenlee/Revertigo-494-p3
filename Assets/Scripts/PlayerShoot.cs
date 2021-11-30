@@ -16,7 +16,7 @@ public class PlayerShoot : MonoBehaviour
     public float knockBackForce;
     private TowerInventory towerInventory;
     private PlayerInputControl playerInputControl;
-    public GameObject playerShootEffect;
+    //public GameObject playerShootEffect;
 
     private void Awake()
     {
@@ -44,7 +44,8 @@ public class PlayerShoot : MonoBehaviour
             if (Time.time - cooldownUtility > towerStats.getCooldown())
             {
                 GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.LookRotation(transform.forward));
-                Instantiate(playerShootEffect, transform.position, Quaternion.identity);
+                objectPooler.getObjectFromPool("OnShootEffect", transform.position + transform.forward, Quaternion.identity);
+                //Instantiate(playerShootEffect, transform.position, Quaternion.identity);
                 tempBullet.GetComponent<Rigidbody>().velocity = transform.forward * 30;
                 tempBullet.GetComponent<BulletController>().towerStats = towerStats;
                 rb.AddForce(transform.forward * -1 * knockBackForce, ForceMode.Impulse);

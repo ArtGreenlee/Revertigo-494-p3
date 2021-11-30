@@ -17,7 +17,6 @@ public class AutoDeactivate : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-
     private IEnumerator Start()
     {
         yield return new WaitForSeconds(deactivateTimer);

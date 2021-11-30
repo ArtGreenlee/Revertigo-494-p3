@@ -56,7 +56,7 @@ public class TowerDisplay : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 TowerStats tempStats;
-                if (hit.collider.gameObject.TryGetComponent<TowerStats>(out tempStats)) 
+                if (hit.collider.gameObject.TryGetComponent<TowerStats>(out tempStats) && !hit.collider.gameObject.CompareTag("Player")) 
                 {
                     setValues(tempStats);
                     if (!active)

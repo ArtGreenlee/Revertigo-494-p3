@@ -75,6 +75,21 @@ public class EnemySpawner : MonoBehaviour
             StartCoroutine(startWave(numEnemies, enemyHealthForWave[i]));
         }
 
+        //no more waves. just spawn a bunch of enemies i guess
+
+        while (true)
+        {
+            while (!pathFinder.pathFinished())
+            {
+                yield return new WaitForSeconds(.5f);
+            }
+            GameObject newEnemy = Instantiate(enemy, enemyPath[0][0], Quaternion.identity);
+            enemyStorage.addEnemy(newEnemy);
+            newEnemy.GetComponent<EnemyHealth>().setMaxHealth(1000);
+            newEnemy.GetComponent<EnemyHealth>().goldValue = 3;
+            newEnemy.GetComponent<EnemyMovement>().path = enemyPath;
+            yield return new WaitForSeconds(2);
+        }
         
     }
 

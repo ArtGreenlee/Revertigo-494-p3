@@ -19,7 +19,7 @@ public class ShootsBullets : MonoBehaviour
     private float playerShootCooldownUtility;
     private Rigidbody rb;
     private float rangeSquared;
-    public GameObject shootEffect;
+    //public GameObject shootEffect;
 
     public Vector3 snapPosition;
 
@@ -125,10 +125,7 @@ public class ShootsBullets : MonoBehaviour
         {
             playerShootCooldownUtility = Time.time;
             GameObject tempBullet = objectPooler.getObjectFromPool("Bullet", transform.position, Quaternion.LookRotation(direction));
-            if (!towerStats.attachedToPlayer)
-            {
-                Instantiate(shootEffect, transform.position, Quaternion.identity);
-            }
+            objectPooler.getObjectFromPool("OnShootEffect", transform.position + direction.normalized / 2, Quaternion.identity);
             tempBullet.GetComponent<Rigidbody>().velocity = direction.normalized * bulletSpeed * Random.Range(.9f, 1.1f);
             tempBullet.GetComponent<BulletController>().towerStats = towerStats;
             tempBullet.GetComponent<MeshRenderer>().material.color = towerStats.trailRendererColor;

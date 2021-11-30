@@ -63,7 +63,7 @@ public class RangeIndicator : MonoBehaviour
                 {
                     enableRangeDisplay();
                 }
-                else
+                else if (rangeDisplayed && rangeIndicatorInstance != null)
                 {
                     StartCoroutine(disableRangeDisplay());
                 }

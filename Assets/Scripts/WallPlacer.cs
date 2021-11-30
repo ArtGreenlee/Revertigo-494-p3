@@ -43,7 +43,7 @@ public class WallPlacer : MonoBehaviour
     {
         dragDirection = Vector3.zero;
         previousPlacementPosition = Vector3.zero;
-        layerMask = ~LayerMask.GetMask("Tower", "Player");
+        layerMask = ~LayerMask.GetMask("Player");
         storageVector = new Vector3(25, 0, 0);
         currentMouseDragWallPositions = new HashSet<Vector3>();
         goldStorage = GoldStorage.instance;
