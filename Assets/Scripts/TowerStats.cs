@@ -157,6 +157,7 @@ public class TowerStats : MonoBehaviour
         {
             GetComponent<TrailRenderer>().startColor = trailRendererColor;
         }
+        GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .8f;
     }
 
     public void increaseKills()

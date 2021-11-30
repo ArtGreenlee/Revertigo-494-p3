@@ -24,6 +24,7 @@ public class SpiritTower : MonoBehaviour
         enemyStorage = EnemyStorage.instance;
         InvokeRepeating("getSpawnRate", 1, 1);
         GetComponent<Rigidbody>().angularVelocity = Random.onUnitSphere * .8f;
+        
     }
 
     // Update is called once per frame
@@ -55,7 +56,14 @@ public class SpiritTower : MonoBehaviour
     private void getSpawnRate()
     {
         ParticleSystem.EmissionModule emission = spiritSystem.emission;
-        emission.rateOverTime = Mathf.Lerp(20, 5, towerStats.getCooldown());
+        if (towerStats.attachedToPlayer)
+        {
+            emission.rateOverTime = 0;
+        }
+        else
+        {
+            emission.rateOverTime = Mathf.Lerp(20, 5, towerStats.getCooldown());
+        }
     }
 
     private void OnParticleCollision(GameObject other)

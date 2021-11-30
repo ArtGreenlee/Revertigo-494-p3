@@ -97,12 +97,18 @@ public class TowerInventory : MonoBehaviour
             new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
 
         temp.Clear();
-        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(1, TowerStats.TowerName.Yellow));
-        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(1, TowerStats.TowerName.Blue));
-        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Blue));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Purple));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Yellow));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.White));
         specialTowerCombinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Tourmaline,
             new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
 
+        temp.Clear();
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Blue));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Purple));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Green));
+        specialTowerCombinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Stun,
+            new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
     }
 
     private void Update()
@@ -214,7 +220,7 @@ public class TowerInventory : MonoBehaviour
             }
             else
             {
-                for (int i = 0; i < combinations[combinationLrIndex].Count - 1; i++)
+                for (int i = 0; i < combinations[combinationLrIndex].Count - 1 && i < lr.positionCount; i++)
                 {
                     lr.SetPosition(i, combinations[combinationLrIndex][i].transform.position);
                     lr.SetPosition(i + 1, combinations[combinationLrIndex][i + 1].transform.position);
@@ -306,13 +312,14 @@ public class TowerInventory : MonoBehaviour
 
     public IEnumerator destroyPlayerInventory()
     {
+        lr.positionCount = 0;
         while (playerInventory.Count > 0)
         {
             for (int i = 0; i < playerInventory.Count; i++)
             {
                 playerInventory[i].GetComponent<TowerStats>().attachedToPlayer = false;
                 playerInventory[i].GetComponent<Rigidbody>().AddForce((transform.position - playerInventory[i].transform.position).normalized * 100);
-                if (Vector3.Distance(playerInventory[i].transform.position, transform.position) < .4f)
+                if (Vector3.Distance(playerInventory[i].transform.position, transform.position) < 1)
                 {
                     //Instantiate(towerDestroyEffect, Vector3.Lerp(playerInventory[i].transform.position, transform.position, .5f), Quaternion.identity);
                     Destroy(playerInventory[i]);

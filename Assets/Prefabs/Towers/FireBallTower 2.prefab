@@ -122,7 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AreaSparksEffect: {fileID: 0}
-  TowerFireEffect: {fileID: 100004, guid: 1c20c7996d683754db1f0f62a361952c, type: 3}
+  TowerFireEffect: {fileID: 8197433914150080023, guid: 768e051a05ce8a641a55162ac081181a,
+    type: 3}
 --- !u!65 &-7828663118756896797
 BoxCollider:
   m_ObjectHideFlags: 0
