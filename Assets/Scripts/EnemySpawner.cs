@@ -74,6 +74,7 @@ public class EnemySpawner : MonoBehaviour
             Debug.Log("happening");
             StartCoroutine(startWave(numEnemies, enemyHealthForWave[i]));
         }
+        Destroy(countdownText);
 
         //no more waves. just spawn a bunch of enemies i guess
 

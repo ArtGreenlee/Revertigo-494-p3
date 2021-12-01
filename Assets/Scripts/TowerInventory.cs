@@ -33,6 +33,7 @@ public class TowerInventory : MonoBehaviour
     private LineRenderer lr;
     private int combinationLrIndex;
     List<List<GameObject>> combinations;
+    public GameObject removeEffect;
 
     public Dictionary<TowerStats.TowerName, GameObject> specialTowerDictionary;
 
@@ -313,22 +314,17 @@ public class TowerInventory : MonoBehaviour
     public IEnumerator destroyPlayerInventory()
     {
         lr.positionCount = 0;
-        while (playerInventory.Count > 0)
+        if (selectionDisplayEffectInstance != null)
         {
-            for (int i = 0; i < playerInventory.Count; i++)
-            {
-                playerInventory[i].GetComponent<TowerStats>().attachedToPlayer = false;
-                playerInventory[i].GetComponent<Rigidbody>().AddForce((transform.position - playerInventory[i].transform.position).normalized * 100);
-                if (Vector3.Distance(playerInventory[i].transform.position, transform.position) < 1)
-                {
-                    //Instantiate(towerDestroyEffect, Vector3.Lerp(playerInventory[i].transform.position, transform.position, .5f), Quaternion.identity);
-                    Destroy(playerInventory[i]);
-                    playerInventory.RemoveAt(i);
-                    i--;
-                }
-                yield return new WaitForFixedUpdate();
-            }
+            Destroy(selectionDisplayEffectInstance);
         }
+        for (int i = 0; i < playerInventory.Count; i++)
+        {
+            Instantiate(removeEffect, playerInventory[i].transform.position, Quaternion.identity);
+            Destroy(playerInventory[i]);
+            yield return new WaitForSeconds(.2f);
+        }
+        playerInventory.Clear();
     }
 
     private int pairListIndex(List<KeyValuePair<int, TowerStats.TowerName>> checkList, KeyValuePair<int, TowerStats.TowerName> value)

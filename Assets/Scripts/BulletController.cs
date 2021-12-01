@@ -80,7 +80,7 @@ public class BulletController : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
         if (towerStats.aoe)
         {
-            UtilityFunctions.changeScaleOfTransform(Instantiate(onHitAoeEffect, collision.contacts[0].point, Quaternion.identity).transform, towerStats.aoe_range);
+            UtilityFunctions.changeScaleOfTransform(objectPooler.getObjectFromPool("AoeOnHitEffect", transform.position, Quaternion.identity).transform, towerStats.aoe_range / 1.5f);
             foreach (GameObject enemy in enemyStorage.getAllEnemiesWithinRange(collision.contacts[0].point, towerStats.aoe_range))
             {
                 hitEnemies.Add(enemy);

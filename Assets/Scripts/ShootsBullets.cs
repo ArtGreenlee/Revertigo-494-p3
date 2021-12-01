@@ -133,8 +133,9 @@ public class ShootsBullets : MonoBehaviour
             if (!towerStats.attachedToPlayer && snapPosition != Vector3.zero)
             {
                 source.PlayOneShot(towerShootSFX, Random.Range(towerShootLow, towerShootHigh));
-                rb.AddForce(direction.normalized * bulletSpeed * -.1f, ForceMode.Impulse);
+                
             }
+            rb.AddForce(direction.normalized * bulletSpeed * -.1f, ForceMode.Impulse);
         }
     }
 }

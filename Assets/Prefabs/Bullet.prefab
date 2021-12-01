@@ -214,7 +214,8 @@ MonoBehaviour:
   towerStats: {fileID: 0}
   onHitEffect: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
   criticalEffect: {fileID: 100004, guid: f95ff734540a0d749be6571b6cb5b37f, type: 3}
-  onHitAoeEffect: {fileID: 100002, guid: e9391f622091e1449bdef4ef15af4948, type: 3}
+  onHitAoeEffect: {fileID: 9022066806678992439, guid: 7ccebf8cdf5dd584988dbbf95fd08683,
+    type: 3}
 --- !u!135 &6128567203789746484
 SphereCollider:
   m_ObjectHideFlags: 0
