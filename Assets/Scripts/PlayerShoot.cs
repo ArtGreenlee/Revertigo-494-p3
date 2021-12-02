@@ -56,7 +56,7 @@ public class PlayerShoot : MonoBehaviour
 
             foreach (GameObject tower in towerInventory.playerInventory)
             {
-                if (tower.GetComponent<TowerStats>().attachedToPlayer)
+                if (tower != null && tower.GetComponent<TowerStats>().attachedToPlayer)
                 {
                     ShootsBullets shootsBullets;
                     ShootsFireBalls shootsFireballs;

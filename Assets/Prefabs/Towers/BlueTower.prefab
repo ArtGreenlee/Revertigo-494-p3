@@ -106,7 +106,6 @@ MonoBehaviour:
   towerShootHigh: 0.1
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
   bulletSpeed: 15
-  shootEffect: {fileID: 100004, guid: fb7b0526ade434043b350a180d741cf3, type: 3}
   snapPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &6128606681395467051
 BoxCollider:
@@ -203,7 +202,8 @@ MonoBehaviour:
   trailRendererColor: {r: 0, g: 0.07363939, b: 1, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   specialTower: 0
-  slowEffect: {fileID: 100000, guid: 77ec3c4e07a36814fb3169ecef41b50a, type: 3}
+  slowEffect: {fileID: 1814315751473787963, guid: e9459def1a517a24ba482f9e639df7ff,
+    type: 3}
 --- !u!54 &-1015115182130153035
 Rigidbody:
   m_ObjectHideFlags: 0

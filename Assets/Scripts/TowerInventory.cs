@@ -34,6 +34,7 @@ public class TowerInventory : MonoBehaviour
     private int combinationLrIndex;
     List<List<GameObject>> combinations;
     public GameObject removeEffect;
+    private bool purchaseEnabled;
 
     public Dictionary<TowerStats.TowerName, GameObject> specialTowerDictionary;
 
@@ -53,6 +54,7 @@ public class TowerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        purchaseEnabled = true;
         combinationLrIndex = 0;
         source = GetComponent<AudioSource>();
         lr = GetComponent<LineRenderer>();
@@ -114,7 +116,7 @@ public class TowerInventory : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && goldStorage.gold >= price && playerInventory.Count < maxTowerInventory)
+        if (Input.GetKeyDown(KeyCode.G) && goldStorage.gold >= price && playerInventory.Count < maxTowerInventory && purchaseEnabled)
         {
             combineCooldownUtility = Time.time;
             goldStorage.changeGoldAmount(-price);
@@ -269,7 +271,7 @@ public class TowerInventory : MonoBehaviour
             */
 
             //position.z += inventoryDistanceFromPlayer * Mathf.Cos(i * degreesBetween) * Mathf.Cos(vecRotation.x * Mathf.Deg2Rad);
-            if (playerInventory[i].GetComponent<TowerStats>().attachedToPlayer)
+            if (playerInventory[i] != null && playerInventory[i].GetComponent<TowerStats>().attachedToPlayer)
             {
                 if (playerInputControl.movementEnabled || Vector3.Distance(playerInventory[i].transform.position, transform.position) < inventoryDistanceFromPlayer - .5f)
                 {
@@ -313,6 +315,7 @@ public class TowerInventory : MonoBehaviour
 
     public IEnumerator destroyPlayerInventory()
     {
+        purchaseEnabled = false;
         lr.positionCount = 0;
         if (selectionDisplayEffectInstance != null)
         {
@@ -325,6 +328,7 @@ public class TowerInventory : MonoBehaviour
             yield return new WaitForSeconds(.2f);
         }
         playerInventory.Clear();
+        purchaseEnabled = true;
     }
 
     private int pairListIndex(List<KeyValuePair<int, TowerStats.TowerName>> checkList, KeyValuePair<int, TowerStats.TowerName> value)
