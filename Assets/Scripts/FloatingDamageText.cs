@@ -34,6 +34,7 @@ public class FloatingDamageText : MonoBehaviour
 
     private void OnEnable()
     {
+        transform.localScale = startScale;
         StartCoroutine(growShrinkFade());
     }
 
@@ -41,7 +42,6 @@ public class FloatingDamageText : MonoBehaviour
     void Update()
     {
         transform.rotation = Quaternion.LookRotation(transform.position - cameraTransform.position);
-        transform.Translate(transform.up * Time.deltaTime * 1.2f);
     }
 
     private IEnumerator growShrinkFade()
@@ -49,23 +49,32 @@ public class FloatingDamageText : MonoBehaviour
         textMesh.color = color;
         StartCoroutine(destroyaftertime(2));
         float startMagnitute = rectTransform.localScale.magnitude;
-        while (rectTransform.localScale.magnitude < startMagnitute + .2f)
+        while (rectTransform.localScale.magnitude < startMagnitute + .4f)
         {
-            float increase = .5f * Time.deltaTime;
+            float increase = 3f * Time.deltaTime;
             Vector3 newScale = new Vector3(rectTransform.localScale.x + increase, rectTransform.localScale.y + increase, rectTransform.localScale.z + increase);
             rectTransform.localScale = newScale;
             yield return new WaitForEndOfFrame();
         }
+
         yield return new WaitForSeconds(.1f);
         startMagnitute = rectTransform.localScale.magnitude;
-        while (rectTransform.localScale.magnitude > startMagnitute - .3f)
+        while (rectTransform.localScale.magnitude > startMagnitute - .4f)
         {
-            Color curColor = textMesh.color;
+            /*Color curColor = textMesh.color;
             curColor.a -= 1 * Time.deltaTime;
-            float decrease = -.1f * Time.deltaTime;
-            textMesh.color = curColor;
+            textMesh.color = curColor;*/
+            float decrease = -3f * Time.deltaTime;
             Vector3 newScale = new Vector3(rectTransform.localScale.x + decrease, rectTransform.localScale.y + decrease, rectTransform.localScale.z + decrease);
             rectTransform.localScale = newScale;
+            yield return new WaitForEndOfFrame();
+        }
+        while (textMesh.color.a > .1f)
+        {
+            transform.Translate(transform.up * Time.deltaTime * 1.2f);
+            Color curColor = textMesh.color;
+            curColor.a -= 1 * Time.deltaTime;
+            textMesh.color = curColor;
             yield return new WaitForEndOfFrame();
         }
         gameObject.SetActive(false);
