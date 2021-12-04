@@ -10,7 +10,7 @@ public class FloatingDamageText : MonoBehaviour
     private RectTransform rectTransform;
     public Color color;
 
-    private Vector3 startScale;
+    private Vector3 spawnScale;
 
     public void setDamage(float damageIn)
     {
@@ -27,14 +27,14 @@ public class FloatingDamageText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startScale = transform.localScale;
+        spawnScale = transform.localScale;
         textMesh.color = color;
         StartCoroutine(growShrinkFade());
     }
 
     private void OnEnable()
     {
-        transform.localScale = startScale;
+        transform.localScale = spawnScale;
         StartCoroutine(growShrinkFade());
     }
 
@@ -48,30 +48,25 @@ public class FloatingDamageText : MonoBehaviour
     {
         textMesh.color = color;
         StartCoroutine(destroyaftertime(2));
-        float startMagnitute = rectTransform.localScale.magnitude;
-        while (rectTransform.localScale.magnitude < startMagnitute + .4f)
+        float startScale = rectTransform.localScale.x;
+        while (rectTransform.localScale.x < startScale + .4f)
         {
             float increase = 3f * Time.deltaTime;
             Vector3 newScale = new Vector3(rectTransform.localScale.x + increase, rectTransform.localScale.y + increase, rectTransform.localScale.z + increase);
             rectTransform.localScale = newScale;
             yield return new WaitForEndOfFrame();
         }
-
-        yield return new WaitForSeconds(.1f);
-        startMagnitute = rectTransform.localScale.magnitude;
-        while (rectTransform.localScale.magnitude > startMagnitute - .4f)
+        startScale = rectTransform.localScale.x;
+        while (rectTransform.localScale.x > startScale - .2f)
         {
-            /*Color curColor = textMesh.color;
-            curColor.a -= 1 * Time.deltaTime;
-            textMesh.color = curColor;*/
-            float decrease = -3f * Time.deltaTime;
-            Vector3 newScale = new Vector3(rectTransform.localScale.x + decrease, rectTransform.localScale.y + decrease, rectTransform.localScale.z + decrease);
+            float increase = -2f * Time.deltaTime;
+            Vector3 newScale = new Vector3(rectTransform.localScale.x + increase, rectTransform.localScale.y + increase, rectTransform.localScale.z + increase);
             rectTransform.localScale = newScale;
             yield return new WaitForEndOfFrame();
         }
         while (textMesh.color.a > .1f)
         {
-            transform.Translate(transform.up * Time.deltaTime * 1.2f);
+            transform.Translate(transform.up * Time.deltaTime * 1);
             Color curColor = textMesh.color;
             curColor.a -= 1 * Time.deltaTime;
             textMesh.color = curColor;
@@ -83,7 +78,7 @@ public class FloatingDamageText : MonoBehaviour
     private IEnumerator destroyaftertime(float timer)
     {
         yield return new WaitForSeconds(timer);
-        transform.localScale = startScale;
+        transform.localScale = spawnScale;
         gameObject.SetActive(false);
         StopAllCoroutines();
     }
