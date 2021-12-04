@@ -174,7 +174,12 @@ MonoBehaviour:
   - {fileID: 4300000, guid: 79b2a5cdd70824e3d9b3acf2ddc79f4d, type: 3}
   - {fileID: 4300000, guid: e53910dd9ff52433db8fc7f84a2318bb, type: 3}
   - {fileID: 4300000, guid: 04a69148d0283440c96e0a776ed3bf53, type: 3}
-  rangeAtLevel: []
+  rangeAtLevel:
+  - 15
+  - 16
+  - 17
+  - 20
+  - 25
   towerName: 0
   cooldownBuffEffect: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
   kills: 0

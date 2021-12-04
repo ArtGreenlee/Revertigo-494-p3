@@ -106,7 +106,6 @@ MonoBehaviour:
   towerShootHigh: 0.1
   bullet: {fileID: 5904691959828911179, guid: 213a4759f4eef5342a0d3706c35f9332, type: 3}
   bulletSpeed: 20
-  shootEffect: {fileID: 100004, guid: fb7b0526ade434043b350a180d741cf3, type: 3}
   snapPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &1158445546626551160
 BoxCollider:
@@ -175,7 +174,12 @@ MonoBehaviour:
   - {fileID: 4300000, guid: 79b2a5cdd70824e3d9b3acf2ddc79f4d, type: 3}
   - {fileID: 4300000, guid: e53910dd9ff52433db8fc7f84a2318bb, type: 3}
   - {fileID: 4300000, guid: 04a69148d0283440c96e0a776ed3bf53, type: 3}
-  rangeAtLevel: []
+  rangeAtLevel:
+  - 10
+  - 15
+  - 20
+  - 25
+  - 30
   towerName: 2
   cooldownBuffEffect: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
   kills: 0

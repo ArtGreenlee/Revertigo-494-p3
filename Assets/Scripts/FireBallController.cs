@@ -51,12 +51,18 @@ public class FireBallController : MonoBehaviour
             float damage = towerStats.getDamage();
             if (enemyHealth.currentHealth - damage < 0)
             {
-                Debug.Log("fireball kill count");   
                 towerStats.increaseKills();
             }
             enemy.GetComponent<EnemyHealth>().takeDamage(damage, true, false);
         }
-        Destroy(gameObject);
+        StartCoroutine(disableAndDestroyAfterTime());
+    }
+
+    private IEnumerator disableAndDestroyAfterTime()
+    {
+        sphereCollider.enabled = false;
+        GetComponent<ParticleSystem>().Stop();
+        yield return new WaitForSeconds(2f);
     }
 
     // Update is called once per frame

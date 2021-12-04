@@ -190,6 +190,7 @@ public class TowerStats : MonoBehaviour
         }
         if (!specialTower)
         {
+            range = rangeAtLevel[level];
             baseDamageMin *= damageIncreaseOnLevelUp[level];
             baseDamageMax *= damageIncreaseOnLevelUp[level];
             baseCooldown *= cooldownDecreaseOnLevelUp[level];
