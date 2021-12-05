@@ -53,7 +53,7 @@ public class FireBallController : MonoBehaviour
             {
                 towerStats.increaseKills();
             }
-            enemy.GetComponent<EnemyHealth>().takeDamage(damage, true, false);
+            enemy.GetComponent<EnemyHealth>().takeDamage(damage, true);
         }
         StartCoroutine(disableAndDestroyAfterTime());
     }

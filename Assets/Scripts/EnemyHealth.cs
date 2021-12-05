@@ -15,12 +15,11 @@ public class EnemyHealth : MonoBehaviour
     public GameObject FloatingDamageText;
     public float floatingDamageTextThreshold;
     private ObjectPooler objectPooler;
-    private GameObject gold;
     public int goldValue;
     private Transform cameraTransform;
-    public GameObject DoTEffect;
-    public GameObject poisonEffect;
     private float currentDPS;
+    private Color originalColor;
+    private MeshRenderer meshRenderer;
     // Start is called before the first frame update
 
     public void setMaxHealth(float maxHealthIn)
@@ -48,6 +47,8 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
+        meshRenderer = GetComponent<MeshRenderer>();
+        originalColor = meshRenderer.material.color;
         currentDPS = 0;
         objectPooler = ObjectPooler.Instance;
         currentHealth = maxHealth;
@@ -63,7 +64,7 @@ public class EnemyHealth : MonoBehaviour
         }*/
     }
 
-    public void takeDamage(float damage, bool flashingDamage, bool isDoT)
+    public void takeDamage(float damage, bool flashingDamage)
     {
         if (flashingDamage)
         {
@@ -79,10 +80,6 @@ public class EnemyHealth : MonoBehaviour
             float redColorRatio = (maxHealth - damage) / (maxHealth * 1.5f);
             damageText.color = new Color(1, redColorRatio, redColorRatio);
             damageText.setDamage(damage);
-            if (isDoT)
-            {
-                damageText.color = Color.green;
-            }
         }
         if (currentHealth <= 0)
         {
@@ -99,31 +96,24 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void takeDoT(float DPS, float duration, TowerStats towerStats)
+    public void takeDoT(float DPS, float duration, TowerStats towerStats, GameObject DoTEffect, Color newColor)
     {
-        if (DPS > currentDPS)
-        {
-            currentDPS = DPS;
-            StartCoroutine(DoTroutine(DPS, duration, towerStats));
-        }
+        StartCoroutine(DoTroutine(DPS, duration, towerStats, DoTEffect, newColor));
     }
 
-    private IEnumerator DoTroutine(float DPS, float duration, TowerStats towerStats)
+    private IEnumerator DoTroutine(float DPS, float duration, TowerStats towerStats, GameObject DoTEffect, Color newColor)
     {
-        Color beforeColor = GetComponent<MeshRenderer>().material.color;
-        GetComponent<MeshRenderer>().material.color = new Color(beforeColor.r, beforeColor.g + 1f, beforeColor.b);
-        Instantiate(poisonEffect, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
+        GetComponent<MeshRenderer>().material.color = newColor;
+        Instantiate(DoTEffect, transform.position, Quaternion.identity, transform);
         for (float i = 0; i < duration; i += .5f)
         {
-            Instantiate(DoTEffect, transform.position, UtilityFunctions.getRotationawayFromSide(transform.position));
             if (currentHealth - DPS / 2 < 0)
             {
                 towerStats.increaseKills();
             }
-            takeDamage(DPS / 2, true, true);
+            takeDamage(DPS / 2, false);
             yield return new WaitForSeconds(.5f);
         }
-        currentDPS = 0;
-        GetComponent<MeshRenderer>().material.color = beforeColor;
+        GetComponent<MeshRenderer>().material.color = originalColor;
     }
 }

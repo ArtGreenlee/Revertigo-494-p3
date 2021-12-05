@@ -77,6 +77,6 @@ public class SpiritTower : MonoBehaviour
         {
             currentEnemyBeingSlowed.gameObject.GetComponent<EnemyMovement>().slowEnemy(Mathf.Lerp(slowPercentageMin, slowPercentageMax, (Time.time - slowStartTime) / timeToGetToMaxSlow), towerStats.slowDuration, towerStats.slowEffect);
         }
-        other.gameObject.GetComponent<EnemyHealth>().takeDamage(towerStats.getDamage(), true, false);
+        other.gameObject.GetComponent<EnemyHealth>().takeDamage(towerStats.getDamage(), true);
     }
 }

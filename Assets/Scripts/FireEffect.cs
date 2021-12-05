@@ -19,7 +19,10 @@ public class FireEffect : MonoBehaviour
             AreaSparksEffect.transform.localScale = rescale;
         }
         
-
-        TowerFireEffect = Instantiate(TowerFireEffect, transform.position, Quaternion.identity, transform);
+        if (TowerFireEffect != null)
+        {
+            TowerFireEffect = Instantiate(TowerFireEffect, transform.position, Quaternion.identity, transform);
+        }
+        
     }
 }

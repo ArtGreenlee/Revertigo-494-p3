@@ -146,6 +146,7 @@ public class TowerStats : MonoBehaviour
     public GameObject upgradeEffect;
     public bool specialTower;
     public GameObject slowEffect;
+    public GameObject DOTEffect;
     private SortedSet<float> cooldownBuffs;
 
     private void Start()

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3854894976047864941}
   - component: {fileID: 1772733558715151200}
   - component: {fileID: 8402121761330943427}
-  - component: {fileID: 1427899370295128172}
   - component: {fileID: 6937924089115662549}
   - component: {fileID: -8904312220338457768}
   - component: {fileID: 7516395724962424619}
@@ -109,20 +108,6 @@ MonoBehaviour:
   controlledByPlayer: 0
   launchForce: 6
   disableDuration: 1
---- !u!114 &1427899370295128172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2316449276373684764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f7a3df63a0f544187bd5c2e53aa5e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AreaSparksEffect: {fileID: 0}
-  TowerFireEffect: {fileID: 100004, guid: 1c20c7996d683754db1f0f62a361952c, type: 3}
 --- !u!65 &6937924089115662549
 BoxCollider:
   m_ObjectHideFlags: 0

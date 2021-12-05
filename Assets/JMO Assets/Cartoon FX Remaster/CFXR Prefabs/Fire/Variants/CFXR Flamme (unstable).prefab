@@ -7,10 +7,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2421226186157800132, guid: af304c622ca86a045a1280a5154d2bb1,
+    - target: {fileID: 2421226186157800130, guid: af304c622ca86a045a1280a5154d2bb1,
         type: 3}
-      propertyPath: m_Name
-      value: CFXR Flamme (unstable)
+      propertyPath: InitialModule.rotation3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2421226186157800131, guid: af304c622ca86a045a1280a5154d2bb1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2421226186157800131, guid: af304c622ca86a045a1280a5154d2bb1,
         type: 3}
@@ -29,6 +34,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2421226186157800131, guid: af304c622ca86a045a1280a5154d2bb1,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2421226186157800131, guid: af304c622ca86a045a1280a5154d2bb1,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -40,16 +50,6 @@ PrefabInstance:
     - target: {fileID: 2421226186157800131, guid: af304c622ca86a045a1280a5154d2bb1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2421226186157800131, guid: af304c622ca86a045a1280a5154d2bb1,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2421226186157800131, guid: af304c622ca86a045a1280a5154d2bb1,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2421226186157800131, guid: af304c622ca86a045a1280a5154d2bb1,
@@ -67,6 +67,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2421226186157800132, guid: af304c622ca86a045a1280a5154d2bb1,
+        type: 3}
+      propertyPath: m_Name
+      value: CFXR Flamme (unstable)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2421226186157800133, guid: af304c622ca86a045a1280a5154d2bb1,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2421226186157800133, guid: af304c622ca86a045a1280a5154d2bb1,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -74,23 +84,23 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 173b6b1a6db432f44b3636e0ca19e4db, type: 2}
     - target: {fileID: 3098611530547898630, guid: af304c622ca86a045a1280a5154d2bb1,
         type: 3}
-      propertyPath: animatedLights.Array.data[0].perlinIntensitySpeed
+      propertyPath: animatedLights.Array.data[0].perlinRangeSpeed
       value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 3098611530547898630, guid: af304c622ca86a045a1280a5154d2bb1,
         type: 3}
-      propertyPath: animatedLights.Array.data[0].perlinRangeSpeed
+      propertyPath: animatedLights.Array.data[0].perlinIntensitySpeed
       value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8891276448460042506, guid: af304c622ca86a045a1280a5154d2bb1,
-        type: 3}
-      propertyPath: m_Intensity
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8891276448460042506, guid: af304c622ca86a045a1280a5154d2bb1,
         type: 3}
       propertyPath: m_Range
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8891276448460042506, guid: af304c622ca86a045a1280a5154d2bb1,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af304c622ca86a045a1280a5154d2bb1, type: 3}

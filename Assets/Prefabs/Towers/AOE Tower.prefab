@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2578779351488463702}
   - component: {fileID: 1951854303462109313}
   - component: {fileID: 7991876800126390086}
+  - component: {fileID: 3913222259548834}
   m_Layer: 10
   m_Name: AOE Tower
   m_TagString: Tower
@@ -140,8 +141,8 @@ MonoBehaviour:
   poisonDuration: 0
   range: 5
   numTargets: 1
-  baseDamageMin: 1
-  baseDamageMax: 3
+  baseDamageMin: 0.5
+  baseDamageMax: 1
   critChance: 3
   critMult: 0
   slowPercent: 0
@@ -152,6 +153,8 @@ MonoBehaviour:
   upgradeEffect: {fileID: 0}
   specialTower: 1
   slowEffect: {fileID: 0}
+  DOTEffect: {fileID: 635707360471444879, guid: 2908fde47719ace4e859dce7814bd442,
+    type: 3}
 --- !u!114 &7942271002821284357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,4 +402,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRing: {fileID: 8197433914150080023, guid: 768e051a05ce8a641a55162ac081181a,
     type: 3}
-  fireEffect: {fileID: 0}
+  fireEffect: {fileID: 2421226186157800132, guid: af304c622ca86a045a1280a5154d2bb1,
+    type: 3}
+  rescaleFactor: 0.5
+--- !u!114 &3913222259548834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2761455524533561138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f7a3df63a0f544187bd5c2e53aa5e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AreaSparksEffect: {fileID: 100000, guid: f89732ea99785b94c87bbba1e27f75a3, type: 3}
+  TowerFireEffect: {fileID: 100004, guid: 2a489509f13a8b24581cd3461743f726, type: 3}
