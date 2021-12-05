@@ -7022,6 +7022,7 @@ GameObject:
   - component: {fileID: 1615446040}
   - component: {fileID: 1615446041}
   - component: {fileID: 1615446042}
+  - component: {fileID: 1615446043}
   m_Layer: 0
   m_Name: Main Camera (1)
   m_TagString: MainCamera
@@ -7206,7 +7207,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 824457d73a3340c4fa47a2b8a0698ffd, type: 3}
+  m_audioClip: {fileID: 8300000, guid: bc2ebad8bff17f84faa00eb6ee82f2d9, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.615
   m_Pitch: 1
@@ -7292,6 +7293,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1615446043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615446032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 847c890d373c49e4cbbed557838d9829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1648481196
 GameObject:
   m_ObjectHideFlags: 0
@@ -8577,7 +8590,7 @@ MonoBehaviour:
   slowPercent: 0
   slowDuration: 0
   aoe_range: 2
-  baseCooldown: 1
+  baseCooldown: 0.4
   trailRendererColor: {r: 1, g: 1, b: 1, a: 1}
   upgradeEffect: {fileID: 0}
   specialTower: 1
