@@ -4650,7 +4650,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -43.90001}
+  m_AnchoredPosition: {x: 0, y: -43.900024}
   m_SizeDelta: {x: 323.4, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1161756649
@@ -8581,7 +8581,7 @@ MonoBehaviour:
   trailRendererColor: {r: 1, g: 1, b: 1, a: 1}
   upgradeEffect: {fileID: 0}
   specialTower: 1
-  slowEffect: {fileID: 100000, guid: 77ec3c4e07a36814fb3169ecef41b50a, type: 3}
+  slowEffect: {fileID: 0}
 --- !u!114 &1880758165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8720,12 +8720,14 @@ MonoBehaviour:
   - {fileID: 2000279016636778330, guid: e0598bc5bcb324c1ba3e2d895163c97f, type: 3}
   - {fileID: 9204140441405189623, guid: e7a82ac31456eea4db488781199a4298, type: 3}
   - {fileID: 3352053421576041292, guid: a36e7de485185644884e4d6a03918aaa, type: 3}
+  - {fileID: 2761455524533561138, guid: d2915fe440785d543a3c5e493c2c2677, type: 3}
   specialTowerRoster:
   - {fileID: 6295010870351937091, guid: 82b7e8fad8308ed4cb407bbaa7e9f6d4, type: 3}
   - {fileID: 4782707245435355068, guid: 50382c94b3f4941f99d3020a78658ce2, type: 3}
   - {fileID: 7940872050863963642, guid: c1c1b12a278de74468bfd002d0afcc80, type: 3}
   - {fileID: 5996220971690792234, guid: 1f7e3583f07ac2a4787c3fd2e5c57412, type: 3}
   - {fileID: 2316449276373684764, guid: fa9ee0c353bf14a48bed9e232a048f2a, type: 3}
+  - {fileID: 2761455524533561138, guid: d2915fe440785d543a3c5e493c2c2677, type: 3}
   price: 1
   priceText: {fileID: 1113210396}
   selectionDisplayEffect: {fileID: 100000, guid: 7b56cd9b663f23f429e131a54ec87db0,

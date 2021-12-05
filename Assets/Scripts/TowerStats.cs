@@ -40,7 +40,8 @@ public class TowerStats : MonoBehaviour
         Player,
         Yellow,
         Laser,
-        Tourmaline
+        Tourmaline,
+        AOE
     };
 
     public TowerName towerName;

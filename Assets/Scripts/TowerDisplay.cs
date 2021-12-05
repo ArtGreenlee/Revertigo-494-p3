@@ -180,6 +180,10 @@ public class TowerDisplay : MonoBehaviour
         {
             temp = "Has a " + towerStats.critChance.ToString() + " chance to stun for " + towerStats.slowDuration.ToString() + " second(s)";
         }
+        else if (towerStats.towerName == TowerStats.TowerName.AOE)
+        {
+            temp = "Attacks all enemies in range";
+        }
         return temp;
     }
 
@@ -212,27 +216,31 @@ public class TowerDisplay : MonoBehaviour
         }
         else if (towerStats.towerName == TowerStats.TowerName.Spirit)
         {
-            temp = "Spirit Tower";
+            temp = "Spirit";
         }
         else if (towerStats.towerName == TowerStats.TowerName.Laser)
         {
-            temp = "Laser Tower";
+            temp = "Laser";
         }
         else if (towerStats.towerName == TowerStats.TowerName.Fireball)
         {
-            temp = "Fireball Tower";
+            temp = "Fireball";
         }
         else if (towerStats.towerName == TowerStats.TowerName.ClusterFireball)
         {
-            temp = "Cluster Fireball Tower";
+            temp = "Cluster Fireball";
         }
         else if (towerStats.towerName == TowerStats.TowerName.Stun)
         {
-            temp = "Stun Tower";
+            temp = "Stun";
         }
         else if (towerStats.towerName == TowerStats.TowerName.Tourmaline)
         {
             temp = "Tourmaline";
+        }
+        else if (towerStats.towerName == TowerStats.TowerName.AOE)
+        {
+            temp = "Fire Ring";
         }
 
         if (!towerStats.specialTower)

@@ -70,7 +70,7 @@ public class TowerInventory : MonoBehaviour
         foreach (GameObject tower in specialTowerRoster)
         {
             TowerStats tempStats = tower.GetComponent<TowerStats>();
-            if (tempStats.specialTower)
+            if (tempStats.specialTower && !specialTowerDictionary.ContainsKey(tempStats.towerName))
             {
                 specialTowerDictionary.Add(tempStats.towerName, tower);
             }
@@ -111,6 +111,13 @@ public class TowerInventory : MonoBehaviour
         temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Purple));
         temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Green));
         specialTowerCombinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.Stun,
+            new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
+
+        temp.Clear();
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Red));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Red));
+        temp.Add(new KeyValuePair<int, TowerStats.TowerName>(0, TowerStats.TowerName.Yellow));
+        specialTowerCombinations.Add(new KeyValuePair<TowerStats.TowerName, List<KeyValuePair<int, TowerStats.TowerName>>>(TowerStats.TowerName.AOE,
             new List<KeyValuePair<int, TowerStats.TowerName>>(temp)));
     }
 
