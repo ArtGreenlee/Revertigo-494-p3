@@ -140,7 +140,8 @@ public class EnemyMovement : MonoBehaviour
         if (slowEffect != null)
         {
             Instantiate(slowEffect, transform.position, Quaternion.identity);
-        }        curSpeed *= slowPercentage;
+        }        
+        curSpeed *= slowPercentage;
         yield return new WaitForSeconds(slowDuration);
         curSpeed = maxSpeed;
        

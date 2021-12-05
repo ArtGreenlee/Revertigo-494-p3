@@ -105,7 +105,7 @@ public class EnemySpawner : MonoBehaviour
 
     public IEnumerator startWave(int spawnCount, float enemyHealth)
     {
-        for (int i = 0; i < numEnemies; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
             while (!pathFinder.pathFinished())
             {

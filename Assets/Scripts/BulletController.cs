@@ -130,7 +130,10 @@ public class BulletController : MonoBehaviour
             }
             if (towerStats.poisons)
             {
-                tempHealth.takeDoT(towerStats.poisonDPS, towerStats.poisonDuration, towerStats, towerStats.DOTEffect, new Color(1, 1, .9f));
+                if (towerStats.DOTEffect != null)
+                {
+                    tempHealth.takeDoT(towerStats.poisonDPS, towerStats.poisonDuration, towerStats, towerStats.DOTEffect, new Color(1, 1, .9f));
+                }
             }
             tempHealth.takeDamage(damage, true);
         }

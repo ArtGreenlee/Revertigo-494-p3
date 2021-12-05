@@ -17,7 +17,6 @@ public class EnemyHealth : MonoBehaviour
     private ObjectPooler objectPooler;
     public int goldValue;
     private Transform cameraTransform;
-    private float currentDPS;
     private Color originalColor;
     private MeshRenderer meshRenderer;
     // Start is called before the first frame update
@@ -49,7 +48,6 @@ public class EnemyHealth : MonoBehaviour
     {
         meshRenderer = GetComponent<MeshRenderer>();
         originalColor = meshRenderer.material.color;
-        currentDPS = 0;
         objectPooler = ObjectPooler.Instance;
         currentHealth = maxHealth;
     }
@@ -90,7 +88,10 @@ public class EnemyHealth : MonoBehaviour
             }
             enemyStorage.removeEnemy(gameObject);
             wallStorage.pathfinders.Remove(pathfinder);
-            Instantiate(onDeathEffect, transform.position, Quaternion.identity);
+            if (onDeathEffect != null)
+            {
+                Instantiate(onDeathEffect, transform.position, Quaternion.identity);
+            }
             Destroy(healthBar);
             Destroy(gameObject);
         }
@@ -104,7 +105,10 @@ public class EnemyHealth : MonoBehaviour
     private IEnumerator DoTroutine(float DPS, float duration, TowerStats towerStats, GameObject DoTEffect, Color newColor)
     {
         GetComponent<MeshRenderer>().material.color = newColor;
-        Instantiate(DoTEffect, transform.position, Quaternion.identity, transform);
+        if (DoTEffect != null)
+        {
+            Instantiate(DoTEffect, transform.position, Quaternion.identity, transform);
+        }
         for (float i = 0; i < duration; i += .5f)
         {
             if (currentHealth - DPS / 2 < 0)

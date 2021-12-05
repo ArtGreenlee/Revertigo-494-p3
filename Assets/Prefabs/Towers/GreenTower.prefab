@@ -213,11 +213,12 @@ MonoBehaviour:
   slowPercent: 0.9
   slowDuration: 10
   aoe_range: 0
-  baseCooldown: 1
+  baseCooldown: 3
   trailRendererColor: {r: 0, g: 1, b: 0.060203552, a: 0}
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   specialTower: 0
-  slowEffect: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+  slowEffect: {fileID: 0}
+  DOTEffect: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
 --- !u!114 &462126090924411484
 MonoBehaviour:
   m_ObjectHideFlags: 0
