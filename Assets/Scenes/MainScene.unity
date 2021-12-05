@@ -2765,7 +2765,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &739980372
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5818,7 +5818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde1eed620d637341b436f6e69d0fcd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 1000
+  gold: 10
   goldText: {fileID: 1795517617}
   gemsPerRoundUpgradeButton: {fileID: 739980373}
   gemsPerRoundUpgradeCost:
@@ -6729,9 +6729,9 @@ MonoBehaviour:
     type: 3}
   upcomingWaveSFX: {fileID: 8300000, guid: 08df88f0d9dd54b61ba650b856f3fbf2, type: 3}
   waveVol: 0.1
-  waveStartTimes: 010000001e000000280000002800000028000000320000003c0000003c0000003c0000003c000000
-  enemyCountForWave: 64000000060000000700000008000000090000000900000009000000090000000900000009000000
-  enemyHealthForWave: 640000002300000032000000460000006400000082000000be0000002c01000090010000f4010000
+  waveStartTimes: 0a0000001e000000280000002800000028000000320000003c0000003c0000003c0000003c000000
+  enemyCountForWave: 05000000060000000700000008000000090000000900000009000000090000000900000009000000
+  enemyHealthForWave: 1e0000002800000032000000460000006400000082000000be0000002c01000090010000f4010000
   enemyValueForWave: 0400000005000000060000000700000008000000090000000a0000000b0000000c0000001e000000
 --- !u!114 &1580393135
 MonoBehaviour:
@@ -8433,7 +8433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20774f44c3a5f3749946dedb0d508092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
+  moveSpeed: 1
   rotateSpeed: 6
   cameraTransform: {fileID: 0}
   currentLookPoint: {x: 0, y: 0, z: 0}
@@ -8510,7 +8510,7 @@ Transform:
   m_GameObject: {fileID: 1880758157}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 6}
-  m_LocalScale: {x: 1, y: 1, z: 1.5}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.75}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -8577,7 +8577,7 @@ MonoBehaviour:
   slowPercent: 0
   slowDuration: 0
   aoe_range: 2
-  baseCooldown: 0.3
+  baseCooldown: 1
   trailRendererColor: {r: 1, g: 1, b: 1, a: 1}
   upgradeEffect: {fileID: 0}
   specialTower: 1
@@ -8721,7 +8721,6 @@ MonoBehaviour:
   - {fileID: 2000279016636778330, guid: e0598bc5bcb324c1ba3e2d895163c97f, type: 3}
   - {fileID: 9204140441405189623, guid: e7a82ac31456eea4db488781199a4298, type: 3}
   - {fileID: 3352053421576041292, guid: a36e7de485185644884e4d6a03918aaa, type: 3}
-  - {fileID: 2761455524533561138, guid: d2915fe440785d543a3c5e493c2c2677, type: 3}
   specialTowerRoster:
   - {fileID: 6295010870351937091, guid: 82b7e8fad8308ed4cb407bbaa7e9f6d4, type: 3}
   - {fileID: 4782707245435355068, guid: 50382c94b3f4941f99d3020a78658ce2, type: 3}
@@ -8729,6 +8728,7 @@ MonoBehaviour:
   - {fileID: 5996220971690792234, guid: 1f7e3583f07ac2a4787c3fd2e5c57412, type: 3}
   - {fileID: 2316449276373684764, guid: fa9ee0c353bf14a48bed9e232a048f2a, type: 3}
   - {fileID: 2761455524533561138, guid: d2915fe440785d543a3c5e493c2c2677, type: 3}
+  basePrice: 0
   price: 1
   priceText: {fileID: 1113210396}
   selectionDisplayEffect: {fileID: 100000, guid: 7b56cd9b663f23f429e131a54ec87db0,

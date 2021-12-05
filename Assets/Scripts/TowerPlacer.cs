@@ -63,7 +63,6 @@ public class TowerPlacer : MonoBehaviour
                         shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(podium.transform.position);
                         if (Input.GetKeyDown(KeyCode.F))
                         {
-
                             towerInventory.selectionEnabled = false;
                             GameObject tempTower = towerInventory.playerInventory[0];
                             wallStorage.attachTowerToPodium(tempTower, podium);
@@ -71,7 +70,8 @@ public class TowerPlacer : MonoBehaviour
                             StartCoroutine(placeTowerOnPodium(tempTower, tempTower.transform.position, shadowTower.transform.position, podium));
                             towerInventory.playerInventory.RemoveAt(0);
                             shadowTower.transform.position = new Vector3(25, 0, 0);
-                            towerInventory.price += priceIncreasePerPlacement;
+                            towerInventory.basePrice++;
+                            towerInventory.price = towerInventory.basePrice;
                             towerInventory.priceText.text = "Tower Cost " + towerInventory.price.ToString();
                             StartCoroutine(towerInventory.destroyPlayerInventory());
                         }
@@ -84,14 +84,11 @@ public class TowerPlacer : MonoBehaviour
                         shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(podium.transform.position);
                         if (Input.GetKeyDown(KeyCode.F))
                         {
-                            towerInventory.price += priceIncreasePerPlacement;
+                            towerInventory.price--;
                             towerInventory.priceText.text = "Tower Cost " + towerInventory.price.ToString();
-                            towerInventory.selectionEnabled = false;
                             source.PlayOneShot(placeTowerSFX, placeTowerVol);
                             StartCoroutine(towerInventory.combineTowerOnPodium(wallStorage.getTowerAttachedToPodium(podium), towerInventory.playerInventory[0]));
-                            StartCoroutine(towerInventory.destroyPlayerInventory());
                             shadowTower.transform.position = new Vector3(25, 0, 0);
-
                         }
 
                     }

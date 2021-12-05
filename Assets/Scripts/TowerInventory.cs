@@ -19,6 +19,7 @@ public class TowerInventory : MonoBehaviour
     public List<GameObject> towerRoster;
     public List<GameObject> specialTowerRoster;
     private GoldStorage goldStorage;
+    public float basePrice;
     public float price;
     public TextMeshProUGUI priceText;
 
@@ -27,7 +28,6 @@ public class TowerInventory : MonoBehaviour
     private Transform cameraTransform;
     public GameObject combineEffect;
     public int maxTowerInventory;
-    //public GameObject towerDestroyEffect;
     public float combineCooldown;
     private float combineCooldownUtility;
     private LineRenderer lr;
@@ -54,6 +54,7 @@ public class TowerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        price = basePrice;
         purchaseEnabled = true;
         combinationLrIndex = 0;
         source = GetComponent<AudioSource>();
@@ -127,6 +128,8 @@ public class TowerInventory : MonoBehaviour
         {
             combineCooldownUtility = Time.time;
             goldStorage.changeGoldAmount(-price);
+            price++;
+            priceText.text = "Tower Cost " + price.ToString();
             buyTower();
 
             combinations = checkCurrentTowerForCombinations();
@@ -174,7 +177,7 @@ public class TowerInventory : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && combinations.Count > 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && combinations.Count > 0)
         {
             if (combinationLrIndex == 0)
             {
@@ -207,14 +210,18 @@ public class TowerInventory : MonoBehaviour
 
         if (combinations != null && combinations.Count > 0 && combinations[combinationLrIndex].Count > 1)
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 if (combinations[combinationLrIndex].Count == 2)
                 {
+                    price--;
+                    priceText.text = "Tower Cost " + price.ToString();
                     StartCoroutine(combineTowers(combinations[combinationLrIndex][0], combinations[combinationLrIndex][1]));
                 }
                 else if (combinations[combinationLrIndex].Count == 3)
                 {
+                    price -= 2;
+                    priceText.text = "Tower Cost " + price.ToString();
                     StartCoroutine(combineSpecialTower(combinations[combinationLrIndex][0], combinations[combinationLrIndex][1], combinations[combinationLrIndex][2]));
                 }
                 combinations = checkCurrentTowerForCombinations();
