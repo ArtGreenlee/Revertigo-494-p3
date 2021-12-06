@@ -53,7 +53,7 @@ public class MenuOptionsAnimator : MonoBehaviour
         asyncOperation.allowSceneActivation = false;
 
         //When the load is still in progress, output the Text and progress bar
-        while (asyncOperation.progress < 0.9f)
+        while (!asyncOperation.isDone)
         {
             //Output the current progress
             float progress = Mathf.Clamp01(asyncOperation.progress / .9f);
