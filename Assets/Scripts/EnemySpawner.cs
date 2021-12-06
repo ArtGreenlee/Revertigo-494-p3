@@ -48,7 +48,7 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator Start()
     {
-        while(!tutorialController.isFinished) {
+        while(!tutorialController.isFinished && tutorialController.isActiveAndEnabled) {
             countdownText.text = "";
             yield return new WaitForSeconds(1);
         }

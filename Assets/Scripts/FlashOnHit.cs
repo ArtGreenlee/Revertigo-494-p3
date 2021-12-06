@@ -6,7 +6,7 @@ public class FlashOnHit : MonoBehaviour
 {
 
     public Material flashMaterial;
-    private Material originalMaterial;
+    public Material originalMaterial;
     private MeshRenderer meshRenderer;
     public float flashDuration;
     private bool isFlashing = false;
@@ -36,11 +36,5 @@ public class FlashOnHit : MonoBehaviour
         meshRenderer.material = originalMaterial;
         flashRoutineInstance = null;
 
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        originalMaterial = meshRenderer.material;
     }
 }

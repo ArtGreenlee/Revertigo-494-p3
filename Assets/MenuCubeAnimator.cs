@@ -14,10 +14,7 @@ public class MenuCubeAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.frameCount % 360 == 0)
-        {
-            rb.AddTorque(Random.onUnitSphere * 3, ForceMode.Impulse);
-        }
+        
         
         if (!up && !(transform.position.y > 2)) {
             transform.position = new Vector3(transform.position.x, transform.position.y + 0.001f, transform.position.z);
@@ -31,6 +28,14 @@ public class MenuCubeAnimator : MonoBehaviour
         }
         if (up && (transform.position.y < 0)) {
             up = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (Time.frameCount % 360 == 0)
+        {
+            rb.AddTorque(Random.onUnitSphere * 3, ForceMode.Impulse);
         }
     }
 }

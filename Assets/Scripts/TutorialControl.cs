@@ -80,7 +80,7 @@ public class TutorialControl : MonoBehaviour
         else if (instruction == 1) {
             tutorialText.text = "";
             yield return new WaitForSeconds(2);
-            tutorialText.text = "Right click to place walls to alter the enemy path \nHold right click to place multiple walls";
+            tutorialText.text = "Right click to place walls to alter the enemy path \nHold right click to place multiple walls in a straight line";
         }
         else if (instruction == 2) {
             tutorialText.text = "";
@@ -90,21 +90,18 @@ public class TutorialControl : MonoBehaviour
         else if (instruction == 3) {
             tutorialText.text = "";
             yield return new WaitForSeconds(2);
-            tutorialText.text = "Press G to buy towers to shoot alongside you";
-            
+            tutorialText.text = "Press G to buy towers to shoot alongside you \nPress Space to combine towers";
         }
         else if (instruction == 4) {
             tutorialText.text = "";
             yield return new WaitForSeconds(2);
             tutorialText.text = "Press F while over a podium to place a tower there";
-            
         }
         else if (instruction == 5)
         {
             tutorialText.text = "";
             yield return new WaitForSeconds(2);
             tutorialText.text = "Use WASD to move between sides of the cube";
-            
         }
         else if (instruction == 6) {
             tutorialText.text = "";
