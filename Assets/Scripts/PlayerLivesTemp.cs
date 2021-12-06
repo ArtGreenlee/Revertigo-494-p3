@@ -18,7 +18,7 @@ public class PlayerLivesTemp : MonoBehaviour
     private int numLives; 
     public Slider healthBar;
     private float timeRemaining = 60 * 15 + 1;
-    public GameObject TimerText;
+    public TextMeshProUGUI TimerText;
     public Texture fade_shape = null;
 
 
@@ -43,7 +43,7 @@ public class PlayerLivesTemp : MonoBehaviour
         {
             SceneTransitionController.RequestSceneTransition("End Scene", 1.5f, _SceneTransitionCallback, null);
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             SceneTransitionController.RequestSceneTransition("Menu Scene", 1.5f, _SceneTransitionCallback, fade_shape);
         }
@@ -51,7 +51,7 @@ public class PlayerLivesTemp : MonoBehaviour
         {
             timeRemaining -= Time.deltaTime;
             TimeSpan time = TimeSpan.FromSeconds(timeRemaining);
-            TimerText.GetComponent<TextMeshProUGUI>().text = time.ToString("mm':'ss");
+            TimerText.text = time.ToString("mm':'ss");
         }
         else
         {

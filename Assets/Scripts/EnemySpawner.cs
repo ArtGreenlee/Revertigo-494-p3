@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 public class EnemySpawner : MonoBehaviour
 {
+    public GameObject tutorial;
+    private TutorialControl tutorialController;
     public GameObject enemy;
     private Pathfinder pathFinder;
     private WallPlacer towerPlacer;
@@ -32,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
         towerPlacer = GameObject.Find("GameController").GetComponent<WallPlacer>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         source = GetComponent<AudioSource>();
+        tutorialController = tutorial.GetComponent<TutorialControl>();
     }
 
     public void resetPathIndicators()
@@ -45,6 +48,10 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator Start()
     {
+        while(!tutorialController.isFinished) {
+            countdownText.text = "";
+            yield return new WaitForSeconds(1);
+        }
         enemyPath = pathFinder.getPath();
         for (int i = 0; i < enemyCountForWave.Count; i++)
         {

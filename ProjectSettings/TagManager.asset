@@ -53,3 +53,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: pause menu
+    uniqueID: 92056075
+    locked: 0
+  - name: tutorial
+    uniqueID: 2318527019
+    locked: 0
+  - name: icons
+    uniqueID: 2387238713
+    locked: 0
+  - name: ui
+    uniqueID: 3288250313
+    locked: 0
