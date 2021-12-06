@@ -8,6 +8,8 @@ public class TutorialControl : MonoBehaviour
     public TextMeshPro tutorialText;
     public bool isFinished;
     public bool podiumPlaced;
+    public GameObject GameController;
+    GoldStorage goldStorage;
     float lastUpdate;
     int currInstruction;
 
@@ -25,6 +27,7 @@ public class TutorialControl : MonoBehaviour
         isRunning = false;
         isFinished = false;
         podiumPlaced = false;
+        goldStorage = GameController.GetComponent<GoldStorage>();
         StartCoroutine(DisplayText(currInstruction));
     }
 
@@ -33,6 +36,9 @@ public class TutorialControl : MonoBehaviour
     {
         if (currInstruction > 6) {
              return;
+        }
+        if (goldStorage.gold < 10f) {
+            goldStorage.changeGoldAmount(10f - goldStorage.gold);
         }
         if (currInstruction != 2 && currInstruction != 6) {
             if ((Time.time - lastUpdate > 8.0) && Input.GetKey(keycodes[currInstruction])) {
@@ -49,8 +55,8 @@ public class TutorialControl : MonoBehaviour
             }
         }
         else if (currInstruction == 6) {
+            isFinished = true;
             if (Time.time - lastUpdate > 8.0) {
-                isFinished = true;
                 currInstruction += 1;
                 lastUpdate = Time.time;
                 StartCoroutine(DisplayText(currInstruction));
