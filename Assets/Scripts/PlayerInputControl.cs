@@ -37,58 +37,58 @@ public class PlayerInputControl : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //movementEnabled = !movementEnabled;
-        }
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     //movementEnabled = !movementEnabled;
+        // }
 
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            //Snap to the wall above you
-            StopAllCoroutines();
-            StartCoroutine(snapToPosition(new Vector3(0, 5, 0)));
-            //if curside == forward, up is curside + (-1, 1, 0)
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            //Snap to the wall above you
-            Vector3 curSide = UtilityFunctions.getClosestSide(transform.position);
-            StopAllCoroutines();
-            StartCoroutine(snapToPosition(new Vector3(-5, 0 , 0)));
-            //if curside == forward, up is curside + (-1, 1, 0)
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            //Snap to the wall above you
-            Vector3 curSide = UtilityFunctions.getClosestSide(transform.position);
-            StopAllCoroutines();
-            StartCoroutine(snapToPosition(new Vector3(5, 0, 0)));
-            //if curside == forward, up is curside + (-1, 1, 0)
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            //Snap to the wall above you
-            Vector3 curSide = UtilityFunctions.getClosestSide(transform.position);
-            StopAllCoroutines();
-            StartCoroutine(snapToPosition(new Vector3(-5, 0, 0)));
-            //if curside == forward, up is curside + (-1, 1, 0)
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            //Snap to the wall above you
-            Vector3 curSide = UtilityFunctions.getClosestSide(transform.position);
-            StopAllCoroutines();
-            StartCoroutine(snapToPosition(new Vector3(0, 0, -5)));
-            //if curside == forward, up is curside + (-1, 1, 0)
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            //Snap to the wall above you
-            Vector3 curSide = UtilityFunctions.getClosestSide(transform.position);
-            StopAllCoroutines();
-            StartCoroutine(snapToPosition(new Vector3(0, 0, 5)));
-            //if curside == forward, up is curside + (-1, 1, 0)
-        }
+        // if (Input.GetKeyDown(KeyCode.W))
+        // {
+        //     //Snap to the wall above you
+        //     StopAllCoroutines();
+        //     StartCoroutine(snapToPosition(new Vector3(0, 5, 0)));
+        //     //if curside == forward, up is curside + (-1, 1, 0)
+        // }
+        // else if (Input.GetKeyDown(KeyCode.A))
+        // {
+        //     //Snap to the wall above you
+        //     Vector3 curSide = UtilityFunctions.getClosestSide(transform.position);
+        //     StopAllCoroutines();
+        //     StartCoroutine(snapToPosition(new Vector3(-5, 0 , 0)));
+        //     //if curside == forward, up is curside + (-1, 1, 0)
+        // }
+        // else if (Input.GetKeyDown(KeyCode.D))
+        // {
+        //     //Snap to the wall above you
+        //     Vector3 curSide = UtilityFunctions.getClosestSide(transform.position);
+        //     StopAllCoroutines();
+        //     StartCoroutine(snapToPosition(new Vector3(5, 0, 0)));
+        //     //if curside == forward, up is curside + (-1, 1, 0)
+        // }
+        // else if (Input.GetKeyDown(KeyCode.S))
+        // {
+        //     //Snap to the wall above you
+        //     Vector3 curSide = UtilityFunctions.getClosestSide(transform.position);
+        //     StopAllCoroutines();
+        //     StartCoroutine(snapToPosition(new Vector3(-5, 0, 0)));
+        //     //if curside == forward, up is curside + (-1, 1, 0)
+        // }
+        // else if (Input.GetKeyDown(KeyCode.X))
+        // {
+        //     //Snap to the wall above you
+        //     Vector3 curSide = UtilityFunctions.getClosestSide(transform.position);
+        //     StopAllCoroutines();
+        //     StartCoroutine(snapToPosition(new Vector3(0, 0, -5)));
+        //     //if curside == forward, up is curside + (-1, 1, 0)
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha2))
+        // {
+        //     //Snap to the wall above you
+        //     Vector3 curSide = UtilityFunctions.getClosestSide(transform.position);
+        //     StopAllCoroutines();
+        //     StartCoroutine(snapToPosition(new Vector3(0, 0, 5)));
+        //     //if curside == forward, up is curside + (-1, 1, 0)
+        // }
     }
 
     private IEnumerator snapToPosition(Vector3 position)

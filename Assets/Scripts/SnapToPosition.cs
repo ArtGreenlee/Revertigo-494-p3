@@ -14,6 +14,10 @@ public class SnapToPosition : MonoBehaviour
     Quaternion endRot;
     Vector3 startPos;
     Quaternion startRot;
+    int currentSide = 0;
+    Vector3[] sidePositions = new [] { new Vector3(0f, 0f, -12f), new Vector3(8f, 0f, 0f), new Vector3(0f, 0f, 12f), new Vector3(-12f, 0f, 0f), new Vector3(0f, 12f, 0f), new Vector3(0f, -12f, 0f)};
+    Quaternion[] sideRotations = new [] {Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, -90, 0), Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 90, 0), Quaternion.Euler(90, 0, 0), Quaternion.Euler(-90, 0, 0)};
+    int[,] nextSide = new int[6,4] {{1, 3, 5, 4}, {2, 0, 5, 4}, {3, 1, 5, 4}, {0, 2, 5, 4}, {1, 3, 0, 2}, {1, 3, 2, 0}};
 
     void Start()
     {
@@ -37,61 +41,97 @@ public class SnapToPosition : MonoBehaviour
             }
             
             // check if done
-            if (Time.time - startTime > 0.3f) {
+            // if (Time.time - startTime > 0.3f) {
+            //     isLerping = false;
+            // }
+            if ((transform.position == endPos) && (transform.rotation == endRot)) {
                 isLerping = false;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            //red - back
-            // -Z
-            Debug.Log("hit 1");
-            endPos = new Vector3(0.0f, 0.0f, 7.66f);
-            endRot = Quaternion.Euler(0, 180, 0);
+        if (Input.GetKeyDown(KeyCode.A)) {
+            startPos = sidePositions[currentSide];
+            startRot = sideRotations[currentSide];
+            currentSide = nextSide[currentSide, 0];
+            endPos = sidePositions[currentSide];
+            endRot = sideRotations[currentSide];
             StartLerp();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            //blue - left
-            // -X
-            endPos = new Vector3(7.66f, 0f, 0f);
-            endRot = Quaternion.Euler(0, -90 , 0);
+        else if (Input.GetKeyDown(KeyCode.D)) {
+            startPos = sidePositions[currentSide];
+            startRot = sideRotations[currentSide];
+            currentSide = nextSide[currentSide, 1];
+            endPos = sidePositions[currentSide];
+            endRot = sideRotations[currentSide];
             StartLerp();
+        }
+        else if (Input.GetKeyDown(KeyCode.W)) {
+            startPos = sidePositions[currentSide];
+            startRot = sideRotations[currentSide];
+            currentSide = nextSide[currentSide, 2];
+            endPos = sidePositions[currentSide];
+            endRot = sideRotations[currentSide];
+            StartLerp();
+        }
+        else if (Input.GetKeyDown(KeyCode.S)) {
+            startPos = sidePositions[currentSide];
+            startRot = sideRotations[currentSide];
+            currentSide = nextSide[currentSide, 3];
+            endPos = sidePositions[currentSide];
+            endRot = sideRotations[currentSide];
+            StartLerp();
+        }
+        // if (Input.GetKeyDown(KeyCode.W)) {
+        //     //red - back
+        //     // -Z
+        //     Debug.Log("hit 1");
+        //     endPos = new Vector3(0.0f, 0.0f, 7.66f);
+        //     endRot = Quaternion.Euler(0, 180, 0);
+        //     StartLerp();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.A)) {
+        //     //blue - left
+        //     // -X
+        //     endPos = new Vector3(7.66f, 0f, 0f);
+        //     endRot = Quaternion.Euler(0, -90 , 0);
+        //     StartLerp();
 
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) {
-            //yellow - front
-            // +Z
-            endPos = new Vector3(0f, 0f, -7.66f);
-            endRot = Quaternion.Euler(0, 0 , 0);
-            StartLerp();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) {
-            //green - right
-            // +X
-            endPos = new Vector3(-7.66f, 0f, 0f);
-            endRot = Quaternion.Euler(0, 90, 0);
-            StartLerp();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5)) {
-            //purple - top
-            // +Y
-            endPos = new Vector3(0f, 7.66f, 0f);
-            endRot = Quaternion.Euler(90, 0 , 0);
-            StartLerp();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha6)) {
-            //pink - bottom
-            // -Y
-            endPos = new Vector3(0f, -7.66f, 0f);
-            endRot = Quaternion.Euler(-90, 0 , 0);
-            StartLerp();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.S)) {
+        //     //yellow - front
+        //     // +Z
+        //     endPos = new Vector3(0f, 0f, -7.66f);
+        //     endRot = Quaternion.Euler(0, 0 , 0);
+        //     StartLerp();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.D)) {
+        //     //green - right
+        //     // +X
+        //     endPos = new Vector3(-7.66f, 0f, 0f);
+        //     endRot = Quaternion.Euler(0, 90, 0);
+        //     StartLerp();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.E)) {
+        //     //purple - top
+        //     // +Y
+        //     endPos = new Vector3(0f, 7.66f, 0f);
+        //     endRot = Quaternion.Euler(90, 0 , 0);
+        //     StartLerp();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.X)) {
+        //     //pink - bottom
+        //     // -Y
+        //     endPos = new Vector3(0f, -7.66f, 0f);
+        //     endRot = Quaternion.Euler(-90, 0 , 0);
+        //     StartLerp();
             
-        }
+        // }
     }
 
     void StartLerp() {
         isLerping = true;
         startTime = Time.time;
-        startPos = transform.position;
-        startRot = transform.rotation;
+        // startPos = transform.position;
+        // startRot = transform.rotation;
+        Debug.Log("start " + startPos.ToString() + " " + startRot.ToString() + " " + endPos.ToString() + " " + endRot.ToString() + " " + currentSide.ToString());
     }
 }
