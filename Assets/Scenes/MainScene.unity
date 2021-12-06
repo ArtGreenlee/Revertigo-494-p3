@@ -6443,6 +6443,7 @@ MonoBehaviour:
   loseLifeVol: 0.3
   healthBar: {fileID: 408048319}
   TimerText: {fileID: 0}
+  fade_shape: {fileID: 0}
 --- !u!114 &1411751692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7728,12 +7729,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615446032}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec9af9c923b1a4fb5aefe98f4ebf2324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  Player: {fileID: 1880758157}
   rotSpeed: 1
   posSpeed: 50
   isLerping: 0
@@ -7893,7 +7894,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1880758157}
   rotSpeed: 0.5
-  posSpeed: 40
+  posSpeed: 20
   isLerping: 0
 --- !u!1 &1622014766
 GameObject:
