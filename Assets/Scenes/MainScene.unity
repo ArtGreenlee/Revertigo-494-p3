@@ -2019,6 +2019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c33d4dfa7173994f9998772658b1d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorial: {fileID: 703163876}
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   countdownText: {fileID: 742159}
   pathIndicator: {fileID: 7759244784443228053, guid: 1566776cd3d250e4996cd257a0528b5e,
@@ -3087,7 +3088,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &703163877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3101,6 +3102,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialText: {fileID: 1276542865}
+  isFinished: 0
+  podiumPlaced: 0
 --- !u!4 &703163878
 Transform:
   m_ObjectHideFlags: 0
@@ -4824,6 +4827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c33d4dfa7173994f9998772658b1d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorial: {fileID: 703163876}
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   countdownText: {fileID: 1760329208}
   pathIndicator: {fileID: 7759244784443228053, guid: 1566776cd3d250e4996cd257a0528b5e,
@@ -6608,6 +6612,7 @@ MonoBehaviour:
   debugSphere: {fileID: 3440220758374676105, guid: e8a1b5d91db662a47a20d7c159a5c48a,
     type: 3}
   podium: {fileID: 3186863371094064823, guid: b03dc61e3580cbb40912e64db7d863db, type: 3}
+  tutorial: {fileID: 703163876}
 --- !u!114 &1411751688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7634,13 +7639,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c33d4dfa7173994f9998772658b1d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorial: {fileID: 703163876}
   enemy: {fileID: 5669806530767242401, guid: 22ac39cf812b9db49b690dc7c6ad925f, type: 3}
   countdownText: {fileID: 1227290434}
   pathIndicator: {fileID: 7759244784443228053, guid: 1566776cd3d250e4996cd257a0528b5e,
     type: 3}
   upcomingWaveSFX: {fileID: 8300000, guid: 08df88f0d9dd54b61ba650b856f3fbf2, type: 3}
   waveVol: 0.1
-  waveStartTimes: 0a0000001e000000280000002800000028000000320000003c0000003c0000003c0000003c000000
+  waveStartTimes: 0a0000001400000014000000140000001e0000001e000000280000003c0000003c0000003c000000
   enemyCountForWave: 05000000060000000700000008000000090000000900000009000000090000000900000009000000
   enemyHealthForWave: 1e0000002800000032000000460000006400000082000000be0000002c01000090010000f4010000
   enemyValueForWave: 0400000005000000060000000700000008000000090000000a0000000b0000000c0000001e000000

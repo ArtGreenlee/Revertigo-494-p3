@@ -14,6 +14,8 @@ public class WallStorage : MonoBehaviour
     private Dictionary<GameObject, GameObject> podiumAndTower; //PODIUM AND THEN TOWER
 
     public GameObject podium;
+    public GameObject tutorial;
+    TutorialControl tutorialController;
 
     public HashSet<Vector3> forbiddenVectors;
 
@@ -39,6 +41,7 @@ public class WallStorage : MonoBehaviour
             instance = this;
         }
         storage = new Dictionary<Vector3, GameObject>();
+        tutorialController = tutorial.GetComponent<TutorialControl>();
         //wallAndTowers = new Dictionary<GameObject, GameObject>();
     }
 
@@ -246,6 +249,9 @@ public class WallStorage : MonoBehaviour
                             float changeTransformScale = tempPodium.transform.localScale.x;
                             tempPodium.transform.localScale = Vector3.zero;
                             StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(tempPodium.transform, changeTransformScale, 5));
+                            if (!tutorialController.podiumPlaced) {
+                                tutorialController.podiumPlaced = true;
+                            }
                             yield break;
                         }
                     }

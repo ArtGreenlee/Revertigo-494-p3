@@ -73,7 +73,7 @@ public class TowerPlacer : MonoBehaviour
                             towerInventory.basePrice++;
                             towerInventory.price = towerInventory.basePrice;
                             towerInventory.priceText.text = "Tower Cost " + towerInventory.price.ToString();
-                            StartCoroutine(towerInventory.destroyPlayerInventory());
+                            //StartCoroutine(towerInventory.destroyPlayerInventory());
                         }
                     }
                     else if (wallStorage.getTowerAttachedToPodium(podium) != null &&

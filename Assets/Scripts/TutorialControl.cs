@@ -6,11 +6,13 @@ using TMPro;
 public class TutorialControl : MonoBehaviour
 {
     public TextMeshPro tutorialText;
+    public bool isFinished;
+    public bool podiumPlaced;
     float lastUpdate;
     int currInstruction;
 
     bool isRunning;
-    // KeyCode[] keycodes = new KeyCode[]{ KeyCode.Space, KeyCode.Mouse1, KeyCode.Mouse0, KeyCode.G, KeyCode.F, KeyCode.P};
+    KeyCode[] keycodes = new KeyCode[]{KeyCode.Mouse0, KeyCode.Mouse1, KeyCode.F, KeyCode.G, KeyCode.F, KeyCode.W};
     // public bool firstPlayThrough;
     private Transform cameraTransform;
 
@@ -21,21 +23,39 @@ public class TutorialControl : MonoBehaviour
         currInstruction = 0;
         lastUpdate = Time.time;
         isRunning = false;
-        StartCoroutine(LazyDisplayText());
+        isFinished = false;
+        podiumPlaced = false;
+        StartCoroutine(DisplayText(currInstruction));
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if (currInstruction > 6) {
-        //     return;
-        // }
-        // if ((Time.time - lastUpdate > 8.0f) && !isRunning) {
-            
-        //     currInstruction += 1;
-        //     lastUpdate = Time.time;
-        //     StartCoroutine(DisplayText(currInstruction));
-        // }
+        if (currInstruction > 6) {
+             return;
+        }
+        if (currInstruction != 2 && currInstruction != 6) {
+            if ((Time.time - lastUpdate > 8.0) && Input.GetKey(keycodes[currInstruction])) {
+                currInstruction += 1;
+                lastUpdate = Time.time;
+                StartCoroutine(DisplayText(currInstruction));
+            }
+        }
+        else if (currInstruction == 2) {
+            if ((Time.time - lastUpdate > 8.0) && podiumPlaced) {
+                currInstruction += 1;
+                lastUpdate = Time.time;
+                StartCoroutine(DisplayText(currInstruction));
+            }
+        }
+        else if (currInstruction == 6) {
+            if (Time.time - lastUpdate > 8.0) {
+                isFinished = true;
+                currInstruction += 1;
+                lastUpdate = Time.time;
+                StartCoroutine(DisplayText(currInstruction));
+            }
+        }
         tutorialText.transform.rotation = Quaternion.LookRotation(tutorialText.transform.position - cameraTransform.position);
     }
 
@@ -43,44 +63,40 @@ public class TutorialControl : MonoBehaviour
         
         if (instruction == 0) {
             yield return new WaitForSeconds(2);
-            lastUpdate = Time.time;
-            tutorialText.text = "Use the mouse to look around \nPress space to hold and free position";
+            tutorialText.text = "Left click and hold to shoot enemies";
         }
         else if (instruction == 1) {
             tutorialText.text = "";
-            yield return new WaitForSeconds(1);
-            lastUpdate = Time.time;
-            tutorialText.text = "Left click and hold to shoot enemies";
+            yield return new WaitForSeconds(2);
+            tutorialText.text = "Right click to place walls to alter the enemy path \nHold right click to place multiple walls";
         }
         else if (instruction == 2) {
             tutorialText.text = "";
-            yield return new WaitForSeconds(1);
-            lastUpdate = Time.time;
-            tutorialText.text = "Right click to place walls to block the enemy path \nHold right click to place multiple walls";
+            yield return new WaitForSeconds(2);
+            tutorialText.text = "Place four walls in a square to form a podium";
         }
         else if (instruction == 3) {
             tutorialText.text = "";
-            yield return new WaitForSeconds(10);
-            lastUpdate = Time.time;
-            tutorialText.text = "Place four walls in a square to form a podium";
+            yield return new WaitForSeconds(2);
+            tutorialText.text = "Press G to buy towers to shoot alongside you";
+            
         }
         else if (instruction == 4) {
             tutorialText.text = "";
-            yield return new WaitForSeconds(1);
-            lastUpdate = Time.time;
-            tutorialText.text = "Press G to buy towers to shoot alongside you \nLeft shift over a tower to view its stats";
+            yield return new WaitForSeconds(2);
+            tutorialText.text = "Press F while over a podium to place a tower there";
+            
         }
         else if (instruction == 5)
         {
             tutorialText.text = "";
-            yield return new WaitForSeconds(10);
-            lastUpdate = Time.time;
-            tutorialText.text = "Press F while over a podium to place a tower there";
+            yield return new WaitForSeconds(2);
+            tutorialText.text = "Use WASD to move between sides of the cube";
+            
         }
         else if (instruction == 6) {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            lastUpdate = Time.time;
             tutorialText.text = "Press P to pause and view instructions again";
         }
         else {
@@ -93,6 +109,8 @@ public class TutorialControl : MonoBehaviour
     IEnumerator LazyDisplayText(){
         
         yield return new WaitForSeconds(2);
+        tutorialText.text = "Right click to place walls to alter the enemy path \nHold right click to place multiple walls";
+        
         tutorialText.text = "Use the mouse to look around \nPress space to hold and free position";
         yield return new WaitForSeconds(8);
         tutorialText.text = "";
@@ -101,7 +119,7 @@ public class TutorialControl : MonoBehaviour
         yield return new WaitForSeconds(8);
         tutorialText.text = "";
         yield return new WaitForSeconds(10);
-        tutorialText.text = "Right click to place walls to block the enemy path \nHold right click to place multiple walls";
+        
         yield return new WaitForSeconds(8);
         tutorialText.text = "";
         yield return new WaitForSeconds(1);
