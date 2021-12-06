@@ -6627,7 +6627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde1eed620d637341b436f6e69d0fcd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 10
+  gold: 1000
   goldText: {fileID: 1795517617}
   gemsPerRoundUpgradeButton: {fileID: 739980373}
   gemsPerRoundUpgradeCost:
@@ -6682,6 +6682,7 @@ MonoBehaviour:
   healthBar: {fileID: 408048319}
   TimerText: {fileID: 1617742634}
   fade_shape: {fileID: 2800000, guid: e79bc7c7a61464da4815357239b45372, type: 3}
+  transition_flag: 0
 --- !u!114 &1411751692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6802,6 +6803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df01782ce804c421296774e7729c30d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _current_state: 0
 --- !u!1 &1419153846
 GameObject:
   m_ObjectHideFlags: 0
