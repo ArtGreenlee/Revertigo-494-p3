@@ -49,7 +49,7 @@ public class PlayerInputControl : MonoBehaviour
         Debug.Log(position);
         while (transform.position != position)
         {
-            transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * 2);
+            transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * 1.5f);
             yield return new WaitForFixedUpdate();
         }
     }
