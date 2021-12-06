@@ -9,6 +9,7 @@ public class Unpause : MonoBehaviour
     public AudioClip openMenuSFX;
     public AudioClip closeMenuSFX;
     public float pauseVol = 0.2f;
+    private bool gameisPaused = false;
     private AudioSource source;
     // Start is called before the first frame update
     void Awake()
@@ -23,16 +24,23 @@ public class Unpause : MonoBehaviour
         {
             if (cv.activeSelf == false)
             {
-                cv.SetActive(true);
-                source.PlayOneShot(openMenuSFX, pauseVol);
+                source.PlayOneShot(openMenuSFX, 1.0f);
+                cv.SetActive(true);                
                 Time.timeScale = 0;
+                gameisPaused = true;
             }
             else
             {
                 source.PlayOneShot(closeMenuSFX, pauseVol);
                 cv.SetActive(false);
                 Time.timeScale = 1.0f;
+                gameisPaused = false;
             }
         }
+    }
+
+    public bool isPaused()
+    {
+        return (gameisPaused);
     }
 }
