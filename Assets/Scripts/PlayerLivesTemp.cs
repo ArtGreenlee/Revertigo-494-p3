@@ -17,7 +17,7 @@ public class PlayerLivesTemp : MonoBehaviour
     private TowerInventory towerInventory;
     private int numLives; 
     public Slider healthBar;
-    private float timeRemaining = 60 * 15 + 1;
+    private float timeRemaining;
     public TextMeshProUGUI TimerText;
     public Texture fade_shape = null;
 
@@ -35,6 +35,7 @@ public class PlayerLivesTemp : MonoBehaviour
         towerInventory = TowerInventory.instance;
         numLives = max_lives;
         healthBar.value = Mathf.Clamp01((float)numLives / max_lives);
+        timeRemaining = 60 * 15 + 1;
     }
 
     private void Update()
