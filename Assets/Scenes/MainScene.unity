@@ -6444,6 +6444,7 @@ MonoBehaviour:
   loseLifeVol: 0.3
   healthBar: {fileID: 408048319}
   TimerText: {fileID: 0}
+  fade_shape: {fileID: 2800000, guid: e79bc7c7a61464da4815357239b45372, type: 3}
 --- !u!114 &1411751692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7903,6 +7904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553c998a475d14989a480e83011f5486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
 --- !u!1 &1622014766
 GameObject:
   m_ObjectHideFlags: 0

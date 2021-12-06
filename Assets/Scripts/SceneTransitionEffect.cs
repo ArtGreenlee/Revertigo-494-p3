@@ -13,7 +13,7 @@ public class SceneTransitionEffect : MonoBehaviour {
     Vector2 center_position = Vector2.zero;
     Texture fade_shape;
     float texture_size_factor = 4.0f;
-    SceneTransitionEffectMode mode = SceneTransitionEffectMode.CIRCLE;
+    public SceneTransitionEffectMode mode = SceneTransitionEffectMode.IMAGE;
     float maximum_size_factor = 4.0f; // Controls how large the fade_image gets when disappearing. Tweak to make different images work.
 
     /* Interface / Usage */

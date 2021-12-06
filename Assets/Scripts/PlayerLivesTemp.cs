@@ -19,6 +19,7 @@ public class PlayerLivesTemp : MonoBehaviour
     public Slider healthBar;
     private float timeRemaining = 60 * 15 + 1;
     public GameObject TimerText;
+    public Texture fade_shape = null;
 
 
     private void Awake()
@@ -40,11 +41,11 @@ public class PlayerLivesTemp : MonoBehaviour
     {
         if (numLives <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneTransitionController.RequestSceneTransition("End Scene", 1.5f, _SceneTransitionCallback, null);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneTransitionController.RequestSceneTransition("Menu Scene", 1.0f, _SceneTransitionCallback, null);
+            SceneTransitionController.RequestSceneTransition("Menu Scene", 1.5f, _SceneTransitionCallback, fade_shape);
         }
         if (timeRemaining > 0)
         {
