@@ -8073,10 +8073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9af9c923b1a4fb5aefe98f4ebf2324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1880758157}
-  rotSpeed: 1
-  posSpeed: 50
-  isLerping: 0
 --- !u!114 &1615446040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8084,7 +8080,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615446032}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: faff193440bde444db6292a25fb59f92, type: 3}
   m_Name: 
@@ -8226,15 +8222,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615446032}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec9af9c923b1a4fb5aefe98f4ebf2324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1880758157}
-  rotSpeed: 0.5
-  posSpeed: 20
-  isLerping: 0
 --- !u!114 &1615446045
 MonoBehaviour:
   m_ObjectHideFlags: 0

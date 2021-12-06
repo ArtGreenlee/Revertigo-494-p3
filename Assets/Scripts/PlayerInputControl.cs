@@ -16,7 +16,16 @@ public class PlayerInputControl : MonoBehaviour
     public static PlayerInputControl instance;
     public bool movementEnabled;
     // public bool enabled;
-    
+
+    Vector3 endPos;
+    Quaternion endRot;
+    Vector3 startPos;
+    Quaternion startRot;
+    int currentSide = 0;
+    Vector3[] sidePositions = new[] { new Vector3(0f, 0f, -8), new Vector3(16f, 0f, 0f), new Vector3(0f, 0f, 8), new Vector3(-8, 0f, 0f), new Vector3(0f, 8, 0f), new Vector3(0f, -8, 0f) };
+    Quaternion[] sideRotations = new[] { Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, -90, 0), Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 90, 0), Quaternion.Euler(90, 0, 0), Quaternion.Euler(-90, 0, 0) };
+    int[,] nextSide = new int[6, 4] { { 1, 3, 5, 4 }, { 2, 0, 5, 4 }, { 3, 1, 5, 4 }, { 0, 2, 5, 4 }, { 1, 3, 0, 2 }, { 1, 3, 2, 0 } };
+
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -35,8 +44,50 @@ public class PlayerInputControl : MonoBehaviour
         }
     }
 
+    private IEnumerator snapToPosition(Vector3 position)
+    {
+        Debug.Log(position);
+        while (transform.position != position)
+        {
+            transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * 2);
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            currentSide = nextSide[currentSide, 0];
+            endPos = sidePositions[currentSide];
+            endRot = sideRotations[currentSide];
+            StopAllCoroutines();
+            StartCoroutine(snapToPosition(endPos));
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            currentSide = nextSide[currentSide, 1];
+            endPos = sidePositions[currentSide];
+            endRot = sideRotations[currentSide];
+            StopAllCoroutines();
+            StartCoroutine(snapToPosition(endPos));
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            currentSide = nextSide[currentSide, 2];
+            endPos = sidePositions[currentSide];
+            endRot = sideRotations[currentSide];
+            StopAllCoroutines();
+            StartCoroutine(snapToPosition(endPos));
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            currentSide = nextSide[currentSide, 3];
+            endPos = sidePositions[currentSide];
+            endRot = sideRotations[currentSide];
+            StopAllCoroutines();
+            StartCoroutine(snapToPosition(endPos));
+        }
         // if (Input.GetKeyDown(KeyCode.Space))
         // {
         //     //movementEnabled = !movementEnabled;
@@ -91,15 +142,7 @@ public class PlayerInputControl : MonoBehaviour
         // }
     }
 
-    private IEnumerator snapToPosition(Vector3 position)
-    {
-        Debug.Log(position);
-        while (transform.position != position)
-        {
-            transform.position = Vector3.Slerp(transform.position, position, Time.deltaTime * 2);
-            yield return new WaitForFixedUpdate();
-        }
-    }
+    
 
     // Update is called once per frame
     void FixedUpdate()

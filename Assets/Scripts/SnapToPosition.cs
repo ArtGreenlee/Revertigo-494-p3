@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SnapToPosition : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /*// Start is called before the first frame update
     public GameObject Player;
     MeshRenderer playerMesh;
     public float rotSpeed;
@@ -131,4 +131,5 @@ public class SnapToPosition : MonoBehaviour
         startRot = transform.rotation;
         Debug.Log("start " + startPos.ToString() + " " + startRot.ToString() + " " + endPos.ToString() + " " + endRot.ToString() + " " + currentSide.ToString());
     }
+    */
 }
