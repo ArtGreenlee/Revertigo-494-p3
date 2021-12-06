@@ -47,9 +47,6 @@ public class MenuOptionsAnimator : MonoBehaviour
     }
     IEnumerator LoadSceneAsync()
     {
-        //Begin to load the Scene you specify
-        loadingBar.value = 1;
-
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
         //
         //Don't let the Scene activate until you allow it to
@@ -63,16 +60,6 @@ public class MenuOptionsAnimator : MonoBehaviour
             loadingText.text = "Loading progress: " + progress * 100 + "%";
             Debug.Log("Loading Progress :" + asyncOperation.progress);
             loadingBar.value = progress;
-
-            // Check if the load has finished
-            if (asyncOperation.progress >= 0.9f)
-            {
-                loadingText.text = "Loading progress: " + progress * 100 + "%";
-                Debug.Log("Progress :" + asyncOperation.progress);
-                loadingBar.value = progress;
-                asyncOperation.allowSceneActivation = true;
-            }
-            yield return null;
         }
         if (asyncOperation.progress >= 0.9f)
         {
