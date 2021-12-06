@@ -6342,7 +6342,6 @@ GameObject:
   - component: {fileID: 1411751688}
   - component: {fileID: 1411751692}
   - component: {fileID: 1411751693}
-  - component: {fileID: 1411751694}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -6444,7 +6443,6 @@ MonoBehaviour:
   loseLifeVol: 0.3
   healthBar: {fileID: 408048319}
   TimerText: {fileID: 0}
-  fade_shape: {fileID: 2800000, guid: e79bc7c7a61464da4815357239b45372, type: 3}
 --- !u!114 &1411751692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6553,18 +6551,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1411751694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1411751685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df01782ce804c421296774e7729c30d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1419153846
 GameObject:
   m_ObjectHideFlags: 0
@@ -7610,7 +7596,6 @@ GameObject:
   - component: {fileID: 1615446042}
   - component: {fileID: 1615446043}
   - component: {fileID: 1615446044}
-  - component: {fileID: 1615446045}
   m_Layer: 0
   m_Name: Main Camera (1)
   m_TagString: MainCamera
@@ -7748,6 +7733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9af9c923b1a4fb5aefe98f4ebf2324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 0}
   rotSpeed: 1
   posSpeed: 50
   isLerping: 0
@@ -7905,22 +7891,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9af9c923b1a4fb5aefe98f4ebf2324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotSpeed: 7
-  posSpeed: 15
+  Player: {fileID: 1880758157}
+  rotSpeed: 0.5
+  posSpeed: 40
   isLerping: 0
---- !u!114 &1615446045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1615446032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 553c998a475d14989a480e83011f5486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mode: 0
 --- !u!1 &1622014766
 GameObject:
   m_ObjectHideFlags: 0
@@ -9334,7 +9308,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880758157}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 6}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.75}
   m_Children: []
   m_Father: {fileID: 0}

@@ -5,6 +5,8 @@ using UnityEngine;
 public class SnapToPosition : MonoBehaviour
 {
     // Start is called before the first frame update
+    public GameObject Player;
+    MeshRenderer playerMesh;
     public float rotSpeed;
     public float posSpeed;
     CameraController controller;
@@ -15,13 +17,14 @@ public class SnapToPosition : MonoBehaviour
     Vector3 startPos;
     Quaternion startRot;
     int currentSide = 0;
-    Vector3[] sidePositions = new [] { new Vector3(0f, 0f, -12f), new Vector3(8f, 0f, 0f), new Vector3(0f, 0f, 12f), new Vector3(-12f, 0f, 0f), new Vector3(0f, 12f, 0f), new Vector3(0f, -12f, 0f)};
+    Vector3[] sidePositions = new [] { new Vector3(0f, 0f, -16f), new Vector3(16f, 0f, 0f), new Vector3(0f, 0f, 16f), new Vector3(-16f, 0f, 0f), new Vector3(0f, 16f, 0f), new Vector3(0f, -16f, 0f)};
     Quaternion[] sideRotations = new [] {Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, -90, 0), Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 90, 0), Quaternion.Euler(90, 0, 0), Quaternion.Euler(-90, 0, 0)};
     int[,] nextSide = new int[6,4] {{1, 3, 5, 4}, {2, 0, 5, 4}, {3, 1, 5, 4}, {0, 2, 5, 4}, {1, 3, 0, 2}, {1, 3, 2, 0}};
 
     void Start()
     {
         isLerping = false;
+        playerMesh = Player.GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -46,35 +49,28 @@ public class SnapToPosition : MonoBehaviour
             // }
             if ((transform.position == endPos) && (transform.rotation == endRot)) {
                 isLerping = false;
+                playerMesh.enabled = !playerMesh.enabled;
             }
         }
         if (Input.GetKeyDown(KeyCode.A)) {
-            startPos = sidePositions[currentSide];
-            startRot = sideRotations[currentSide];
             currentSide = nextSide[currentSide, 0];
             endPos = sidePositions[currentSide];
             endRot = sideRotations[currentSide];
             StartLerp();
         }
         else if (Input.GetKeyDown(KeyCode.D)) {
-            startPos = sidePositions[currentSide];
-            startRot = sideRotations[currentSide];
             currentSide = nextSide[currentSide, 1];
             endPos = sidePositions[currentSide];
             endRot = sideRotations[currentSide];
             StartLerp();
         }
         else if (Input.GetKeyDown(KeyCode.W)) {
-            startPos = sidePositions[currentSide];
-            startRot = sideRotations[currentSide];
             currentSide = nextSide[currentSide, 2];
             endPos = sidePositions[currentSide];
             endRot = sideRotations[currentSide];
             StartLerp();
         }
         else if (Input.GetKeyDown(KeyCode.S)) {
-            startPos = sidePositions[currentSide];
-            startRot = sideRotations[currentSide];
             currentSide = nextSide[currentSide, 3];
             endPos = sidePositions[currentSide];
             endRot = sideRotations[currentSide];
@@ -129,9 +125,10 @@ public class SnapToPosition : MonoBehaviour
 
     void StartLerp() {
         isLerping = true;
+        playerMesh.enabled = !playerMesh.enabled;
         startTime = Time.time;
-        // startPos = transform.position;
-        // startRot = transform.rotation;
+        startPos = new Vector3(0f, 0f, 0f);
+        startRot = transform.rotation;
         Debug.Log("start " + startPos.ToString() + " " + startRot.ToString() + " " + endPos.ToString() + " " + endRot.ToString() + " " + currentSide.ToString());
     }
 }
