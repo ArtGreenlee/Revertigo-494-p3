@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
@@ -16,7 +17,7 @@ public class PlayerLivesTemp : MonoBehaviour
     private TowerInventory towerInventory;
     private int numLives; 
     public Slider healthBar;
-    public float timeRemaining = 10;
+    private float timeRemaining = 60 * 15 + 1;
     public GameObject TimerText;
 
 
@@ -48,7 +49,12 @@ public class PlayerLivesTemp : MonoBehaviour
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
-            TimerText.GetComponent<TextMeshPro>().text = timeRemaining.ToString();
+            TimeSpan time = TimeSpan.FromSeconds(timeRemaining);
+            TimerText.GetComponent<TextMeshProUGUI>().text = time.ToString("mm':'ss");
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
