@@ -6442,6 +6442,8 @@ MonoBehaviour:
   loseLifeSFX: {fileID: 8300000, guid: 536ecf00edb054bbfb17d67c548f1b7a, type: 3}
   loseLifeVol: 0.3
   healthBar: {fileID: 408048319}
+  TimerText: {fileID: 0}
+  fade_shape: {fileID: 2800000, guid: e79bc7c7a61464da4815357239b45372, type: 3}
 --- !u!114 &1411751692
 MonoBehaviour:
   m_ObjectHideFlags: 0
