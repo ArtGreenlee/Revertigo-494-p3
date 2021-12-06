@@ -16,6 +16,8 @@ public class PlayerLivesTemp : MonoBehaviour
     private TowerInventory towerInventory;
     private int numLives; 
     public Slider healthBar;
+    public float timeRemaining = 10;
+    public GameObject TimerText;
 
 
     private void Awake()
@@ -42,6 +44,11 @@ public class PlayerLivesTemp : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+        if (timeRemaining > 0)
+        {
+            timeRemaining -= Time.deltaTime;
+            TimerText.GetComponent<TextMeshPro>().text = timeRemaining.ToString();
         }
     }
 
