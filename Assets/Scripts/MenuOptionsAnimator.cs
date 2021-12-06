@@ -65,7 +65,7 @@ public class MenuOptionsAnimator : MonoBehaviour
         {
             loadingText.text = "Loading progress: " + Mathf.Clamp01(asyncOperation.progress / .9f) * 100 + "%";
             Debug.Log("Progress :" + asyncOperation.progress);
-            loadingBar.value = Mathf.Clamp01(asyncOperation.progress / .9f);
+            loadingBar.value = 1;
             asyncOperation.allowSceneActivation = true;
             yield return null;
         }
