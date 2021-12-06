@@ -60,14 +60,16 @@ public class MenuOptionsAnimator : MonoBehaviour
             loadingText.text = "Loading progress: " + progress * 100 + "%";
             Debug.Log("Loading Progress :" + asyncOperation.progress);
             loadingBar.value = progress;
-        }
-        if (asyncOperation.progress >= 0.9f)
-        {
-            loadingText.text = "Loading progress: " + Mathf.Clamp01(asyncOperation.progress / .9f) * 100 + "%";
-            Debug.Log("Progress :" + asyncOperation.progress);
-            loadingBar.value = 1;
-            asyncOperation.allowSceneActivation = true;
+            if (asyncOperation.progress >= 0.9f)
+            {
+                asyncOperation.allowSceneActivation = true;
+                loadingText.text = "Loading progress: " + Mathf.Clamp01(asyncOperation.progress / .9f) * 100 + "%";
+                Debug.Log("Progress :" + asyncOperation.progress);
+                loadingBar.value = 1;
+                
+            }
             yield return null;
         }
+        
     }
 }
