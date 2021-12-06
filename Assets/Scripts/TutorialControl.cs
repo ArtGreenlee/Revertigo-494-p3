@@ -8,6 +8,7 @@ public class TutorialControl : MonoBehaviour
     public TextMeshPro tutorialText;
     public bool isFinished;
     public bool podiumPlaced;
+    bool conditionMet;
     public GameObject GameController;
     GoldStorage goldStorage;
     float lastUpdate;
@@ -27,6 +28,7 @@ public class TutorialControl : MonoBehaviour
         isRunning = false;
         isFinished = false;
         podiumPlaced = false;
+        conditionMet = false;
         goldStorage = GameController.GetComponent<GoldStorage>();
         StartCoroutine(DisplayText(currInstruction));
     }
@@ -41,7 +43,11 @@ public class TutorialControl : MonoBehaviour
             goldStorage.changeGoldAmount(10f - goldStorage.gold);
         }
         if (currInstruction != 2 && currInstruction != 6) {
-            if ((Time.time - lastUpdate > 6.0) && Input.GetKey(keycodes[currInstruction])) {
+            if (Input.GetKey(keycodes[currInstruction])) {
+                conditionMet = true;
+            }
+            if ((Time.time - lastUpdate > 6.0) && conditionMet) {
+                conditionMet = false;
                 currInstruction += 1;
                 lastUpdate = Time.time;
                 StartCoroutine(DisplayText(currInstruction));
@@ -103,7 +109,7 @@ public class TutorialControl : MonoBehaviour
         else if (instruction == 6) {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
-            tutorialText.text = "Press P to pause and view instructions again";
+            tutorialText.text = "Press ESC to pause and view instructions again";
         }
         else {
             tutorialText.text = "";

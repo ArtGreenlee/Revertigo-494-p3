@@ -2355,7 +2355,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: '
 
-    Space: Hold/Free Position
+    WASD: move around cube
 
     Left Click: fire
 
@@ -2370,9 +2370,9 @@ MonoBehaviour:
     Left shift
     over tower: view stats
 
-    R: Reset
+    M: Return to menu
 
-    P: Unpause
+    ESC: Unpause
 
 '
 --- !u!222 &568890283
@@ -2831,7 +2831,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1907728583
   m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &655674877
@@ -4056,7 +4056,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1907728583
   m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &950938671
@@ -4588,7 +4588,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1006716983
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1081148708
@@ -7134,8 +7134,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1976440277
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!1 &1489365329
 GameObject:
@@ -9715,7 +9715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1848959464
 RectTransform:
   m_ObjectHideFlags: 0

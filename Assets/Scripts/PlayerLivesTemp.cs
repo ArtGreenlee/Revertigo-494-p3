@@ -43,7 +43,7 @@ public class PlayerLivesTemp : MonoBehaviour
         {
             SceneTransitionController.RequestSceneTransition("End Scene", 1.5f, _SceneTransitionCallback, null);
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             SceneTransitionController.RequestSceneTransition("Menu Scene", 1.5f, _SceneTransitionCallback, fade_shape);
         }
