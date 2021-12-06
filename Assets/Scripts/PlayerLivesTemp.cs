@@ -20,6 +20,7 @@ public class PlayerLivesTemp : MonoBehaviour
     private float timeRemaining = 60 * 15 + 1;
     public TextMeshProUGUI TimerText;
     public Texture fade_shape = null;
+    public bool transition_flag = false;
 
 
     private void Awake()
@@ -41,7 +42,11 @@ public class PlayerLivesTemp : MonoBehaviour
     {
         if (numLives <= 0)
         {
-            SceneTransitionController.RequestSceneTransition("End Scene", 1.5f, _SceneTransitionCallback, null);
+            if(!transition_flag){
+                Debug.Log("TRANSITION DEATH");
+                transition_flag = true;
+                SceneTransitionController.RequestSceneTransition("End Scene", 1.5f, _SceneTransitionCallback, null);
+            }
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -55,7 +60,11 @@ public class PlayerLivesTemp : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            if(!transition_flag){
+                Debug.Log("TRANSITION TIMER");
+                transition_flag = true;
+                SceneTransitionController.RequestSceneTransition("End Scene", 1.5f, _SceneTransitionCallback, null);
+            }
         }
     }
 
