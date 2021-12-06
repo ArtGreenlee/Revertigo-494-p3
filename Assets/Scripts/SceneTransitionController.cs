@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class SceneTransitionController : MonoBehaviour {
 
     /* Singleton */
-    static SceneTransitionController singleton;
+    public static SceneTransitionController singleton;
 
     /* Private Data */
     SceneTransitionEffect effect;
-    SceneTransitionState _current_state = SceneTransitionState.NOT_TRANSITIONING;
+    public SceneTransitionState _current_state = SceneTransitionState.NOT_TRANSITIONING;
     static AsyncOperation loading_operation;
 
     /* Public Usage Interface */
