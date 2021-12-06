@@ -6342,6 +6342,7 @@ GameObject:
   - component: {fileID: 1411751688}
   - component: {fileID: 1411751692}
   - component: {fileID: 1411751693}
+  - component: {fileID: 1411751694}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -6442,6 +6443,7 @@ MonoBehaviour:
   loseLifeSFX: {fileID: 8300000, guid: 536ecf00edb054bbfb17d67c548f1b7a, type: 3}
   loseLifeVol: 0.3
   healthBar: {fileID: 408048319}
+  TimerText: {fileID: 0}
 --- !u!114 &1411751692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6550,6 +6552,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1411751694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411751685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df01782ce804c421296774e7729c30d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1419153846
 GameObject:
   m_ObjectHideFlags: 0
@@ -7594,6 +7608,7 @@ GameObject:
   - component: {fileID: 1615446041}
   - component: {fileID: 1615446042}
   - component: {fileID: 1615446043}
+  - component: {fileID: 1615446044}
   m_Layer: 0
   m_Name: Main Camera (1)
   m_TagString: MainCamera
@@ -7874,6 +7889,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 847c890d373c49e4cbbed557838d9829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1615446044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615446032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 553c998a475d14989a480e83011f5486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1622014766

@@ -44,7 +44,7 @@ public class PlayerLivesTemp : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            SceneTransitionController.RequestSceneTransition("Menu Scene", 1.0f, _SceneTransitionCallback, null);
         }
         if (timeRemaining > 0)
         {
@@ -68,5 +68,10 @@ public class PlayerLivesTemp : MonoBehaviour
         //Debug.Log(Mathf.Clamp01((float)numLives / max_lives));
         healthBar.value = Mathf.Clamp01((float)numLives / max_lives);
         EventBus.Publish<PlayerLifeEvent>(new PlayerLifeEvent(-1));
+    }
+
+    void _SceneTransitionCallback(SceneTransitionState transition_state, string scene_name)
+    {
+        Debug.Log(transition_state);
     }
 }
