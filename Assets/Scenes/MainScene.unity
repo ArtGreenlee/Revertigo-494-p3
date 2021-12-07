@@ -9917,7 +9917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20774f44c3a5f3749946dedb0d508092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 1.5
   rotateSpeed: 6
   cameraTransform: {fileID: 0}
   currentLookPoint: {x: 0, y: 0, z: 0}

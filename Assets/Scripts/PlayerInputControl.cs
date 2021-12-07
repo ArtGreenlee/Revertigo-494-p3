@@ -11,6 +11,7 @@ public class PlayerInputControl : MonoBehaviour
     public Vector3 currentLookPoint;
     public float movementBuffer;
     private int layerMask;
+    private int sideLayerMask;
     public float distanceFromCenter;
 
     public static PlayerInputControl instance;
@@ -31,6 +32,7 @@ public class PlayerInputControl : MonoBehaviour
         cameraTransform = Camera.main.transform;
         rb = GetComponent<Rigidbody>();
         layerMask = ~LayerMask.GetMask("Tower", "Player");
+        sideLayerMask = LayerMask.GetMask("Playfield");
     }
 
     private void Awake()
@@ -43,7 +45,6 @@ public class PlayerInputControl : MonoBehaviour
 
     private IEnumerator snapToPosition(Vector3 position)
     {
-        Debug.Log(position);
         while (transform.position != position)
         {
             transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * moveSpeed);
@@ -53,7 +54,32 @@ public class PlayerInputControl : MonoBehaviour
 
     private void Update()
     {
+        Vector3 castDirection = Vector3.zero;
         if (Input.GetKeyDown(KeyCode.A))
+        {
+            castDirection = -cameraTransform.right;
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            castDirection = cameraTransform.right;
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            castDirection = -cameraTransform.up;
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            castDirection = cameraTransform.up;
+        }
+        if (castDirection != Vector3.zero)
+        {
+            RaycastHit hit;
+            Physics.Raycast(cameraTransform.position, castDirection, out hit, 1000, sideLayerMask);
+            //string sideName = hit.collider.name;
+            StopAllCoroutines();
+            StartCoroutine(snapToPosition(UtilityFunctions.getClosestSide(hit.transform.position.normalized * distanceFromCenter)));
+        }
+        /*if (Input.GetKeyDown(KeyCode.A))
         {
             currentSide = nextSide[currentSide, 0];
             endPos = sidePositions[currentSide] * distanceFromCenter;
@@ -80,7 +106,7 @@ public class PlayerInputControl : MonoBehaviour
             endPos = sidePositions[currentSide] * distanceFromCenter;
             StopAllCoroutines();
             StartCoroutine(snapToPosition(endPos));
-        }
+        }*/
         // if (Input.GetKeyDown(KeyCode.Space))
         // {
         //     //movementEnabled = !movementEnabled;
