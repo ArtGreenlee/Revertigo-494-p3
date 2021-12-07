@@ -10,20 +10,17 @@ public class PlayerInputControl : MonoBehaviour
     public Transform cameraTransform;
     public Vector3 currentLookPoint;
     public float movementBuffer;
-    private TowerDisplay towerDisplay;
     private int layerMask;
+    public float distanceFromCenter;
 
     public static PlayerInputControl instance;
     public bool movementEnabled;
     // public bool enabled;
 
     Vector3 endPos;
-    Quaternion endRot;
-    Vector3 startPos;
-    Quaternion startRot;
     int currentSide = 0;
-    Vector3[] sidePositions = new[] { new Vector3(0f, 0f, -8), new Vector3(16f, 0f, 0f), new Vector3(0f, 0f, 8), new Vector3(-8, 0f, 0f), new Vector3(0f, 8, 0f), new Vector3(0f, -8, 0f) };
-    Quaternion[] sideRotations = new[] { Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, -90, 0), Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 90, 0), Quaternion.Euler(90, 0, 0), Quaternion.Euler(-90, 0, 0) };
+    Vector3[] sidePositions = new[] { new Vector3(0f, 0f, -1), new Vector3(1, 0f, 0f), new Vector3(0f, 0f, 1), new Vector3(-1, 0f, 0f), new Vector3(0f, 1, 0f), new Vector3(0f, -1, 0f) };
+    //Quaternion[] sideRotations = new[] { Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, -90, 0), Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 90, 0), Quaternion.Euler(90, 0, 0), Quaternion.Euler(-90, 0, 0) };
     int[,] nextSide = new int[6, 4] { { 1, 3, 5, 4 }, { 2, 0, 5, 4 }, { 3, 1, 5, 4 }, { 0, 2, 5, 4 }, { 1, 3, 0, 2 }, { 1, 3, 2, 0 } };
 
     Rigidbody rb;
@@ -49,7 +46,7 @@ public class PlayerInputControl : MonoBehaviour
         Debug.Log(position);
         while (transform.position != position)
         {
-            transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * 1.5f);
+            transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * moveSpeed);
             yield return new WaitForFixedUpdate();
         }
     }
@@ -59,32 +56,28 @@ public class PlayerInputControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             currentSide = nextSide[currentSide, 0];
-            endPos = sidePositions[currentSide];
-            endRot = sideRotations[currentSide];
+            endPos = sidePositions[currentSide] * distanceFromCenter;
             StopAllCoroutines();
             StartCoroutine(snapToPosition(endPos));
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
             currentSide = nextSide[currentSide, 1];
-            endPos = sidePositions[currentSide];
-            endRot = sideRotations[currentSide];
+            endPos = sidePositions[currentSide] * distanceFromCenter;
             StopAllCoroutines();
             StartCoroutine(snapToPosition(endPos));
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
             currentSide = nextSide[currentSide, 2];
-            endPos = sidePositions[currentSide];
-            endRot = sideRotations[currentSide];
+            endPos = sidePositions[currentSide] * distanceFromCenter;
             StopAllCoroutines();
             StartCoroutine(snapToPosition(endPos));
         }
         else if (Input.GetKeyDown(KeyCode.W))
         {
             currentSide = nextSide[currentSide, 3];
-            endPos = sidePositions[currentSide];
-            endRot = sideRotations[currentSide];
+            endPos = sidePositions[currentSide] * distanceFromCenter;
             StopAllCoroutines();
             StartCoroutine(snapToPosition(endPos));
         }

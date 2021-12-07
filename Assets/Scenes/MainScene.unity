@@ -9922,6 +9922,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 0}
   currentLookPoint: {x: 0, y: 0, z: 0}
   movementBuffer: 0
+  distanceFromCenter: 6
   movementEnabled: 0
 --- !u!65 &1880758159
 BoxCollider:
