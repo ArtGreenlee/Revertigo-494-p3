@@ -90,7 +90,7 @@ public class TutorialControl : MonoBehaviour
         else if (instruction == 3) {
             tutorialText.text = "";
             yield return new WaitForSeconds(2);
-            tutorialText.text = "Press G to buy towers to shoot alongside you \nPress Space to combine towers";
+            tutorialText.text = "Press G to buy towers to shoot alongside you \nSome towers can combine!\n If you see a line connecting towers in your inventory \n press space to combine them!";
         }
         else if (instruction == 4) {
             tutorialText.text = "";
