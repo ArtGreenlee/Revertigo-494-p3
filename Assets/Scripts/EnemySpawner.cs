@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 public class EnemySpawner : MonoBehaviour
 {
@@ -19,6 +20,10 @@ public class EnemySpawner : MonoBehaviour
     private int numEnemies;
     private AudioSource source;
     public AudioClip upcomingWaveSFX;
+    public TextMeshProUGUI spawnEarlyText;
+    public Image spawnIcon;
+    public GameObject waveStartEffect;
+
     // public AudioClip waveStartingSFX;
     public float waveVol = 0.1f;
 
@@ -35,6 +40,23 @@ public class EnemySpawner : MonoBehaviour
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
         source = GetComponent<AudioSource>();
         tutorialController = tutorial.GetComponent<TutorialControl>();
+    }
+
+    private void OnMouseOver()
+    {
+        spawnEarlyText.enabled = true;
+        spawnIcon.color = new Color(spawnIcon.color.r, spawnIcon.color.g, spawnIcon.color.b, 1);
+        if (Input.GetMouseButtonDown(0))
+        {
+            startDelay = 0;
+            Instantiate(waveStartEffect, transform.position, Quaternion.identity);
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        spawnEarlyText.enabled = false;
+        spawnIcon.color = new Color(spawnIcon.color.r, spawnIcon.color.g, spawnIcon.color.b, .2f);
     }
 
     public void resetPathIndicators()
@@ -78,7 +100,6 @@ public class EnemySpawner : MonoBehaviour
                 }
                 yield return new WaitForSeconds(1);
             }
-            Debug.Log("happening");
             StartCoroutine(startWave(numEnemies, enemyHealthForWave[i]));
         }
         Destroy(countdownText);
