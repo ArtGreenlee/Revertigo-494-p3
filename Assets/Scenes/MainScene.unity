@@ -2359,16 +2359,14 @@ MonoBehaviour:
 
     Left Click: fire
 
-    Right Click/Drag:
-    Place Walls
+    Right Click/Drag: Place Walls
 
 
     G: Buy Tower
 
     F: Place Tower on Podium
 
-    Left shift
-    over tower: view stats
+    Left shift over tower: view stats
 
     M: Return to menu
 
@@ -9917,11 +9915,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20774f44c3a5f3749946dedb0d508092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 1.5
   rotateSpeed: 6
   cameraTransform: {fileID: 0}
   currentLookPoint: {x: 0, y: 0, z: 0}
   movementBuffer: 0
+  distanceFromCenter: 6
   movementEnabled: 0
 --- !u!65 &1880758159
 BoxCollider:
