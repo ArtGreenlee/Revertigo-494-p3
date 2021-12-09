@@ -14,11 +14,19 @@ public class TutorialControl : MonoBehaviour
     float lastUpdate;
     int currInstruction;
 
+    public static TutorialControl instance;
+
     bool isRunning;
     KeyCode[] keycodes = new KeyCode[]{KeyCode.Mouse0, KeyCode.Mouse1, KeyCode.F, KeyCode.G, KeyCode.F, KeyCode.W};
     // public bool firstPlayThrough;
     private Transform cameraTransform;
-
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {

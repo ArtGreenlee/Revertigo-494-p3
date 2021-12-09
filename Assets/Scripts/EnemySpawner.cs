@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
     {
         spawnEarlyText.enabled = true;
         spawnIcon.color = new Color(spawnIcon.color.r, spawnIcon.color.g, spawnIcon.color.b, 1);
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && (TutorialControl.instance.isFinished || !TutorialControl.instance.isActiveAndEnabled))
         {
             startDelay = 0;
             Instantiate(waveStartEffect, transform.position, Quaternion.identity);
