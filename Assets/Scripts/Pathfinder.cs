@@ -546,6 +546,10 @@ public class Pathfinder : MonoBehaviour
 
     public IEnumerator testForInvalidPath(Vector3 start, Vector3 end, Vector3 psuedoWall, Vector3 parentVec, int pathIndex)
     {
+        if (enemyMovement != null)
+        {
+            yield break;
+        }
         // if there is no path between start and end, return true 
         Stack<Vector3> activePath = new Stack<Vector3>();
         activePath.Push(start);

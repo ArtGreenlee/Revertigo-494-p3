@@ -29,7 +29,7 @@ public class PlayerInputControl : MonoBehaviour
     void Start()
     {
         movementEnabled = false;
-        cameraTransform = Camera.main.transform;
+        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         rb = GetComponent<Rigidbody>();
         layerMask = ~LayerMask.GetMask("Tower", "Player");
         sideLayerMask = LayerMask.GetMask("Playfield");

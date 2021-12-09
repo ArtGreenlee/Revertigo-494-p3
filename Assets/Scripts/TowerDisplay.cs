@@ -40,14 +40,13 @@ public class TowerDisplay : MonoBehaviour
         {
             instance = null;
         }
-        cameraTransform = Camera.main.transform;
+        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.rotation = Quaternion.LookRotation(transform.position - cameraTransform.position);
-
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit; 

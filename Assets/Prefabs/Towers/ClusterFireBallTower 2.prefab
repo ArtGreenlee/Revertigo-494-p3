@@ -161,8 +161,8 @@ MonoBehaviour:
   range: 20
   numTargets: 1
   baseDamageMin: 0
-  baseDamageMax: 25
-  critChance: 35
+  baseDamageMax: 40
+  critChance: 60
   critMult: 0
   slowPercent: 0
   slowDuration: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   specialTower: 1
   slowEffect: {fileID: 0}
+  DOTEffect: {fileID: 0}
 --- !u!114 &7516395724962424619
 MonoBehaviour:
   m_ObjectHideFlags: 0

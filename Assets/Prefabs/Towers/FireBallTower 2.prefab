@@ -160,8 +160,8 @@ MonoBehaviour:
   poisonDuration: 0
   range: 20
   numTargets: 1
-  baseDamageMin: 25
-  baseDamageMax: 35
+  baseDamageMin: 50
+  baseDamageMax: 80
   critChance: 0
   critMult: 0
   slowPercent: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
   upgradeEffect: {fileID: 100000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   specialTower: 1
   slowEffect: {fileID: 0}
+  DOTEffect: {fileID: 0}
 --- !u!114 &5096817390689431554
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,6 +23,7 @@ public class EnemySpawner : MonoBehaviour
     public TextMeshProUGUI spawnEarlyText;
     public Image spawnIcon;
     public GameObject waveStartEffect;
+    private ScoreCounter scoreCounter;
 
     // public AudioClip waveStartingSFX;
     public float waveVol = 0.1f;
@@ -33,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
     public List<int> enemyValueForWave;
     private void Awake()
     {
+
         pathIndicatorSpawnInvervalUtility = Time.time;
         pathIndicatorList = new List<GameObject>();
         pathFinder = GetComponent<Pathfinder>();
@@ -48,6 +50,7 @@ public class EnemySpawner : MonoBehaviour
         spawnIcon.color = new Color(spawnIcon.color.r, spawnIcon.color.g, spawnIcon.color.b, 1);
         if (Input.GetMouseButtonDown(0) && (TutorialControl.instance.isFinished || !TutorialControl.instance.isActiveAndEnabled))
         {
+            scoreCounter.score += startDelay * 100;
             startDelay = 0;
             Instantiate(waveStartEffect, transform.position, Quaternion.identity);
         }
@@ -70,6 +73,7 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator Start()
     {
+        scoreCounter = ScoreCounter.instance;
         while(!tutorialController.isFinished && tutorialController.isActiveAndEnabled) {
             countdownText.text = "";
             yield return new WaitForSeconds(1);
@@ -100,7 +104,7 @@ public class EnemySpawner : MonoBehaviour
                 }
                 yield return new WaitForSeconds(1);
             }
-            StartCoroutine(startWave(numEnemies, enemyHealthForWave[i]));
+            StartCoroutine(startWave(numEnemies, enemyHealthForWave[i], enemyValueForWave[i]));
         }
         Destroy(countdownText);
 
@@ -115,7 +119,7 @@ public class EnemySpawner : MonoBehaviour
             GameObject newEnemy = Instantiate(enemy, enemyPath[0][0], Quaternion.identity);
             enemyStorage.addEnemy(newEnemy);
             newEnemy.GetComponent<EnemyHealth>().setMaxHealth(1000);
-            newEnemy.GetComponent<EnemyHealth>().goldValue = 3;
+            newEnemy.GetComponent<EnemyHealth>().goldValue = 2;
             newEnemy.GetComponent<EnemyMovement>().path = enemyPath;
             yield return new WaitForSeconds(2);
         }
@@ -131,7 +135,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public IEnumerator startWave(int spawnCount, float enemyHealth)
+    public IEnumerator startWave(int spawnCount, float enemyHealth, int goldValue)
     {
         for (int i = 0; i < spawnCount; i++)
         {

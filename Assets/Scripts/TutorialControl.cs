@@ -30,7 +30,7 @@ public class TutorialControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cameraTransform = Camera.main.transform;
+        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         currInstruction = 0;
         lastUpdate = Time.time;
         isRunning = false;

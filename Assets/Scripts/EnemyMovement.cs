@@ -16,6 +16,7 @@ public class EnemyMovement : MonoBehaviour
     public AudioClip loseLifeSFX;
     bool lookingForPath;
     private PlayerLivesTemp playerLifes;
+    private Transform cameraTransform;
 
     private WallStorage wallStorage;
 
@@ -25,6 +26,7 @@ public class EnemyMovement : MonoBehaviour
     }
     void Start()
     {
+        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         wallStorage = WallStorage.instance;
         playerLifes = PlayerLivesTemp.instance;
         curSpeed = maxSpeed;
@@ -96,11 +98,11 @@ public class EnemyMovement : MonoBehaviour
         if (path != null && path.Count != 0 && path[pathIndex].Count != 0)
         {
             nextPoint = path[pathIndex][currentPointIndex];
-            if (wallStorage.isWall(nextPoint))
+            /*if (wallStorage.isWall(nextPoint))
             {
                 resetPath();
                 return;
-            }
+            }*/
             transform.position += (nextPoint - transform.position).normalized * Time.deltaTime * curSpeed;
             if ((transform.position - nextPoint).sqrMagnitude < .01f)
             {
@@ -113,7 +115,7 @@ public class EnemyMovement : MonoBehaviour
                     {
                         Instantiate(onPathFinishEffect, transform.position, Quaternion.identity);
                         pathFinder.StopAllCoroutines();
-                        AudioSource.PlayClipAtPoint(loseLifeSFX, Camera.main.transform.position);
+                        AudioSource.PlayClipAtPoint(loseLifeSFX, cameraTransform.position);
                         playerLifes.loseLife();
                         Destroy(gameObject);
                     }

@@ -15,7 +15,7 @@ public class HealthBar : MonoBehaviour
     private void Awake()
     {
         HealthBarImage = GetComponent<Image>();
-        cameraTransform = Camera.main.transform;
+        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
     }
     void Start()
     {

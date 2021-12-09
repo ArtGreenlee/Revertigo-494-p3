@@ -62,7 +62,7 @@ public class TowerInventory : MonoBehaviour
         combinations = new List<List<GameObject>>();
         combineCooldownUtility = 0;
         playerInputControl = PlayerInputControl.instance;
-        cameraTransform = Camera.main.transform;
+        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         priceText.text = "Tower Cost " + price.ToString();
         goldStorage = GoldStorage.instance;
         playerInventory = new List<GameObject>();
@@ -566,7 +566,6 @@ public class TowerInventory : MonoBehaviour
         Destroy(towerB);
         Destroy(towerC);
         GameObject specialTower = Instantiate(specialTowerDictionary[towerName], inbetween, Quaternion.identity);
-        Debug.Log(towerName);
         addTowerToInventory(specialTower);
     }
 

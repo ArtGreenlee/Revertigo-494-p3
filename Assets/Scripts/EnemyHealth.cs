@@ -19,6 +19,7 @@ public class EnemyHealth : MonoBehaviour
     private Transform cameraTransform;
     private Color originalColor;
     private MeshRenderer meshRenderer;
+    private ScoreCounter scoreCounter;
     // Start is called before the first frame update
 
     public void setMaxHealth(float maxHealthIn)
@@ -34,7 +35,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void Awake()
     {
-        cameraTransform = Camera.main.transform;
+        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         pathfinder = GetComponent<Pathfinder>();
         wallStorage = GameObject.Find("GameController").GetComponent<WallStorage>();
         enemyStorage = GameObject.Find("GameController").GetComponent<EnemyStorage>();
@@ -46,6 +47,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
+        scoreCounter = ScoreCounter.instance;
         meshRenderer = GetComponent<MeshRenderer>();
         originalColor = meshRenderer.material.color;
         objectPooler = ObjectPooler.Instance;
@@ -92,6 +94,7 @@ public class EnemyHealth : MonoBehaviour
             {
                 Instantiate(onDeathEffect, transform.position, Quaternion.identity);
             }
+            scoreCounter.score += Mathf.RoundToInt(maxHealth);
             Destroy(healthBar);
             Destroy(gameObject);
         }
