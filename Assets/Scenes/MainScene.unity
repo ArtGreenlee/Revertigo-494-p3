@@ -3251,7 +3251,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 703163876}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf868f963a1bb40869c94a9a874c3e07, type: 3}
   m_Name: 
@@ -5487,7 +5487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!20 &1122634882
 Camera:
   m_ObjectHideFlags: 0
@@ -7209,7 +7209,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411751685}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9adcd49cbbc54016916f1198f525f3f, type: 3}
   m_Name: 
@@ -8340,7 +8340,7 @@ MonoBehaviour:
   waveStartEffect: {fileID: 2314935142293839282, guid: b42aa3f5250af22429aa13485faa9977,
     type: 3}
   waveVol: 0.2
-  waveStartTimes: e8030000140000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e000000
+  waveStartTimes: 0a000000140000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e0000001e000000
   enemyCountForWave: 050000000600000007000000080000000a0000000a0000000a0000000a0000000a0000000a0000000b0000000a0000000b0000000a0000000c0000000a0000000d0000000a0000000f0000000a000000
   enemyHealthForWave: 1e0000002800000032000000460000006400000082000000be0000002c01000090010000f401000058020000bc0200002003000084030000e8030000e8030000e8030000e8030000e8030000e8030000
   enemyValueForWave: 0400000005000000060000000700000008000000090000000a0000000a0000000a0000000a0000000a0000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000
@@ -8644,7 +8644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!20 &1606934279
 Camera:
   m_ObjectHideFlags: 0
@@ -11000,6 +11000,8 @@ MonoBehaviour:
     type: 3}
   maxTowerInventory: 20
   combineCooldown: 0.5
+  lr: {fileID: 0}
+  combinationLrIndex: 0
   removeEffect: {fileID: 4301057783707249758, guid: 74ccf31d718fbea49a5c201d4b7c5af2,
     type: 3}
   selectionEnabled: 0
@@ -11381,7 +11383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!20 &1927034572
 Camera:
   m_ObjectHideFlags: 0

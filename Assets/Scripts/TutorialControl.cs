@@ -17,7 +17,7 @@ public class TutorialControl : MonoBehaviour
     public static TutorialControl instance;
 
     bool isRunning;
-    KeyCode[] keycodes = new KeyCode[]{KeyCode.Mouse0, KeyCode.Mouse1, KeyCode.F, KeyCode.G, KeyCode.F, KeyCode.W};
+    KeyCode[] keycodes = new KeyCode[]{KeyCode.Mouse0, KeyCode.Mouse1, KeyCode.F, KeyCode.G, KeyCode.Space, KeyCode.F, KeyCode.W};
     // public bool firstPlayThrough;
     private Transform cameraTransform;
     private void Awake()
@@ -44,13 +44,13 @@ public class TutorialControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currInstruction > 6) {
+        if (currInstruction > 8) {
              return;
         }
         if (goldStorage.gold < 10f) {
             goldStorage.changeGoldAmount(10f - goldStorage.gold);
         }
-        if (currInstruction != 2 && currInstruction != 6) {
+        if (currInstruction != 2 && currInstruction != 4 && currInstruction != 7) {
             if (Input.GetKey(keycodes[currInstruction])) {
                 conditionMet = true;
             }
@@ -68,9 +68,17 @@ public class TutorialControl : MonoBehaviour
                 StartCoroutine(DisplayText(currInstruction));
             }
         }
-        else if (currInstruction == 6) {
+        else if (currInstruction == 4) {
+            if ((Time.time - lastUpdate > 10.0) || conditionMet) {
+                conditionMet = false;
+                currInstruction += 1;
+                lastUpdate = Time.time;
+                StartCoroutine(DisplayText(currInstruction));
+            }
+        }
+        else if (currInstruction == 7) {
             isFinished = true;
-            if (Time.time - lastUpdate > 6.0) {
+            if (Time.time - lastUpdate > 14.0) {
                 currInstruction += 1;
                 lastUpdate = Time.time;
                 StartCoroutine(DisplayText(currInstruction));
@@ -83,7 +91,7 @@ public class TutorialControl : MonoBehaviour
         
         if (instruction == 0) {
             yield return new WaitForSeconds(2);
-            tutorialText.text = "Left click and hold to shoot enemies";
+            tutorialText.text = "Left click and hold to shoot";
         }
         else if (instruction == 1) {
             tutorialText.text = "";
@@ -98,22 +106,29 @@ public class TutorialControl : MonoBehaviour
         else if (instruction == 3) {
             tutorialText.text = "";
             yield return new WaitForSeconds(2);
-            tutorialText.text = "Press G to buy towers to shoot alongside you \nSome towers can combine!\n If you see a line connecting towers in your inventory \n press space to combine them!";
+            tutorialText.text = "Press G to buy towers to shoot alongside you";
         }
         else if (instruction == 4) {
             tutorialText.text = "";
             yield return new WaitForSeconds(2);
+            tutorialText.text = "Some towers can combine!\n If you see a line connecting towers in your inventory \n press space to combine them!";
+        }
+        else if (instruction == 5) {
+            tutorialText.text = "";
+            yield return new WaitForSeconds(2);
             tutorialText.text = "Press F while over a podium to place a tower there";
         }
-        else if (instruction == 5)
+        else if (instruction == 6)
         {
             tutorialText.text = "";
             yield return new WaitForSeconds(2);
             tutorialText.text = "Use WASD to move between sides of the cube";
         }
-        else if (instruction == 6) {
+        else if (instruction == 7) {
             tutorialText.text = "";
             yield return new WaitForSeconds(1);
+            tutorialText.text = "Click a spawn point to start a wave early";
+            yield return new WaitForSeconds(8);
             tutorialText.text = "Press ESC to pause and view instructions again";
         }
         else {
