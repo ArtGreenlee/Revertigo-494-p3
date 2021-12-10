@@ -17,7 +17,7 @@ public class PlayerLivesTemp : MonoBehaviour
     private TowerInventory towerInventory;
     private int numLives; 
     public Slider healthBar;
-    private float timeRemaining;
+    public float timeRemaining;
     public TextMeshProUGUI TimerText;
     public Texture fade_shape = null;
     public bool transition_flag = false;
