@@ -10,7 +10,7 @@ public class ScoreTextDisplayer : MonoBehaviour
     public Text score;
     void Start()
     {
-        score.text = "Score" + ScoreCounter.instance.score.ToString();
+        score.text = "Score  " + ScoreCounter.instance.score.ToString();
     }
 
     // Update is called once per frame
