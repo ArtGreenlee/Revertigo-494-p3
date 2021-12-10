@@ -52,7 +52,7 @@ public class RangeIndicator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             RaycastHit hit;
             Vector2 mousePosition = Input.mousePosition;

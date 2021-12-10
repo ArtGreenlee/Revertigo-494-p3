@@ -37,7 +37,7 @@ public class TowerPlacer : MonoBehaviour
         wallStorage = WallStorage.instance;
         towerInventory = TowerInventory.instance;
         shadowTower = Instantiate(shadowTower, transform.position, Quaternion.identity);
-        shadowTower.transform.position = new Vector3(25, 0, 0);
+        shadowTower.transform.position = new Vector3(100, 0, 0);
         podiumLayerMask = ~LayerMask.GetMask("Podium");
     }
 
@@ -55,7 +55,7 @@ public class TowerPlacer : MonoBehaviour
             if (hit.collider.gameObject.CompareTag("Podium"))
             {
                 GameObject podium = hit.collider.gameObject;
-                if (towerInventory.selectionEnabled)
+                if (towerInventory.playerInventory.Count > 0)
                 {
                     if (!wallStorage.podiumHasTower(podium))
                     {
@@ -69,9 +69,13 @@ public class TowerPlacer : MonoBehaviour
                             source.PlayOneShot(placeTowerSFX, placeTowerVol);
                             StartCoroutine(placeTowerOnPodium(tempTower, tempTower.transform.position, shadowTower.transform.position, podium));
                             towerInventory.playerInventory.RemoveAt(0);
-                            shadowTower.transform.position = new Vector3(25, 0, 0);
+                            shadowTower.transform.position = new Vector3(100, 0, 0);
                             towerInventory.basePrice++;
-                            towerInventory.combinations = towerInventory.checkCurrentTowerForCombinations();
+                            if (towerInventory.playerInventory.Count > 0)
+                            {
+                                towerInventory.combinations = towerInventory.checkCurrentTowerForCombinations();
+                            }
+                            
                             towerInventory.price = towerInventory.basePrice;
                             towerInventory.priceText.text = "Tower Cost " + towerInventory.price.ToString();
                             //StartCoroutine(towerInventory.destroyPlayerInventory());
@@ -87,6 +91,7 @@ public class TowerPlacer : MonoBehaviour
                         }
                     }
                     else if (wallStorage.getTowerAttachedToPodium(podium) != null &&
+                        towerInventory.playerInventory.Count > 0 &&
                         TowerInventory.canCombine(towerInventory.playerInventory[0].GetComponent<TowerStats>(),
                         wallStorage.getTowerAttachedToPodium(podium).GetComponent<TowerStats>()))
                     {
@@ -98,34 +103,24 @@ public class TowerPlacer : MonoBehaviour
                             towerInventory.priceText.text = "Tower Cost " + towerInventory.price.ToString();
                             source.PlayOneShot(placeTowerSFX, placeTowerVol);
                             StartCoroutine(towerInventory.combineTowerOnPodium(wallStorage.getTowerAttachedToPodium(podium), towerInventory.playerInventory[0]));
-                            shadowTower.transform.position = new Vector3(25, 0, 0);
+                            shadowTower.transform.position = new Vector3(100, 0, 0);
                         }
 
                     }
-                    /*else if (wallStorage.podiumHasTower(podium) && Input.GetKeyDown(KeyCode.F))
-                    {
-                        GameObject tower = wallStorage.getTowerAttachedToPodium(podium);
-                        if (canCombine(tower, towerInventory.playerInventory[0]))
-                        {
-                            towerInventory.selectionEnabled = false;
-                            StartCoroutine(combineTowers(tower, towerInventory.playerInventory[0]));
-                            towerInventory.playerInventory.RemoveAt(0);
-                        }
-                    }*/
                 }
                 else
                 {
-                    shadowTower.transform.position = new Vector3(25, 0, 0);
+                    shadowTower.transform.position = new Vector3(100, 0, 0);
                 }
             }
             else
             {
-                shadowTower.transform.position = new Vector3(25, 0, 0);
+                shadowTower.transform.position = new Vector3(100, 0, 0);
             }
         }
         else
         {
-            shadowTower.transform.position = new Vector3(25, 0, 0);
+            shadowTower.transform.position = new Vector3(100, 0, 0);
         }
     }
 
@@ -176,6 +171,7 @@ public class TowerPlacer : MonoBehaviour
         }
         else
         {
+            attachPodium.GetComponent<MeshRenderer>().material.color = tower.GetComponent<TowerStats>().trailRendererColor;
             towerStorage.addTower(end, tower);
             tower.transform.position = end;
             tower.GetComponent<TowerStats>().attachedToPlayer = false;

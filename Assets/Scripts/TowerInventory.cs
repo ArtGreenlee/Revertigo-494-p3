@@ -224,7 +224,15 @@ public class TowerInventory : MonoBehaviour
                     priceText.text = "Tower Cost " + price.ToString();
                     StartCoroutine(combineSpecialTower(combinations[combinationLrIndex][0], combinations[combinationLrIndex][1], combinations[combinationLrIndex][2]));
                 }
-                combinations = checkCurrentTowerForCombinations();
+                if (playerInventory.Count > 0)
+                {
+                    combinations = checkCurrentTowerForCombinations();
+                }
+                else
+                {
+                    combinations = new List<List<GameObject>>();
+                    lr.positionCount = 0;
+                }
                 combinationLrIndex = 0;
                 if (combinations.Count > 0)
                 {
@@ -235,9 +243,9 @@ public class TowerInventory : MonoBehaviour
                     lr.positionCount = 0;
                 }
             }
-            else
+            else if (lr.positionCount > 2)
             {
-                for (int i = 0; i < combinations[combinationLrIndex].Count - 1 && i < lr.positionCount; i++)
+                for (int i = 0; i < combinations[combinationLrIndex].Count - 1; i++)
                 {
                     lr.SetPosition(i, combinations[combinationLrIndex][i].transform.position);
                     lr.SetPosition(i + 1, combinations[combinationLrIndex][i + 1].transform.position);

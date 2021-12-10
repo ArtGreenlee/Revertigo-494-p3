@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class RotateAboutCenter : MonoBehaviour
 {
-    public float speed = 30;
-    // Update is called once per frame
-    void Update()
+    private Vector3 rotationAxis;
+    public float speed;
+    private void Start()
     {
-        transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, speed * Time.deltaTime);
+        rotationAxis = Random.onUnitSphere;
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        transform.RotateAround(Vector3.zero, rotationAxis, speed * Time.deltaTime);
     }
 }

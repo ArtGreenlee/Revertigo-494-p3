@@ -47,7 +47,7 @@ public class TowerDisplay : MonoBehaviour
     void Update()
     {
         transform.rotation = Quaternion.LookRotation(transform.position - cameraTransform.position);
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             RaycastHit hit; 
             Vector2 mousePosition = Input.mousePosition;
