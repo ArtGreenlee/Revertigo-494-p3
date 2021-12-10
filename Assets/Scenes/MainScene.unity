@@ -751,7 +751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &64554627
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -6335,7 +6335,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &253705116
 Transform:
   m_ObjectHideFlags: 0
@@ -7319,14 +7319,16 @@ MonoBehaviour:
 
     Left Click: fire
 
-    Right Click/Drag: Place Walls
+    Right Click/Drag:
+    Place Walls
 
 
     G: Buy Tower
 
     F: Place Tower on Podium
 
-    Left shift over tower: view stats
+    Left shift
+    over tower: view stats
 
     M: Return to menu
 
@@ -16032,7 +16034,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1910343713
 ParticleSystemRenderer:
   serializedVersion: 6
