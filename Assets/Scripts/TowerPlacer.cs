@@ -70,7 +70,7 @@ public class TowerPlacer : MonoBehaviour
                             StartCoroutine(placeTowerOnPodium(tempTower, tempTower.transform.position, shadowTower.transform.position, podium));
                             towerInventory.playerInventory.RemoveAt(0);
                             shadowTower.transform.position = new Vector3(100, 0, 0);
-                            towerInventory.basePrice++;
+                            towerInventory.basePrice += 2;
                             if (towerInventory.playerInventory.Count > 0)
                             {
                                 towerInventory.combinations = towerInventory.checkCurrentTowerForCombinations();
