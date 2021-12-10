@@ -63,7 +63,7 @@ public class TowerPlacer : MonoBehaviour
                         shadowTower.transform.rotation = UtilityFunctions.getRotationTowardSide(podium.transform.position);
                         if (Input.GetKeyDown(KeyCode.F))
                         {
-                            towerInventory.selectionEnabled = false;
+                            //towerInventory.selectionEnabled = false;
                             GameObject tempTower = towerInventory.playerInventory[0];
                             wallStorage.attachTowerToPodium(tempTower, podium);
                             source.PlayOneShot(placeTowerSFX, placeTowerVol);
@@ -71,9 +71,19 @@ public class TowerPlacer : MonoBehaviour
                             towerInventory.playerInventory.RemoveAt(0);
                             shadowTower.transform.position = new Vector3(25, 0, 0);
                             towerInventory.basePrice++;
+                            towerInventory.combinations = towerInventory.checkCurrentTowerForCombinations();
                             towerInventory.price = towerInventory.basePrice;
                             towerInventory.priceText.text = "Tower Cost " + towerInventory.price.ToString();
-                            StartCoroutine(towerInventory.destroyPlayerInventory());
+                            //StartCoroutine(towerInventory.destroyPlayerInventory());
+                            towerInventory.combinationLrIndex = 0;
+                            if (towerInventory.combinations.Count > 0)
+                            {
+                                towerInventory.lr.positionCount = towerInventory.combinations[towerInventory.combinationLrIndex].Count;
+                            }
+                            else
+                            {
+                                towerInventory.lr.positionCount = 0;
+                            }
                         }
                     }
                     else if (wallStorage.getTowerAttachedToPodium(podium) != null &&

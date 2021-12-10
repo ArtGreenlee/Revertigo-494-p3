@@ -30,9 +30,9 @@ public class TowerInventory : MonoBehaviour
     public int maxTowerInventory;
     public float combineCooldown;
     private float combineCooldownUtility;
-    private LineRenderer lr;
-    private int combinationLrIndex;
-    List<List<GameObject>> combinations;
+    public LineRenderer lr;
+    public int combinationLrIndex;
+    public List<List<GameObject>> combinations;
     public GameObject removeEffect;
     private bool purchaseEnabled;
 
@@ -358,7 +358,7 @@ public class TowerInventory : MonoBehaviour
         return -1;
     }
 
-    private List<List<GameObject>> checkCurrentTowerForCombinations()
+    public List<List<GameObject>> checkCurrentTowerForCombinations()
     {
         List<List<GameObject>> combinations = new List<List<GameObject>>();
         TowerStats checkTowerStats = playerInventory[0].GetComponent<TowerStats>();
