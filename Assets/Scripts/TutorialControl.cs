@@ -44,7 +44,7 @@ public class TutorialControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currInstruction > 9) {
+        if (currInstruction > 8) {
              return;
         }
         if (goldStorage.gold < 10f) {
@@ -140,42 +140,6 @@ public class TutorialControl : MonoBehaviour
             tutorialText.text = "";
         }
         yield break;
-        
-    }
-
-    IEnumerator LazyDisplayText(){
-        
-        yield return new WaitForSeconds(2);
-        tutorialText.text = "Right click to place walls to alter the enemy path \nHold right click to place multiple walls";
-        
-        tutorialText.text = "Use the mouse to look around \nPress space to hold and free position";
-        yield return new WaitForSeconds(8);
-        tutorialText.text = "";
-        yield return new WaitForSeconds(1);
-        tutorialText.text = "Left click and hold to shoot enemies";
-        yield return new WaitForSeconds(8);
-        tutorialText.text = "";
-        yield return new WaitForSeconds(10);
-        
-        yield return new WaitForSeconds(8);
-        tutorialText.text = "";
-        yield return new WaitForSeconds(1);
-        tutorialText.text = "Press G to buy towers to shoot alongside you \nLeft shift over a tower to view its stats";
-        yield return new WaitForSeconds(8);
-        tutorialText.text = "";
-        yield return new WaitForSeconds(10);
-        tutorialText.text = "Place four walls in a square to form a podium";
-        yield return new WaitForSeconds(10);
-        tutorialText.text = "";
-        yield return new WaitForSeconds(1);
-        tutorialText.text = "Press F while over a podium to place a tower there";
-        yield return new WaitForSeconds(8);
-        tutorialText.text = "";
-        yield return new WaitForSeconds(1);
-        tutorialText.text = "Press P to pause and view instructions again";
-        yield return new WaitForSeconds(8);
-        tutorialText.text = "";
-        yield return null;
         
     }
 }
