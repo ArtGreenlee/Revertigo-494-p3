@@ -66,7 +66,7 @@ public class FloatingDamageText : MonoBehaviour
         }
         while (textMesh.color.a > .1f)
         {
-            transform.Translate(transform.up * Time.deltaTime * 1);
+            //transform.Translate(transform.up * Time.deltaTime * 1);
             Color curColor = textMesh.color;
             curColor.a -= 1 * Time.deltaTime;
             textMesh.color = curColor;
