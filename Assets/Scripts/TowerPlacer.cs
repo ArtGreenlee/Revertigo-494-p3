@@ -149,10 +149,13 @@ public class TowerPlacer : MonoBehaviour
 
     private IEnumerator placeTowerOnPodium(GameObject tower, Vector3 start, Vector3 end, GameObject attachPodium)
     {
+        MeshRenderer mesh = attachPodium.GetComponent<MeshRenderer>();
+        Color finalColor = tower.GetComponent<TowerStats>().trailRendererColor;
         //StartCoroutine(UtilityFunctions.changeScaleOfTransformOverTime(tower.transform, 1, 1));
         while (Vector3.Distance(tower.transform.position, end) > .05f)
         {
             tower.transform.position = Vector3.Slerp(tower.transform.position, end, 3 * Time.deltaTime);
+            mesh.material.color = Color.Lerp(mesh.material.color, finalColor, 3 * Time.deltaTime);
             if (attachPodium == null)
             {
                 //UtilityFunctions.changeScaleOfTransform(tower.transform, .5f);
@@ -171,7 +174,7 @@ public class TowerPlacer : MonoBehaviour
         }
         else
         {
-            attachPodium.GetComponent<MeshRenderer>().material.color = tower.GetComponent<TowerStats>().trailRendererColor;
+            mesh.material.color = finalColor;
             towerStorage.addTower(end, tower);
             tower.transform.position = end;
             tower.GetComponent<TowerStats>().attachedToPlayer = false;

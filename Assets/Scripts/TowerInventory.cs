@@ -243,7 +243,7 @@ public class TowerInventory : MonoBehaviour
                     lr.positionCount = 0;
                 }
             }
-            else if (lr.positionCount > 2)
+            else if (lr.positionCount > 1)
             {
                 for (int i = 0; i < combinations[combinationLrIndex].Count - 1; i++)
                 {

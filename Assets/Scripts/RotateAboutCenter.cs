@@ -24,7 +24,9 @@ public class RotateAboutCenter : MonoBehaviour
 
     private IEnumerator disableAndDestroyAfterTime()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
+        //rotationAxis = Random.onUnitSphere;
+        yield return new WaitForSeconds(5);
         GetComponent<ParticleSystem>().Stop();
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
