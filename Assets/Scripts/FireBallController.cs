@@ -63,6 +63,7 @@ public class FireBallController : MonoBehaviour
         sphereCollider.enabled = false;
         GetComponent<ParticleSystem>().Stop();
         yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
