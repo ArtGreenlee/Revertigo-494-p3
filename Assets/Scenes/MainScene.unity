@@ -11769,7 +11769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde1eed620d637341b436f6e69d0fcd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 1000000
+  gold: 50
   goldText: {fileID: 1795517617}
   gemsPerRoundUpgradeButton: {fileID: 739980373}
   gemsPerRoundUpgradeCost:
